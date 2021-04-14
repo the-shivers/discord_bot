@@ -18,8 +18,6 @@ function generateCharacter() {
     rpg_char_info[key] = value[Math.floor(Math.random() * value.length)]
   })
 
-  console.log(rpg_char_info);
-
   // Collect random info string from background.
   let bg_info = {};
   let your_bg = backgrounds[rpg_char_info.bg_keys]
@@ -29,8 +27,6 @@ function generateCharacter() {
   })
   // Correct name, since it's a string instead of a list...
   bg_info.name = your_bg.name;
-  console.log(your_bg);
-  console.log(bg_info);
 
   // Generate stats
   let stat_arr = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];

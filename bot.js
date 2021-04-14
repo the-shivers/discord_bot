@@ -288,9 +288,7 @@ bot.on("message", async msg => {
     // RPG Character
     if (content === "rpg") {
       console.log("Generating rp character.");
-
       let send_msg = rpg.generateCharacter();
-
       msg.reply(send_msg);
     }
 
