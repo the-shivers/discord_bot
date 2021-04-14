@@ -32,7 +32,7 @@ function interpretUrbanString(text) {
     && f.isNumeric(text.split(", ")[1])
   ) {
     search_term = components.join(' ').split(", ")[0];
-    def_num = parseInt(text.split(", ")[1], 10);
+    def_num = Math.abs(parseInt(text.split(", ")[1], 10));
   } else {
     is_valid = false;
   }
@@ -86,4 +86,9 @@ async function urbanDictionary(msg, is_valid, search_term, def_num) {
   }
 }
 
-module.exports = { interpretUrbanString, urbanDictionary };
+function ud(msg, content) {
+  let ud_arr = interpretUrbanString(content);
+  urbanDictionary(msg, ud_arr[0], ud_arr[1], ud_arr[2]);
+}
+
+module.exports = { ud };

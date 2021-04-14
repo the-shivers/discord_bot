@@ -1,10 +1,9 @@
 "use strict";
 
 // Define Constants and key Variables
-const fs = require('fs');
 const f = require('../../funcs.js');
 
-function multiDice(content) {
+function multiDice(msg, content) {
   // Takes a string of the form 3d10 and returns a dice roll string.
 
   let return_str = "";
@@ -44,7 +43,7 @@ function multiDice(content) {
   } else {
     return_str = "Invalid.";
   }
-  return return_str;
+  msg.channel.send(return_str);
 }
 
 module.exports = { multiDice };

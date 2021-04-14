@@ -17,7 +17,9 @@ const tarot = require('./scripts/tarot/tarot.js');
 const rpg = require('./scripts/rpg/rpg.js');
 const ud = require('./scripts/ud/ud.js');
 const dice = require('./scripts/dice/dice.js');
-const av = require('./scripts/avatar/avatar.js');
+const avatar = require('./scripts/avatar/avatar.js');
+const pingpong = require('./scripts/pingpong/pingpong.js');
+const prune = require('./scripts/prune/prune.js');
 
 const bot = new Discord.Client();
 const trig = "!";
@@ -34,7 +36,39 @@ let command_dict = {
   "rpg": {
     "log": "Generating RPG character.",
     "func": rpg.rpg
-  }
+  },
+  "avatar": {
+    "log": "Fetching avatar.",
+    "func": avatar.getAvatar
+  },
+  "roll": {
+    "log": "Rolling dice.",
+    "func": dice.multiDice
+  },
+  "r": {
+    "log": "Rolling dice.",
+    "func": dice.multiDice
+  },
+  "ud": {
+    "log": "Fetching urban wisdom.",
+    "func": ud.ud
+  },
+  "ping": {
+    "log": "Pinged, so I pong!.",
+    "func": pingpong.ping
+  },
+  "pong": {
+    "log": "Ponged, so I ping!",
+    "func": pingpong.pong
+  },
+  "trick": {
+    "log": "Tricking evil mashi.",
+    "func": pingpong.trick
+  },
+  "prune": {
+    "log": "Prunin'.",
+    "func": prune.prune
+  },
 }
 
 
@@ -77,64 +111,10 @@ bot.on("message", async msg => {
       + "*(Alias: !r)*\n"
       + "**!ud <search term> [, integer]** - *Finds the definition of search "
       + "term on UrbanDictionary. Example: \"!ud tennis ball, 3\" would return "
-      + "the third definition for tennis ball.*";
+      + "the fourth definition for tennis ball (zero-indexed).*";
       msg.channel.send(message);
     }
 
-
-    // Avatar Fetch
-    if (content.startsWith("avatar")) {
-      console.log("Fetching avatar.")
-      av.getAvatar(msg, content);
-    }
-
-    // Ping Response
-    if (content === "ping") {
-      console.log("Fetching ping.")
-      msg.reply('Pong!');
-    }
-
-    // Pong Response
-    if (content === "pong") {
-      console.log("Fetching pong.")
-      msg.reply('Ping!');
-    }
-
-    // trick Response
-    if (content === "trick evil mashi") {
-      console.log("Tempting evil mashi with food...")
-      msg.reply('wtf');
-    }
-
-    // Dice Rolls
-    if (content.startsWith('roll ') || content.startsWith('r ')) {
-      console.log("Trying to roll stuff.");
-      msg.channel.send(dice.multiDice(content));
-    }
-
-    // Delete Messages
-    if (content.startsWith("prune")) {
-      console.log("Prunin'.");
-      if (
-        content.split(' ').length === 2
-        && f.isNumeric(content.split(" ")[1])
-      ) {
-          let prune_num = parseInt(content.split(" ")[1], 10);
-          if (prune_num > 20)
-            {
-              msg.channel.send("Are you crazy? That's too many!")
-            } else {
-            msg.channel.messages.fetch({ limit: prune_num + 1 })
-              .then(messages => {
-                msg.channel.bulkDelete(messages);
-                msg.channel.send("Deleted " + prune_num.toString() + " messages." );
-              })
-              .catch(console.error);
-            }
-        } else {
-        msg.channel.send("Try again but better.")
-      }
-    }
 
     // Weather
     let weather_trigger = "w ";
@@ -154,16 +134,6 @@ bot.on("message", async msg => {
     }
 
 
-
-
-
-    // Urban Dictionary
-    let ud_trigger = "ud";
-    if (content.startsWith(ud_trigger)) {
-      console.log("Fetching urban wisdom.");
-      let [is_valid, search_term, def_num] = ud.interpretUrbanString(content);
-      ud.urbanDictionary(msg, is_valid, search_term, def_num)
-    }
 
     // Rename
     let rename_trigger = "nick"
@@ -196,16 +166,6 @@ bot.on("message", async msg => {
         }
       }
     }
-
-    // RPG Character
-    // if (content === "rpg") {
-    //   console.log("Generating rp character.");
-    //   let send_msg = rpg.generateCharacter();
-    //   msg.reply(send_msg);
-    // }
-
-
-
 
 
   }
