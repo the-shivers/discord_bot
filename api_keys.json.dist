@@ -1,0 +1,23 @@
+{
+  "ud_options": {
+    "method": "GET",
+    "url": "https://mashape-community-urban-dictionary.p.rapidapi.com/define",
+    "qs": {"term": "wat"},
+    "headers": {
+      "x-rapidapi-host": "mashape-community-urban-dictionary.p.rapidapi.com",
+      "x-rapidapi-key": "**************************************************"
+    }
+  },
+  "open_weather_options": {
+    "method": "GET",
+    "url": "https://community-open-weather-map.p.rapidapi.com/weather",
+    "qs": {
+      "q": "London,uk"
+    },
+    "headers": {
+      "x-rapidapi-key": "**************************************************",
+      "x-rapidapi-host": "community-open-weather-map.p.rapidapi.com",
+      "useQueryString": true
+    }
+  }
+}
