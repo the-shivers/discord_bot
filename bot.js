@@ -10,21 +10,15 @@ const fs = require('fs');
 const Canvas = require('canvas');
 const auth = require("./auth.json");
 const f = require('./funcs.js');
-const tarot = require('./tarot/tarot.js');
-const rpg = require('./rpg/rpg.js');
-const ud = require('./ud/ud.js');
+// const tarot = require('./tarot/tarot.js');
+// const rpg = require('./rpg/rpg.js');
+// const ud = require('./ud/ud.js');
+const ind = require('./index.js');
 const bot = new Discord.Client();
 const trig = "!";
 
-
-// JSON Imports
-
-const api_keys = JSON.parse(fs.readFileSync('./api_keys.json', 'utf8'));
-
-
 // API Options
-var ud_options = api_keys.ud_options;
-var open_weather_options = api_keys.open_weather_options;
+// var open_weather_options = api_keys.open_weather_options;
 
 // Useful functions
 
@@ -39,7 +33,7 @@ bot.on("ready", () => {
 
 bot.on("message", async msg => {
 
-  if (msg.content.startsWith("!")) {
+  if (msg.content.startsWith(trig)) {
     let content = msg.content.substring(msg.content.indexOf(trig)+1);
 
     // Get Help
@@ -236,7 +230,7 @@ bot.on("message", async msg => {
     // RPG Character
     if (content === "rpg") {
       console.log("Generating rp character.");
-      let send_msg = rpg.generateCharacter();
+      let send_msg = generateCharacter();
       msg.reply(send_msg);
     }
 
