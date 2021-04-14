@@ -85,13 +85,13 @@
   ],
   "weapon_second": [
     "a paper shield", "nothing else", "a can-do attitude", "an elephant",
-    "a miniature version of yourself", "a crutch", "The power of love",
+    "a miniature version of yourself", "a crutch", "the power of love",
     "a steel shield", "a greatshield", "an Uno reverse card",
     "a bag of milk", "an iPod", "your precious rock collection",
     "a homing pigeon", "a diamond-encrusted shield", "a tiny shield",
     "a shield with a big hole in the middle", "a magic shield", "a knife",
     "a tiny knife", "a needle", "a shortspear", "a satchel of potions",
-    "a first-aid kid", "a tasty snack", "a leath shield", "a wooden shield",
+    "a first-aid kit", "a tasty snack", "a leath shield", "a wooden shield",
     "a battle knife", "a hacksaw", "some gum", "a refreshing drink",
     "a sidearm", "a bomb", "walking sticks", "a vaulter's pole",
     "a dazzling, sequined glove", "a vial of deadly poison",
@@ -304,8 +304,8 @@
         "You'll do anything to win fame and renown.",
         "You're a sucker for a pretty face.",
         "A scandal prevents ou from ever going home again, and it follows you around.",
-        "You once satirized a noble who wants your head--a mistake You'll likely repeat.",
-        "You have trouble keeping your feelings hidden - your sharp tongue lands you in trouble.",
+        "You once satirized a noble who wants your head--a mistake you'll likely repeat.",
+        "You have trouble keeping your feelings hidden--your sharp tongue lands you in trouble.",
         "Despite your best efforts, you are unreliable to your friends."
       ]
     },

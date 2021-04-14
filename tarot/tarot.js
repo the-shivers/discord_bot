@@ -30,19 +30,6 @@ const arcana_arr = [
 
 
 // Key Functions
-function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
-  while (0 !== currentIndex) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-  return array;
-}
-
-
 function rotateCanvas(ctx, canvas) {
   ctx.translate(canvas.width, canvas.height);
   ctx.scale(-1, -1);
@@ -86,7 +73,7 @@ async function tarotReading(msg, x, y, z) {
   );
 
   // Define which cards will be "reversed", at 1/3 probabiltiy. 1 if reversed.
-  let shuffled = shuffle(cards);
+  let shuffled = f.shuffle(cards);
   let rev_list = [
     Math.round(Math.abs(Math.random() - (1/6))),
     Math.round(Math.abs(Math.random() - (1/6))),

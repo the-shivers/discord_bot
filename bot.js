@@ -9,14 +9,15 @@ const bot = new Discord.Client();
 const trig = "!";
 const auth = require("./auth.json");
 const request = require("request");
+const fs = require('fs');
 const Canvas = require('canvas');
 const f = require('./funcs.js');
 const tarot = require('./tarot/tarot.js');
-const fs = require('fs');
+const rpg = require('./rpg/rpg.js');
+
 
 // JSON Imports
-const tarot_info = JSON.parse(fs.readFileSync('./tarot/tarot.json', 'utf8'));
-const rpg_vars = JSON.parse(fs.readFileSync('./rpg_vars.json', 'utf8'));
+
 const api_keys = JSON.parse(fs.readFileSync('./api_keys.json', 'utf8'));
 
 
@@ -24,23 +25,7 @@ const api_keys = JSON.parse(fs.readFileSync('./api_keys.json', 'utf8'));
 var ud_options = api_keys.ud_options;
 var open_weather_options = api_keys.open_weather_options;
 
-// var open_weather_options = {
-//   method: 'GET',
-//   url: 'https://community-open-weather-map.p.rapidapi.com/weather',
-//   qs: {term: 'wat'},
-//   headers: {
-//     'x-rapidapi-host': 'community-open-weather-map.p.rapidapi.com',
-//     'x-rapidapi-key': 'cabb5c6aaamsh53224d47dc5a03fp1dc952jsn88293d9f9dcc'
-//   }
-// };
-
-
 // Useful functions
-
-
-function rollDie(sides) {
-  return Math.ceil(Math.random()*sides);
-}
 
 
 
@@ -303,68 +288,9 @@ bot.on("message", async msg => {
     // RPG Character
     if (content === "rpg") {
       console.log("Generating rp character.");
-      let send_msg = "";
-      let race = rpg_vars.races[Math.floor(Math.random() * rpg_vars.races.length)];
-      let my_class = rpg_vars.classes[Math.floor(Math.random() * rpg_vars.classes.length)];
-      let first_name = rpg_vars.first_names[Math.floor(Math.random() * rpg_vars.first_names.length)];
-      let ln_1 = rpg_vars.ln_first[Math.floor(Math.random() * rpg_vars.ln_first.length)];
-      let ln_2 = rpg_vars.ln_second[Math.floor(Math.random() * rpg_vars.ln_second.length)];
-      let wp_1 = rpg_vars.weapon_first[Math.floor(Math.random() * rpg_vars.weapon_first.length)];
-      let wp_2 = rpg_vars.weapon_second[Math.floor(Math.random() * rpg_vars.weapon_second.length)];
-      let armor = rpg_vars.armor[Math.floor(Math.random() * rpg_vars.armor.length)];
-      let gender = rpg_vars.genders[Math.floor(Math.random() * rpg_vars.genders.length)];
-      let modifier = rpg_vars.modifiers[Math.floor(Math.random() * rpg_vars.modifiers.length)];
-      let height = rpg_vars.height_ft[Math.floor(Math.random() * rpg_vars.height_ft.length)];
-      let inches = rpg_vars.height_in[Math.floor(Math.random() * rpg_vars.height_in.length)];
-      let alignment = rpg_vars.alignment[Math.floor(Math.random() * rpg_vars.alignment.length)];
-      let lang1 = rpg_vars.basic_languages[Math.floor(Math.random() * rpg_vars.basic_languages.length)];
-      let lang2 = rpg_vars.exotic_languages[Math.floor(Math.random() * rpg_vars.exotic_languages.length)];
-      let lang3 = rpg_vars.ultra_exotic_languages[Math.floor(Math.random() * rpg_vars.ultra_exotic_languages.length)];
-      let bg_key = rpg_vars.bg_keys[Math.floor(Math.random() * rpg_vars.bg_keys.length)];
-      let bg = rpg_vars.backgrounds[bg_key];
-      let bg_name = bg.name;
-      let bg_type = bg.types[Math.floor(Math.random() * bg.types.length)];
-      let pers = bg.personalities[Math.floor(Math.random() * bg.personalities.length)];
-      let ideal = bg.ideals[Math.floor(Math.random() * bg.ideals.length)];
-      let bond = bg.bonds[Math.floor(Math.random() * bg.bonds.length)];
-      let flaw = bg.flaws[Math.floor(Math.random() * bg.flaws.length)];
 
-      let str = rollDie(20);
-      let dex = rollDie(20);
-      let con = rollDie(20);
-      let int = rollDie(20);
-      let wis = rollDie(20);
-      let cha = rollDie(20);
-      let total = str+dex+con+int+wis+cha
-      let stat = ''
+      let send_msg = rpg.generateCharacter();
 
-      if (total > 90) {stat = 'Beastly!!!';}
-      else if (total > 85) {stat = 'Extremely strong!!';}
-      else if (total > 80) {stat = 'Very strong!';}
-      else if (total > 75) {stat = 'Strong!';}
-      else if (total > 70) {stat = 'Fairly strong.';}
-      else if (total > 65) {stat = 'Somewhat strong.';}
-      else if (total > 60) {stat = 'Average.';}
-      else if (total > 55) {stat = 'Weak.';}
-      else if (total > 50) {stat = 'Very weak.';}
-      else if (total > 45) {stat = 'Frail.';}
-      else if (total > 40) {stat = 'Extremely fragile.';}
-      else {stat = 'Shamefully, pathetically weak.';}
-
-      send_msg += "You are a " + modifier + ' ' + gender + ' ' + race + " "
-      + my_class + " named " + first_name + " " + ln_1 + ln_2 + ". Standing at "
-      + height + "'" + inches + ' and clad in ' + armor + ', you wield ' +  wp_1
-      + ' and ' + wp_2 + '. You are ' + alignment + ' and speak ' + lang1 + ', '
-      + lang2 + ', and ' + lang3 +'.\n\n'
-      send_msg += '`STR: ' + str.toString() + "`\n"
-      send_msg += '`DEX: ' + dex.toString() + "`\n"
-      send_msg += '`CON: ' + con.toString() + "`\n"
-      send_msg += '`INT: ' + int.toString() + "`\n"
-      send_msg += '`WIS: ' + wis.toString() + "`\n"
-      send_msg += '`CHA: ' + cha.toString() + "`\n"
-      send_msg += 'Overall stats: **' + stat + '** (' + total.toString() + ')\n\n'
-      send_msg += "Background: " + bg_name + " (Specialization: " + bg_type
-      + "). " + pers + " " + ideal + " " + bond + " " + flaw
       msg.reply(send_msg);
     }
 
