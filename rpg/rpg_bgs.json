@@ -1,0 +1,522 @@
+{
+  "acolyte": {
+    "name": "Acolyte",
+    "types": [
+      "Mormon", "Scientologist", "Muslim", "Jew", "Pastafarian", "Jehovah's Witness"
+    ],
+    "personalities": [
+      "You idolize a particular hero of your faith, and constantly refer to that person's deeds and example.",
+      "You find common ground between the fiercest enemies, empathizing with them and always working toward peace.",
+      "You see omens in every event and action. The gods try to speak to us and you are ther to listen.",
+      "Nothing can shake your optimistic attitude.",
+      "You quote (or misuote) sacred texts and proverbs in every situation.",
+      "You are intolerant of other faiths and condemn the heretics!",
+      "You've enjoyed fine food, drink and high society among the temple's elites. Rough living grates on you.",
+      "You've spent so long in the temple that you have little practical experience dealing with the outside world."
+    ],
+    "ideals": [
+      "You believe the ancient traditions of worship and sacrifice must be upheld.",
+      "You always try to help those in need, no matter the personal cost.",
+      "You believe it is essential to bring about the changes the gods are constantly pushing for.",
+      "You hope to one day rise to the top of your faith's relious hierarchy.",
+      "You trust that your deity will guide your actions.",
+      "You seek to prove yourself worthy of your god's favor by matching your actions against their teachings."
+    ],
+    "bonds": [
+      "You would die to recover an ancient relic of your faith that was lost long ago.",
+      "You will someday get revenge on the corrupt temple hierarchy who branded you a heretic.",
+      "You owe your life to the priest who took you in when your parents died.",
+      "Everything you do is for the common people.",
+      "You will do anyhing to protect your temple.",
+      "You seek to preserve a sacred text that your enemies consider heretical and want destroyed."
+    ],
+    "flaws": [
+      "You judge others harshly and yourself even more severely.",
+      "You put too much trust in those who wield power within your temple's hierarchy.",
+      "Your piety sometimes leads you to blindly trust those that claim to be devout.",
+      "You are inflexible in your thinking.",
+      "You are suspicious of strangers and expect the worst of them.",
+      "Once you pick a goal, you become obsessed with it to the detriment of everything else in your life."
+    ]
+  },
+  "charlatan": {
+    "name": "Charlatan",
+    "types": [
+      "Cheater", "Forger", "Gold digger", "Fraud", "Pickpocketing", "Scammer"
+    ],
+    "personalities": [
+      "You fall in and out of love easily and are always pursuing someone.",
+      "You have a joke for every occasion, especially occassions where humor is inapproproate.",
+      "Flattery is your preferred trick for getting what you want.",
+      "You're a born gambler who can't resist taking a risk for a potential payoff.",
+      "You lie about almost everything, even when there's no good reason to.",
+      "Sarcasm and insults are your weapon of choice.",
+      "You keep multiple holy symbols on you to invoke whatever deity might come in useful at any given moment.",
+      "You pocket anything you see that might have some value."
+    ],
+    "ideals": [
+      "You're a free spirit--no one tells you what to do.",
+      "You never target people who can't afford to lose a few coins.",
+      "You distribute the money you acquire to people who really need it.",
+      "You never run the same con twice.",
+      "You feel that while material goods come and go, friendship lasts forever.",
+      "You're determined to make something of yourself."
+    ],
+    "bonds": [
+      "You fleeced the wrong person and must work to ensure that this individual never crosses paths with you or those you care about.",
+      "You owe everything to your mentor--a horrible person who's probably in jail.",
+      "Somewhere out there, you have a child who doesn't know you. You're making the world better for them.",
+      "You come from a noble family, and one day You'll reclaim your lands and title from those who stole them.",
+      "A powerful person killed someone you love. Some day soon, You'll have your revenge.",
+      "You swindled and ruined a person who didn't deserve it. You seek to atone for your misdeeds but will never forgive yourself."
+    ],
+    "flaws": [
+      "You can't resist a pretty face.",
+      "You're always in det. You spend your ill-gotten gains on decadent luxuries faster than you bring them in.",
+      "You're convinced no one could ever fool you the way you fool others.",
+      "You're too greedy for your own good. You can't resist taking a risk if there's money involved.",
+      "You can't resist swindling people more powerful than you.",
+      "You hate to admit it and hate yourself for it, but You'll run and preserve your own hide if the going gets rough."
+    ]
+  },
+  "criminal": {
+    "name": "Criminal",
+    "types": [
+      "Blackmailer", "Burglar", "Enforcer", "Fence", "Highwayman", "Assassin", "Pickpocket", "Smuggler"
+    ],
+    "personalities": [
+      "You always have a plan for what to do when things go wrong.",
+      "You are always calm, no matter the situation. You never raise your voice or let your emotions control you.",
+      "The first thing you do in a new place is note the locations of everything valuable--or where such things could be hidden.",
+      "You would ather make a new friend than a new enemy.",
+      "You are incredibly slow to trust. Those who seem the fairest often have the most to hide.",
+      "You don't pay attention to the risks in a situation. 'Never tell me the odds!'",
+      "The best way to get you to do something is to tell you that you can't do it.",
+      "You blow up at the slightest insult."
+    ],
+    "ideals": [
+      "You don't steal from others in the trade.",
+      "You believe chains are meant to be broken, as are those who would forge them.",
+      "You steal from the wealthy so that you can help people in need.",
+      "You will do whatever it takes to become wealthy.",
+      "You're loyal to your friends, not to any 'ideals', and everyone else can go to hell for all you care.",
+      "There's a spark of good in everyone."
+    ],
+    "bonds": [
+      "You're trying to pay of an old debt you owe to a generous benefactor.",
+      "Your ill-gotten gains go to support your family.",
+      "Something important was taken from you and you aim to steal it back.",
+      "You want to be the greatest thief who ever lived.",
+      "You're guilty of a terrible crime and wish to redeem yourself for it.",
+      "Someone you loved died because of a mistake you made--you vow never to let it happen again."
+    ],
+    "flaws": [
+      "When you see something valuable, you can't think of anything other than how to steal it.",
+      "When faced with a choice between your money and your friends, you usually choose the money.",
+      "If there's a plan, You'll forget it. If you don't forget it, You'll ignore it.",
+      "You have a 'tell' that gives away when You're lying.",
+      "You turn tail and run when things look bad.",
+      "An innocent person is in prison for a crime you committed, and You're cool with that."
+    ]
+  },
+  "entertainer": {
+    "name": "Entertainer",
+    "types": [
+      "Actor", "Dancer", "Fire-eater", "Jester", "Juggler", "Instrumentalist", "Poet", "Singer", "Storyteller", "Tumbler"
+    ],
+    "personalities": [
+      "You know a story relevant to almost every situation.",
+      "Whenever you come to a new place, you collect local rumors and spread gossip.",
+      "You're a hopeless romantic, always searching for that 'special someone.'",
+      "Nobody stays angry at you or around you for long, since you can defuse any amount of tension.",
+      "You love a good insult, even one directed at you.",
+      "You get bitter if You're not the center of attention.",
+      "You’ll settle for nothing less than perfection.",
+      "You change your mood or your mind as quickly as you change key in a song."
+    ],
+    "ideals": [
+      "You believe that when you perform, you make the world better than it was.",
+      "You feel that the stories, legends and songs of the past must never be forgotten, for they teach us who we are.",
+      "You think the world is in need new ideas and bold action.",
+      "You're only in it for the money and fame.",
+      "You like seeing the smiles on people's faces when you perform. That's all that matters to you.",
+      "You believe art should reflect the soul; it should come from within and reveal who we really are."
+    ],
+    "bonds": [
+      "Your instrument is your most treasured possession and it reminds you of someone you loved.",
+      "Someone stole your precious instrument and you vow that someday You'll get it back.",
+      "You want to be famous, whatever it takes.",
+      "You idolize a hero of the old tales and measure your deeds against that person's.",
+      "You will do anthing to prove yourself superior to your hated rival.",
+      "You would do anything for the other members of your old troupe."
+    ],
+    "flaws": [
+      "You'll do anything to win fame and renown.",
+      "You're a sucker for a pretty face.",
+      "A scandal prevents ou from ever going home again, and it follows you around.",
+      "You once satirized a noble who wants your head--a mistake you'll likely repeat.",
+      "You have trouble keeping your feelings hidden--your sharp tongue lands you in trouble.",
+      "Despite your best efforts, you are unreliable to your friends."
+    ]
+  },
+  "folk_hero": {
+    "name": "Folk Hero",
+    "types": [
+      "Rebel", "Savior", "Slayer", "Robin Hood", "Gentleman Thief", "Martyr", "Chosen One", "Conqueror"
+    ],
+    "personalities": [
+      "You judge someone by their actions, not their words.",
+      "You're always ready to help someone in trouble.",
+      "When you set your mind to something, you follow through no matter what gets in your way.",
+      "You have a strong sense of fair play and always try to find the most equitable solution to arguments.",
+      "You're confident in your own abilities and do what you can to instill confidence in others.",
+      "Thinking is for other people; you prefer action.",
+      "You misuse long words in an attempt to sound smarter.",
+      "You get bored easily, constantly focused on thinking about when You'll get to your destiny."
+    ],
+    "ideals": [
+      "You think that people deserve to be treated with dignity and respect.",
+      "You feel nobody should get preferential treatment before the law, and nobody is above the law",
+      "You fiercely believe that tyrants must not be allowed to oppress the people.",
+      "You feel tha if you become strong, you can take what you deserve.",
+      "You think there's no good in pretending to be something You're not.",
+      "You believe nothing and no one can steer you away from your higher calling."
+    ],
+    "bonds": [
+      "You have a family, but have no idea where they are. ONe day you hope to see them again.",
+      "You worked the land, loved the land, and will protect the land.",
+      "A proud noble once gave you a horrible beating, and you will take your revenge on any bully you encounter.",
+      "Your tools are symbols of your past life and you carry them so yo will never forget your roots.",
+      "You protect those who cannot protect themselves.",
+      "You wish your childhood sweetheart had come with you to pursue your destiny."
+    ],
+    "flaws": [
+      "The tyrant who rules your land will stop at nothing to see you dead.",
+      "You're convinced of the significance of your destiny and blind yourself to your shortcomings and the risk of failure.",
+      "The people who knew you when you were young know your secret, so you can never go home again.",
+      "You have a weakness for the vices of the city, especially alcohol.",
+      "Secretly, you believe things would be better if you were a tyrant ruling over the land.",
+      "You have trouble trusting your allies."
+    ]
+  },
+  "guild_artisan": {
+    "name": "Guild Artisan",
+    "Types": [
+      "Alchemist", "Armorer", "Brewer", "Scribe", "Carpenter", "Cartographer", "Cobbler", "Baker", "Glazier", "Jeweler", "Leatherworker", "Mason", "Painter", "Potter", "Shipwright", "Smith", "Tinkerer", "Wagon-maker", "Weaver", "Woodcarver"
+    ],
+    "personalities": [
+      "You believe anything worth doing is worth doing right. You can't help it, You're a perfectionist.",
+      "You're a snob who looks down on those who can't appreciate fine art.",
+      "You always know how things work and what makes people tick.",
+      "You're full of witty aphorisms and a proverb for every occasion.",
+      "You're rude to people who lack your committment to hard work and fair play.",
+      "You like to talk at length about your profession.",
+      "You don't part ith your money easily and will haggle tirelessly for the best deal.",
+      "You're very well-known for your work and want to make sure everyone appreciates about it. You're taken aback when people haven't heard of you."
+    ],
+    "ideals": [
+      "You believe it is the duty of all civilized people to strengthen the 'bonds' of community and the security of civilization.",
+      "You feel that your talents were given to you so that you could benefit the world.",
+      "You think everyone should be free to pursue their own liveliehood.",
+      "You're only in this job for the money.",
+      "You're commited to the people you care about, not to any ideal.",
+      "You work hard to be the best their is at your craft"
+    ],
+    "bonds": [
+      "The workshop where you learned your trade is the most important place in the world to you.",
+      "You created a great work for someone, and then found them unworthy to receive it. You're still looking for someone worthy.",
+      "You owe your guild a great debt for forging you into the person you are today.",
+      "You pursue wealth to secure someone's love.",
+      "One day you will return to your guild and prove that you are the greatest artisan of them all.",
+      "You will get revenge on the evil forces that destroyed your place of business and ruined your liveliehood."
+    ],
+    "flaws": [
+      "You'll do anything to get your hands on something rare or priceless.",
+      "You're quick to assume someone is trying to cheat you.",
+      "No one must ever learn that you stole money from the guild coffers.",
+      "You're never satisfied with what you have--you always want more.",
+      "You would kill to acquire a noble title.",
+      "You're horribly jealous of anyone who can outshine your handiwork. Everywhere you go, You're surrounded by rivals."
+    ]
+  },
+  "hermit": {
+    "name": "Hermit",
+    "types": [
+      "Spiritual", "Religious", "Exile", "PTSD", "Artist", "Druid", "Caretaker"
+    ],
+    "personalities": [
+      "You've been isolated for so long that you rarely speak, performing gestures and grunts intead.",
+      "You're utterly serene, even in the face of disaster.",
+      "The leader of your community had something wise to say for everything, and You're eager to share that wisdom.",
+      "You feel tremendous empathy for all who suffer.",
+      "You're oblivious to etiquette and social expectations.",
+      "You connect everything that happens to you to a grand, cosmic plan.",
+      "You often get lost in your own thoughts and contemplation, becoming oblivious to your surroundings.",
+      "You are working on a grand philosophical theory and love sharing your ideas."
+    ],
+    "ideals": [
+      "You believe your gifts are meant to be shared with all, not used for your own benefit.",
+      "You feel that emotions must not cloud your sense of what is right and true, or your logical thinking.",
+      "You believe in inquiry and curiosity as the pillars of progress.",
+      "You feel solitude and contemplations are paths toward mystical or magical power.",
+      "You believe meddling in the affairs of others only causes trouble.",
+      "You think that if you know yorself, there's nothing left to know."
+    ],
+    "bonds": [
+      "Nothing is more important than the other members of your hermitage.",
+      "You entered seclusion to hide from the ones who might still be hunting you. One day you must confront them.",
+      "You're still seeking the enlightenment you pursued in your seclusion, and it still eludes you.",
+      "You have entered seclusion because you loved someone you could not have.",
+      "Should your discovery come to light, it could bring ruin to the world.",
+      "Your isolation gave you great insight into a great evil that only you can destroy."
+    ],
+    "flaws": [
+      "Now that You've returned to the world, you enjoy its delights a little too much.",
+      "You harbor dark, bloodthirsty thoughts that your isolation and meditation failed to quell.",
+      "You are dogmatic in your thoughts and philosophy.",
+      "You let your need to win arguments overshadow friendship and harmony.",
+      "You'd risk too much to uncover a lost bit of knowledge.",
+      "You like keeping secrets and won't share them with anyone."
+    ]
+  },
+  "noble": {
+    "name": "Noble",
+    "types": [
+      "Prince", "Baron", "Lord", "Heir", "New Money", "Knight"
+    ],
+    "personalities": [
+      "Your eloquent flattery makes everyone you talk to feel like the most wonderful and important person in the whole world.",
+      "The common folk love you for your kindness and generosity.",
+      "No one could doubt by looking at your regal bearing that you are a cut above the masses.",
+      "You take great pains to always look your best and follow the latest fashions.",
+      "You don't like to get your hands dirty and won't e caught dead in unsuitable accommodations.",
+      "Despite your noble birth, you do not place yourself above other folks. You all have the same blood.",
+      "Your favor, once lost, is lost forever.",
+      "If one does you an injury, you will crush them, ruin their name, and salt their fields."
+    ],
+    "ideals": [
+      "You believe that respect is due to ou because of your position, but all people regardless of station should be treated with dignity.",
+      "You feel it is your duty to respect the authority of those above you, just as those below you must respect yours.",
+      "You must prove that you can handle yourself without the coddling of your family.",
+      "You believe that if you can attain more power, no one will tell you what to do.",
+      "Blood runs thicker than water, or so you believe.",
+      "You think it is your duty to protect and care for the people beneath you."
+    ],
+    "bonds": [
+      "You will face any challenge to win the approval of your family.",
+      "Your house's alliance with another noble family must be sustained at all costs.",
+      "Nothing is more important than the other members of your family.",
+      "You are in love with the heir of a family that your family despises.",
+      "Your loyalty to your sovereign is unwavering.",
+      "You believe that the common folk must see you as a hero of the people."
+    ],
+    "flaws": [
+      "You secretly believe that everyone is beneath you.",
+      "You hide a truly scandalous secret that could ruin your family forever.",
+      "You too often hear veiled insults and threats in every word addressed to you, and You're quick to anger.",
+      "You have an insatiable desire for carnal pleasures.",
+      "You believe that, in fact, the world does revolve around you.",
+      "You often bring shame to your family with your words and actions."
+    ]
+  },
+  "outlander": {
+    "name": "Outlander",
+    "types": [
+      "Forester", "Trapper", "Homesteader", "Guide", "Outcast", "Bounty Hunter", "Pilgrim", "Tribal Nomad", "Hunter-Gatherer", "Tribal Marauder"
+    ],
+    "personalities": [
+      "You're driven by a wanderlust that led you away from hme.",
+      "You watch over your friends as if they were a litter of newborn pups.",
+      "You ran twenty-five miles without stopping to warn your clan of an approaching orc horde. You'd do it again if you had to.",
+      "You have a lesson for every situation, drawn from observing nature.",
+      "You place no stock in wealthy or well-mannered folk. Money and manners won't save you from a hungry bear.",
+      "You're always picking things up and fiddling with them.",
+      "You feel far more comfortable around animals than people.",
+      "You were, in fact, raised by wolves."
+    ],
+    "ideals": [
+      "You believe life is like the seasons, in constant change and you must change with it.",
+      "You feel that it is each person's responsibility to make the most happiness for the whole tribe.",
+      "You think that if you dishonor yourself, you dishonor the whole clan.",
+      "You believe the strongest are meant to rule.",
+      "You think that the natural world is more important than all the cosntructs of civilization.",
+      "You sense that you must earn glory in battle, for yourself and your clan."
+    ],
+    "bonds": [
+      "Your family, clan, or tribe is the most important thing in your life, even when they are far away from you.",
+      "An injury to the unspoiled wilderness of your home is an injury to you.",
+      "You will bring terrible wrath down on the evildoers who destroyed your homeland.",
+      "You are the last of your tribe, and it is up to you to ensure heir names enter legend.",
+      "You suffer awful visions of a coming disaster and will do anything to prevent it.",
+      "It is your duty to provide children to sustain your tribe."
+    ],
+    "flaws": [
+      "You are too enamored of ale, and other intoxicants.",
+      "There's no room for caution in a life lived to the fullest, or so you believe.",
+      "You remember every insult you received and nurse a silent resentment toward those who wronged you.",
+      "You are slow to trust members of other races, tribes, and societies.",
+      "Violence is your answer to almost any challenge.",
+      "You don't feel it's necessary to save those who can't save themselves. Survival of the fittest."
+    ]
+  },
+  "sage": {
+    "name": "Sage",
+    "types": [
+      "Alchemist", "Astronomer", "Discredited Academic", "Librarian", "Professor", "Researcher", "Wizard's Apprentice", "Scribe"
+    ],
+    "personalities": [
+      "You use polysyllabic words to convey the impression of great erudition.",
+      "You've read every book in the world's greatest libraries, or at least you boast that you have.",
+      "You're used to helping out those who aren't as smart as you are, and are patient in explaining anything to others.",
+      "There's nothing you like more than a good mystery.",
+      "You're willing to listen to every side of an argument before you make your own judgement.",
+      "You... speak... slowly... when talking... to idiots... which almost... everyone... is... compared to... you.",
+      "You are horribly, horribly awkward in social situations.",
+      "You're convinced that people are always trying to steal your secrets."
+    ],
+    "ideals": [
+      "You believe that the path to power and self-improvement is through knowledge.",
+      "You think that what is beautiful points us beyond itself toward what is true.",
+      "You feel that emotions should not cloud our logical thinking.",
+      "You believe that nothing should fetter the infinite possibility inherent in all existence.",
+      "You believe that knowledge is the path to power and domination.",
+      "You think that the goal of a life of study is betterment of oneself."
+    ],
+    "bonds": [
+      "It is your duty to protect your students.",
+      "You have an ancient text ta holds terrible secrets that must not fall into the wrong hands.",
+      "You work to preserve a library, university, scriptorium, or monastery.",
+      "Your life's work is a series of tomes related to a specific field of lore.",
+      "You've been researching your whole life for the answer to a specific question.",
+      "You sold your soul for knowledge and hope to do great deeds to win it back."
+    ],
+    "flaws": [
+      "You are easily distracted by the promise of information.",
+      "Most people scream and run when they see a demon. YOu stop and take notes on its anatomy.",
+      "Unlocking an ancient mystery is worth the price of a civilization.",
+      "You overlook obvious solutions in favor of complex ones.",
+      "You speak without really hinking through your words, invariably insulting others.",
+      "You can't keep a secret to save your life, or anyone else's."
+    ]
+  },
+  "sailor": {
+    "name": "Sailor",
+    "types": [
+      "Pirate", "Captain", "First Mate", "Shanghaiied", "Bosun", "Explorer"
+    ],
+    "personalities": [
+      "Your friends know they can rely on you, no matter what.",
+      "You work hard so that you can play hard when the work is done.",
+      "You enjoy sailing into new ports and making new friends over a flagon of ale.",
+      "You stretch the truth for the sake of a good story.",
+      "To you, a tavern brawl is a nice way to get to know a new city.",
+      "You never pass up a friendly wager.",
+      "Your language is as foul as a rotting carcass.",
+      "You like a job well done, especially if you can convince someone else to do it."
+    ],
+    "ideals": [
+      "You believe that the thing keeping a ship together is mutual respect between captain and crew.",
+      "You think that all who do te work deserve a share of the rewards.",
+      "You see the sea as freedom--the freedom to go anywhere and do anything.",
+      "You believe that You're a predator and the other ships of the sea are your prey.",
+      "You're committed to your crewmates, not to ideals.",
+      "Someday, you want to own your own ship and chart your own destiny."
+    ],
+    "bonds": [
+      "You're loyal to yor captain first, and everything else second.",
+      "The ship is most important--crewmates and captains come and go.",
+      "You'll alway remember your first ship.",
+      "In a harbor town, you have a paramour whose eyes nearly stole you from the sea.",
+      "You was cheated out f yo fair share of the profits and you want to get our due.",
+      "Ruthless pirates murdered your captain and crewmates, plundered your ship, and left you to die. At all times, you only have one thing on your mind: vengeance."
+    ],
+    "flaws": [
+      "You follow orders, even if they seem wrong.",
+      "You'll say anything to avoid extra work.",
+      "Once someone questions your courage, you never back down, no matter how dangerous the situation.",
+      "Once you start drinking, it's hard for you to stop.",
+      "You can't help but pocket loose coins and trinkets you come across.",
+      "Your pride will probably lead to your destruction."
+    ]
+  },
+  "soldier": {
+    "name": "Soldier",
+    "types": [
+      "Officer", "Scout", "Infantry", "Cavalry", "Healer", "Quartermaster", "Standard bearer", "Support Staff"
+    ],
+    "personalities": [
+      "You're always polite and respectful.",
+      "You're haunted by memories of war. You can't get the images of violence out of your mind.",
+      "You've lost too many friends, and You're slow make new ones.",
+      "You're full of inspiring and cautionary tales from your military experience relevant to almost any combat situation.",
+      "You can stare down a hell hound without flinching.",
+      "You enjoy being strong and like breaking things.",
+      "You have a crude sense of humor.",
+      "You face problems head-on. A simple, direct solution is the best path to success."
+    ],
+    "ideals": [
+      "You believe that your lot is to lay down your life in defense of others.",
+      "You feel you do what you must and obey just authority.",
+      "You believe that when people follow orders blindly, they embrace tyranny.",
+      "You feel that in life as well as war, the stronger force always wins.",
+      "You believe that ideals aren't worth killing or going to war for.",
+      "You think that your nation, city, or people are all that matter."
+    ],
+    "bonds": [
+      "You would lay down yor life for the people you served with.",
+      "Someone saved your life on the battlefield. To this day, you will never leave a friend behind.",
+      "Your honor is your life.",
+      "You'll never forget the crushing defeat your company suffered or the enemies to dealt it.",
+      "Those who fight beside you are those worth dying for.",
+      "You fight for those who cannot fight for themselves."
+    ],
+    "flaws": [
+      "The monstrous enemy you faced in battle still leaves you quivering with fear.",
+      "You have little respect for anyone who is not a proven warrior.",
+      "You have made terrible mistakes in battle which cost many lives - you would do anything to keep them secret.",
+      "Your hatred of your enemies is blind and unreasoning.",
+      "You obey the law, even when it causes misery.",
+      "You'd rather eat your armor than admit to being wrong."
+    ]
+  },
+  "urchin": {
+    "name": "Urchin",
+    "types": [
+      "Orphan", "Cripple", "Beggar", "Street Rat", "Thief"
+    ],
+    "personalities": [
+      "You hide scraps of food and trinkets in your pockets.",
+      "You ask a lot of questions.",
+      "You like to squeeze into small places where no one else can get you.",
+      "You sleep with your back to a wall or tree, with everything you own wrapped in your bundle in your arms.",
+      "You eat like a pig and have bad manners.",
+      "You think anyone who's nice to you is hiding evil intent.",
+      "You hate bathing.",
+      "You bluntly say what other people hint at or hide."
+    ],
+    "ideals": [
+      "All people, rich or poor, deserve respect. That's what you beieve.",
+      "You believe that we have to take care of each other, because no one else will.",
+      "You think the low should be lifted up and the high and mighty brought down.",
+      "You think the rich need to be shown what life and death are like in the gutters.",
+      "You help people who help you. That's how you stay alive.",
+      "You want to prove that You're worthy of a better life."
+    ],
+    "bonds": [
+      "Your city is your home, and You're willing to fight for it.",
+      "You sponsor an orphanage to keep others from enduring what you went through.",
+      "You owe your survival to another urchin who taught you to live on the streets.",
+      "You owe a debt you can never repay to the person who took pity on you.",
+      "You escaped your life of poverty by robbing an important person, and You're wanted for it.",
+      "No one else should have to go through what you went through."
+    ],
+    "flaws": [
+      "If You're outnumbered, You'll run away from a fight.",
+      "Gold seems like a lot of money to you, and You'll do anything for more of it.",
+      "You'll never trust anyone besides yourself.",
+      "You'd rather kill someone in their sleep than fight fair.",
+      "It's not stealing if you need it more than someone else, right?",
+      "People who can't take care of themselves get what they deserve."
+    ]
+  }
+}

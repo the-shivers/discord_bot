@@ -5,15 +5,16 @@
 
 // Define Constants
 const Discord = require("discord.js");
-const bot = new Discord.Client();
-const trig = "!";
-const auth = require("./auth.json");
 const request = require("request");
 const fs = require('fs');
 const Canvas = require('canvas');
+const auth = require("./auth.json");
 const f = require('./funcs.js');
 const tarot = require('./tarot/tarot.js');
 const rpg = require('./rpg/rpg.js');
+const ud = require('./ud/ud.js');
+const bot = new Discord.Client();
+const trig = "!";
 
 
 // JSON Imports
@@ -196,61 +197,8 @@ bot.on("message", async msg => {
     let ud_trigger = "ud";
     if (content.startsWith(ud_trigger)) {
       console.log("Fetching urban wisdom.");
-
-      let isValid = true
-      let search_term = "default"
-      let def_num = 0;
-
-      if (content.split(' ').length === 2) {
-        search_term = content.split(' ')[1].replace('"',"");
-      } else if (
-        content.split(' ').length > 2
-        && !content.includes(",")
-      ) {
-        search_term = content.substring(ud_trigger.length + 1);
-      } else if (
-        content.split(' ').length > 2
-        && content.includes(",")
-        && !isNaN(content.split(", ")[1])
-      ) {
-        search_term = content.substring(ud_trigger.length + 1).split(", ")[0];
-        def_num = +content.split(", ")[1];
-      } else {
-        isValid = false;
-        msg.reply("Invalid input. :(");
-      }
-
-      if (isValid) {
-        ud_options.qs.term = search_term;
-        request(ud_options, function (error, response, body) {
-          if (error) throw new Error(error);
-          let result_list = JSON.parse(body).list;
-          def_num = Math.min(def_num, result_list.length - 1);
-          if (result_list.length > 0) {
-
-            let word = result_list[def_num].word;
-            word = "__**" + word + "**__\n";
-
-            let definition = result_list[def_num].definition;
-            definition = ">>> " + definition.replace(/\[|\]/g, '');
-            if (definition.length > 1400) {
-              definition = definition.substring(0, 1500);
-            }
-            definition = definition + "\n\n";
-
-            let example = result_list[def_num].example;
-            example = example.replace(/\[|\]|\*/g, '');
-            if (example.length > 400) {
-              example = example.substring(0, 1800 - definition.length);
-            }
-            example = "*" + example.trim() + "*";
-
-            msg.channel.send(word + definition + example)
-          } else {
-            msg.channel.send("No results.")
-          }
-        });
-      }
+      let [is_valid, search_term, def_num] = ud.interpretUrbanString(content);
+      ud.urbanDictionary(msg, is_valid, search_term, def_num)
     }
 
     // Rename

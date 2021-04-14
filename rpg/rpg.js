@@ -1,26 +1,24 @@
 "use strict";
 
 // Define Constants and key Variables
-const Discord = require("discord.js");
 const fs = require('fs');
 const f = require('../funcs.js');
-var rpg_vars = JSON.parse(fs.readFileSync('./rpg/rpg_vars.json', 'utf8'));
-const backgrounds = rpg_vars.backgrounds;
-delete rpg_vars['backgrounds'];
+const rpg_vars = JSON.parse(fs.readFileSync('./rpg/rpg_vars.json', 'utf8'));
+const rpg_bgs =  JSON.parse(fs.readFileSync('./rpg/rpg_bgs.json', 'utf8'));
 
 function generateCharacter() {
-  // Returns a complex discord message with information of RPG character.
+  // Returns a complex string with information of RPG character.
 
   // Collect random info string from each JSON element.
   let rpg_char_info = {};
   Object.keys(rpg_vars).forEach(function(key) {
     var value = rpg_vars[key];
-    rpg_char_info[key] = value[Math.floor(Math.random() * value.length)]
+    rpg_char_info[key] = value[Math.floor(Math.random() * value.length)];
   })
 
   // Collect random info string from background.
   let bg_info = {};
-  let your_bg = backgrounds[rpg_char_info.bg_keys]
+  let your_bg = rpg_bgs[rpg_char_info.bg_keys]
   Object.keys(your_bg).forEach(function(key) {
     var value = your_bg[key];
     bg_info[key] = value[Math.floor(Math.random() * value.length)]
