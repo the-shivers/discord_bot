@@ -2,11 +2,15 @@
 
 // Define Constants and key Variables
 const fs = require('fs');
-const f = require('../funcs.js');
-const rpg_vars = JSON.parse(fs.readFileSync('./rpg/rpg_vars.json', 'utf8'));
-const rpg_bgs =  JSON.parse(fs.readFileSync('./rpg/rpg_bgs.json', 'utf8'));
+const f = require('../../funcs.js');
+const rpg_vars = JSON.parse(
+  fs.readFileSync('scripts/rpg/rpg_vars.json', 'utf8')
+);
+const rpg_bgs =  JSON.parse(
+  fs.readFileSync('scripts/rpg/rpg_bgs.json', 'utf8')
+);
 
-function generateCharacter() {
+function rpg(msg, content) {
   // Returns a complex string with information of RPG character.
 
   // Collect random info string from each JSON element.
@@ -51,7 +55,7 @@ function generateCharacter() {
   else if (total > 40) {stat = 'Extremely fragile.';}
   else {stat = 'Shamefully, pathetically weak.';}
 
-  // Create message
+  // Create and send message
   let send_msg = "You are a " + rpg_char_info.modifiers + ' '
   + rpg_char_info.genders + ' ' + rpg_char_info.races + " "
   + rpg_char_info.classes + " named " + rpg_char_info.first_names + " "
@@ -68,8 +72,7 @@ function generateCharacter() {
   send_msg += "Background: " + bg_info.name + " (Specialization: "
   + bg_info.types  + "). " + bg_info.personalities + " " + bg_info.ideals
   + " " + bg_info.bonds + " " + bg_info.flaws
-
-  return send_msg;
+  msg.reply(send_msg);
 }
 
-module.exports = { generateCharacter };
+module.exports = { rpg };

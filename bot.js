@@ -8,12 +8,17 @@ const Discord = require("discord.js");
 const request = require("request");
 const fs = require('fs');
 const Canvas = require('canvas');
+const glob = require( 'glob' );
+const path = require( 'path' );
+
 const auth = require("./auth.json");
 const f = require('./funcs.js');
-// const tarot = require('./tarot/tarot.js');
-// const rpg = require('./rpg/rpg.js');
-// const ud = require('./ud/ud.js');
-const ind = require('./index.js');
+const tarot = require('./scripts/tarot/tarot.js');
+const rpg = require('./scripts/rpg/rpg.js');
+const ud = require('./scripts/ud/ud.js');
+const dice = require('./scripts/dice/dice.js');
+const av = require('./scripts/avatar/avatar.js');
+
 const bot = new Discord.Client();
 const trig = "!";
 
@@ -21,7 +26,16 @@ const trig = "!";
 // var open_weather_options = api_keys.open_weather_options;
 
 // Useful functions
-
+let command_dict = {
+  "tarot": {
+    "log": "Predicting the future",
+    "func": tarot.tarot
+  },
+  "rpg": {
+    "log": "Generating RPG character.",
+    "func": rpg.rpg
+  }
+}
 
 
 // Live bot behavior
@@ -35,6 +49,13 @@ bot.on("message", async msg => {
 
   if (msg.content.startsWith(trig)) {
     let content = msg.content.substring(msg.content.indexOf(trig)+1);
+    let command = content.split(' ')[0];
+    if (command in command_dict) {
+      console.log(command_dict[command].log);
+      command_dict[command].func(msg, content);
+    } else {
+      msg.channel.send("oops")
+    }
 
     // Get Help
     if (content === "help") {
@@ -60,22 +81,11 @@ bot.on("message", async msg => {
       msg.channel.send(message);
     }
 
+
     // Avatar Fetch
     if (content.startsWith("avatar")) {
       console.log("Fetching avatar.")
-      //let embed = new Discord.RichEmbed();
-      let embed = new Discord.MessageEmbed()
-        .setDescription('Looking sharp! :3');
-      console.log(msg.author.avatarURL());
-      if (content === "avatar") {
-        embed.setImage(msg.author.avatarURL() + '?size=256');
-        msg.reply(embed);
-      } else if (msg.mentions.users.size > 0) {
-        embed.setImage(msg.mentions.users.first().avatarURL() + '?size=256')
-        msg.reply(embed);
-      } else {
-        msg.reply("Invalid!")
-      }
+      av.getAvatar(msg, content);
     }
 
     // Ping Response
@@ -99,47 +109,7 @@ bot.on("message", async msg => {
     // Dice Rolls
     if (content.startsWith('roll ') || content.startsWith('r ')) {
       console.log("Trying to roll stuff.");
-      //check if only one word after the command
-      if (content.split(' ').length === 2) {
-        //check if command has a d folowed by a number
-        let cmd_str = content.split(' ')[1];
-        if (
-          cmd_str.includes('d') &&
-          f.isNumeric(cmd_str.split('d')[1])
-        ) {
-          //check to see if multiple dice
-          if (f.isNumeric(cmd_str.split('d')[0])) {
-            let send_str = "";
-            let num_dice = Math.abs(parseInt(cmd_str.split('d')[0]));
-            let dice_val = parseInt(cmd_str.split('d')[1]);
-            //check to see if num of dice is insane
-            if (num_dice > 100) {
-              msg.channel.send("Are you crazy? That's so many dice! (Max: 100)");
-            } else if (Math.abs(dice_val) * num_dice > 10000000) {
-              msg.channel.send("That's gonna make the message too long, come on!");
-            } else {
-              let i;
-              let sum = 0;
-              for (i = 0; i < num_dice; i++) {
-                let roll = rollDie(dice_val);
-                send_str += "`" + roll.toString() + "`,";
-                sum += roll;
-              }
-              msg.channel.send(
-                send_str.slice(0, -1) + ".\nSum is `" + sum.toString() + "`"
-              );
-            }
-          } else { //single dice
-            msg.channel.send(
-              "`" + rollDie(parseInt(cmd_str.split('d')[1])).toString() + "`"
-            );
-          }
-        } else { // Didn't include d or number after d.
-          msg.channel.send("Invalid.")
-        }
-      } else { // Command was wrong length.
-        msg.channel.send("Invalid.")
-      }
+      msg.channel.send(dice.multiDice(content));
     }
 
     // Delete Messages
@@ -228,19 +198,11 @@ bot.on("message", async msg => {
     }
 
     // RPG Character
-    if (content === "rpg") {
-      console.log("Generating rp character.");
-      let send_msg = generateCharacter();
-      msg.reply(send_msg);
-    }
-
-    // Tarot Reading
-    if (content.startsWith("tarot")) {
-      console.log("Predicting the future.");
-      let xyz = tarot.interpretTarotString(content);
-      let embed = await tarot.tarotReading(msg, xyz[0], xyz[1], xyz[2]);
-      msg.channel.send({embed});
-    }
+    // if (content === "rpg") {
+    //   console.log("Generating rp character.");
+    //   let send_msg = rpg.generateCharacter();
+    //   msg.reply(send_msg);
+    // }
 
 
 

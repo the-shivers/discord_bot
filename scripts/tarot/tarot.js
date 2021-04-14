@@ -4,9 +4,11 @@
 const Discord = require("discord.js");
 const fs = require('fs');
 const Canvas = require('canvas');
-const f = require('../funcs.js');
-const loc_str = './tarot/cards/';
-const cards = JSON.parse(fs.readFileSync('./tarot/tarot.json', 'utf8')).tarot;
+const f = require('../../funcs.js');
+const loc_str = './scripts/tarot/cards/';
+const cards = JSON.parse(
+  fs.readFileSync('scripts/tarot/tarot.json', 'utf8')
+).tarot;
 const ttl_cards = cards.length;
 const card_height = 300;
 const card_width = 175;
@@ -64,7 +66,7 @@ function interpretTarotString(text) {
 }
 
 async function tarotReading(msg, x, y, z) {
-  // Takes discord message and 3 integers to generate Tarot spread embed.
+  // Takes discord message and 3 integers to send a Tarot spread embed.
   // Sends a preparatory message prior to generation. Returns nothing.
 
   // Send preparatory message.
@@ -109,25 +111,24 @@ async function tarotReading(msg, x, y, z) {
   }
 
   // Create embed with canvas
-  var canvas = Canvas.createCanvas(585, 340);
+  var canvas = Canvas.createCanvas(565, 320);
   var ctx = canvas.getContext('2d');
-  const loc_str = './tarot/cards/';
   const left_img = await Canvas.loadImage(loc_str + c1.image);
   const center_img = await Canvas.loadImage(loc_str + c2.image);
   const right_img = await Canvas.loadImage(loc_str + c3.image);
 
   // Adjust x positioning based on reversals
-  var c1_x = (rev_list[0] === 0) ? 20 : 390;
-  var c2_x = 205;
-  var c3_x = (rev_list[2] === 0) ? 390 : 20;
+  var c1_x = (rev_list[0] === 0) ? 10 : 380;
+  var c2_x = 195;
+  var c3_x = (rev_list[2] === 0) ? 380 : 10;
 
   //Draw and flip
   if (rev_list[0] === 1) {ctx = rotateCanvas(ctx, canvas);}
-  ctx.drawImage(left_img, c1_x, 20, card_width, card_height);
+  ctx.drawImage(left_img, c1_x, 10, card_width, card_height);
   if (rev_list[0] !== rev_list[1]) {ctx = rotateCanvas(ctx, canvas);}
-  ctx.drawImage(center_img, c2_x, 20, card_width, card_height);
+  ctx.drawImage(center_img, c2_x, 10, card_width, card_height);
   if (rev_list[1] !== rev_list[2]) {ctx = rotateCanvas(ctx, canvas);}
-  ctx.drawImage(right_img, c3_x, 20, card_width, card_height);
+  ctx.drawImage(right_img, c3_x, 10, card_width, card_height);
 
   // Create embed and return
   const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'tarot.jpg');
@@ -141,7 +142,13 @@ async function tarotReading(msg, x, y, z) {
     .attachFiles(attachment)
     .setImage('attachment://tarot.jpg')
     .setFooter(card_data[0].desc + card_data[1].desc + card_data[2].desc);
-  return embed;
+  msg.channel.send({embed});
 }
 
-module.exports = { interpretTarotString, tarotReading };
+
+function tarot(msg, content) {
+  let num_array = interpretTarotString(content);
+  tarotReading(msg, num_array[0], num_array[1], num_array[2])
+}
+
+module.exports = { tarot };

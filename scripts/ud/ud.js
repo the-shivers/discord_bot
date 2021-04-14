@@ -3,7 +3,7 @@ const fs = require('fs');
 const request = require("request");
 const Discord = require("discord.js");
 const api_keys = JSON.parse(fs.readFileSync('./api_keys.json', 'utf8'));
-const f = require('../funcs.js');
+const f = require('../../funcs.js');
 
 // API Options
 var ud_options = api_keys.ud_options;
@@ -36,7 +36,6 @@ function interpretUrbanString(text) {
   } else {
     is_valid = false;
   }
-  console.log([is_valid, search_term, def_num])
   return [is_valid, search_term, def_num];
 }
 
@@ -46,33 +45,40 @@ async function urbanDictionary(msg, is_valid, search_term, def_num) {
     ud_options.qs.term = search_term;
     request(ud_options, function (error, response, body) {
       if (error) throw new Error(error);
-      let result_list = JSON.parse(body).list;
-      def_num = Math.min(def_num, result_list.length - 1);
-      if (result_list.length > 0) {
-
-        // Get and format word
-        let word = result_list[def_num].word;
-        word = "__**" + word + "**__\n";
-
-        // Get and format definition
-        let definition = result_list[def_num].definition;
-        definition = ">>> " + definition.replace(/\[|\]/g, '');
-        if (definition.length > 1400) {
-          definition = definition.substring(0, 1500);
-        }
-        definition = definition + "\n\n";
-
-        // Get and format example
-        let example = result_list[def_num].example;
-        example = example.replace(/\[|\]|\*/g, '');
-        if (example.length > 400) {
-          example = example.substring(0, 1800 - definition.length);
-        }
-        example = "*" + example.trim() + "*";
-
-        msg.channel.send(word + definition + example);
+      if (
+        "error" in JSON.parse(body) &&
+        JSON.parse(body).error.startsWith("An error occurred")
+      ) {
+        msg.channel.send("A weird Urban Dictionary error occurred.");
       } else {
-        msg.channel.send("No results.");
+        let result_list = JSON.parse(body).list;
+        def_num = Math.min(def_num, result_list.length - 1);
+        if (result_list.length > 0) {
+
+          // Get and format word
+          let word = result_list[def_num].word;
+          word = "__**" + word + "**__\n";
+
+          // Get and format definition
+          let definition = result_list[def_num].definition;
+          definition = ">>> " + definition.replace(/\[|\]/g, '');
+          if (definition.length > 1400) {
+            definition = definition.substring(0, 1500);
+          }
+          definition = definition + "\n\n";
+
+          // Get and format example
+          let example = result_list[def_num].example;
+          example = example.replace(/\[|\]|\*/g, '');
+          if (example.length > 400) {
+            example = example.substring(0, 1800 - definition.length);
+          }
+          example = "*" + example.trim() + "*";
+
+          msg.channel.send(word + definition + example);
+        } else {
+          msg.channel.send("No results.");
+        }
       }
     })
   } else {

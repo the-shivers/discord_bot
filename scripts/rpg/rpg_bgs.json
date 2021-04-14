@@ -201,7 +201,7 @@
   },
   "guild_artisan": {
     "name": "Guild Artisan",
-    "Types": [
+    "types": [
       "Alchemist", "Armorer", "Brewer", "Scribe", "Carpenter", "Cartographer", "Cobbler", "Baker", "Glazier", "Jeweler", "Leatherworker", "Mason", "Painter", "Potter", "Shipwright", "Smith", "Tinkerer", "Wagon-maker", "Weaver", "Woodcarver"
     ],
     "personalities": [
