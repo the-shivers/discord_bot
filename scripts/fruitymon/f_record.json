@@ -105,25 +105,181 @@
       "🍏",
       "🍐",
       "🍋",
-      "🥑"
+      "🥑",
+      "🥥",
+      "🫐",
+      "🥭",
+      "🥭",
+      "🥥",
+      "🍓",
+      "🍓",
+      "🍈",
+      "🍏",
+      "🍐",
+      "🌶️",
+      "🍅",
+      "🍂"
     ],
     "Item Inventory": [],
     "Fruitbux": 0,
     "Level": 0,
-    "Experience": 102,
+    "Experience": 115,
     "Perks": [],
-    "Total Fruit Picked": 102,
+    "Total Fruit Picked": 115,
+    "Total Rare Fruits Picked": 5,
+    "Total Fruit Sold": 0,
+    "Total Rare Fruit Sold": 0,
+    "Total Fruitbux Earned": 0,
+    "Daily Picks": 5,
+    "Single Pick Limit": 2,
+    "Dice Number Modifier": 0,
+    "Dice Roll Modifier": 0,
+    "Today": {
+      "Date": "Apr 15 2021",
+      "Picks": 4
+    }
+  },
+  "83398001577431040": {
+    "Username": "Fawfil",
+    "First Fruitymon Command": "Apr 15 2021",
+    "Current Channel": "831546281611624448",
+    "Fruit Inventory": [
+      "🍈",
+      "🍅",
+      "🌶️",
+      "🥑",
+      "🍊"
+    ],
+    "Item Inventory": [],
+    "Fruitbux": 0,
+    "Level": 0,
+    "Experience": 5,
+    "Perks": [],
+    "Total Fruit Picked": 5,
+    "Total Rare Fruits Picked": 0,
+    "Total Fruit Sold": 0,
+    "Total Rare Fruit Sold": 0,
+    "Total Fruitbux Earned": 0,
+    "Daily Picks": 5,
+    "Single Pick Limit": 2,
+    "Dice Number Modifier": 0,
+    "Dice Roll Modifier": 0,
+    "Today": {
+      "Date": "Apr 15 2021",
+      "Picks": 5
+    }
+  },
+  "83398835652530176": {
+    "Username": "League",
+    "First Fruitymon Command": "Apr 15 2021",
+    "Current Channel": "831546281611624448",
+    "Fruit Inventory": [
+      "🍊",
+      "🍊",
+      "🌶️",
+      "🥝",
+      "🥭"
+    ],
+    "Item Inventory": [],
+    "Fruitbux": 0,
+    "Level": 0,
+    "Experience": 5,
+    "Perks": [],
+    "Total Fruit Picked": 5,
     "Total Rare Fruits Picked": 1,
     "Total Fruit Sold": 0,
     "Total Rare Fruit Sold": 0,
     "Total Fruitbux Earned": 0,
     "Daily Picks": 5,
-    "Single Pick Limit": 200,
+    "Single Pick Limit": 2,
     "Dice Number Modifier": 0,
     "Dice Roll Modifier": 0,
     "Today": {
       "Date": "Apr 15 2021",
-      "Picks": 2
+      "Picks": 5
+    }
+  },
+  "359808687826796545": {
+    "Username": "Wiseoni",
+    "First Fruitymon Command": "Apr 15 2021",
+    "Current Channel": "831546281611624448",
+    "Fruit Inventory": [
+      "🍈",
+      "🍉",
+      "🍏",
+      "🍈",
+      "🍏"
+    ],
+    "Item Inventory": [],
+    "Fruitbux": 0,
+    "Level": 0,
+    "Experience": 5,
+    "Perks": [],
+    "Total Fruit Picked": 5,
+    "Total Rare Fruits Picked": 0,
+    "Total Fruit Sold": 0,
+    "Total Rare Fruit Sold": 0,
+    "Total Fruitbux Earned": 0,
+    "Daily Picks": 5,
+    "Single Pick Limit": 2,
+    "Dice Number Modifier": 0,
+    "Dice Roll Modifier": 0,
+    "Today": {
+      "Date": "Apr 15 2021",
+      "Picks": 5
+    }
+  },
+  "243314148698619905": {
+    "Username": "bird_d",
+    "First Fruitymon Command": "Apr 15 2021",
+    "Current Channel": "395263814209241100",
+    "Fruit Inventory": [
+      "🍏"
+    ],
+    "Item Inventory": [],
+    "Fruitbux": 0,
+    "Level": 0,
+    "Experience": 1,
+    "Perks": [],
+    "Total Fruit Picked": 1,
+    "Total Rare Fruits Picked": 0,
+    "Total Fruit Sold": 0,
+    "Total Rare Fruit Sold": 0,
+    "Total Fruitbux Earned": 0,
+    "Daily Picks": 5,
+    "Single Pick Limit": 2,
+    "Dice Number Modifier": 0,
+    "Dice Roll Modifier": 0,
+    "Today": {
+      "Date": "Apr 15 2021",
+      "Picks": 1
+    }
+  },
+  "340310812952363009": {
+    "Username": "Drinky_Bot",
+    "First Fruitymon Command": "Apr 15 2021",
+    "Current Channel": "395263814209241100",
+    "Fruit Inventory": [
+      "🍇",
+      "🥑"
+    ],
+    "Item Inventory": [],
+    "Fruitbux": 0,
+    "Level": 0,
+    "Experience": 2,
+    "Perks": [],
+    "Total Fruit Picked": 2,
+    "Total Rare Fruits Picked": 0,
+    "Total Fruit Sold": 0,
+    "Total Rare Fruit Sold": 0,
+    "Total Fruitbux Earned": 0,
+    "Daily Picks": 5,
+    "Single Pick Limit": 2,
+    "Dice Number Modifier": 0,
+    "Dice Roll Modifier": 0,
+    "Today": {
+      "Date": "Apr 15 2021",
+      "Picks": 1
     }
   }
 }

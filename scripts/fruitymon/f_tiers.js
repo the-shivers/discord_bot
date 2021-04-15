@@ -4,16 +4,16 @@
 const c = require('./f_config.js');
 const Discord = require('discord.js');
 const attachment = new Discord.MessageAttachment(
-  './scripts/fruitymon/assets/fruit.gif', 'fruit.gif'
+  './scripts/bing/assets/bing_logo.png', 'bing_logo.png'
 );
 
 // Create template to embed
 const template = new Discord.MessageEmbed()
   .setColor('#0099ff')
-  .setTitle("⭐🌟✨ FRUITYMON RARITY ✨🌟⭐")
-  .setDescription('_Can you catch them all?_\u200b\n\u200b\n')
+  .setTitle("Just Bing It!")
+  .setDescription('_Do you feel the bing?_')
   .attachFiles(attachment)
-  .setImage('attachment://fruit.gif');
+  .setThumbnail('attachment://bing_logo.png');
 
 // Add fruit to template based on f_config.js
 var i;

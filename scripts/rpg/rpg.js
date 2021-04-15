@@ -58,13 +58,16 @@ async function rpg(msg, content) {
   else {stat = 'Shamefully, pathetically weak.';}
 
   // Create and send message
-  let query = rpg_char_info.genders + ' ' + rpg_char_info.races + " "
-  + rpg_char_info.classes + " named " + rpg_char_info.first_names + " "
-  + rpg_char_info.ln_first + rpg_char_info.ln_second;
+  let query = rpg_char_info.modifiers + ' '
+  + rpg_char_info.genders + ' '
+  + rpg_char_info.races + " "
+  + rpg_char_info.classes;
 
   let url = await bing.getBingUrl(query);
 
-  let send_msg = "\nYou are a " + rpg_char_info.modifiers + ' ' + query + ". "
+  let send_msg = "\nYou are a " +  query + " named "
+  + rpg_char_info.first_names + " " + rpg_char_info.ln_first
+  + rpg_char_info.ln_second + ". ";
   send_msg += "Standing at " + rpg_char_info.height_ft + "'"
   + rpg_char_info.height_in + ' and clad in ' + rpg_char_info.armor
   + ', you wield ' +  rpg_char_info.weapon_first + ' and '

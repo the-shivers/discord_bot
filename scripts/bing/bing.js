@@ -1,22 +1,10 @@
 // Define Constants
 const fs = require('fs');
 const request = require("request");
-const rp = require("request-promise");
-const Discord = require("discord.js");
 const api_keys = JSON.parse(fs.readFileSync('./api_keys.json', 'utf8'));
-const f = require('../../funcs.js');
 
 // API Options
 var bing_options = api_keys.bing_options;
-
-// async function getBingUrl(query) {
-//   //gets the url
-//   bing_options.qs.q = query;
-//   var result = '';
-//   result = await rp(bing_options);
-//   console.log(result.slice[0,500])
-//   //console.log(result);
-// };
 
 function getBody(query) {
   bing_options.qs.q = query;
@@ -45,7 +33,7 @@ async function bing(msg, content) {
   let components = content.split(' ');
   if (components.length > 1) {
     query = components.slice(1).join(' ');
-    if (query > 150) {
+    if (query.length > 150) {
       msg.channel.send("That bing was too long!");
     } else {
       result = await getBingUrl(query);

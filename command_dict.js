@@ -12,6 +12,7 @@ const nick = require('./scripts/nick/nick.js');
 const weather = require('./scripts/weather/weather.js');
 const help = require('./scripts/help/help.js')
 const bing = require('./scripts/bing/bing.js')
+const bingw = require('./scripts/bing/bingw.js')
 const wa = require('./scripts/wolframalpha/wolframalpha.js')
 const smack = require('./scripts/smack/smack.js')
 const fruitymon = require('./scripts/fruitymon/fruitymon.js')
@@ -73,7 +74,7 @@ let command_dict = {
     "log": "Helping someone!",
     "func": help.help
   },
-  "bing": {
+  "bi": {
     "log": "Just bing it, bro!",
     "func": bing.bing
   },
@@ -88,6 +89,14 @@ let command_dict = {
   "f": {
     "log": "Initiating fruit!",
     "func": fruitymon.f
+  },
+  "bw": {
+    "log": "Binging words.",
+    "func": bingw.bingw
+  },
+  "bn": {
+    "log": "Binging news.",
+    "func": bingw.bingn
   }
 };
 

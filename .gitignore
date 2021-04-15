@@ -1,8 +1,6 @@
 **/auth.json
 **/api_keys.json
-./tarot/cards/**
 **/*.jpg
 **/*.gif
+**/*.png
 **/node_modules/**
-**/node_modules/
-**/cards/**

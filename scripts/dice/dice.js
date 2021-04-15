@@ -18,9 +18,9 @@ function multiDice(msg, content) {
         let send_str = "";
         let num_dice = Math.abs(parseInt(cmd_str.split('d')[0]));
         let dice_val = parseInt(cmd_str.split('d')[1]);
-        if (num_dice > 100) {
+        if (num_dice > 200) {
           msg.channel.send("Are you crazy? That's so many dice! (Max: 100)");
-        } else if (Math.abs(dice_val) * num_dice > 10000000) {
+        } else if (Math.abs(dice_val) * num_dice > 10000000000) {
           msg.channel.send("That's gonna make the message too long, come on!");
         } else {
           let i;
