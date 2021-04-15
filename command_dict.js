@@ -11,6 +11,9 @@ const prune = require('./scripts/prune/prune.js');
 const nick = require('./scripts/nick/nick.js');
 const weather = require('./scripts/weather/weather.js');
 const help = require('./scripts/help/help.js')
+const bing = require('./scripts/bing/bing.js')
+const wa = require('./scripts/wolframalpha/wolframalpha.js')
+const smack = require('./scripts/smack/smack.js')
 
 let command_dict = {
   "tarot": {
@@ -69,6 +72,18 @@ let command_dict = {
     "log": "Helping someone!",
     "func": help.help
   },
+  "bing": {
+    "log": "Just bing it, bro!",
+    "func": bing.bing
+  },
+  "wa": {
+    "log": "Math time, with WA!",
+    "func": wa.wolframAlpha
+  },
+  "smack": {
+    "log": "Initiating violence!",
+    "func": smack.smack
+  }
 };
 
 module.exports = { command_dict };

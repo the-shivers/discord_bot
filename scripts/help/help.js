@@ -13,6 +13,8 @@ function help(msg, content) {
   + "**!ping** - *Makes the bot say \"Pong!\".*\n"
   + "**!pong** - *Makes the bot say \"Ping!\".*\n"
   + "**!rpg** - *Generates an rpg character.*\n"
+  + "**!wa <query>** - *Asks Wolfram Alpha something.*\n"
+  + "**!bing <query>** - *Uses bing to fetch an image.*\n"
   + "**!tarot [int int int]** - *Draws tarot cards. You can select which "
   + "cards in the deck to draw, or have it be random.*\n"
   + "**!roll [integer]d<integer>** - *!roll 2d6 rolls 2 6-sided dice. "
