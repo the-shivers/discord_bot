@@ -25,6 +25,7 @@ function determineRolls(msg, content) {
     }
   } else {
     f_record[msg.author.id]["Today"]["Date"] = curr_date;
+    f_record[msg.author.id]["Today"]["Picks"] = 0;
   }
   let dice_num_mod = f_record[msg.author.id]["Dice Number Modifier"];
   let single_pick_limit = f_record[msg.author.id]["Single Pick Limit"];
@@ -108,8 +109,10 @@ function pick(msg, content) {
   }
   f_record[msg.author.id]["Total Rare Fruits Picked"] =
     f_record[msg.author.id]["Total Rare Fruits Picked"] + rare_fruit;
-  f_record[msg.author.id]["Today"]["Picks"] =
-    f_record[msg.author.id]["Today"]["Picks"] + 1;
+  if (fruit.length > 0) {
+    f_record[msg.author.id]["Today"]["Picks"] =
+      f_record[msg.author.id]["Today"]["Picks"] + 1;
+  }
   fs.writeFile(record_filename_full, JSON.stringify(f_record, null, 2), function writeJSON(err) {
     if (err) return console.log(err);
   });

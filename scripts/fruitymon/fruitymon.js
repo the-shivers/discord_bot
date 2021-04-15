@@ -42,9 +42,13 @@ function f(msg, content) {
         }
       }
     };
+
+    // Record
     fs.writeFile(record_filename_full, JSON.stringify(f_record, null, 2), function writeJSON(err) {
       if (err) return console.log(err);
     });
+
+    // Execute command
     f_command_dict[command].func(msg, rem_content);
     console.log(f_command_dict[command].log);
   } else {
