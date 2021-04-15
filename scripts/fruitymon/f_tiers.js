@@ -9,9 +9,9 @@ const attachment = new Discord.MessageAttachment(
 
 // Create template to embed
 const template = new Discord.MessageEmbed()
-  .setColor('#ff5555')
-  .setTitle("🧺 Your Inventory 🧺")
-  .setDescription("Here are your captures so far!\u200b\n\u200b\n")
+  .setColor('#0099ff')
+  .setTitle("⭐🌟✨ FRUITYMON RARITY ✨🌟⭐")
+  .setDescription('_Can you catch them all?_\u200b\n\u200b\n')
   .attachFiles(attachment)
   .setImage('attachment://fruit.gif');
 
