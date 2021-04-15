@@ -1,0 +1,35 @@
+{
+  "790037139546570802": {
+    "Username": "Shivers",
+    "First Fruitymon Command": "2021-04-15T06:37:33.812Z",
+    "Current Channel": "831546281611624448",
+    "Fruit Inventory": [
+      "🍅",
+      "🍆",
+      "🍒",
+      "🍊",
+      "🥚",
+      "🍎",
+      "🍉",
+      "🍎"
+    ],
+    "Item Inventory": [],
+    "Fruitbux": 0,
+    "Level": 0,
+    "Experience": 8,
+    "Perks": [],
+    "Total Fruit Picked": 8,
+    "Total Rare Fruits Picked": 0,
+    "Total Fruit Sold": 0,
+    "Total Rare Fruit Sold": 0,
+    "Total Fruitbux Earned": 0,
+    "Daily Picks": 5,
+    "Single Pick Limit": 2,
+    "Dice Number Modifier": 0,
+    "Dice Roll Modifier": 0,
+    "Today": {
+      "Date": "Apr 15 2021",
+      "Picks": 6
+    }
+  }
+}

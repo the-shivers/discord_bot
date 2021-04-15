@@ -1,15 +1,24 @@
 {
   "adverb": [
-    "quiently", "angrily"
+    "quietly", "angrily", "blindly", "clumsily", "rapidly", "repeatedly",
+    "brutally", "mercilessly", "gleefully", "happily", "greedily",
+    "gracefully", "silently", "unblinkingly", "sadly", "slowly"
   ],
   "verb": [
-    "clobbers", "smacks", "whacks", "knocks", "murders", "dents", "cracks"
+    "clobbers", "smacks", "whacks", "knocks", "murders", "dents", "cracks",
+    "beats", "hits", "clunks", "stomps"
   ],
   "body_part": [
     "in the noggin", "over the head", "in the teeth", "in the foot",
-    "in the ribs"
+    "in the ribs", "under the chin", "in the soul", "through the heart",
+    "through the brain", "in the brainstem", "in the optic nerves",
+    "in the belly", "across the face"
   ],
   "weapon": [
-    "a large trout", "the holy bible", "a horse femur", "a small trout"
+    "a large trout", "the holy bible", "a horse femur", "a small trout",
+    "an entire school of trout", "the Macy's Thanksgiving Day Parade",
+    "a leather whip", "an anvil", "3,000 lbs. of feathers", "Manneken Pis",
+    "an Easter Island head", "Uluru", "a brick-stuffed sock", "a pipe",
+    "a wrench", "a baseball", "a chunk of granite"
   ]
 }

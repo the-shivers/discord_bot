@@ -3,6 +3,7 @@
 // Define Constants and key Variables
 const fs = require('fs');
 const f = require('../../funcs.js');
+const bing = require('../bing/bing.js');
 const rpg_vars = JSON.parse(
   fs.readFileSync('scripts/rpg/rpg_vars.json', 'utf8')
 );
@@ -10,7 +11,7 @@ const rpg_bgs =  JSON.parse(
   fs.readFileSync('scripts/rpg/rpg_bgs.json', 'utf8')
 );
 
-function rpg(msg, content) {
+async function rpg(msg, content) {
   // Returns a complex string with information of RPG character.
 
   // Collect random info string from each JSON element.
@@ -32,13 +33,14 @@ function rpg(msg, content) {
 
   // Generate stats
   let stat_arr = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
-  let stat_msg = "";
+  let stat_msg = "` " + stat_arr.join(' | ') + ' `\n` ';
   let total = 0;
   for (var i = 0; i < stat_arr.length; i++) {
     let roll = f.rollDie(20);
-    stat_msg += "`" + stat_arr[i] + ": " + roll + "`\n"
+    stat_msg += roll.toString().padStart(2, '0') + "  | ";
     total += roll;
   }
+  stat_msg = stat_msg.slice(0,-4) + "  `\n";
 
   // Describe stats
   let stat = "";
@@ -56,10 +58,13 @@ function rpg(msg, content) {
   else {stat = 'Shamefully, pathetically weak.';}
 
   // Create and send message
-  let send_msg = "You are a " + rpg_char_info.modifiers + ' '
-  + rpg_char_info.genders + ' ' + rpg_char_info.races + " "
+  let query = rpg_char_info.genders + ' ' + rpg_char_info.races + " "
   + rpg_char_info.classes + " named " + rpg_char_info.first_names + " "
-  + rpg_char_info.ln_first + rpg_char_info.ln_second + ". "
+  + rpg_char_info.ln_first + rpg_char_info.ln_second;
+
+  let url = await bing.getBingUrl(query);
+
+  let send_msg = "\nYou are a " + rpg_char_info.modifiers + ' ' + query + ". "
   send_msg += "Standing at " + rpg_char_info.height_ft + "'"
   + rpg_char_info.height_in + ' and clad in ' + rpg_char_info.armor
   + ', you wield ' +  rpg_char_info.weapon_first + ' and '
@@ -72,7 +77,8 @@ function rpg(msg, content) {
   send_msg += "Background: " + bg_info.name + " (Specialization: "
   + bg_info.types  + "). " + bg_info.personalities + " " + bg_info.ideals
   + " " + bg_info.bonds + " " + bg_info.flaws
-  msg.reply(send_msg);
+
+  msg.reply(url + send_msg);
 }
 
 module.exports = { rpg };

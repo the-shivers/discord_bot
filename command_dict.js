@@ -14,6 +14,7 @@ const help = require('./scripts/help/help.js')
 const bing = require('./scripts/bing/bing.js')
 const wa = require('./scripts/wolframalpha/wolframalpha.js')
 const smack = require('./scripts/smack/smack.js')
+const fruitymon = require('./scripts/fruitymon/fruitymon.js')
 
 let command_dict = {
   "tarot": {
@@ -83,6 +84,10 @@ let command_dict = {
   "smack": {
     "log": "Initiating violence!",
     "func": smack.smack
+  },
+  "f": {
+    "log": "Initiating fruit!",
+    "func": fruitymon.f
   }
 };
 
