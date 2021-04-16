@@ -3,6 +3,7 @@
 // Imports
 const tiers = require('./f_tiers.js');
 const pick = require('./f_pick.js');
+const perk = require('./f_perks.js');
 const inventory = require('./inventory.js');
 const f_help = require('./f_help.js');
 
@@ -14,6 +15,10 @@ let f_command_dict = {
   "pick": {
     "log": "Picking fruit!",
     "func": pick.pick
+  },
+  "perks": {
+    "log": "Displaying perks!",
+    "func": perk.perk
   },
   "inventory": {
     "log": "Showing an inventory",

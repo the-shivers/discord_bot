@@ -4,23 +4,23 @@
 const c = require('./f_config.js');
 const Discord = require('discord.js');
 const attachment = new Discord.MessageAttachment(
-  './scripts/bing/assets/bing_logo.png', 'bing_logo.png'
+  './scripts/fruitymon/assets/fruit.gif', 'fruit.gif'
 );
 
 // Create template to embed
 const template = new Discord.MessageEmbed()
   .setColor('#0099ff')
-  .setTitle("Just Bing It!")
-  .setDescription('_Do you feel the bing?_')
+  .setTitle("⭐🌟✨ FRUITYMON RARITY ✨🌟⭐")
+  .setDescription('_Can you catch them all?_\u200b\n\u200b\n')
   .attachFiles(attachment)
-  .setThumbnail('attachment://bing_logo.png');
+  .setThumbnail('attachment://fruit.gif');
 
 // Add fruit to template based on f_config.js
 var i;
-for (i = 0; i < c.fruit.length; i++) {
+for (i = 0; i < c.fruit_tiers.length; i++) {
   template.addField(
-    i + 1 + ". " + c.fruit[i].name + " `(" + c.fruit[i].rarity_int + "%)`",
-    c.fruit[i].fruit.join(" "),
+    i + 1 + ". " + c.fruit_tiers[i].name + " \n`(" + c.fruit_tiers[i].rarity_int + "%)`",
+    c.fruit_tiers[i].fruit.join(" "),
     true
   )
 }

@@ -10,12 +10,14 @@ const pingpong = require('./scripts/pingpong/pingpong.js');
 const prune = require('./scripts/prune/prune.js');
 const nick = require('./scripts/nick/nick.js');
 const weather = require('./scripts/weather/weather.js');
-const help = require('./scripts/help/help.js')
-const bing = require('./scripts/bing/bing.js')
-const bingw = require('./scripts/bing/bingw.js')
-const wa = require('./scripts/wolframalpha/wolframalpha.js')
-const smack = require('./scripts/smack/smack.js')
-const fruitymon = require('./scripts/fruitymon/fruitymon.js')
+const help = require('./scripts/help/help.js');
+const bing = require('./scripts/bing/bing.js');
+const bingw = require('./scripts/bing/bingw.js');
+const wa = require('./scripts/wolframalpha/wolframalpha.js');
+const smack = require('./scripts/smack/smack.js');
+const fruitymon = require('./scripts/fruitymon/fruitymon.js');
+const sona = require('./scripts/sona/sona.js');
+const crypto = require('./scripts/crypto/crypto.js');
 
 let command_dict = {
   "tarot": {
@@ -97,6 +99,18 @@ let command_dict = {
   "bn": {
     "log": "Binging news.",
     "func": bingw.bingn
+  },
+  "sona": {
+    "log": "Generating 'sona'.",
+    "func": sona.sona
+  },
+  "persona": {
+    "log": "Predicting the future",
+    "func": tarot.tarot
+  },
+  "crypto": {
+    "log": "HODLing against fudders...",
+    "func": crypto.crypto
   }
 };
 

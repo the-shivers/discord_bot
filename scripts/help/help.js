@@ -15,6 +15,7 @@ function help(msg, content) {
   + "**!pong** - *Makes the bot say \"Ping!\".*\n"
   + "**!rpg** - *Generates an rpg character.*\n"
   + "**!wa <query>** - *Asks Wolfram Alpha something.*\n"
+  + "**!sona** - *Generates a fursona. Yikes warning.*\n"
   + "**!f <various options>** - *Starts a fruitymon command. Run '!f help' "
   + "for details.*\n"
   + "**!bi <query>** - *Uses bing to fetch an image.*\n"

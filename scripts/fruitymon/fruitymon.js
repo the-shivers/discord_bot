@@ -19,12 +19,11 @@ function f(msg, content) {
     if (!(new_key in f_record)) {
       f_record[new_key] = {
         "Username": msg.author.username,
-        "First Fruitymon Command": msg.createdAt.toDateString().slice(4),
-        "Current Channel": msg.channel.id,
+        "First Fruitymon Command": msg.createdTimestamp,
         "Fruit Inventory": [],
         "Item Inventory": [],
         "Fruitbux": 0,
-        "Level": 0,
+        "Level": 1,
         "Experience": 0,
         "Perks": [],
         "Total Fruit Picked": 0,
@@ -32,17 +31,13 @@ function f(msg, content) {
         "Total Fruit Sold": 0,
         "Total Rare Fruit Sold": 0,
         "Total Fruitbux Earned": 0,
-        "Daily Picks": c.daily_picks,
-        "Single Pick Limit": c.single_pick_limit,
-        "Dice Number Modifier": 0,
-        "Dice Roll Modifier": 0,
-        "Today": {
-          "Date": msg.createdAt.toDateString().slice(4),
-          "Picks": 0
-        }
+        "Pick Limit": c.default_pick_limit, // how many you pick at a time
+        "Number of Dice": c.default_pick_limit, // e.g. the 5 in 5d100
+        "Dice Sides": c.default_sides, // Roll more/less dice, same # returned fruit
+        "Last Roll": msg.createdTimestamp - 3605 * 1000,
+        "Roll Delay": c.default_delay
       }
     };
-
     // Record
     fs.writeFile(record_filename_full, JSON.stringify(f_record, null, 2), function writeJSON(err) {
       if (err) return console.log(err);
