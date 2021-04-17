@@ -22,4 +22,8 @@ function shuffle(array) {
   return array;
 }
 
-module.exports = { isNumeric, rollDie, shuffle };
+function secondsAndMinutes(seconds) {
+  return Math.round(seconds/60) + " minutes and " + seconds % 60 + " seconds";
+}
+
+module.exports = { isNumeric, rollDie, shuffle, secondsAndMinutes };

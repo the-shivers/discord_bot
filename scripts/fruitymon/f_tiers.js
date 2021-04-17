@@ -4,7 +4,7 @@
 const c = require('./f_config.js');
 const Discord = require('discord.js');
 const attachment = new Discord.MessageAttachment(
-  './scripts/fruitymon/assets/fruit.gif', 'fruit.gif'
+  './scripts/fruitymon/assets/orange.gif', 'orange.gif'
 );
 
 // Create template to embed
@@ -13,7 +13,7 @@ const template = new Discord.MessageEmbed()
   .setTitle("⭐🌟✨ FRUITYMON RARITY ✨🌟⭐")
   .setDescription('_Can you catch them all?_\u200b\n\u200b\n')
   .attachFiles(attachment)
-  .setThumbnail('attachment://fruit.gif');
+  .setThumbnail('attachment://orange.gif');
 
 // Add fruit to template based on f_config.js
 var i;

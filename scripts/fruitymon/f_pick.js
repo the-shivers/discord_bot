@@ -79,7 +79,7 @@ function generateExperience(fruit_arr) {
 }
 
 function generateExpBar(decimal, curr_level) {
-  // Returns a cool expbar string!
+  // Returns a cool expbar string! Header and string in array.
   let filled = "▰";
   let empty = "▱";
   let length = 20;
@@ -87,10 +87,11 @@ function generateExpBar(decimal, curr_level) {
   let num_empty = length - num_filled;
   let filled_arr = Array(num_filled).fill(filled);
   let empty_arr = Array(num_empty).fill(empty);
-  let return_str = "**" + Math.round((decimal)*100) + "% to level "
-   + (curr_level + 1) + "!**\n```ini\n[" + filled_arr.join("")
-   + empty_arr.join("") + "]```";
-  return return_str;
+  let return_str1 = "**" + Math.round((decimal)*100) + "% to level "
+   + (curr_level + 1) + "!**\n"
+  let return_str2 = "```ini\n[" + filled_arr.join("")
+  + empty_arr.join("") + "]```";
+  return [return_str1, return_str2];
 }
 
 function levelUp(msg, f_record) {
@@ -161,7 +162,7 @@ function pick(msg, content) {
     let exp_to_next = c.levels[curr_level];
     let new_exp = keep_exp.reduce((a, b) => a + b, 0);
     let exp_decimal = Math.min(1, ((new_exp + curr_exp) / exp_to_next))
-    let exp_bar = generateExpBar(exp_decimal, curr_level);
+    let [expb1, expb2] = generateExpBar(exp_decimal, curr_level);
 
     // Clean up discarded experience
     if (discard_exp.length === 0) {
@@ -185,7 +186,7 @@ function pick(msg, content) {
       .addField(fill, fill, false)
       .addField("Captured Exp.", keep_exp_str + keep_exp_ttl, true)
       .addField("Discarded Exp.", fill + discard_exp_str + discard_exp_ttl, true)
-      .addField(fill, exp_bar, false)
+      .addField(expb1, expb2, false)
     msg.reply(template);
 
     // Update stats
@@ -195,9 +196,10 @@ function pick(msg, content) {
     });
 
   } else {
-    msg.reply(`Sorry pal, you need to wait ${wait} more seconds!`);
+    let minutes_and_seconds = f.secondsAndMinutes(wait)
+    msg.reply(`Sorry pal, you need to wait ${minutes_and_seconds} more seconds!`);
   }
 }
 
 
-module.exports = { pick };
+module.exports = { pick, generateExpBar };

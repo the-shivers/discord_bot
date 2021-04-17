@@ -6,6 +6,8 @@ const pick = require('./f_pick.js');
 const perk = require('./f_perks.js');
 const inventory = require('./inventory.js');
 const f_help = require('./f_help.js');
+const f_stats = require('./f_stats.js');
+const f_shop = require('./f_shop.js');
 
 let f_command_dict = {
   "tiers": {
@@ -27,6 +29,14 @@ let f_command_dict = {
   "help": {
     "log": "Helping with fruit!",
     "func": f_help.f_help
+  },
+  "stats": {
+    "log": "Showing fruit statistics!",
+    "func": f_stats.stats
+  },
+  "shop": {
+    "log": "Showing shoppy woppy!",
+    "func": f_shop.f_shop
   }
 }
 

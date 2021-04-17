@@ -25,7 +25,7 @@ let fruit_tiers = [
   {
     "name": "Trash",
     "fruit": ["🍂", "🪵", "🥚", "🥌", "🗿"],
-    "fruit_str": ["falling_leaf", "wood", "egg", "curling_stone", "moyai"],
+    "fruit_str": ["fallen_leaf", "wood", "egg", "curling_stone", "moyai"],
     "rarity_int": 20,
     "rarity_prop": 0.2,
   },
@@ -94,19 +94,19 @@ let ranks = [
 
 let default_pick_limit = 5;
 let default_sides = 100;
-let default_delay = 0;
+let default_delay = 1800;
 // Define perk strings where we keep lowest or highest rolls
 greedy = new Perk(
   "greedy", "greedy", "Get twice as many fruit, but far fewer rare fruit.",
   {"Pick Limit": 5, "Number of Dice": 7}
 );
-gp2a = new Perk(
+sloth = new Perk(
   "sloth", "greedy", "Doubles your cooldown for bigger hauls.",
-  {"Pick Limit": 7, "Number of Dice": 8, "Roll Delay": 3600}
+  {"Pick Limit": 7, "Number of Dice": 8, "Roll Delay": 1800}
 );
-gp2b = new Perk(
+ambition = new Perk(
   "ambition", "greedy", "Reduces your cooldown for more frequent hauls.",
-  {"Roll Delay": -1800}
+  {"Roll Delay": -900}
 );
 gp3a = new Perk(
   "gp3a", "greedy", "TBD",
@@ -128,11 +128,11 @@ lucky = new Perk(
   "lucky", "lucky", "Increases your chances of getting rare fruit.",
   {"Number of Dice": 2}
 );
-lp2a = new Perk(
+gambler = new Perk(
   "gambler", "lucky", "Triple your chances of getting extraordinary fruit.",
   {"Dice Sides": 2}
 );
-lp2b = new Perk(
+diversify = new Perk(
   "diversify", "lucky", "Larger hauls that aren't quite as lucky.",
   {"Pick Limit": 5, "Number of Dice": 4}
 );
@@ -153,18 +153,27 @@ lp4b = new Perk(
   {}
 );
 
+let perk_dict = {
+  "greedy": greedy,
+  "lucky": lucky,
+  "sloth": sloth,
+  "ambition": ambition,
+  "diversify": diversify,
+  "gambler": gambler
+}
+
 let min_perk_group = ["greedy"];
 let max_perk_group = ["lucky"];
 
 let greedy_perks = [
   greedy,
-  [gp2a, gp2b],
+  [sloth, ambition],
   [gp3a, gp3b],
   [gp4a, gp4b],
 ]
 let lucky_perks = [
   lucky,
-  [lp2a, lp2b],
+  [gambler, diversify],
   [lp3a, lp3b],
   [lp4a, lp4b],
 ]
@@ -255,15 +264,6 @@ for (let i = 0; i < fruit_tiers.length; i++) {
     fruit_dict[curr_str]["exp"] = fruit_exp(i + 1, j + 1);
     fruit_dict[curr_str]
   }
-}
-
-let perk_dict = {
-  "lucky": lucky,
-  "greedy": greedy,
-  "sloth": gp2a,
-  "ambition": gp2b,
-  "gambler": lp2a,
-  "diversify": lp2b
 }
 
 

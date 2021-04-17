@@ -243,7 +243,7 @@
   "mode": [
     "feral", "feral", "feral",
     "anthro", "anthro", "anthro", "anthro", "anthro",
-    "taur", "inflatable", "piñata", "latex", "plushie"
+    "taur", "inflatable", "piñata", "latex", "plushie", "mentally challenged"
   ],
   "color": [
     "NOT_QUITE_BLACK", "DARK_BUT_NOT_BLACK", "GREYPLE", "BLURPLE", "DARK_NAVY",
@@ -326,7 +326,16 @@
     "using the internet", "trashing other people's houses",
     "contracting scurvy", "spreading ebola", "beheading heretics",
     "breeding fucked-up looking dogs", "'snorting hella cocaine'",
-    "dying", "being immortal", "mansplaining", "manspreading"
+    "dying", "being immortal", "mansplaining", "manspreading",
+    "learning about Hitler", "being straight", "trying to breathe underwater",
+    "closing your eyes when driving", "playing Russian roulette",
+    "bumping uglies", "attending funerals", "giving abortions",
+    "huffing sock gas", "injecting marijuanas", "heckling stand up comedians",
+    "refusing to better yourself", "abandoning society",
+    "commandeering enemy ships", "getting seasick",
+    "saying 'YAAAS QUEEN' after anybody else says literally anything",
+    "clubbing baby seals", "hitting the club with the girls",
+    "snitching on refugees", "snapping in a Z-shape", "playing jackbox"  
   ],
   "sound": [
     "exactly like a fat woman getting fucked", "really raspy",
@@ -334,7 +343,10 @@
     "like you want to die", "kind of like a trumpet or tuba or something",
     "like James Earl Jones", "like Mariah Carey", "really nasally",
     "like you want someone to kick your ass", "like you're underwater",
-    "like you're really sad and lonely", "pretty cool"
+    "like you're really sad and lonely", "pretty cool", "annoying",
+    "Scottish", "Australian", "like you are very uneducated", "posh",
+    "horrible", "fantastic", "very quiet", "extremely loud, like way too loud",
+    "like you didn't get a lot of sleep last night"
   ],
   "smell": [
     "like dogshit", "absolutely terrible", "nice and musky", "like peaches",
@@ -353,7 +365,7 @@
     "magic", "hypnosis resistance", "poison resistance", "special defense",
     "special attack", "hp", "alcohol tolerance", "weed tolerance", "sexual stamina",
     "sexual prowess", "saliva production", "hunger", "sleepiness", "needs to piss right now",
-    "turning radius", "spanish"
+    "turning radius", "spanish", "being antiracist", "autism"
   ],
   "height_ft": [
     "0",

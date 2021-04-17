@@ -18,6 +18,7 @@ const smack = require('./scripts/smack/smack.js');
 const fruitymon = require('./scripts/fruitymon/fruitymon.js');
 const sona = require('./scripts/sona/sona.js');
 const crypto = require('./scripts/crypto/crypto.js');
+const ml = require('./scripts/ml/ml.js');
 
 let command_dict = {
   "tarot": {
@@ -111,6 +112,14 @@ let command_dict = {
   "crypto": {
     "log": "HODLing against fudders...",
     "func": crypto.crypto
+  },
+  "ml": {
+    "log": "Running mad libs.",
+    "func": ml.ml
+  },
+  "mladd": {
+    "log": "Running mad libs (adding).",
+    "func": ml.mladd
   }
 };
 
