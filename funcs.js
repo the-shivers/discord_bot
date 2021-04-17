@@ -30,13 +30,10 @@ function secondsAndMinutes(seconds) {
 }
 
 function backup(dest_folder, filename_array) {
-  console.log("trying to backup :(")
   let today = new Date().toISOString().slice(0, 10)
   for (let i = 0; i < filename_array.length; i++) {
     let shortname = filename_array[i].split('/').slice(-1)[0].split('.')[0]
-    console.log("reading file")
     let json = require(filename_array[i]);
-    console.log("REad the file, now saving it to " + "./" + dest_folder + "/" + shortname)
     fs.writeFile(
       "./" + dest_folder + "/" + shortname + "-" + today + '.json',
       JSON.stringify(json, null, 2),

@@ -197,7 +197,7 @@ function pick(msg, content) {
 
   } else {
     let minutes_and_seconds = f.secondsAndMinutes(wait)
-    msg.reply(`Sorry pal, you need to wait ${minutes_and_seconds} more seconds!`);
+    msg.reply(`Sorry pal, you need to wait ${minutes_and_seconds}!`);
   }
 }
 

@@ -8,9 +8,7 @@ var f_record = require(record_filename);
 
 function f_reset(msg, content) {
   msg.channel.send('resetting');
-  console.log(f_record[msg.author.id]);
   delete f_record[msg.author.id]
-  console.log(f_record[msg.author.id]);
   fs.writeFile(record_filename_full, JSON.stringify(f_record, null, 2), function writeJSON(err) {
     if (err) return console.log(err);
   });
