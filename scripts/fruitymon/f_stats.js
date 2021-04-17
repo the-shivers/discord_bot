@@ -12,7 +12,7 @@ function stats(msg, content) {
   let user_json = f_record[msg.author.id];
   let style_str = ""
   let mo_str = "You typically roll `" + user_json["Number of Dice"]
-  + "d" + user_json["Dice Sides"] + "`.";
+  + "d" + user_json["Dice Sides"] + "`. ";
   if (user_json["Perks"].includes("greedy")) {
     style_str = "Greedy"
     mo_str += "Then, being `greedy`, you take the lowest `"

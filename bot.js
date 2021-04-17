@@ -5,6 +5,7 @@ const Discord = require("discord.js");
 const fs = require('fs');
 const auth = require("./auth.json");
 const f = require('./funcs.js');
+const b = require('./funcs.js');
 const command_dict = require('./command_dict.js').command_dict;
 const bot = new Discord.Client();
 const trig = "!";
@@ -13,6 +14,14 @@ const trig = "!";
 bot.login(auth.token);
 bot.on("ready", () => {
   console.log(`Logged in as ${bot.user.tag}!`);
+  f.backup(
+    "backups",
+    [
+      "./scripts/fruitymon/f_record.json",
+      "./scripts/ml/ml.json"
+    ]
+  );
+  console.log("Backed up files.")
 });
 
 bot.on("message", async msg => {
