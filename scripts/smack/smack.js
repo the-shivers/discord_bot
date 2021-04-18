@@ -8,13 +8,20 @@ const smack_json = JSON.parse(
 );
 
 async function smack(msg, content) {
+  console.log("first: ", content)
+  console.log(msg.mentions.users.size);
+  console.log(content.split(' ').length);
   if (
     msg.mentions.users.size === 1
     && content.split(' ').length > 1
   ) {
     let user_id = msg.mentions.users.first().id;
     let split_content = content.split(" ");
-    if (split_content[1] === "<@!" + user_id + ">") {
+    console.log(split_content[1])
+    if (
+      split_content[1] === "<@!" + user_id + ">" ||
+      split_content[1] === "<@" + user_id + ">"
+    ) {
 
       let smack_info = {};
       Object.keys(smack_json).forEach(function(key) {

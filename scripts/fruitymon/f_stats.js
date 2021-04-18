@@ -21,6 +21,8 @@ function stats(msg, content) {
     style_str = "Lucky"
     mo_str += "Then, being `lucky`, you take the highest `"
     + user_json["Pick Limit"] + "` of them.";
+  } else {
+    style_str = "None Yet";
   }
   mo_str += " You must wait `" + user_json["Roll Delay"]
   + "` seconds before picking again."
@@ -35,8 +37,12 @@ function stats(msg, content) {
   + user_json["Total Fruit Picked"] + '`\n';
   detail_str += "`Rare Fruit Picked: "
   + user_json["Total Rare Fruits Picked"] + '`\n';
-  detail_str += "`Fruitbux Earned: "
-  + user_json["Total Fruitbux Earned"] + '`'
+  detail_str += "`Fruit Sold: "
+  + user_json["Total Fruit Sold"] + '`\n'
+  detail_str += "`Rare Fruit Sold: "
+  + user_json["Total Rare Fruit Sold"] + '`\n'
+  detail_str += "`Fruitbux Earned: ₣"
+  + user_json["Total Fruitbux Earned"] + '`\n'
 
   // Perks
   let perk_str = "";
@@ -57,14 +63,14 @@ function stats(msg, content) {
     .setThumbnail('attachment://frog.gif')
     .addField("Level:", "`" + user_json["Level"] + "`", true)
     .addField("Rank:", "`" + c.ranks[user_json["Level"]] + "`", true)
-    .addField("Style:", "`" + style_str + "`", true)
-    .addField("Modus Operandi:", mo_str, false)
-    .addField("Fruitbux:", "`"+ user_json["Fruitbux"] + "`", true)
+    .addField("Style:", fill + "`" + style_str + "`", true)
+    .addField("Modus Operandi:", "" + mo_str, false)
+    .addField("Fruitbux:", "`₣"+ user_json["Fruitbux"] + "`", true)
     .addField("Experience:", "`"+ user_json["Experience"] + "`", true)
     .addField("To next level:", "`" + exp_to_next_lvl + "`", true)
     //.addField(fill, expb2 + '\n' + fill, false)
     .addField("Details:", detail_str, true)
-    .addField("Perks:", perk_str, true)
+    .addField("Perks:", fill + perk_str, true)
   msg.channel.send(template);
 }
 

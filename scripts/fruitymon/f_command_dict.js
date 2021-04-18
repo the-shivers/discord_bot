@@ -47,6 +47,14 @@ let f_command_dict = {
   "cheat": {
     "log": "Helping someone cheat!",
     "func": f_cheat.f_cheat
+  },
+  "buy": {
+    "log": "Shop buying.",
+    "func": f_shop.f_buy
+  },
+  "sell": {
+    "log": "Shop selling.",
+    "func": f_shop.f_sell
   }
 }
 
