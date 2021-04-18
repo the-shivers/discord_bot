@@ -19,6 +19,8 @@ const fruitymon = require('./scripts/fruitymon/fruitymon.js');
 const sona = require('./scripts/sona/sona.js');
 const crypto = require('./scripts/crypto/crypto.js');
 const ml = require('./scripts/ml/ml.js');
+const drake = require('./scripts/drake/drake.js');
+const brain = require('./scripts/brain/brain.js');
 
 let command_dict = {
   "tarot": {
@@ -120,6 +122,14 @@ let command_dict = {
   "mladd": {
     "log": "Running mad libs (adding).",
     "func": ml.mladd
+  },
+  "drake": {
+    "log": "Draking.",
+    "func": drake.drake
+  },
+  "brain": {
+    "log": "Galaxy braining.",
+    "func": brain.brain
   }
 };
 

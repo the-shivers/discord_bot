@@ -77,26 +77,32 @@
       "green_apple",
       "apple",
       "olive",
-      "eggplant"
+      "eggplant",
+      "green_apple",
+      "green_apple",
+      "avocado",
+      "eggplant",
+      "olive"
     ],
     "Item Inventory": [],
     "Fruitbux": 0,
-    "Level": 2,
-    "Experience": 2920,
+    "Level": 3,
+    "Experience": 0,
     "Perks": [
-      "lucky"
+      "lucky",
+      "gambler"
     ],
-    "Total Fruit Picked": 75,
+    "Total Fruit Picked": 80,
     "Total Rare Fruits Picked": 1,
     "Total Fruit Sold": 0,
     "Total Rare Fruit Sold": 0,
     "Total Fruitbux Earned": 0,
     "Pick Limit": 5,
     "Number of Dice": 7,
-    "Dice Sides": 100,
-    "Last Roll": 1618716788580,
+    "Dice Sides": 102,
+    "Last Roll": 1618719169394,
     "Roll Delay": 1800,
-    "Current Channel": "292529542613041153"
+    "Current Channel": "831546281611624448"
   },
   "359808687826796545": {
     "Username": "Wiseoni",
@@ -483,16 +489,21 @@
       "lemon",
       "tangerine",
       "apple",
-      "peach"
+      "peach",
+      "strawberry",
+      "tangerine",
+      "green_apple",
+      "olive",
+      "fallen_leaf"
     ],
     "Item Inventory": [],
     "Fruitbux": 252,
     "Level": 2,
-    "Experience": 2059,
+    "Experience": 2409,
     "Perks": [
       "lucky"
     ],
-    "Total Fruit Picked": 70,
+    "Total Fruit Picked": 75,
     "Total Rare Fruits Picked": 1,
     "Total Fruit Sold": 9,
     "Total Rare Fruit Sold": 0,
@@ -500,7 +511,7 @@
     "Pick Limit": 5,
     "Number of Dice": 7,
     "Dice Sides": 100,
-    "Last Roll": 1618712100060,
+    "Last Roll": 1618721515471,
     "Roll Delay": 1800,
     "Current Channel": "807552578329772042"
   },
@@ -594,14 +605,24 @@
       "green_apple",
       "watermelon",
       "tomato",
-      "green_apple"
+      "green_apple",
+      "fallen_leaf",
+      "olive",
+      "apple",
+      "fallen_leaf",
+      "melon",
+      "tangerine",
+      "pear",
+      "fallen_leaf",
+      "pear",
+      "apple"
     ],
     "Item Inventory": [],
     "Fruitbux": 0,
     "Level": 2,
-    "Experience": 1292,
+    "Experience": 1829,
     "Perks": [],
-    "Total Fruit Picked": 60,
+    "Total Fruit Picked": 70,
     "Total Rare Fruits Picked": 0,
     "Total Fruit Sold": 0,
     "Total Rare Fruit Sold": 0,
@@ -609,8 +630,8 @@
     "Pick Limit": 5,
     "Number of Dice": 5,
     "Dice Sides": 100,
-    "Last Roll": 1618716042139,
-    "Roll Delay": 0,
+    "Last Roll": 1618719518609,
+    "Roll Delay": 1800,
     "Current Channel": "807552578329772042"
   }
 }
