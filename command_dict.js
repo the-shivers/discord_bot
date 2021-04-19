@@ -21,6 +21,8 @@ const crypto = require('./scripts/crypto/crypto.js');
 const ml = require('./scripts/ml/ml.js');
 const drake = require('./scripts/drake/drake.js');
 const brain = require('./scripts/brain/brain.js');
+const test = require('./scripts/test/test.js');
+const f_command_dict = require('./scripts/fruitymon/f_command_dict.js').f_command_dict;
 
 let command_dict = {
   "tarot": {
@@ -130,6 +132,14 @@ let command_dict = {
   "brain": {
     "log": "Galaxy braining.",
     "func": brain.brain
+  },
+  "test": {
+    "log": "Test.",
+    "func": test.test
+  },
+  "pick": {
+    "log": "Picking fruit (aliased).",
+    "func": f_command_dict.pick
   }
 };
 

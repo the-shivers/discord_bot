@@ -38,8 +38,22 @@ function f(msg, content) {
         "Roll Delay": c.default_delay
       }
     };
+
+    // Handle item expiration
+    let rem_list = [];
+    for (let i = 0; i < f_record[msg.author.id]["Item Inventory"].length; i++) {
+      let curr_item = new c.Item(f_record[msg.author.id]["Item Inventory"][i].name);
+      let item_date = f_record[msg.author.id]["Item Inventory"][i].date
+      if (item_date + (curr_item.exp * 1000) <= msg.createdTimestamp) {
+        rem_list = rem_list.concat([i]);
+      }
+    }
+    for (var i = rem_list.length - 1; i >= 0; i--) {
+      f_record[msg.author.id]["Item Inventory"].splice(rem_list[i], 1);
+    }
+
     // Record
-    fs.writeFile(record_filename_full, JSON.stringify(f_record, null, 2), function writeJSON(err) {
+    fs.writeFileSync(record_filename_full, JSON.stringify(f_record, null, 2), function writeJSON(err) {
       if (err) return console.log(err);
     });
 

@@ -7,14 +7,6 @@ const record_filename = './ml.json';
 const record_filename_full = './scripts/ml/ml.json';
 var ml_json = require(record_filename);
 
-var ml_size = 0;
-for (var key in ml_json) {
-  if (ml_json.hasOwnProperty(key)) {
-    ml_size += 1;
-  }
-}
-
-// const Discord = require('discord.js');
 
 async function getGuildMember(msg, user) {
   return msg.guild.members.fetch(user.id);
@@ -26,9 +18,10 @@ async function getGuildMembers(msg) {
 }
 
 async function ml(msg, content) {
+  let server_ml = ml_json[msg.guild.id];
   let rem_content = content.split(' ').slice(1).join(' ');
-  let random_key = Math.ceil(ml_size * Math.random()).toString();
-  let ml_msg = ml_json[random_key].message
+  let random_key = Math.floor(server_ml.length * Math.random()).toString();
+  let ml_msg = server_ml[random_key].message
   if (ml_msg.includes("$target")) {
     //console.log(content.split)
     //branch for replacing target with target or random
@@ -71,8 +64,7 @@ function mladd(msg, content) {
 
     if (1 === 1) { //This is the condition that determines if it can be added.
 
-      ml_json[ml_size + 1] = {"author": author, "message": message};
-      ml_size += 1;
+      ml_json[msg.guild.id] =  ml_json[msg.guild.id].concat({"author": author, "message": message})
       fs.writeFile(record_filename_full, JSON.stringify(ml_json, null, 2), function writeJSON(err) {
         if (err) return console.log(err);
       })

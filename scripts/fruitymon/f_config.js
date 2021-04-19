@@ -21,6 +21,49 @@ class Perk {
   }
 }
 
+class Item {
+  constructor(str) {
+    this.name = str;
+    this.desc = item_dict[str].desc;
+    this.exp = item_dict[str].exp;
+    this.price = item_dict[str].price;
+  }
+}
+
+let item_dict = {
+  "lucky_test_item": {
+    "name": "lucky_test_item",
+    "desc": "It's a test item for lucky people.",
+    "exp": 120,
+    "price": 50
+  },
+  "greedy_test_item": {
+    "name": "greedy_test_item",
+    "desc": "It's a test item for greedy people.",
+    "exp": 120,
+    "price": 50
+  },
+  "greedy_test_item_expensive": {
+    "name": "greedy_test_item_expensive",
+    "desc": "It's an expensive test item for greedy people.",
+    "exp": 120,
+    "price": 1000000000
+  },
+  "megaluck": {
+    "name": "megaluck",
+    "desc": "Much luckier rolls for 24 hours",
+    "exp": 3600 * 24,
+    "price": 2000
+  }
+  ,
+  "megagreed": {
+    "name": "megagreed",
+    "desc": "5 extra fruits per pick for 24 hours",
+    "exp": 3600 * 24,
+    "price": 2000
+  }
+}
+
 let fruit_tiers = [
   {
     "name": "Trash",
@@ -101,28 +144,20 @@ greedy = new Perk(
   {"Pick Limit": 5, "Number of Dice": 7}
 );
 sloth = new Perk(
-  "sloth", "greedy", "Doubles your cooldown for bigger hauls.",
-  {"Pick Limit": 7, "Number of Dice": 8, "Roll Delay": 1800}
+  "sloth", "greedy", "Doubles your cooldown for tripled hauls.",
+  {"Roll Delay": 1800}
 );
 ambition = new Perk(
   "ambition", "greedy", "Reduces your cooldown for more frequent hauls.",
   {"Roll Delay": -900}
 );
-gp3a = new Perk(
-  "gp3a", "greedy", "TBD",
-  {}
+accelerate = new Perk(
+  "accelerate", "greedy", "50% more experience from fruit picking.",
+  {"Roll Delay": 0}
 );
-gp3b = new Perk(
-  "gp3b", "greedy", "TBD",
-  {}
-);
-gp4a = new Perk(
-  "gp4a", "greedy", "TBD",
-  {}
-);
-gp4b = new Perk(
-  "gp4b", "greedy", "TBD",
-  {}
+hoarder = new Perk(
+  "hoarder", "greedy", "10 extra trash on every pick.",
+  {"Roll Delay": 0}
 );
 lucky = new Perk(
   "lucky", "lucky", "Increases your chances of getting rare fruit.",
@@ -136,21 +171,13 @@ diversify = new Perk(
   "diversify", "lucky", "Larger hauls that aren't quite as lucky.",
   {"Pick Limit": 5, "Number of Dice": 4}
 );
-lp3a = new Perk(
-  "lp3a", "lucky", "TBD",
-  {}
+blessed = new Perk(
+  "blessed", "lucky", "You'll have luckier rolls than ever!",
+  {"Number of Dice": 7}
 );
-lp3b = new Perk(
-  "lp3b", "lucky", "TBD",
-  {}
-);
-lp4a = new Perk(
-  "lp4a", "lucky", "TBD",
-  {}
-);
-lp4b = new Perk(
-  "lp4b", "lucky", "TBD",
-  {}
+prodigy = new Perk(
+  "prodigy", "lucky", "One bonus fruit from one of the top two tiers every pick.",
+  {"Roll Delay": 0}
 );
 
 let perk_dict = {
@@ -159,7 +186,11 @@ let perk_dict = {
   "sloth": sloth,
   "ambition": ambition,
   "diversify": diversify,
-  "gambler": gambler
+  "gambler": gambler,
+  "prodigy": prodigy,
+  "blessed": blessed,
+  "accelerate": accelerate,
+  "hoarder": hoarder
 }
 
 let min_perk_group = ["greedy"];
@@ -168,14 +199,12 @@ let max_perk_group = ["lucky"];
 let greedy_perks = [
   greedy,
   [sloth, ambition],
-  [gp3a, gp3b],
-  [gp4a, gp4b],
+  [accelerate, hoarder],
 ]
 let lucky_perks = [
   lucky,
   [gambler, diversify],
-  [lp3a, lp3b],
-  [lp4a, lp4b],
+  [blessed, prodigy],
 ]
 
 let emoji_to_string = {
@@ -271,5 +300,6 @@ module.exports = {
   default_pick_limit, default_sides, default_delay, greedy, lucky,
   levels, min_perk_group, max_perk_group, ranks, greedy_perks, lucky_perks,
   tierRarity, fruit_arr_to_emoji_arr, fruit_arr_to_str_arr, emoji_to_string,
-  fruit_dict, fruit_tiers, Fruit, tier_cutoffs, count_rare_fruits, perk_dict
+  fruit_dict, fruit_tiers, Fruit, tier_cutoffs, count_rare_fruits, perk_dict,
+  Item
 };

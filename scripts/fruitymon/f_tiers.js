@@ -11,7 +11,7 @@ const attachment = new Discord.MessageAttachment(
 const template = new Discord.MessageEmbed()
   .setColor('#0099ff')
   .setTitle("⭐🌟✨ FRUITYMON RARITY ✨🌟⭐")
-  .setDescription('_Can you catch them all?_\u200b\n\u200b\n')
+  .setDescription('_Can you catch them all?_ Fruit within individual tiers are arranged least to most rare.\u200b\n\u200b\n')
   .attachFiles(attachment)
   .setThumbnail('attachment://orange.gif');
 

@@ -47,12 +47,23 @@ function inventory(msg, content) {
   const template = new Discord.MessageEmbed()
     .setColor('#ff5555')
     .setTitle("🧺 Your Inventory 🧺")
-    .setDescription("Here are your captures so far!\u200b\n\u200b\n")
     .attachFiles(attachment)
-    .setThumbnail('attachment://cherry_bounce.gif');
+    .setThumbnail('attachment://cherry_bounce.gif')
+    .addField(
+      "Your Fruitbux:",
+      "`₣" + f_record[msg.author.id]["Fruitbux"] + ".00`",
+      false
+    )
   for(var i = 0; i < c.fruit_tiers.length; i++) {
-    template.addField(c.fruit_tiers[i].name, generateTierCounts(msg, [i]), true);
+    template.addField(i + 1 + ". " + c.fruit_tiers[i].name, generateTierCounts(msg, [i]), true);
   }
+  // Add items. First create pretty item string.
+  let item_str = '\u200b';
+  for (let i = 0; i < f_record[msg.author.id]["Item Inventory"].length; i++) {
+    let curr_item = new c.Item(f_record[msg.author.id]["Item Inventory"][i].name);
+    item_str += "`" + curr_item.name + "` - " + curr_item.desc + "\n"
+  }
+  template.addField("Your items:", item_str, false);
   msg.channel.send(template);
 }
 

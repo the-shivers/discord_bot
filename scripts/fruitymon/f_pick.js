@@ -16,6 +16,45 @@ function generateRolls(msg) {
   for (let i = 0; i < num_die; i++) {
     roll_arr = roll_arr.concat(f.rollDie(sides));
   }
+  // Logic for special perks (excl. sloth)
+  if (f_record[msg.author.id]["Perks"].includes("hoarder")) {
+    for (let i = 0; i < 10; i++) {
+      roll_arr = roll_arr.concat(f.rollDie(20));
+    }
+  } else if (f_record[msg.author.id]["Perks"].includes("prodigy")) {
+    if (f_record[msg.author.id]["Perks"].includes("gambler")) {
+      roll_arr = roll_arr.concat(98 + f.rollDie(4))
+    } else {
+      roll_arr = roll_arr.concat(96 + f.rollDie(4))
+    }
+  }
+  // Logic for special items
+  for (let i = 0; i < f_record[msg.author.id]["Item Inventory"].length; i++) {
+    if (f_record[msg.author.id]["Item Inventory"][i].name === "megaluck" ) {
+      for (let i = 0; i < 10; i++) {
+        roll_arr = roll_arr.concat(f.rollDie(sides));
+      }
+    } else if (f_record[msg.author.id]["Item Inventory"][i].name === "megagreed") {
+      for (let i = 0; i < 5; i++) {
+        roll_arr = roll_arr.concat(f.rollDie(sides));
+      }
+    }
+  }
+  // Logic for sloth perk
+  let hoarder_rolls = 0
+  if (f_record[msg.author.id]["Perks"].includes("sloth")) {
+    let addtl_rolls = roll_arr.length * 2;
+    if (f_record[msg.author.id]["Perks"].includes("hoarder")) {
+      hoarder_rolls = 20;
+      addtl_rolls -= 20;
+    }
+    for (let i = 0; i < addtl_rolls; i++) {
+      roll_arr = roll_arr.concat(f.rollDie(sides));
+    }
+    for (let i = 0; i < hoarder_rolls; i++) {
+      roll_arr = roll_arr.concat(f.rollDie(20));
+    }
+  }
   return roll_arr;
 }
 
@@ -47,6 +86,23 @@ function pickLogic(msg) {
       break;
     }
   }
+  // Adjust number of picks based on special perks. +1 for prodigy, +10 for hoarder
+  if (f_record[msg.author.id]["Perks"].includes("prodigy")) {
+    num_picks += 1;
+  } else if (f_record[msg.author.id]["Perks"].includes("hoarder")) {
+    num_picks += 10
+  }
+  // Logic for special items
+  for (let i = 0; i < f_record[msg.author.id]["Item Inventory"].length; i++) {
+    if (f_record[msg.author.id]["Item Inventory"][i].name === "megagreed") {
+      num_picks += 5;
+    }
+  }
+  // Logic for sloth
+  if (f_record[msg.author.id]["Perks"].includes("sloth")) {
+    let to_add = num_picks * 2;
+    num_picks += to_add;
+  }
   return [roll_arr.slice(0, num_picks), roll_arr.slice(num_picks)];
 }
 
@@ -70,11 +126,16 @@ function fruitArray(arr) {
   return fruit_arr;
 }
 
-function generateExperience(fruit_arr) {
+function generateExperience(msg, fruit_arr) {
   // Returns array of experience from an array of fruit
   let exp_arr = []
   for (let i = 0; i < fruit_arr.length; i++) {
-    exp_arr = exp_arr.concat(fruit_arr[i].exp);
+    let exp = fruit_arr[i].exp
+    // Special Perk Logic
+    if (f_record[msg.author.id]["Perks"].includes("accelerate")) {
+      exp = Math.round(exp * 1.5);
+    }
+    exp_arr = exp_arr.concat(exp);
   }
   return exp_arr;
 }
@@ -148,8 +209,8 @@ function pick(msg, content) {
     let [keep, discard] = pickLogic(msg);
     let keep_fruit = fruitArray(keep);
     let discard_fruit = fruitArray(discard);
-    let keep_exp = generateExperience(keep_fruit);
-    let discard_exp = generateExperience(discard_fruit);
+    let keep_exp = generateExperience(msg, keep_fruit);
+    let discard_exp = generateExperience(msg, discard_fruit);
 
     // Process Results
     let keep_fruit_str = c.fruit_arr_to_emoji_arr(keep_fruit).join(" ");
@@ -179,15 +240,15 @@ function pick(msg, content) {
     const template = new Discord.MessageEmbed()
       .setColor('#55FF55')
       .setTitle("🧺 ⬅️ 🍎 Fruit Picked! 🍎 ➡️ 🧺")
-      .setDescription("*Enjoy the fruits of your labor!*")
       .attachFiles(attachment)
       .setThumbnail('attachment://fruit.gif')
       .addField("Captured Fruit", keep_fruit_str, true)
       .addField("Discarded Fruit", fill + discard_fruit_str, true)
-      .addField(fill, fill, false)
+      // .addField(fill, fill, false)
+      .addField(expb1, expb2, false)
       .addField("Captured Exp.", keep_exp_str + keep_exp_ttl, true)
       .addField("Discarded Exp.", fill + discard_exp_str + discard_exp_ttl, true)
-      .addField(expb1, expb2, false)
+      // .addField(expb1, expb2, false)
     msg.reply(template);
 
     // Update stats
