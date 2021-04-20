@@ -53,14 +53,14 @@ let item_dict = {
     "name": "megaluck",
     "desc": "Much luckier rolls for 24 hours",
     "exp": 3600 * 24,
-    "price": 2000
+    "price": 1000000000000000000
   }
   ,
   "megagreed": {
     "name": "megagreed",
     "desc": "5 extra fruits per pick for 24 hours",
     "exp": 3600 * 24,
-    "price": 2000
+    "price": 20000000000000000000
   }
 }
 
@@ -116,9 +116,9 @@ for (let i = 1; i < fruit_tiers.length; i++) {
 }
 
 let levels = [
-  0, 100, 200, 300, 500, 800, 1300, 2100, 3400, 5500, 9000, 14000, 20000
+  0, 100, 200, 300, 500, 800, 1300, 2100, 3400, 5500, 9000, 14000, 20000, 34000
 ];
-levels = levels.map(function(x) { return x * 15; });
+levels = levels.map(function(x) { return x * 20; });
 let ranks = [
   'broken',
   "Seed Sniffer",
@@ -140,57 +140,67 @@ let default_sides = 100;
 let default_delay = 1800;
 // Define perk strings where we keep lowest or highest rolls
 greedy = new Perk(
-  "greedy", "greedy", "Get twice as many fruit, but far fewer rare fruit.",
+  "greedy", "greedy", "Get twice as many fruit, but far fewer rare fruit!",
   {"Pick Limit": 5, "Number of Dice": 7}
 );
-sloth = new Perk(
-  "sloth", "greedy", "Doubles your cooldown for tripled hauls.",
-  {"Roll Delay": 1800}
+struggle = new Perk(
+  "struggle", "greedy", "15 more picks, but they'll be less rare!",
+  {"Pick Limit": 15, "Number of Dice": 18}
 );
-ambition = new Perk(
-  "ambition", "greedy", "Reduces your cooldown for more frequent hauls.",
-  {"Roll Delay": -900}
+acceptance = new Perk(
+  "acceptance", "greedy", "15 more picks, but you'll never get another ultra rare or better!",
+  {"Pick Limit": 15, "Number of Dice": 15, "Dice Sides": -4}
 );
-accelerate = new Perk(
-  "accelerate", "greedy", "50% more experience from fruit picking.",
+raccoon = new Perk(
+  "raccoon", "greedy", "10 free trash every pick. Can now find rare trash!",
   {"Roll Delay": 0}
 );
-hoarder = new Perk(
-  "hoarder", "greedy", "10 extra trash on every pick.",
+pawnstar = new Perk(
+  "pawnstar", "greedy", "Trash sells for 2x as much! Can sell trash any day of the week.",
   {"Roll Delay": 0}
 );
 lucky = new Perk(
-  "lucky", "lucky", "Increases your chances of getting rare fruit.",
+  "lucky", "lucky", "Increases your chances of getting rare fruit!",
   {"Number of Dice": 2}
 );
 gambler = new Perk(
-  "gambler", "lucky", "Triple your chances of getting extraordinary fruit.",
-  {"Dice Sides": 2}
+  "gambler", "lucky", "7x your chances of getting extraordinary fruit!",
+  {"Dice Sides": 6}
 );
 diversify = new Perk(
-  "diversify", "lucky", "Larger hauls that aren't quite as lucky.",
-  {"Pick Limit": 5, "Number of Dice": 4}
+  "diversify", "lucky", "Larger hauls that still retain their luck!",
+  {"Pick Limit": 7, "Number of Dice": 7}
 );
 blessed = new Perk(
-  "blessed", "lucky", "You'll have luckier rolls than ever!",
-  {"Number of Dice": 7}
+  "blessed", "lucky", "Your rolls will be insanely lucky!",
+  {"Number of Dice": 15}
 );
-prodigy = new Perk(
-  "prodigy", "lucky", "One bonus fruit from one of the top two tiers every pick.",
+beloved = new Perk(
+  "beloved", "lucky", "Ultra rares and extraordinaries sell for 2x!",
+  {"Roll Delay": 0}
+);
+null_perk_l = new Perk(
+  "null_perk_l", "lucky", "Placeholder. Do not take this perk!!! YOU WERE WARNED!",
+  {"Roll Delay": 0}
+);
+null_perk_g = new Perk(
+  "null_perk_g", "greedy", "Placeholder. Do not take this perk!!! YOU WERE WARNED!",
   {"Roll Delay": 0}
 );
 
 let perk_dict = {
   "greedy": greedy,
   "lucky": lucky,
-  "sloth": sloth,
-  "ambition": ambition,
-  "diversify": diversify,
+  "struggle": struggle,
+  "acceptance": acceptance,
+  "raccoon": raccoon,
+  "pawnstar": pawnstar,
   "gambler": gambler,
-  "prodigy": prodigy,
+  "diversify": diversify,
   "blessed": blessed,
-  "accelerate": accelerate,
-  "hoarder": hoarder
+  "beloved": beloved,
+  "null_perk_l": null_perk_l,
+  "null_perk_g": null_perk_g
 }
 
 let min_perk_group = ["greedy"];
@@ -198,13 +208,21 @@ let max_perk_group = ["lucky"];
 
 let greedy_perks = [
   greedy,
-  [sloth, ambition],
-  [accelerate, hoarder],
+  [struggle, acceptance],
+  [raccoon, pawnstar],
+  [null_perk_g, null_perk_g],
+  [null_perk_g, null_perk_g],
+  [null_perk_g, null_perk_g],
+  [null_perk_g, null_perk_g],
+  [null_perk_g, null_perk_g]
 ]
 let lucky_perks = [
   lucky,
   [gambler, diversify],
-  [blessed, prodigy],
+  [blessed, beloved],
+  [null_perk_l, null_perk_l],
+  [null_perk_l, null_perk_l],
+  [null_perk_l, null_perk_l]
 ]
 
 let emoji_to_string = {
@@ -234,7 +252,12 @@ let emoji_to_string = {
   "🍒": "cherries",
   "🥭": "mango",
   "🍍": "pineapple",
-  "🥥": "coconut"
+  "🥥": "coconut",
+  "🦠": "microbe",
+  "💉": "syringe",
+  "🩲": "briefs",
+  "🫁": "lungs",
+  "💊": "pill"
 };
 
 function fruit_exp(tier, num_in_tier) {
@@ -291,15 +314,23 @@ for (let i = 0; i < fruit_tiers.length; i++) {
     fruit_dict[curr_str]["tier"] = i + 1;
     fruit_dict[curr_str]["num_in_tier"] = j + 1;
     fruit_dict[curr_str]["exp"] = fruit_exp(i + 1, j + 1);
-    fruit_dict[curr_str]
   }
 }
 
+
+let rare_trash_arr = ["microbe", "syringe", "briefs", "lungs", "pill"]
+let rare_trash_emoji_arr = ["🦠","💉","🩲","🫁","💊"]
+for (let i=0; i < 5; i++) {
+  let curr_str = rare_trash_arr[i];
+  fruit_dict[rare_trash_arr[i]]["tier"] = 0;
+  fruit_dict[curr_str]["num_in_tier"] = 5;
+  fruit_dict[curr_str]["exp"] = 100;
+}
 
 module.exports = {
   default_pick_limit, default_sides, default_delay, greedy, lucky,
   levels, min_perk_group, max_perk_group, ranks, greedy_perks, lucky_perks,
   tierRarity, fruit_arr_to_emoji_arr, fruit_arr_to_str_arr, emoji_to_string,
   fruit_dict, fruit_tiers, Fruit, tier_cutoffs, count_rare_fruits, perk_dict,
-  Item
+  Item, rare_trash_arr, rare_trash_emoji_arr, null_perk_l, null_perk_g
 };

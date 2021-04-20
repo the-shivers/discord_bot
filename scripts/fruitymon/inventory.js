@@ -28,6 +28,11 @@ function generateTierCounts(msg, tier_num) {
   let result = [];
   let tier_fruit_str = c.fruit_tiers[tier_num].fruit_str;
   let tier_fruit_emo = c.fruit_tiers[tier_num].fruit;
+  // Add rare trash
+  if (tier_num === [0] || tier_num === 0) {
+    tier_fruit_str = tier_fruit_str.concat(c.rare_trash_arr);
+    tier_fruit_emo = tier_fruit_emo.concat(c.rare_trash_emoji_arr);
+  }
   for(var i = 0; i < tier_fruit_str.length; i++) {
     let count = countStr(msg, tier_fruit_str[i]);
     if (count !== 0) {
@@ -55,7 +60,7 @@ function inventory(msg, content) {
       false
     )
   for(var i = 0; i < c.fruit_tiers.length; i++) {
-    template.addField(i + 1 + ". " + c.fruit_tiers[i].name, generateTierCounts(msg, [i]), true);
+    template.addField(i + 1 + ". " + c.fruit_tiers[i].name, generateTierCounts(msg, i), true);
   }
   // Add items. First create pretty item string.
   let item_str = '\u200b';

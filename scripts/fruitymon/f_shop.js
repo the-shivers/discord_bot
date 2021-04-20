@@ -16,25 +16,64 @@ function generatePrices(msg, ind) {
   let fruit_tier = c.fruit_tiers[ind]
   for (let i = 0; i < fruit_tier.fruit.length; i++) {
     let curr_fruit = new c.Fruit(fruit_tier.fruit_str[i]);
-    return_str += fruit_tier.fruit[i] + " `₣" + priceFruit(curr_fruit) + ".00`\n"
+    return_str += fruit_tier.fruit[i] + " `₣" + priceFruit(curr_fruit, msg) + ".00`\n"
   }
   return return_str;
 }
 
-function priceFruit(fruit) {
+function priceFruit(fruit, msg) {
   var d = new Date();
   var n = d.getDay()
-  if (n === trash_day) {
-    if (fruit.tier !== 1) {
+  let trash_tiers = [0, 1];
+  let rare_tiers = [5, 6];
+  if (trash_tiers.includes(fruit.tier)) {
+    if (f_record[msg.author.id]["Perks"].includes("pawnstar")) {
+      return fruit.exp * 2;
+    } else if (n === trash_day) {
+      return fruit.exp;
+    } else {
       return 0;
     }
   } else {
-    if (fruit.tier === 1) {
+    if (n === trash_day) {
       return 0;
+    } else {
+      if (f_record[msg.author.id]["Perks"].includes("beloved") && rare_tiers.includes(fruit.tier)) {
+        console.log(fruit);
+        return fruit.exp * 2;
+      } else {
+        return fruit.exp;
+      }
     }
   }
-  return fruit.exp;
 }
+
+
+  // if (f_record[msg.author.id]["Perks"].includes("pawnstar") && trash_tiers.includes(fruit.tier)) {
+  //   return fruit.exp * 2
+  // } else if (trash_tiers.includes(fruit.tier)) {
+  //   if (n === trash_day) {
+  //     return fruit.exp
+  //   }
+  // }
+  //
+  //
+  // if (n === trash_day || f_record[msg.author.id]["Perks"].includes("pawnstar")) {
+  //   if (fruit.tier === 1 || fruit.tier === 0) {
+  //     return fruit.exp * 2;
+  //   }
+  // }
+  // if (n === trash_day) {
+  //   if (fruit.tier !== 1) {
+  //     return 0;
+  //   }
+  // } else {
+  //   if (fruit.tier === 1) {
+  //     return 0;
+  //   }
+  // }
+  // return fruit.exp;
+// }
 
 function generateItems(msg) {
   // Generates items for a particular user
@@ -75,6 +114,10 @@ function prettifyItems(item_arr) {
 function f_shop(msg, content) {
   // Assemble attachment
   const template = new Discord.MessageEmbed()
+  let rare_trash_msg = '\u200b';
+  if (f_record[msg.author.id]["Perks"].includes('raccoon')) {
+    rare_trash_msg = "\n\nYou smell like you might have some rare trash! Sell it the same way you'd sell any other specific emoji."
+  }
   var d = new Date();
   var n = d.getDay()
   if (n === trash_day) {
@@ -95,7 +138,7 @@ function f_shop(msg, content) {
     var description = "Welcome! To sell, try one of the following options:\n\n"
     + "Sell one type of fruit: `!f sell <fruit emoji> <quantity>`\n"
     + "Sell all of one tier: `!f sell <tier number>`\n"
-    + "Sell all: `!f sell all`"
+    + "Sell all: `!f sell all`" + rare_trash_msg
     template.attachFiles(attachment);
     template.setThumbnail('attachment://fruit_stand.gif');
   }
@@ -135,10 +178,10 @@ function f_sell(msg, content) {
       if (curr_fruit.tier === 6) {
         trfs++;
       }
-      val += priceFruit(curr_fruit);
+      val += priceFruit(curr_fruit, msg);
     }
     inv = []
-  } else if (
+  } else if ( // Check if they sold an entire tier
     f.isNumeric(content.split(' ')[0]) &&
     (
       n === trash_day && parseInt(content.split(' ')[0]) === 1
@@ -153,7 +196,7 @@ function f_sell(msg, content) {
     for (let i = 0; i < inv.length; i++) {
       var curr_fruit = new c.Fruit(inv[i]);
       if (curr_fruit.tier == parseInt(content.split(' ')[0])) {
-        val += priceFruit(curr_fruit);
+        val += priceFruit(curr_fruit, msg);
         rem_list = rem_list.concat([i]);
       }
     }
@@ -165,7 +208,7 @@ function f_sell(msg, content) {
     if (parseInt(content.split(' ')[0]) === 6) {
       trfs += rem_list.length;
     }
-  } else if (
+  } else if ( // check if they sold a number of an emoji
     content.split(' ')[0] in c.emoji_to_string &&
     f.isNumeric(content.split(' ')[1])
   ) {
@@ -173,11 +216,16 @@ function f_sell(msg, content) {
     for (let i = 0; i < inv.length; i++) {
       var curr_fruit = new c.Fruit(inv[i]);
       if (curr_fruit.emoji == content.split(' ')[0]) {
-        val += priceFruit(curr_fruit);
+        // val += priceFruit(curr_fruit, msg);
         rem_list = rem_list.concat([i]);
       }
     }
     for (var i = Math.min(rem_list.length,parseInt(content.split(' ')[1]))-1; i >= 0; i--) {
+      var myfruit = new c.Fruit(inv[rem_list[i]]);
+      console.log("my fruit!", myfruit);
+      console.log("val begin", val)
+      val += priceFruit(myfruit, msg);
+      console.log("val end", val)
       inv.splice(rem_list[i],1);
       success = true
     }

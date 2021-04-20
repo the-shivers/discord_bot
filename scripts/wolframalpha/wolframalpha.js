@@ -15,7 +15,8 @@ let url3 = '&output=json&format=plaintext';
 // Functions
 function wolframAlpha(msg, content) {
   //Wolf it up...
-  query = content.split(' ').slice(1).join('%20');
+  //query = content.split(' ').slice(1).join('\%20');
+  query = content.split(' ').slice(1).join(' ');
   query = encodeURIComponent(query);
   request(url+query+url2+appid+url3, function (error, response, body) {
   	if (error) throw new Error(error);

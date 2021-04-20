@@ -16,45 +16,25 @@ function generateRolls(msg) {
   for (let i = 0; i < num_die; i++) {
     roll_arr = roll_arr.concat(f.rollDie(sides));
   }
-  // Logic for special perks (excl. sloth)
-  if (f_record[msg.author.id]["Perks"].includes("hoarder")) {
+  // Logic for special perks
+  if (f_record[msg.author.id]["Perks"].includes("raccoon")) {
     for (let i = 0; i < 10; i++) {
       roll_arr = roll_arr.concat(f.rollDie(20));
     }
-  } else if (f_record[msg.author.id]["Perks"].includes("prodigy")) {
-    if (f_record[msg.author.id]["Perks"].includes("gambler")) {
-      roll_arr = roll_arr.concat(98 + f.rollDie(4))
-    } else {
-      roll_arr = roll_arr.concat(96 + f.rollDie(4))
-    }
   }
   // Logic for special items
-  for (let i = 0; i < f_record[msg.author.id]["Item Inventory"].length; i++) {
-    if (f_record[msg.author.id]["Item Inventory"][i].name === "megaluck" ) {
-      for (let i = 0; i < 10; i++) {
-        roll_arr = roll_arr.concat(f.rollDie(sides));
-      }
-    } else if (f_record[msg.author.id]["Item Inventory"][i].name === "megagreed") {
-      for (let i = 0; i < 5; i++) {
-        roll_arr = roll_arr.concat(f.rollDie(sides));
-      }
-    }
-  }
+  // for (let i = 0; i < f_record[msg.author.id]["Item Inventory"].length; i++) {
+  //   if (f_record[msg.author.id]["Item Inventory"][i].name === "megaluck" ) {
+  //     for (let i = 0; i < 10; i++) {
+  //       roll_arr = roll_arr.concat(f.rollDie(sides));
+  //     }
+  //   } else if (f_record[msg.author.id]["Item Inventory"][i].name === "megagreed") {
+  //     for (let i = 0; i < 5; i++) {
+  //       roll_arr = roll_arr.concat(f.rollDie(sides));
+  //     }
+  //   }
+  // }
   // Logic for sloth perk
-  let hoarder_rolls = 0
-  if (f_record[msg.author.id]["Perks"].includes("sloth")) {
-    let addtl_rolls = roll_arr.length * 2;
-    if (f_record[msg.author.id]["Perks"].includes("hoarder")) {
-      hoarder_rolls = 20;
-      addtl_rolls -= 20;
-    }
-    for (let i = 0; i < addtl_rolls; i++) {
-      roll_arr = roll_arr.concat(f.rollDie(sides));
-    }
-    for (let i = 0; i < hoarder_rolls; i++) {
-      roll_arr = roll_arr.concat(f.rollDie(20));
-    }
-  }
   return roll_arr;
 }
 
@@ -87,26 +67,20 @@ function pickLogic(msg) {
     }
   }
   // Adjust number of picks based on special perks. +1 for prodigy, +10 for hoarder
-  if (f_record[msg.author.id]["Perks"].includes("prodigy")) {
-    num_picks += 1;
-  } else if (f_record[msg.author.id]["Perks"].includes("hoarder")) {
-    num_picks += 10
+  if (f_record[msg.author.id]["Perks"].includes("raccoon")) {
+    num_picks += 10;
   }
   // Logic for special items
-  for (let i = 0; i < f_record[msg.author.id]["Item Inventory"].length; i++) {
-    if (f_record[msg.author.id]["Item Inventory"][i].name === "megagreed") {
-      num_picks += 5;
-    }
-  }
+  // for (let i = 0; i < f_record[msg.author.id]["Item Inventory"].length; i++) {
+  //   if (f_record[msg.author.id]["Item Inventory"][i].name === "megagreed") {
+  //     num_picks += 5;
+  //   }
+  // }
   // Logic for sloth
-  if (f_record[msg.author.id]["Perks"].includes("sloth")) {
-    let to_add = num_picks * 2;
-    num_picks += to_add;
-  }
   return [roll_arr.slice(0, num_picks), roll_arr.slice(num_picks)];
 }
 
-function fruitArray(arr) {
+function fruitArray(arr, msg) {
   // returns a fruit array based on a numerical array
   let fruit_arr = [];
   let i;
@@ -121,6 +95,17 @@ function fruitArray(arr) {
     let tier_rarity = c.tierRarity(c.fruit_tiers[j].fruit.length); // 1-indexed!
     let temp_val = c.fruit_tiers[j].fruit[tier_rarity - 1];
     let fruit_str = c.emoji_to_string[temp_val];
+    let curr_fruit = new c.Fruit(fruit_str)
+    // Coon logic
+    if (
+      f_record[msg.author.id]["Perks"].includes("raccoon") &&
+      curr_fruit.tier === 1
+    ) {
+      let chance = Math.floor(Math.random() * 50)
+      if (chance <= 4) {
+        fruit_str = c.rare_trash_arr[chance];
+      }
+    }
     fruit_arr = fruit_arr.concat(new c.Fruit(fruit_str));
   }
   return fruit_arr;
@@ -131,10 +116,6 @@ function generateExperience(msg, fruit_arr) {
   let exp_arr = []
   for (let i = 0; i < fruit_arr.length; i++) {
     let exp = fruit_arr[i].exp
-    // Special Perk Logic
-    if (f_record[msg.author.id]["Perks"].includes("accelerate")) {
-      exp = Math.round(exp * 1.5);
-    }
     exp_arr = exp_arr.concat(exp);
   }
   return exp_arr;
@@ -207,8 +188,8 @@ function pick(msg, content) {
   let [can_roll, wait] = canRoll(msg);
   if (can_roll) {
     let [keep, discard] = pickLogic(msg);
-    let keep_fruit = fruitArray(keep);
-    let discard_fruit = fruitArray(discard);
+    let keep_fruit = fruitArray(keep, msg);
+    let discard_fruit = fruitArray(discard, msg);
     let keep_exp = generateExperience(msg, keep_fruit);
     let discard_exp = generateExperience(msg, discard_fruit);
 
@@ -216,6 +197,9 @@ function pick(msg, content) {
     let keep_fruit_str = c.fruit_arr_to_emoji_arr(keep_fruit).join(" ");
     let discard_fruit_str = c.fruit_arr_to_emoji_arr(discard_fruit).join(" ");
     let keep_exp_str = "`" + keep_exp.join(" + ") + "`\n";
+    if (keep_exp_str.length > 990) {
+      keep_exp_str = "Shortened: `..." + keep_exp_str.slice(-990)
+    }
     let discard_exp_str = "`" + discard_exp.join(" + ") + " `\n";
     let keep_exp_ttl = "` = " + keep_exp.reduce((a, b) => a + b, 0) + "`" // Sum
     let discard_exp_ttl = "` = " + discard_exp.reduce((a, b) => a + b, 0) + "`"

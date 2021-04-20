@@ -6,6 +6,7 @@ const p = require('./f_pick.js')
 const fs = require('fs');
 var f_record = require('./f_record.json');
 const Discord = require('discord.js');
+const f = require('../../funcs.js');
 
 function stats(msg, content) {
   // Get basic info
@@ -43,6 +44,18 @@ function stats(msg, content) {
   + user_json["Total Rare Fruit Sold"] + '`\n'
   detail_str += "`Fruitbux Earned: ₣"
   + user_json["Total Fruitbux Earned"] + '`\n'
+
+  // Get time remaining for details
+  let prev_time = f_record[msg.author.id]["Last Roll"];
+  let curr_time = msg.createdTimestamp;
+  let diff = Math.round((curr_time - prev_time)/1000);
+  let wait = f_record[msg.author.id]["Roll Delay"] - diff;
+  let minutes_and_seconds = f.secondsAndMinutes(wait)
+
+  if (minutes_and_seconds <= 0) {
+    minutes_and_seconds = "You can pick now!"
+  }
+  detail_str += "\n`Time until next pick:\n" + minutes_and_seconds + "`"
 
   // Perks
   let perk_str = "";

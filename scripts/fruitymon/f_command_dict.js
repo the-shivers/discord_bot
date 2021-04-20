@@ -24,7 +24,15 @@ let f_command_dict = {
     "log": "Displaying perks!",
     "func": perk.perk
   },
+  "perk": {
+    "log": "Displaying perks!",
+    "func": perk.perk
+  },
   "inventory": {
+    "log": "Showing an inventory",
+    "func": inventory.inventory
+  },
+  "inv": {
     "log": "Showing an inventory",
     "func": inventory.inventory
   },
