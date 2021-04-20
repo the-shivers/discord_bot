@@ -1,0 +1,55 @@
+{
+  "annoyed": [
+    "\"AAAAAAAAAAAAAHHHHH STOP PESTERING ME!\"\nIt seems like God isn't really in the mood to talk to you right now.",
+    "Wow, look at that expression. God really hates you, huh? Better come back when he doesn't want to kill you.",
+    "\"LISTEN JERK, I DON'T HAVE TIME TO ANSWER YOUR PRAYERS ALL DAY. I'M NOT IN THE MOOD RIGHT NOW.\"",
+    "\"I HATE THIS I DON'T WANT TO BE GOD ANYMORE I WANT TO LET SOMEBODY ELSE BE GOD LIKE IN THAT MOVIE!\"",
+    "You hear a lot of sounds, like God is beating someone to death. You decide it might be better to come back later."
+  ],
+  "happy":[
+    [
+      "\"Hey! Funny seeing you again so soon. What can I do for you $name? Do you have any nice offerings for a God like me?\"",
+      "\"Wow! Feels like it's been less than an hour. That's because it has! Haha. But seriously: got any offerings?\""
+    ],
+    [
+      "\"It's been a while, hasn't it $name? Were you able to scrounge up any nice offerings for me since we last met?\""
+    ],
+    [
+      "\"Hey there! It's me, God! Not what you're expecting? I get that all the time! Haha. Anyway, I heard you wanted to make me an offering?\""
+    ]
+  ],
+  "thinking":[
+    [
+      "\"Hey! Funny seeing you again so soon. What can I do for you $name? Do you have any nice offerings for a God like me?\"",
+      "\"Wow! Feels like it's been less than an hour. That's because it has! Haha. But seriously: got any offerings?\""
+    ],
+    [
+      "\"It's been a while, hasn't it $name? Were you able to scrounge up any nice offerings for me since we last met?\""
+    ],
+    [
+      "\"Hey there! It's me, God! Not what you're expecting? I get that all the time! Haha. Anyway, I heard you wanted to make me an offering?\""
+    ]
+  ],
+  "sad":[
+    [
+      "\"Oh. It's you again, $name. Back so soon. I've just been thinking about all the baby deer I've struck with lightning. Yeah, it's kind of a bummer. Anyway, a nice offering might cheer me up!\""
+    ],
+    [
+      "\"It's been a while, $name, but seeing an old friend again might cheer me up. Speaking of, have you seen Dave around? Haha. Just yanking your chain. Anyway, I could use a nice offering right about now.\""
+    ],
+    [
+      "\"Oh, sorry to meet you looking like this! I'm God! Yeah! Gods can be sad sometimes. Anyway, offerings really cheer us gods up, so please make one when you get the chance!\""
+    ]
+  ],
+  "angry":[
+    [
+      "\"Ugh, it's you. I thought I'd seen the last of you today. Fine, just tell me what you want and get it over with. And don't waste my time if you're not going to make me a really generous offering.\""
+    ],
+    [
+      "\"I thought I'd gotten rid of you for good. Why are you back? Go away. I don't want anything to do with you right now.\""
+    ],
+    [
+      "\"HELLO I'M GOD BUT RIGHT NOW I'M AN ANGRY GOD. NICE TO MEET YOU. PLEASE LEAVE ME AN OFFERING.\""
+    ]
+  ]
+}
