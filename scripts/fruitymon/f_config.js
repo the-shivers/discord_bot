@@ -260,6 +260,17 @@ let emoji_to_string = {
   "💊": "pill"
 };
 
+function swap(json){
+  var ret = {};
+  for(var key in json){
+    ret[json[key]] = key;
+  }
+  return ret;
+}
+
+
+let string_to_emoji = swap(emoji_to_string);
+
 function fruit_exp(tier, num_in_tier) {
   let tier_exp = [10, 20, 40, 75, 125, 250][tier - 1];
   let num_in_tier_exp = tier**2 * num_in_tier;
@@ -332,5 +343,6 @@ module.exports = {
   levels, min_perk_group, max_perk_group, ranks, greedy_perks, lucky_perks,
   tierRarity, fruit_arr_to_emoji_arr, fruit_arr_to_str_arr, emoji_to_string,
   fruit_dict, fruit_tiers, Fruit, tier_cutoffs, count_rare_fruits, perk_dict,
-  Item, rare_trash_arr, rare_trash_emoji_arr, null_perk_l, null_perk_g
+  Item, rare_trash_arr, rare_trash_emoji_arr, null_perk_l, null_perk_g,
+  string_to_emoji
 };

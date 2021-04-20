@@ -10,6 +10,7 @@ const f_stats = require('./f_stats.js');
 const f_shop = require('./f_shop.js');
 const f_reset = require('./f_reset.js');
 const f_cheat = require('./f_cheat.js');
+const f_steal = require('./f_steal.js');
 
 let f_command_dict = {
   "tiers": {
@@ -63,6 +64,14 @@ let f_command_dict = {
   "sell": {
     "log": "Shop selling.",
     "func": f_shop.f_sell
+  },
+  "steal": {
+    "log": "STEALING.",
+    "func": f_steal.f_steal
+  },
+  "steal_m": {
+    "log": "STEALING MONEY.",
+    "func": f_steal.f_steal_m
   }
 }
 
