@@ -23,6 +23,7 @@ const drake = require('./scripts/drake/drake.js');
 const brain = require('./scripts/brain/brain.js');
 const test = require('./scripts/test/test.js');
 const god = require('./scripts/god/god.js');
+const grid = require('./scripts/grid/grid.js');
 
 let command_dict = {
   "tarot": {
@@ -140,6 +141,10 @@ let command_dict = {
   "god": {
     "log": "Talking to god...",
     "func": god.god
+  }  ,
+  "grid": {
+    "log": "Gridding...",
+    "func": grid.grid
   }
 };
 

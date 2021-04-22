@@ -19,6 +19,7 @@ function help(msg, content) {
   + "**!wa <query>** - *Asks Wolfram Alpha something.*\n"
   + "**!sona** - *Generates a fursona. Yikes warning.*\n"
   + "**!drake <top text> | <bottom text>** - *Epic and totally-not outdated drake meme.*\n"
+  + "**!grid <north text-south text>,<east text-west text>** - *Example: `!grid being gay-being straight, based-cringe` Creates an alignment chart.*\n"
   + "**!brain <top brain text> | <second brain text> | <third brain text> [| fourth brain text] [| fifth brain text ]** - *Epic and totally-not outdated galaxy brain meme.*\n"
   + "**!f <various options>** - *Starts a fruitymon command. Run '!f help' "
   + "for details.*\n"
