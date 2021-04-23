@@ -99,6 +99,7 @@ function createPerkTree() {
   return template;
 }
 
+
 function perk(msg, content) {
   // Offer perks.
   if (content === "tree") {
