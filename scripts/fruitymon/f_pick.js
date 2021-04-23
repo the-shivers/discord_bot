@@ -9,7 +9,7 @@ const record_filename_full = './scripts/fruitymon/f_record.json';
 var f_record = require(record_filename);
 const Discord = require('discord.js');
 
-function generateRolls(msg) {
+function generateRolls(msg, can_megaroll=false) {
   let roll_arr = [];
   let num_die = f_record[msg.author.id]["Number of Dice"];
   let sides = f_record[msg.author.id]["Dice Sides"];
@@ -22,19 +22,12 @@ function generateRolls(msg) {
       roll_arr = roll_arr.concat(f.rollDie(20));
     }
   }
-  // Logic for special items
-  // for (let i = 0; i < f_record[msg.author.id]["Item Inventory"].length; i++) {
-  //   if (f_record[msg.author.id]["Item Inventory"][i].name === "megaluck" ) {
-  //     for (let i = 0; i < 10; i++) {
-  //       roll_arr = roll_arr.concat(f.rollDie(sides));
-  //     }
-  //   } else if (f_record[msg.author.id]["Item Inventory"][i].name === "megagreed") {
-  //     for (let i = 0; i < 5; i++) {
-  //       roll_arr = roll_arr.concat(f.rollDie(sides));
-  //     }
-  //   }
-  // }
-  // Logic for sloth perk
+  if (can_megaroll) {
+    for (let i = 0; i < 40; i++) {
+      roll_arr = roll_arr.concat(f.rollDie(100))
+    }
+  }
+
   return roll_arr;
 }
 
@@ -50,11 +43,11 @@ function canRoll(msg) {
   }
 }
 
-function pickLogic(msg) {
+function pickLogic(msg, can_megaroll = false) {
   // Gets the correct number of numbers for your picks of your rolls
   // If you have 7 rolls and 5 picks, you may want the lowest or highest rolls.
   // Defaults to random rolls. Returns selected and discarded arrays.
-  let roll_arr = generateRolls(msg);
+  let roll_arr = generateRolls(msg, can_megaroll);
   let num_picks = f_record[msg.author.id]['Pick Limit'];
   for (let i = 0; i < f_record[msg.author.id]["Perks"].length; i++) {
     let curr_perk_str = f_record[msg.author.id]["Perks"][i];
@@ -69,6 +62,9 @@ function pickLogic(msg) {
   // Adjust number of picks based on special perks. +1 for prodigy, +10 for hoarder
   if (f_record[msg.author.id]["Perks"].includes("raccoon")) {
     num_picks += 10;
+  }
+  if (can_megaroll) {
+    num_picks += 40;
   }
   // Logic for special items
   // for (let i = 0; i < f_record[msg.author.id]["Item Inventory"].length; i++) {
@@ -174,11 +170,37 @@ function updateFruitStats(msg, fruit_array, final_exp, f_record) {
   f_record[msg.author.id]["Total Fruit Picked"] += fruit_array.length;
   f_record[msg.author.id]["Total Rare Fruits Picked"] += rare_count;
   f_record[msg.author.id]["Last Roll"] = msg.createdTimestamp;
+  if (
+    f_record[msg.author.id]["Perks"].includes("king_of_fruits")
+    && str_array.includes("pineapple")
+  ) {
+    msg.channel.send("🍍 The King has Arrived! Pick again immediately! 🍍")
+    f_record[msg.author.id]["Last Roll"] = msg.createdTimestamp - (1800*1000);
+  }
   f_record[msg.author.id]["Current Channel"] = msg.channel.id;
   if (final_exp >= c.levels[f_record[msg.author.id]["Level"]]) {
     f_record = levelUp(msg, f_record);
   }
   return f_record;
+}
+
+function megaroll(msg) {
+  let yr = msg.createdAt.getUTCFullYear()
+  let mnth = ("0" + msg.createdAt.getUTCMonth()).slice(-2)
+  let day = ("0" + msg.createdAt.getUTCDate()).slice(-2)
+  let new_date = yr + "-" + mnth + "-" + day;
+  if (f_record[msg.author.id]["Perks"].includes("king_of_trash")) {
+    if ("Last Mega Date" in f_record[msg.author.id]) {
+      if (new_date > f_record[msg.author.id]["Last Mega Date"]) {
+        f_record[msg.author.id]["Last Mega Date"] = new_date;
+        return true
+      }
+    } else {
+      f_record[msg.author.id]["Last Mega Date"] = new_date;
+      return true
+    }
+  }
+  return false;
 }
 
 
@@ -187,7 +209,8 @@ function pick(msg, content) {
   // Run Functions
   let [can_roll, wait] = canRoll(msg);
   if (can_roll) {
-    let [keep, discard] = pickLogic(msg);
+    let can_megaroll = megaroll(msg);
+    let [keep, discard] = pickLogic(msg, can_megaroll);
     let keep_fruit = fruitArray(keep, msg);
     let discard_fruit = fruitArray(discard, msg);
     let keep_exp = generateExperience(msg, keep_fruit);
@@ -234,7 +257,7 @@ function pick(msg, content) {
       .addField("Discarded Exp.", fill + discard_exp_str + discard_exp_ttl, true)
       // .addField(expb1, expb2, false)
     msg.reply(template);
-
+    if (can_megaroll) msg.channel.send("🎲Megaroll!🎲");
     // Update stats
     f_record = updateFruitStats(msg, keep_fruit, curr_exp + new_exp, f_record);
     fs.writeFile(record_filename_full, JSON.stringify(f_record, null, 2), function writeJSON(err) {

@@ -49,32 +49,6 @@ function priceFruit(fruit, msg) {
 }
 
 
-  // if (f_record[msg.author.id]["Perks"].includes("pawnstar") && trash_tiers.includes(fruit.tier)) {
-  //   return fruit.exp * 2
-  // } else if (trash_tiers.includes(fruit.tier)) {
-  //   if (n === trash_day) {
-  //     return fruit.exp
-  //   }
-  // }
-  //
-  //
-  // if (n === trash_day || f_record[msg.author.id]["Perks"].includes("pawnstar")) {
-  //   if (fruit.tier === 1 || fruit.tier === 0) {
-  //     return fruit.exp * 2;
-  //   }
-  // }
-  // if (n === trash_day) {
-  //   if (fruit.tier !== 1) {
-  //     return 0;
-  //   }
-  // } else {
-  //   if (fruit.tier === 1) {
-  //     return 0;
-  //   }
-  // }
-  // return fruit.exp;
-// }
-
 function generateItems(msg) {
   // Generates items for a particular user
   let item_arr = [];
@@ -89,6 +63,7 @@ function generateItems(msg) {
 function generateGreedyItems() {
   let item_arr = [];
   item_arr = item_arr.concat(
+    new c.Item("deperker"),
     new c.Item("megagreed")
   )
   return item_arr;
@@ -97,6 +72,7 @@ function generateGreedyItems() {
 function generateLuckyItems() {
   let item_arr = [];
   item_arr = item_arr.concat(
+    new c.Item("deperker"),
     new c.Item("megaluck")
   )
   return item_arr;
@@ -265,6 +241,12 @@ function f_buy(msg, content) {
           f_record[msg.author.id]["Item Inventory"].concat(
             {"name": buy_items[i].name, "date": msg.createdTimestamp}
           );
+        if (buy_items[i].name == 'deperker') {
+          f_record[msg.author.id]["Perks"] = [];
+          f_record[msg.author.id]["Pick Limit"] = 5;
+          f_record[msg.author.id]["Number of Dice"] = 5;
+          f_record[msg.author.id]["Dice Sides"] = 100;
+        }
         fs.writeFileSync(record_filename_full, JSON.stringify(f_record, null, 2), function writeJSON(err) {
           if (err) return console.log(err);
         });

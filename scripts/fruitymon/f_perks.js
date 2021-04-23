@@ -37,6 +37,8 @@ function offerPerks(msg, level, perks) {
         }
       }
       return result_arr;
+    } else if (perks.length === 4) {
+      return [c.king_of_trash, c.empty_perk]
     } else {
       return [c.null_perk_g, c.null_perk_g];
     }
@@ -51,8 +53,10 @@ function offerPerks(msg, level, perks) {
         }
       }
       return result_arr;
+    } else if (perks.length === 4) {
+      return [c.king_of_fruits, c.empty_perk]
     } else {
-      return [c.null_perk_l, c.null_perk_l];
+      return [c.null_perk_g, c.null_perk_g];
     }
   }
   return [perk_opt1, perk_opt2];
@@ -71,6 +75,8 @@ function createPerkTree() {
   let l4pl = "`" + c.perk_dict['blessed'].str + "` - " + c.perk_dict['blessed'].desc + '\n';
   l4pl += "`" + c.perk_dict['beloved'].str + "` - " + c.perk_dict['beloved'].desc + '\n';
   let l5p = "For your fifth perk, you'll have the option to pick up one last perk from your branch (greedy/lucky).";
+  let l6pl = "`" + c.perk_dict['king_of_fruits'].str + "` - " + c.perk_dict['king_of_fruits'].desc;
+  let l6pg = "`" + c.perk_dict['king_of_trash'].str + "` - " + c.perk_dict['king_of_trash'].desc;
   const attachment = new Discord.MessageAttachment('./scripts/fruitymon/assets/tree.gif', 'tree.gif');
   const template = new Discord.MessageEmbed()
     .setColor('#77DD77')
@@ -87,6 +93,9 @@ function createPerkTree() {
     .addField('Level 4 Perk (Greedy Branch)', l4pg, true)
     .addField(fill, fill, false)
     .addField('Level 5 Perk', l5p, false)
+    .addField(fill, fill, false)
+    .addField('Level 6 Perk (Lucky Branch)', l6pl, true)
+    .addField('Level 6 Perk (Greedy Branch)', l6pg, true)
   return template;
 }
 
@@ -106,14 +115,17 @@ function perk(msg, content) {
       if (content === "") {
         // STYLE THIS SECTION OF WHAT PERKS THEY COULD HAVE
         const attachment = new Discord.MessageAttachment('./scripts/fruitymon/assets/question_mark.gif', 'question_mark.gif');
+        console.log(p1, p2);
         const template = new Discord.MessageEmbed()
           .setColor('#AACC33')
           .setTitle("↔️ Select a perk! ↔️")
           .attachFiles(attachment)
           .setThumbnail('attachment://question_mark.gif')
           .addField('Option 1: ' + p1.proper, "`!f perks " + p1.str + "`\n" + p1.desc, true)
-          .addField('Option 2: ' + p2.proper, "`!f perks " + p2.str + "`\n" + p2.desc, true)
           .setFooter("*Don't pick the wrong thing! This decision is irreversible!*");
+        if (p2.str.length > 1) {
+          template.addField('Option 2: ' + p2.proper, "`!f perks " + p2.str + "`\n" + p2.desc, true)
+        }
         msg.channel.send(template);
       } else if (content.split(' ').length === 1) {
         let selected_perk = content.split(' ')[0];

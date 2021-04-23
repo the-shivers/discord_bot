@@ -4,6 +4,10 @@
 const Discord = require("discord.js");
 const Canvas = require('canvas');
 const f = require('../../funcs.js');
+const fs = require('fs');
+var pairs = JSON.parse(
+  fs.readFileSync('scripts/grid/grid.json', 'utf8')
+).pairs;
 const width = 700;
 const height = 700;
 
@@ -27,7 +31,6 @@ function awaitAll(list, asyncFn) {
 }
 
 async function grid(msg, content) {
-  msg.channel.send("AAAAAAAAAAA")
   const canvas = Canvas.createCanvas(width, height);
 	const ctx = canvas.getContext('2d');
   const background = await Canvas.loadImage('./scripts/grid/assets/grid.jpg');
@@ -46,8 +49,11 @@ async function grid(msg, content) {
     var east = second_part.split('-')[0]
     var west = second_part.split('-')[1]
   } else {
-    msg.channel.send("you fucked it up...");
-    return;
+    pairs = f.shuffle(pairs);
+    var north = pairs[0][0]
+    var south = pairs[0][1]
+    var east = pairs[1][0]
+    var west = pairs[1][1]
   }
 
   // Asynchronously get images
@@ -70,15 +76,15 @@ async function grid(msg, content) {
   // Text
   ctx.textAlign = "center";
   ctx.font = '32px comic sans ms';
-  ctx.fillText(north, width / 2, 30);
-  ctx.fillText(south, width / 2, height - 15);
+  ctx.fillText(north.trim(), width / 2, 30);
+  ctx.fillText(south.trim(), width / 2, height - 15);
   ctx.rotate(Math.PI/2);
-  ctx.fillText(east, width / 2, - 15);
+  ctx.fillText(east.trim(), width / 2, - 15);
   ctx.rotate(Math.PI);
-  ctx.fillText(west, -width / 2, height - 15);
+  ctx.fillText(west.trim(), -width / 2, height - 15);
 
   const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'welcome-image.png');
-  msg.channel.send(`Welcome to the server, asdfasdfs!`, attachment);
+  msg.channel.send(attachment);
 }
 
 

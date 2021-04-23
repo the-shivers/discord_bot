@@ -12,9 +12,13 @@ class Fruit {
 class Perk {
   constructor(str, group, description, effects) {
     this.str = str;
-    this.proper = (
-      str[0].toUpperCase() + str.substring(1)
-    ).split("_").join(" ");
+    if (str.length > 0) {
+      this.proper = (
+        str[0].toUpperCase() + str.substring(1)
+      ).split("_").join(" ");
+    } else {
+      this.proper = ""
+    }
     this.group = group;
     this.desc = description;
     this.effects = effects;
@@ -61,6 +65,13 @@ let item_dict = {
     "desc": "5 extra fruits per pick for 24 hours",
     "exp": 3600 * 24,
     "price": 20000000000000000000
+  }
+  ,
+  "deperker": {
+    "name": "deperker",
+    "desc": "Resets your perks. Also removes boons/curses from God.",
+    "exp": 0,
+    "price": 20000
   }
 }
 
@@ -187,6 +198,17 @@ null_perk_g = new Perk(
   "null_perk_g", "greedy", "Placeholder. Do not take this perk!!! YOU WERE WARNED!",
   {"Roll Delay": 0}
 );
+king_of_fruits = new Perk(
+  "king_of_fruits", "lucky", "If you pick a pineapple, get to immediately pick agin!",
+  {"Roll Delay": 0}
+);
+king_of_trash = new Perk(
+  "king_of_trash", "greedy", "Your first pick of the day is a megapick!",
+  {"Roll Delay": 0}
+);
+empty_perk = new Perk(
+  "", "", "", {}
+)
 
 let perk_dict = {
   "greedy": greedy,
@@ -200,7 +222,10 @@ let perk_dict = {
   "blessed": blessed,
   "beloved": beloved,
   "null_perk_l": null_perk_l,
-  "null_perk_g": null_perk_g
+  "null_perk_g": null_perk_g,
+  "king_of_fruits": king_of_fruits,
+  "king_of_trash": king_of_trash,
+  "empty_perk": empty_perk
 }
 
 let min_perk_group = ["greedy"];
@@ -344,5 +369,5 @@ module.exports = {
   tierRarity, fruit_arr_to_emoji_arr, fruit_arr_to_str_arr, emoji_to_string,
   fruit_dict, fruit_tiers, Fruit, tier_cutoffs, count_rare_fruits, perk_dict,
   Item, rare_trash_arr, rare_trash_emoji_arr, null_perk_l, null_perk_g,
-  string_to_emoji
+  string_to_emoji, king_of_fruits, king_of_trash, empty_perk
 };

@@ -12,6 +12,7 @@ const f_reset = require('./f_reset.js');
 const f_cheat = require('./f_cheat.js');
 const f_steal = require('./f_steal.js');
 const f_shoot = require('./f_shoot.js');
+const give = require('./give.js');
 
 let f_command_dict = {
   "tiers": {
@@ -73,6 +74,14 @@ let f_command_dict = {
   "steal_m": {
     "log": "STEALING MONEY.",
     "func": f_steal.f_steal_m
+  },
+  "give": {
+    "log": "Giving fruits :).",
+    "func": give.f_give
+  },
+  "give_m": {
+    "log": "Sharing the wealth.",
+    "func": give.f_give_m
   },
   "shoot": {
     "log": "kapow!",
