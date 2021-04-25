@@ -18,6 +18,7 @@ bot.on("ready", () => {
     "backups",
     [
       "./scripts/fruitymon/f_record.json",
+      "./scripts/fruitymon/fruit_dict.json",
       "./scripts/ml/ml.json"
     ]
   );

@@ -52,7 +52,7 @@ function stats(msg, content) {
   let wait = f_record[msg.author.id]["Roll Delay"] - diff;
   let minutes_and_seconds = f.secondsAndMinutes(wait)
 
-  if (minutes_and_seconds <= 0) {
+  if (wait <= 0) {
     minutes_and_seconds = "You can pick now!"
   }
   detail_str += "\n`Time until next pick:\n" + minutes_and_seconds + "`"

@@ -1,4 +1,6 @@
 // Config
+let fruit_dict = require('./fruit_dict.json');
+
 class Fruit {
   constructor(str) {
     this.str = str;
@@ -73,57 +75,13 @@ let item_dict = {
     "exp": 0,
     "price": 20000
   }
-}
-
-let fruit_tiers = [
-  {
-    "name": "Trash",
-    "fruit": ["🍂", "🪵", "🥚", "🥌", "🗿"],
-    "fruit_str": ["fallen_leaf", "wood", "egg", "curling_stone", "moyai"],
-    "rarity_int": 20,
-    "rarity_prop": 0.2,
-  },
-  {
-    "name": "Barely Fruit",
-    "fruit": ["🫒", "🍅", "🌶️", "🍆", "🥑"],
-    "fruit_str": ["olive", "tomato", "hot_pepper", "eggplant", "avocado"],
-    "rarity_int": 30,
-    "rarity_prop": 0.3
-  },
-  {
-    "name": "Common Fruit",
-    "fruit": ["🍏", "🍎", "🍐", "🍑", "🍌"],
-    "fruit_str": ["green_apple", "apple", "pear", "peach", "banana"],
-    "rarity_int": 34,
-    "rarity_prop": 0.34
-  },
-  {
-    "name": "Rare Fruit",
-    "fruit": ["🍊", "🍋", "🍉", "🍈", "🥝"],
-    "fruit_str": ["tangerine", "lemon", "watermelon", "melon", "kiwi"],
-    "rarity_int": 12,
-    "rarity_prop": 0.12
-  },
-  {
-    "name": "Ultra Rare Fruit",
-    "fruit": ["🍒", "🍓", "🍇", "🫐"],
-    "fruit_str": ["cherries", "strawberry", "grapes", "blueberries"],
-    "rarity_int": 3,
-    "rarity_prop": 0.03
-  },
-  {
-    "name": "Extraordinary Fruit",
-    "fruit": ["🥭", "🥥", "🍍"],
-    "fruit_str": ["mango", "coconut", "pineapple"],
-    "rarity_int": 1,
-    "rarity_prop": 0.01
+  ,
+  "lock": {
+    "name": "lock",
+    "desc": "Locks up your shit for a day so people can't steal it. Lasts 24 hours.",
+    "exp": 3600 * 24,
+    "price": 2000
   }
-];
-
-let tier_cutoffs = [fruit_tiers[0].rarity_int];
-for (let i = 1; i < fruit_tiers.length; i++) {
-  let new_cutoff = fruit_tiers[i].rarity_int + tier_cutoffs[i - 1];
-  tier_cutoffs = tier_cutoffs.concat(new_cutoff);
 }
 
 let levels = [
@@ -334,33 +292,429 @@ function tierRarity(n) {
   return return_val;
 }
 
-let fruit_dict = {};
-for (const [key, value] of Object.entries(emoji_to_string)) {
-  fruit_dict[value] = {
-    "str": value,
-    "emoji": key,
+let fruit_dict2 = {
+   "wood":{
+      "str":"wood",
+      "emoji":"🪵",
+      "tier":1,
+      "num_in_tier":2,
+      "exp":12,
+      "period": 1,
+      "offset": 0,
+      "amplitude": 1,
+      "rw_amplitude": 2
+   },
+   "fallen_leaf":{
+      "str":"fallen_leaf",
+      "emoji":"🍂",
+      "tier":1,
+      "num_in_tier":1,
+      "exp":11,
+      "period": 1,
+      "offset": 0,
+      "amplitude": 1,
+      "rw_amplitude": 1
+   },
+   "curling_stone":{
+      "str":"curling_stone",
+      "emoji":"🥌",
+      "tier":1,
+      "num_in_tier":4,
+      "exp":14,
+      "period": 1,
+      "offset": 0,
+      "amplitude": 1,
+      "rw_amplitude": 4
+   },
+   "egg":{
+      "str":"egg",
+      "emoji":"🥚",
+      "tier":1,
+      "num_in_tier":3,
+      "exp":13,
+      "period": 1,
+      "offset": 0,
+      "amplitude": 1,
+      "rw_amplitude": 3
+   },
+   "moyai":{
+      "str":"moyai",
+      "emoji":"🗿",
+      "tier":1,
+      "num_in_tier":5,
+      "exp":15,
+      "period": 1,
+      "offset": 0,
+      "amplitude": 1,
+      "rw_amplitude": 5
+   },
+   "olive":{
+      "str":"olive",
+      "emoji":"🫒",
+      "tier":2,
+      "num_in_tier":1,
+      "exp":24,
+      "period": 2,
+      "offset": 1,
+      "amplitude": 12,
+      "rw_amplitude": 2
+   },
+   "tomato":{
+      "str":"tomato",
+      "emoji":"🍅",
+      "tier":2,
+      "num_in_tier":2,
+      "exp":28,
+      "period": 7,
+      "offset": 2,
+      "amplitude": 8,
+      "rw_amplitude": 4
+   },
+   "hot_pepper":{
+      "str":"hot_pepper",
+      "emoji":"🌶️",
+      "tier":2,
+      "num_in_tier":3,
+      "exp":32,
+      "period": 10,
+      "offset": 5,
+      "amplitude": 9,
+      "rw_amplitude": 6
+   },
+   "eggplant":{
+      "str":"eggplant",
+      "emoji":"🍆",
+      "tier":2,
+      "num_in_tier":4,
+      "exp":36,
+      "period": 3,
+      "offset": 1,
+      "amplitude": 4,
+      "rw_amplitude": 2
+   },
+   "avocado":{
+      "str":"avocado",
+      "emoji":"🥑",
+      "tier":2,
+      "num_in_tier":5,
+      "exp":40,
+      "period": 5,
+      "offset": 2,
+      "amplitude": 30,
+      "rw_amplitude": 6
+   },
+   "green_apple":{
+      "str":"green_apple",
+      "emoji":"🍏",
+      "tier":3,
+      "num_in_tier":1,
+      "exp":49,
+      "period": 14,
+      "offset": 2,
+      "amplitude": 30,
+      "rw_amplitude": 20
+   },
+   "apple":{
+      "str":"apple",
+      "emoji":"🍎",
+      "tier":3,
+      "num_in_tier":2,
+      "exp":58,
+      "period": 14,
+      "offset": 2,
+      "amplitude": 20,
+      "rw_amplitude": 6
+   },
+   "pear":{
+      "str":"pear",
+      "emoji":"🍐",
+      "tier":3,
+      "num_in_tier":3,
+      "exp":67,
+      "period": 14,
+      "offset": 2,
+      "amplitude": 30,
+      "rw_amplitude": 10
+   },
+   "peach":{
+      "str":"peach",
+      "emoji":"🍑",
+      "tier":3,
+      "num_in_tier":4,
+      "exp":76,
+      "period": 14,
+      "offset": 2,
+      "amplitude": 34,
+      "rw_amplitude": 12
+   },
+   "banana":{
+      "str":"banana",
+      "emoji":"🍌",
+      "tier":3,
+      "num_in_tier":5,
+      "exp":85,
+      "period": 14,
+      "offset": 2,
+      "amplitude": 40,
+      "rw_amplitude": 16
+   },
+   "tangerine":{
+      "str":"tangerine",
+      "emoji":"🍊",
+      "tier":4,
+      "num_in_tier":1,
+      "exp":91,
+      "period": 24,
+      "offset": 12,
+      "amplitude": 91,
+      "rw_amplitude": 30
+   },
+   "lemon":{
+      "str":"lemon",
+      "emoji":"🍋",
+      "tier":4,
+      "num_in_tier":2,
+      "exp":107,
+      "period": 19,
+      "offset": 4,
+      "amplitude": 107,
+      "rw_amplitude": 30
+   },
+   "watermelon":{
+      "str":"watermelon",
+      "emoji":"🍉",
+      "tier":4,
+      "num_in_tier":3,
+      "exp":123,
+      "period": 15,
+      "offset": 11,
+      "amplitude": 123,
+      "rw_amplitude": 40
+   },
+   "melon":{
+      "str":"melon",
+      "emoji":"🍈",
+      "tier":4,
+      "num_in_tier":4,
+      "exp":139,
+      "period": 30,
+      "offset": 22,
+      "amplitude": 139,
+      "rw_amplitude": 30
+   },
+   "kiwi":{
+      "str":"kiwi",
+      "emoji":"🥝",
+      "tier":4,
+      "num_in_tier":5,
+      "exp":155,
+      "period": 35,
+      "offset": 29,
+      "amplitude": 155,
+      "rw_amplitude": 36
+   },
+   "cherries":{
+      "str":"cherries",
+      "emoji":"🍒",
+      "tier":5,
+      "num_in_tier":1,
+      "exp":150,
+      "period": 60,
+      "offset": 20,
+      "amplitude": 70,
+      "rw_amplitude": 30
+   },
+   "strawberry":{
+      "str":"strawberry",
+      "emoji":"🍓",
+      "tier":5,
+      "num_in_tier":2,
+      "exp":175,
+      "period": 65,
+      "offset": 32,
+      "amplitude": 90,
+      "rw_amplitude": 36
+   },
+   "grapes":{
+      "str":"grapes",
+      "emoji":"🍇",
+      "tier":5,
+      "num_in_tier":3,
+      "exp":200,
+      "period": 75,
+      "offset": 72,
+      "amplitude": 130,
+      "rw_amplitude": 46
+   },
+   "blueberries":{
+      "str":"blueberries",
+      "emoji":"🫐",
+      "tier":5,
+      "num_in_tier":4,
+      "exp":225,
+      "period": 85,
+      "offset": 45,
+      "amplitude": 180,
+      "rw_amplitude": 30
+   },
+   "mango":{
+      "str":"mango",
+      "emoji":"🥭",
+      "tier":6,
+      "num_in_tier":1,
+      "exp":286,
+      "period": 45,
+      "offset": 12,
+      "amplitude": 200,
+      "rw_amplitude": 65
+   },
+   "pineapple":{
+      "str":"pineapple",
+      "emoji":"🍍",
+      "tier":6,
+      "num_in_tier":3,
+      "exp":358,
+      "period": 42,
+      "offset": 4,
+      "amplitude": 300,
+      "rw_amplitude": 100
+   },
+   "coconut":{
+      "str":"coconut",
+      "emoji":"🥥",
+      "tier":6,
+      "num_in_tier":2,
+      "exp":322,
+      "period": 39,
+      "offset": 20,
+      "amplitude": 280,
+      "rw_amplitude": 89
+   },
+   "microbe":{
+      "str":"microbe",
+      "emoji":"🦠",
+      "tier":0,
+      "num_in_tier":5,
+      "exp":100,
+      "period": 1,
+      "offset": 0,
+      "amplitude": 1,
+      "rw_amplitude": 10
+   },
+   "syringe":{
+      "str":"syringe",
+      "emoji":"💉",
+      "tier":0,
+      "num_in_tier":5,
+      "exp":100,
+      "period": 1,
+      "offset": 0,
+      "amplitude": 1,
+      "rw_amplitude": 10
+   },
+   "briefs":{
+      "str":"briefs",
+      "emoji":"🩲",
+      "tier":0,
+      "num_in_tier":5,
+      "exp":100,
+      "period": 1,
+      "offset": 0,
+      "amplitude": 1,
+      "rw_amplitude": 10
+   },
+   "lungs":{
+      "str":"lungs",
+      "emoji":"🫁",
+      "tier":0,
+      "num_in_tier":5,
+      "exp":100,
+      "period": 1,
+      "offset": 0,
+      "amplitude": 1,
+      "rw_amplitude": 10
+   },
+   "pill":{
+      "str":"pill",
+      "emoji":"💊",
+      "tier":0,
+      "num_in_tier":5,
+      "exp":100,
+      "period": 1,
+      "offset": 0,
+      "amplitude": 1,
+      "rw_amplitude": 10
+   }
+};
+
+
+
+let fruit_tiers = [
+  {
+    "name": "Rare Trash",
+    "fruit": [],
+    "fruit_str": [],
+    "rarity_int": 0,
+    "rarity_prop": 0
+  },
+  {
+    "name": "Trash",
+    "fruit": [],
+    "fruit_str": [],
+    "rarity_int": 20,
+    "rarity_prop": 0.2,
+  },
+  {
+    "name": "Barely Fruit",
+    "fruit": [],
+    "fruit_str": [],
+    "rarity_int": 30,
+    "rarity_prop": 0.3
+  },
+  {
+    "name": "Common Fruit",
+    "fruit": [],
+    "fruit_str": [],
+    "rarity_int": 34,
+    "rarity_prop": 0.34
+  },
+  {
+    "name": "Rare Fruit",
+    "fruit": [],
+    "fruit_str": [],
+    "rarity_int": 12,
+    "rarity_prop": 0.12
+  },
+  {
+    "name": "Ultra Rare Fruit",
+    "fruit": [],
+    "fruit_str": [],
+    "rarity_int": 3,
+    "rarity_prop": 0.03
+  },
+  {
+    "name": "Extraordinary Fruit",
+    "fruit": [],
+    "fruit_str": [],
+    "rarity_int": 1,
+    "rarity_prop": 0.01
   }
+];
+
+for (const key of Object.keys(fruit_dict)) {
+  fruit_tiers[fruit_dict[key].tier]["fruit"].push(fruit_dict[key].emoji)
+  fruit_tiers[fruit_dict[key].tier]["fruit_str"].push(fruit_dict[key].str)
 }
 
-for (let i = 0; i < fruit_tiers.length; i++) {
-  let curr_tier = fruit_tiers[i];
-  for (let j = 0; j < curr_tier.fruit.length; j++) {
-    let curr_emoji = curr_tier.fruit[j];
-    let curr_str = emoji_to_string[curr_emoji];
-    fruit_dict[curr_str]["tier"] = i + 1;
-    fruit_dict[curr_str]["num_in_tier"] = j + 1;
-    fruit_dict[curr_str]["exp"] = fruit_exp(i + 1, j + 1);
-  }
+let ticker_to_string = {};
+for (const key of Object.keys(fruit_dict)) {
+  ticker_to_string[fruit_dict[key].ticker] = fruit_dict[key]
 }
 
-
-let rare_trash_arr = ["microbe", "syringe", "briefs", "lungs", "pill"]
-let rare_trash_emoji_arr = ["🦠","💉","🩲","🫁","💊"]
-for (let i=0; i < 5; i++) {
-  let curr_str = rare_trash_arr[i];
-  fruit_dict[rare_trash_arr[i]]["tier"] = 0;
-  fruit_dict[curr_str]["num_in_tier"] = 5;
-  fruit_dict[curr_str]["exp"] = 100;
+let tier_cutoffs = [fruit_tiers[0].rarity_int];
+for (let i = 1; i < fruit_tiers.length; i++) {
+  let new_cutoff = fruit_tiers[i].rarity_int + tier_cutoffs[i - 1];
+  tier_cutoffs = tier_cutoffs.concat(new_cutoff);
 }
 
 module.exports = {
@@ -368,6 +722,6 @@ module.exports = {
   levels, min_perk_group, max_perk_group, ranks, greedy_perks, lucky_perks,
   tierRarity, fruit_arr_to_emoji_arr, fruit_arr_to_str_arr, emoji_to_string,
   fruit_dict, fruit_tiers, Fruit, tier_cutoffs, count_rare_fruits, perk_dict,
-  Item, rare_trash_arr, rare_trash_emoji_arr, null_perk_l, null_perk_g,
-  string_to_emoji, king_of_fruits, king_of_trash, empty_perk
+  Item, null_perk_l, null_perk_g, ticker_to_string,
+  string_to_emoji, king_of_fruits, king_of_trash, empty_perk, item_dict
 };

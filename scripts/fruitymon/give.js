@@ -19,7 +19,6 @@ function countFruitStr(arr, fruit_str) {
 }
 
 function f_give(msg, content) {
-  console.log(content.split(' '));
   if (
     msg.mentions.users.size > 0 &&
     msg.author.id in f_record &&

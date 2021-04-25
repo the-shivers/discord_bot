@@ -8,6 +8,8 @@ const record_filename = './f_record.json';
 const record_filename_full = './scripts/fruitymon/f_record.json';
 var f_record = require(record_filename);
 const Discord = require('discord.js');
+const fruit_dict = require('./fruit_dict.json')
+const f_prices = require('./f_prices.js');
 
 const trash_day = 3;
 
@@ -15,22 +17,25 @@ function generatePrices(msg, ind) {
   let return_str = '';
   let fruit_tier = c.fruit_tiers[ind]
   for (let i = 0; i < fruit_tier.fruit.length; i++) {
-    let curr_fruit = new c.Fruit(fruit_tier.fruit_str[i]);
-    return_str += fruit_tier.fruit[i] + " `₣" + priceFruit(curr_fruit, msg) + ".00`\n"
+    let curr_fruit_str = fruit_tier.fruit_str[i];
+    return_str += fruit_tier.fruit[i] + " `₣" + priceFruit(curr_fruit_str, msg).toFixed(2) + "`\n"
   }
   return return_str;
 }
 
-function priceFruit(fruit, msg) {
-  var d = new Date();
-  var n = d.getDay()
+function priceFruit(fruit_str, msg) {
+  let fruit = fruit_dict[fruit_str];
+  let d = new Date();
+  let n = d.getDay();
+  let date_str = f_prices.generatePastDaysWithYears(1)[0];
+  let base_price = fruit.hist_prices[date_str];
   let trash_tiers = [0, 1];
   let rare_tiers = [5, 6];
   if (trash_tiers.includes(fruit.tier)) {
     if (f_record[msg.author.id]["Perks"].includes("pawnstar")) {
-      return fruit.exp * 2;
+      return base_price * 2;
     } else if (n === trash_day) {
-      return fruit.exp;
+      return base_price;
     } else {
       return 0;
     }
@@ -40,9 +45,9 @@ function priceFruit(fruit, msg) {
     } else {
       if (f_record[msg.author.id]["Perks"].includes("beloved") && rare_tiers.includes(fruit.tier)) {
         console.log(fruit);
-        return fruit.exp * 2;
+        return base_price * 2;
       } else {
-        return fruit.exp;
+        return base_price;
       }
     }
   }
@@ -64,6 +69,7 @@ function generateGreedyItems() {
   let item_arr = [];
   item_arr = item_arr.concat(
     new c.Item("deperker"),
+    new c.Item("lock"),
     new c.Item("megagreed")
   )
   return item_arr;
@@ -73,6 +79,7 @@ function generateLuckyItems() {
   let item_arr = [];
   item_arr = item_arr.concat(
     new c.Item("deperker"),
+    new c.Item("lock"),
     new c.Item("megaluck")
   )
   return item_arr;
@@ -81,7 +88,7 @@ function generateLuckyItems() {
 function prettifyItems(item_arr) {
   let return_str = "";
   for (let i = 0; i < item_arr.length; i++) {
-    return_str += "`" + item_arr[i].name + "` `(₣" + item_arr[i].price + ".00)` - "
+    return_str += "`" + item_arr[i].name + "` `(₣" + item_arr[i].price.toFixed(2) + ")` - "
     return_str += item_arr[i].desc + "\n"
   }
   return return_str;
@@ -128,7 +135,7 @@ function f_shop(msg, content) {
     let buy_items = prettifyItems(generateItems(msg));
     template.addField(
       "Items:\n",
-      "To buy, try `!f buy <item_name>`\nYou have `₣" + f_record[msg.author.id]["Fruitbux"] + ".00` to buy with.\n\n" + buy_items,
+      "To buy, try `!f buy <item_name>`\nYou have `₣" + f_record[msg.author.id]["Fruitbux"].toFixed(2) + "` to buy with.\n\n" + buy_items,
       false
     );
   msg.channel.send(template);
@@ -154,7 +161,7 @@ function f_sell(msg, content) {
       if (curr_fruit.tier === 6) {
         trfs++;
       }
-      val += priceFruit(curr_fruit, msg);
+      val += priceFruit(curr_fruit.str, msg);
     }
     inv = []
   } else if ( // Check if they sold an entire tier
@@ -172,7 +179,7 @@ function f_sell(msg, content) {
     for (let i = 0; i < inv.length; i++) {
       var curr_fruit = new c.Fruit(inv[i]);
       if (curr_fruit.tier == parseInt(content.split(' ')[0])) {
-        val += priceFruit(curr_fruit, msg);
+        val += priceFruit(curr_fruit.str, msg);
         rem_list = rem_list.concat([i]);
       }
     }
@@ -192,16 +199,12 @@ function f_sell(msg, content) {
     for (let i = 0; i < inv.length; i++) {
       var curr_fruit = new c.Fruit(inv[i]);
       if (curr_fruit.emoji == content.split(' ')[0]) {
-        // val += priceFruit(curr_fruit, msg);
         rem_list = rem_list.concat([i]);
       }
     }
     for (var i = Math.min(rem_list.length,parseInt(content.split(' ')[1]))-1; i >= 0; i--) {
       var myfruit = new c.Fruit(inv[rem_list[i]]);
-      console.log("my fruit!", myfruit);
-      console.log("val begin", val)
-      val += priceFruit(myfruit, msg);
-      console.log("val end", val)
+      val += priceFruit(myfruit.str, msg);
       inv.splice(rem_list[i],1);
       success = true
     }
@@ -216,7 +219,7 @@ function f_sell(msg, content) {
     f_record[msg.author.id]["Total Fruitbux Earned"] += val;
     f_record[msg.author.id]["Total Fruit Sold"] += tfs;
     f_record[msg.author.id]["Total Rare Fruit Sold"] += trfs;
-    msg.channel.send("Congrats on your sale! You made `₣" + val + "`")
+    msg.channel.send("Congrats on your sale! You made `₣" + val.toFixed(2) + "`")
     fs.writeFileSync(record_filename_full, JSON.stringify(f_record, null, 2), function writeJSON(err) {
       if (err) return console.log(err);
     });
@@ -234,7 +237,7 @@ function f_buy(msg, content) {
     if (content === buy_items[i].name) {
       // Check if they can afford it
       if (f_record[msg.author.id]["Fruitbux"] >= buy_items[i].price) {
-        return_msg = "You bought `" + buy_items[i].name + "` for `₣" + buy_items[i].price + ".00`";
+        return_msg = "You bought `" + buy_items[i].name + "` for `₣" + buy_items[i].price.toFixed(2) + "`";
         // Update stats
         f_record[msg.author.id]["Fruitbux"] -= buy_items[i].price
         f_record[msg.author.id]["Item Inventory"] =

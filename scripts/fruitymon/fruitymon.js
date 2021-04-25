@@ -7,6 +7,7 @@ const record_filename = './f_record.json';
 const record_filename_full = './scripts/fruitymon/f_record.json';
 const f_record = require(record_filename);
 const f_command_dict = require('./f_command_dict.js').f_command_dict;
+const f_prices = require('./f_prices.js');
 
 // Command combiner
 function f(msg, content) {
@@ -56,6 +57,13 @@ function f(msg, content) {
     fs.writeFileSync(record_filename_full, JSON.stringify(f_record, null, 2), function writeJSON(err) {
       if (err) return console.log(err);
     });
+
+    // Update item info based on which command was run.
+    if (['shop', 'chart', 'sell', 'buy'].includes(command)) {
+      // UPDATE
+      let dates_to_update = f_prices.generatePastDaysWithYears(50);
+      f_prices.updateAllPrices(dates_to_update)
+    }
 
     // Execute command
     f_command_dict[command].func(msg, rem_content);

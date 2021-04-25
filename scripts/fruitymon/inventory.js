@@ -56,7 +56,7 @@ function inventory(msg, content) {
     .setThumbnail('attachment://cherry_bounce.gif')
     .addField(
       "Your Fruitbux:",
-      "`₣" + f_record[msg.author.id]["Fruitbux"] + ".00`",
+      "`₣" + f_record[msg.author.id]["Fruitbux"].toFixed(2) + "`",
       false
     )
   for(var i = 0; i < c.fruit_tiers.length; i++) {

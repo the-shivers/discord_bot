@@ -237,11 +237,11 @@ function analyzeOffering(n) {
 
 function analyzeDiff(n) {
   let result = -2 // major boon
-  if (n > -20) {result = -1}
-  if (n > -5) {result = 0}
-  if (n > 5) {result = 1}
-  if (n > 15) {result = 2}
-  if (n > 45) {result = 3} // minor boon
+  if (n >= -20) {result = -1}
+  if (n >= -5) {result = 0}
+  if (n >= 5) {result = 1}
+  if (n >= 15) {result = 2}
+  if (n >= 45) {result = 3} // minor boon
   return result;
 }
 
@@ -255,10 +255,13 @@ function bigCurse(msg, template, had_offering) {
     if (f_record[msg.author.id]["Perks"].includes("lucky")) {
       footer_msg += " You now roll 3 fewer dice per pick! Forever!"
       f_record[msg.author.id]["Number of Dice"] -= 3;
+      f_record[msg.author.id]["Number of Dice"] = Math.max(0, f_record[msg.author.id]["Number of Dice"]);
     } else if (f_record[msg.author.id]["Perks"].includes("greedy")) {
       footer_msg += " You get 2 fewer picks and 2 fewer dice rolls per pick! Forever!";
       f_record[msg.author.id]["Number of Dice"] -= 2;
       f_record[msg.author.id]["Pick Limit"] -= 2;
+      f_record[msg.author.id]["Number of Dice"] = Math.max(0, f_record[msg.author.id]["Number of Dice"]);
+      f_record[msg.author.id]["Pick Limit"] = Math.max(0, f_record[msg.author.id]["Pick Limit"]);
     }
   } else {
     footer_msg = "pretty shit prayer bro..."
@@ -384,7 +387,7 @@ function god(msg, content) {
     // Offering mode.
     if (f.isNumeric(content.split(' ')[2])) {
       // Monetary offering
-      let amt = content.split(' ')[2]
+      let amt = Math.max(0, content.split(' ')[2]);
       if (
         msg.author.id in f_record &&
         f_record[msg.author.id]["Fruitbux"] >= amt
@@ -400,6 +403,8 @@ function god(msg, content) {
       } else {
         msg.channel.send('Don\'t make offerings you can\'t afford!');
       }
+    } else {
+      msg.channel.send('where is money');
     }
   } else {
   // Placeholder response below.

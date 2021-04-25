@@ -13,6 +13,7 @@ const f_cheat = require('./f_cheat.js');
 const f_steal = require('./f_steal.js');
 const f_shoot = require('./f_shoot.js');
 const give = require('./give.js');
+const f_chart = require('./f_chart.js');
 
 let f_command_dict = {
   "tiers": {
@@ -86,6 +87,10 @@ let f_command_dict = {
   "shoot": {
     "log": "kapow!",
     "func": f_shoot.f_shoot
+  },
+  "chart": {
+    "log": "Charting a fruit!!!",
+    "func": f_chart.f_chart
   }
 }
 

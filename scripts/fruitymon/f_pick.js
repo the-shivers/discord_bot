@@ -99,7 +99,7 @@ function fruitArray(arr, msg) {
     ) {
       let chance = Math.floor(Math.random() * 50)
       if (chance <= 4) {
-        fruit_str = c.rare_trash_arr[chance];
+        fruit_str = c.fruit_tiers[0].fruit_str[chance];
       }
     }
     fruit_arr = fruit_arr.concat(new c.Fruit(fruit_str));
