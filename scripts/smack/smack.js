@@ -8,9 +8,6 @@ const smack_json = JSON.parse(
 );
 
 async function smack(msg, content) {
-  console.log("first: ", content)
-  console.log(msg.mentions.users.size);
-  console.log(content.split(' ').length);
   if (
     msg.mentions.users.size === 1
     && content.split(' ').length > 1

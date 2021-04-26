@@ -24,8 +24,8 @@ function f_chart(msg, content) {
     fruit_str = c.emoji_to_string[content.trim()];
   } else if (content.trim() in fruit_dict) {
     fruit_str = content.trim()
-  } else if (content.trim() in c.ticker_to_string) {
-    fruit_str = c.ticker_to_string[content.trim()].str;
+  } else if (content.trim().toUpperCase() in c.ticker_to_string) {
+    fruit_str = c.ticker_to_string[content.trim().toUpperCase()].str;
   } else {
     msg.reply("That ain't no fruit!!!")
     return ;

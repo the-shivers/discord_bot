@@ -1,0 +1,404 @@
+{
+  "cow": {
+    "str": "cow",
+    "proper": "Cow",
+    "emoji": "🐄",
+    "description": "Grows slowly, then produces milk, butter and cheese regularly.",
+    "hours_to_maturity": 72,
+    "base_speed": 10,
+    "base_health": 30,
+    "base_spoils": 6,
+    "base_price": 30000,
+    "generation": {
+      "milk": {
+        "str": "milk",
+        "emoji": "🥛",
+        "freq": 3
+      },
+      "butter": {
+        "str": "butter",
+        "emoji": "🧈",
+        "freq": 2
+      },
+      "cheese": {
+        "str": "cheese",
+        "emoji": "🧀",
+        "freq": 1
+      }
+    },
+    "death": {
+      "cut_of_meat": {
+        "str": "cut_of_meat",
+        "emoji": "🥩",
+        "freq": 2
+      },
+      "meat_on_bone": {
+        "str": "meat_on_bone",
+        "emoji": "🍖",
+        "freq": 1
+      }
+    },
+    "variants": {
+      "ox": {
+        "str": "ox",
+        "proper": "Ox",
+        "emoji": "🐂",
+        "rarity": "uncommon",
+        "r_emoji": "🔵"
+      },
+      "water_buffalo": {
+        "str": "water_buffalo",
+        "proper": "Water Buffalo",
+        "emoji": "🐃",
+        "rarity": "uncommon",
+        "r_emoji": "🔵"
+      },
+      "bison": {
+        "str": "bison",
+        "proper": "Bison",
+        "emoji": "🦬",
+        "rarity": "uncommon",
+        "r_emoji": "🔵"
+      },
+      "horse": {
+        "str": "horse",
+        "proper": "Horse",
+        "emoji": "🐎",
+        "rarity": "uncommon",
+        "r_emoji": "🔵"
+      },
+      "deer": {
+        "str": "deer",
+        "proper": "Deer",
+        "emoji": "🦌",
+        "rarity": "rare",
+        "r_emoji": "🟣"
+      },
+      "zebra": {
+        "str": "zebra",
+        "proper": "Zebra",
+        "emoji": "🦓",
+        "rarity": "rare",
+        "r_emoji": "🟣"
+      }
+    }
+  },
+  "pig": {
+    "str": "pig",
+    "proper": "Pig",
+    "emoji": "🐖",
+    "description": "Finds truffles (mushrooms) for you!",
+    "hours_to_maturity": 48,
+    "base_speed": 6,
+    "base_health": 20,
+    "base_spoils": 4,
+    "base_price": 20000,
+    "generation": {
+      "milk": {
+        "str": "mushroom",
+        "emoji": "🍄",
+        "freq": 1
+      }
+    },
+    "death": {
+      "bacon": {
+        "str": "cut_of_meat",
+        "emoji": "🥓",
+        "freq": 3
+      },
+      "meat_on_bone": {
+        "str": "meat_on_bone",
+        "emoji": "🍖",
+        "freq": 1
+      }
+    },
+    "variants": {
+      "boar": {
+        "str": "boar",
+        "proper": "Boar",
+        "emoji": "🐗",
+        "rarity": "uncommon",
+        "r_emoji": "🔵"
+      },
+      "badger": {
+        "str": "badger",
+        "proper": "Badger",
+        "emoji": "🦡",
+        "rarity": "uncommon",
+        "r_emoji": "🔵"
+      },
+      "hedgehog": {
+        "str": "hedgehog",
+        "proper": "Hedgehog",
+        "emoji": "🦔",
+        "rarity": "uncommon",
+        "r_emoji": "🔵"
+      },
+      "raccoon": {
+        "str": "raccoon",
+        "proper": "Raccoon",
+        "emoji": "🦝",
+        "rarity": "rare",
+        "r_emoji": "🟣"
+      },
+      "rhino": {
+        "str": "rhino",
+        "proper": "Rhino",
+        "emoji": "🦏",
+        "rarity": "rare",
+        "r_emoji": "🟣"
+      },
+      "hippopotamus": {
+        "str": "hippopotamus",
+        "proper": "Hippo",
+        "emoji": "🦛",
+        "rarity": "rare",
+        "r_emoji": "🟣"
+      }
+    }
+  },
+  "chicken": {
+    "str": "chicken",
+    "proper": "Chicken",
+    "emoji": "🐓",
+    "description": "Grows fast and produces eggs and feathers!",
+    "hours_to_maturity": 24,
+    "base_speed": 10,
+    "base_health": 10,
+    "base_spoils": 3,
+    "base_price": 15000,
+    "generation": {
+      "egg": {
+        "str": "egg",
+        "emoji": "🥚",
+        "freq": 3
+      },
+      "feather": {
+        "str": "feather",
+        "emoji": "🪶",
+        "freq": 1
+      }
+    },
+    "death": {
+      "poultry_leg": {
+        "str": "poultry_leg",
+        "emoji": "🍗",
+        "freq": 2
+      },
+      "feather": {
+        "str": "feather",
+        "emoji": "🪶",
+        "freq": 1
+      }
+    },
+    "variants": {
+      "duck": {
+        "str": "duck",
+        "proper": "Duck",
+        "emoji": "🦆",
+        "rarity": "uncommon",
+        "r_emoji": "🔵"
+      },
+      "turkey": {
+        "str": "turkey",
+        "proper": "Turkey",
+        "emoji": "🦃",
+        "rarity": "uncommon",
+        "r_emoji": "🔵"
+      },
+      "swan": {
+        "str": "swan",
+        "proper": "Swan",
+        "emoji": "🦢",
+        "rarity": "uncommon",
+        "r_emoji": "🔵"
+      },
+      "owl": {
+        "str": "owl",
+        "proper": "Owl",
+        "emoji": "🦉",
+        "rarity": "rare",
+        "r_emoji": "🟣"
+      },
+      "penguin": {
+        "str": "penguin",
+        "proper": "Penguin",
+        "emoji": "🐧",
+        "rarity": "rare",
+        "r_emoji": "🟣"
+      },
+      "parrot": {
+        "str": "parrot",
+        "proper": "Parrot",
+        "emoji": "🦜",
+        "rarity": "rare",
+        "r_emoji": "🟣"
+      },
+      "flamingo": {
+        "str": "flamingo",
+        "proper": "Flamingo",
+        "emoji": "🦩",
+        "rarity": "rare",
+        "r_emoji": "🟣"
+      }
+    }
+  },
+  "sheep": {
+    "str": "sheep",
+    "proper": "Sheep",
+    "emoji": "🐑",
+    "description": "Produces yarn, milk, butter and cheese, but not as quickly as cows.",
+    "hours_to_maturity": 48,
+    "base_speed": 8,
+    "base_health": 25,
+    "base_spoils": 6,
+    "base_price": 25000,
+    "generation": {
+      "yarn": {
+        "str": "yarn",
+        "emoji": "🧶",
+        "freq": 4
+      },
+      "milk": {
+        "str": "milk",
+        "emoji": "🥛",
+        "freq": 3
+      },
+      "butter": {
+        "str": "butter",
+        "emoji": "🧈",
+        "freq": 2
+      },
+      "cheese": {
+        "str": "cheese",
+        "emoji": "🧀",
+        "freq": 1
+      }
+    },
+    "death": {
+      "cut_of_meat": {
+        "str": "cut_of_meat",
+        "emoji": "🥩",
+        "freq": 2
+      },
+      "meat_on_bone": {
+        "str": "meat_on_bone",
+        "emoji": "🍖",
+        "freq": 1
+      }
+    },
+    "variants": {
+      "goat": {
+        "str": "goat",
+        "proper": "Goat",
+        "emoji": "🐐",
+        "rarity": "uncommon",
+        "r_emoji": "🔵"
+      },
+      "ram": {
+        "str": "ram",
+        "proper": "Ram",
+        "emoji": "🐏",
+        "rarity": "uncommon",
+        "r_emoji": "🔵"
+      },
+      "llama": {
+        "str": "llama",
+        "proper": "Llama",
+        "emoji": "🦙",
+        "rarity": "uncommon",
+        "r_emoji": "🔵"
+      },
+      "camel": {
+        "str": "camel",
+        "proper": "Camel",
+        "emoji": "🐪",
+        "rarity": "rare",
+        "r_emoji": "🟣"
+      },
+      "mammoth": {
+        "str": "mammoth",
+        "proper": "Mammoth",
+        "emoji": "🦣",
+        "rarity": "rare",
+        "r_emoji": "🟣"
+      }
+    }
+  },
+  "dog": {
+    "str": "dog",
+    "proper": "Dog",
+    "emoji": "🐕",
+    "description": "Produces nothing, but protects your other animals from predators.",
+    "hours_to_maturity": 36,
+    "base_speed": 4,
+    "base_health": 25,
+    "base_spoils": 0,
+    "base_price": 25000,
+    "generation": {
+      "poop": {
+        "str": "poop",
+        "emoji": "💩",
+        "freq": 1
+      }
+    },
+    "death": {
+      "poop": {
+        "str": "poop",
+        "emoji": "💩",
+        "freq": 1
+      }
+    },
+    "variants": {
+      "poodle": {
+        "str": "poodle",
+        "proper": "Poodle",
+        "emoji": "🐩",
+        "rarity": "uncommon",
+        "r_emoji": "🔵"
+      },
+      "cat": {
+        "str": "cat",
+        "proper": "Cat",
+        "emoji": "🐈",
+        "rarity": "uncommon",
+        "r_emoji": "🔵"
+      },
+      "black_cat": {
+        "str": "black_cat",
+        "proper": "Black Cat",
+        "emoji": "🐈‍⬛",
+        "rarity": "uncommon",
+        "r_emoji": "🔵"
+      },
+      "wolf": {
+        "str": "wolf",
+        "proper": "Wolf",
+        "emoji": "🐺",
+        "rarity": "rare",
+        "r_emoji": "🟣"
+      },
+      "fox": {
+        "str": "fox",
+        "proper": "Fox",
+        "emoji": "🦊",
+        "rarity": "rare",
+        "r_emoji": "🟣"
+      },
+      "lion": {
+        "str": "lion",
+        "proper": "Lion",
+        "emoji": "🦁",
+        "rarity": "rare",
+        "r_emoji": "🟣"
+      },
+      "tiger": {
+        "str": "tiger",
+        "proper": "Tiger",
+        "emoji": "🐯",
+        "rarity": "rare",
+        "r_emoji": "🟣"
+      }
+    }
+  }
+}

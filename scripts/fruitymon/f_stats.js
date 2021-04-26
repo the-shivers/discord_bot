@@ -43,7 +43,7 @@ function stats(msg, content) {
   detail_str += "`Rare Fruit Sold: "
   + user_json["Total Rare Fruit Sold"] + '`\n'
   detail_str += "`Fruitbux Earned: ₣"
-  + user_json["Total Fruitbux Earned"] + '`\n'
+  + user_json["Total Fruitbux Earned"].toFixed(2) + '`\n'
 
   // Get time remaining for details
   let prev_time = f_record[msg.author.id]["Last Roll"];
@@ -78,7 +78,7 @@ function stats(msg, content) {
     .addField("Rank:", "`" + c.ranks[user_json["Level"]] + "`", true)
     .addField("Style:", fill + "`" + style_str + "`", true)
     .addField("Modus Operandi:", "" + mo_str, false)
-    .addField("Fruitbux:", "`₣"+ user_json["Fruitbux"] + "`", true)
+    .addField("Fruitbux:", "`₣"+ user_json["Fruitbux"].toFixed(2) + "`", true)
     .addField("Experience:", "`"+ user_json["Experience"] + "`", true)
     .addField("To next level:", "`" + exp_to_next_lvl + "`", true)
     //.addField(fill, expb2 + '\n' + fill, false)

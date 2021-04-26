@@ -26,6 +26,9 @@ function offerPerks(msg, level, perks) {
   let g_arr = ["struggle", "acceptance", "raccoon", "pawnstar"]
   let l_arr = ["gambler", "diversify", "blessed", "beloved"]
   let result_arr = [];
+  if (perks.length === 5) {
+    return [c.eloi, c.morlock];
+  }
   if (perks.includes('greedy')) {
     if (perks.length < 3) {
       perk_opt1 = c.greedy_perks[perks.length][0]

@@ -14,6 +14,9 @@ const f_steal = require('./f_steal.js');
 const f_shoot = require('./f_shoot.js');
 const give = require('./give.js');
 const f_chart = require('./f_chart.js');
+const f_petshop = require('./f_petshop.js');
+
+
 
 let f_command_dict = {
   "tiers": {
@@ -91,6 +94,14 @@ let f_command_dict = {
   "chart": {
     "log": "Charting a fruit!!!",
     "func": f_chart.f_chart
+  },
+  "petshop": {
+    "log": "Pets!!!!",
+    "func": f_petshop.f_petshop
+  },
+  "pettiers": {
+    "log": "Pets!!!!",
+    "func": f_petshop.f_pettiers
   }
 }
 

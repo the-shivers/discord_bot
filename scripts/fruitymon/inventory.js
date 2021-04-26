@@ -60,7 +60,7 @@ function inventory(msg, content) {
       false
     )
   for(var i = 0; i < c.fruit_tiers.length; i++) {
-    template.addField(i + 1 + ". " + c.fruit_tiers[i].name, generateTierCounts(msg, i), true);
+    template.addField(i + ". " + c.fruit_tiers[i].name, generateTierCounts(msg, i), true);
   }
   // Add items. First create pretty item string.
   let item_str = '\u200b';

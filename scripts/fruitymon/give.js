@@ -73,10 +73,10 @@ function f_give_m(msg, content) {
       target.id in f_record &&
       f_record[msg.author.id]["Fruitbux"] > 0
     ) {
-      let actual_give_amt = Math.min(f_record[target.id]["Fruitbux"], amount);
+      let actual_give_amt = Math.min(f_record[msg.author.id]["Fruitbux"], amount);
       f_record[target.id]["Fruitbux"] += actual_give_amt
       f_record[msg.author.id]["Fruitbux"] -= actual_give_amt
-      msg.reply("Success! Gave `₣" + actual_give_amt + ".00` to " + `${target.username}!`)
+      msg.reply("Success! Gave `₣" + actual_give_amt.toFixed(2) + "` to " + `${target.username}!`)
     } else {
       msg.reply("You're either poor, not playing, or they're not playing Fruitymon, dude.")
     }

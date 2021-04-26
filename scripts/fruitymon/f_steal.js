@@ -12,6 +12,9 @@ const Discord = require('discord.js');
 let steal_size = 5;
 
 function f_steal(msg, content) {
+  console.log(content)
+  console.log(msg.mentions)
+  console.log(msg.mentions.users)
   if (msg.mentions.users.size > 0) {
     let target = msg.mentions.users.first();
     if (target.id in f_record && f_record[target.id]["Fruit Inventory"].length > 0) {
@@ -74,7 +77,7 @@ function f_steal_m(msg, content) {
       let actual_theft_amt = Math.min(f_record[target.id]["Fruitbux"], steal_money_amount);
       f_record[target.id]["Fruitbux"] -= actual_theft_amt
       f_record[msg.author.id]["Fruitbux"] += actual_theft_amt
-      msg.reply("Success! Stole `₣" + actual_theft_amt + ".00` from " + `${target.username}!`)
+      msg.reply("Success! Stole `₣" + actual_theft_amt.toFixed(2) + "` from " + `${target.username}!`)
     } else {
       msg.reply("they aint got shit")
     }

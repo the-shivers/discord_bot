@@ -14,7 +14,7 @@ function interpretUrbanString(text) {
 
   let is_valid = true
   let search_term = ""
-  let def_num = 1;
+  let def_num = 0;
 
   let components = text.split(' ');
   components.shift();

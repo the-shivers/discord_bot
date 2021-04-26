@@ -31,13 +31,11 @@ function crypto(msg, content) {
         // console.log(body);
         let seek = content.split(' ')[1].toUpperCase();
         for (let i = 0; i < body.data.length; i++) {
-          console.log(i);
           if (
             body.data[i].name === seek ||
             body.data[i].slug === seek ||
             body.data[i].symbol === seek
           ) {
-            console.log("found it!")
             let name = body.data[i].name;
             let symbol = body.data[i].symbol;
             let data = body.data[i].quote.USD;
