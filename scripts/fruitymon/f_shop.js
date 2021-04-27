@@ -202,8 +202,6 @@ function f_sell(msg, content) {
     for (var i = Math.min(rem_list.length,parseInt(content.split(' ')[1]))-1; i >= 0; i--) {
       var myfruit = fruit_dict[inv[rem_list[i]]];
       val += priceFruit(myfruit.str, msg);
-      console.log(stock.stock);
-      console.log(myfruit.str);
       stock.stock[myfruit.str]++;
       inv.splice(rem_list[i],1);
       success = true

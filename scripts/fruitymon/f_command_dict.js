@@ -100,8 +100,20 @@ let f_command_dict = {
     "func": f_petshop.f_petshop
   },
   "pettiers": {
-    "log": "Pets!!!!",
+    "log": "Pet tiers!!!!",
     "func": f_petshop.f_pettiers
+  },
+  "buypet": {
+    "log": "Pets buying!!!!",
+    "func": f_petshop.f_buyPet
+  },
+  "petinv": {
+    "log": "Looking at a pet inventory!",
+    "func": f_petshop.f_petInv
+  },
+  "namepet": {
+    "log": "Naming a pet",
+    "func": f_petshop.f_namePet
   }
 }
 
