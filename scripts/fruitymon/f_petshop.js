@@ -3,6 +3,7 @@
 // Imports
 const f = require('../../funcs.js');
 const fs = require('fs');
+const fruit_dict = require('./fruit_dict.json')
 const seedrandom = require('seedrandom')
 const Discord = require('discord.js');
 const record_filename = './f_record.json';
@@ -10,8 +11,8 @@ const record_filename_full = './scripts/fruitymon/f_record.json';
 var f_record = require(record_filename);
 var animal_stats = require('./animal_stats.json');
 let fill = '\u200b';
-const rare_pet_prob = 1/8; // Usually 1/8
-const rare_variant_prob = 1/3; // Usually 1/3
+const variant_prob = 1/6; // Usually 1/6
+const rare_variant_prob = 1/4; // Usually 1/4
 
 // Define pet quirks
 let late_bloomer = {
@@ -150,7 +151,7 @@ function generatePets(msg, user_specific=false) {
   return pet_array;
 }
 
-function getVariant(msg, pet_str, user_specific=false) {
+function getVariant(msg, pet_str, user_specific=false, index=0) {
   // Returns variant object randomly
   let pet_array = [];
   let d = new Date();
@@ -158,7 +159,7 @@ function getVariant(msg, pet_str, user_specific=false) {
   if (user_specific) {
     date_int += msg.author.id
   }
-  let rng = seedrandom(date_int + pet_str);
+  let rng = seedrandom(date_int + pet_str + index);
   let specified_rarity = "uncommon";
   if (rng() < rare_variant_prob) {
     specified_rarity = "rare";
@@ -170,8 +171,9 @@ function getVariant(msg, pet_str, user_specific=false) {
       variants_arr.push(animal_stats[pet_str].variants[key])
     }
   }
-  rng = seedrandom(date_int + pet_str + 1);
-  return variants_arr[Math.floor(rng() * variants_arr.length)];
+  rng = seedrandom(date_int + index + pet_str + 1);
+  console.log("variants_arr random", rng())
+  return variants_arr[Math.floor(rng(date_int + pet_str + index + 1) * variants_arr.length)];
 }
 
 function getPetInfo(msg, pet_str, index=0, user_specific=false) {
@@ -198,8 +200,9 @@ function getPetInfo(msg, pet_str, index=0, user_specific=false) {
   pet_info['animal_type'] = pet_info['name'];
   pet_info['rarity'] = "common"
   let rng = seedrandom(date_int + pet_str + index)
-  if (rng() < rare_pet_prob) {
-    let variant = getVariant(msg, pet_str);
+  console.log("Determining if pet", pet_str, "in index", index, "where user specific is", user_specific, "will be a rare variant.", rng(), "versus variant prob", variant_prob)
+  if (rng() < variant_prob) {
+    let variant = getVariant(msg, pet_str, user_specific, index);
     pet_info['name'] = variant.str;
     pet_info['emoji'] = variant.emoji
     pet_info['rarity'] = variant.rarity;
@@ -330,7 +333,7 @@ function f_buyPet(msg, content) {
   // console.log(generatePets(msg, user_specific=user_specific))
   // console.log(pet_info)
   // Identify if user can afford it
-  if (f_record[msg.author.id]["Fruitbux"] < pet_info.price) {
+  if (f_record[msg.author.id]["Fruitbux"] < pet_info.base_price) {
     msg.channel.send("You can't afford it! Ever heard of saving up?")
     return ;
   }
@@ -424,8 +427,35 @@ function f_namePet(msg, content) {
   }
 }
 
+function f_collect(msg, content) {
+  if (!("Animals" in f_record[msg.author.id])) {
+    msg.channel.send("You don't have any animals!")
+  }
+  let emoji_arr = [];
+  let str_array = [];
+  let exp = 0;
+  for (let i = 0; i < f_record[msg.author.id]["Animals"].length; i++) {
+    for (let j = 0; j < f_record[msg.author.id]["Animals"][i].inv.length; j++) {
+      str_array.push(f_record[msg.author.id]["Animals"][i].inv[j].str)
+      emoji_arr.push(f_record[msg.author.id]["Animals"][i].inv[j].emoji);
+      exp += fruit_dict[f_record[msg.author.id]["Animals"][i].inv[j].str].exp;
+    }
+    f_record[msg.author.id]["Animals"][i].inv = [];
+  }
+  if (str_array.length === 0) {
+    msg.channel.send("Your animals didn't have anything!");
+    return;
+  }
+  f_record[msg.author.id]["Fruit Inventory"] = f_record[msg.author.id]["Fruit Inventory"].concat(str_array);
+  f_record[msg.author.id]["Experience"] += exp;
+  msg.channel.send(`You collected some animal goods (${emoji_arr.join()}) and gained \`${exp}\` experience.`)
+  fs.writeFileSync(record_filename_full, JSON.stringify(f_record, null, 2), function writeJSON(err) {
+    if (err) return console.log(err);
+  });
+}
 
-module.exports = {f_petshop, f_buyPet, f_pettiers, f_petInv, f_namePet};
+
+module.exports = {f_petshop, f_buyPet, f_pettiers, f_petInv, f_namePet, f_collect};
 
 
 // Exotics: dragon (eggs, scales), t-rex, (eggs, scales), unicorn (milk, sparkles)

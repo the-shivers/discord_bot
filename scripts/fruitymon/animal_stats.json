@@ -104,7 +104,7 @@
     },
     "death": {
       "bacon": {
-        "str": "cut_of_meat",
+        "str": "bacon",
         "emoji": "🥓",
         "freq": 3
       },

@@ -15,6 +15,7 @@ const f_shoot = require('./f_shoot.js');
 const give = require('./give.js');
 const f_chart = require('./f_chart.js');
 const f_petshop = require('./f_petshop.js');
+const f_vault = require('./f_vault.js');
 
 
 
@@ -114,6 +115,18 @@ let f_command_dict = {
   "namepet": {
     "log": "Naming a pet",
     "func": f_petshop.f_namePet
+  },
+  "vault": {
+    "log": "Vaulting...",
+    "func": f_vault.f_vault
+  },
+  "unvault": {
+    "log": "Unvaulting...",
+    "func": f_vault.f_unvault
+  },
+  "collect": {
+    "log": "Unvaulting...",
+    "func": f_petshop.f_collect
   }
 }
 

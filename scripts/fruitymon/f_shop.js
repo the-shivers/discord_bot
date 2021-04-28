@@ -26,7 +26,7 @@ function updateStock() {
   if (stock.last_updated_at !== curr_date) {
     stock.last_updated_at = curr_date;
     for (const key of Object.keys(fruit_dict)) {
-      if ([0, 1].includes(fruit_dict[key].tier)) {
+      if ([0, 1, 7, 8].includes(fruit_dict[key].tier)) {
         stock.stock[key] = 0
       } else if (fruit_dict[key].tier === 2) {
         stock.stock[key] = 20;
@@ -79,6 +79,8 @@ function generateItems(msg) {
     item_arr = generateGreedyItems();
   } else if (f_record[msg.author.id]["Perks"].includes("lucky")) {
     item_arr = generateLuckyItems();
+  } else {
+    item_arr = generateLuckyItems();
   }
   return item_arr;
 }
@@ -88,7 +90,7 @@ function generateGreedyItems() {
   item_arr = item_arr.concat(
     new c.Item("deperker"),
     new c.Item("lock"),
-    new c.Item("megagreed")
+    new c.Item("vault")
   )
   return item_arr;
 }
@@ -98,7 +100,7 @@ function generateLuckyItems() {
   item_arr = item_arr.concat(
     new c.Item("deperker"),
     new c.Item("lock"),
-    new c.Item("megaluck")
+    new c.Item("vault")
   )
   return item_arr;
 }
@@ -285,6 +287,10 @@ function f_buy(msg, content) {
   // Check if item is available
   for (let i = 0; i < buy_items.length; i++) {
     if (content === buy_items[i].name) {
+      if (buy_items[i].name === "vault" && "vault" in f_record[msg.author.id]) {
+        msg.channel.send("You can only have one vault!");
+        return;
+      }
       // Check if they can afford it
       if (f_record[msg.author.id]["Fruitbux"] >= buy_items[i].price) {
         return_msg = "You bought `" + buy_items[i].name + "` for `₣" + buy_items[i].price.toFixed(2) + "`";
@@ -294,11 +300,14 @@ function f_buy(msg, content) {
           f_record[msg.author.id]["Item Inventory"].concat(
             {"name": buy_items[i].name, "date": msg.createdTimestamp}
           );
-        if (buy_items[i].name == 'deperker') {
+        if (buy_items[i].name === 'deperker') {
           f_record[msg.author.id]["Perks"] = [];
           f_record[msg.author.id]["Pick Limit"] = 5;
           f_record[msg.author.id]["Number of Dice"] = 5;
           f_record[msg.author.id]["Dice Sides"] = 100;
+        }
+        if (buy_items[i].name === 'vault') {
+          f_record[msg.author.id]["vault"] = {}
         }
         fs.writeFileSync(record_filename_full, JSON.stringify(f_record, null, 2), function writeJSON(err) {
           if (err) return console.log(err);

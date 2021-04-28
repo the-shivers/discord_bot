@@ -25,11 +25,18 @@ bot.on("ready", () => {
   console.log("Backed up files.")
 });
 
+let ignore_list = [
+  "twg", "end", "join", "start", "info", "vote", "votes", "unvote", "leave",
+   "players"
+]
+
 bot.on("message", async msg => {
   if (msg.content.startsWith(trig)) {
     let content = msg.content.substring(msg.content.indexOf(trig)+1);
     let command = content.split(' ')[0];
-    if (command in command_dict) {
+    if (ignore_list.includes(command)) {
+      return;
+    } else if (command in command_dict) {
       console.log(command_dict[command].log);
       command_dict[command].func(msg, content);
     } else {

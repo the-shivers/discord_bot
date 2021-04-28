@@ -3,6 +3,7 @@ let fruit_dict = require('./fruit_dict.json');
 
 class Fruit {
   constructor(str) {
+    console.log(str)
     this.str = str;
     this.emoji = fruit_dict[str].emoji;
     this.tier = fruit_dict[str].tier;
@@ -81,6 +82,12 @@ let item_dict = {
     "desc": "Locks up your shit for a day so people can't steal it. Lasts 24 hours.",
     "exp": 3600 * 24,
     "price": 2000
+  },
+  "vault": {
+    "name": "vault",
+    "desc": "Store as many copies of ten unique items in a vault. These will be unstealable and unaffected by sell all. Additionally, it allows you to track the value of your vault contents over time. Good for keeping investments safe!",
+    "exp": 0,
+    "price": 5000
   }
 }
 
@@ -222,7 +229,7 @@ let emoji_to_string = {
   "🪵": "wood",
   "🍂": "fallen_leaf",
   "🥌": "curling_stone",
-  "🥚": "egg",
+  "💩": "poop",
   "🗿": "moyai",
   "🍅": "tomato",
   "🌶️": "hot_pepper",
@@ -250,7 +257,19 @@ let emoji_to_string = {
   "💉": "syringe",
   "🩲": "briefs",
   "🫁": "lungs",
-  "💊": "pill"
+  "💊": "pill",
+  "🥛": "milk",
+  "🥚": "egg",
+  "🧶": "yarn",
+  "🪶": "feather",
+  "🧈": "butter",
+  "🍄": "mushroom",
+  "🧀": "cheese",
+  "🦴": "bone",
+  "🥩": "cut_of_meat",
+  "🍗": "poultry_leg",
+  "🥓": "bacon",
+  "🍖": "meat_on_bone"
 };
 
 function swap(json){
@@ -351,6 +370,20 @@ let fruit_tiers = [
     "fruit_str": [],
     "rarity_int": 1,
     "rarity_prop": 0.01
+  },
+  {
+    "name": "Animal Products",
+    "fruit": [],
+    "fruit_str": [],
+    "rarity_int": 0,
+    "rarity_prop": 0.00
+  },
+  {
+    "name": "Meat",
+    "fruit": [],
+    "fruit_str": [],
+    "rarity_int": 0,
+    "rarity_prop": 0.00
   }
 ];
 

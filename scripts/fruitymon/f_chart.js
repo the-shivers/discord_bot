@@ -16,8 +16,53 @@ const width = 600;
 const height = 400;
 let num_points = 50;
 
-function f_chart(msg, content) {
+function f_chart_top(msg, num) {
+  let dates = f_prices.generatePastDaysWithYears(num + 1);
+  let curr_date = dates[dates.length - 1]
+  let comp_date = dates[0]
+  console.log("Curr date is", curr_date, "comp date is", comp_date)
+  let fruit_arr = [];
+  for (var key in fruit_dict) {
+    let curr_price = fruit_dict[key].hist_prices[curr_date]
+    let comp_price = fruit_dict[key].hist_prices[comp_date]
+    let list_item =
+    fruit_arr.push([
+      fruit_dict[key].ticker.padEnd(4),
+      fruit_dict[key].emoji,
+      (curr_price - comp_price) / comp_price,
+      curr_price,
+      comp_price
+    ]);
+  }
 
+  fruit_arr.sort(function(a, b) {
+    return a[2] - b[2];
+  });
+
+  let top_str = '';
+  let bot_str = ''
+  for (let i = 0; i < 9; i++) {
+    let j = fruit_arr.length - 1 - i;
+    bot_str += (i + 1) + ". `" + fruit_arr[i][0] + "` " + fruit_arr[i][1]
+    bot_str += " `(" + (fruit_arr[i][2] * 100).toFixed(2) + "%)`\n"
+    top_str += (i + 1) + ". `" + fruit_arr[j][0] + "` " + fruit_arr[j][1]
+    top_str += " `(" + (fruit_arr[j][2] * 100).toFixed(2) + "%)`\n"
+  }
+
+  const attachment = new Discord.MessageAttachment(
+    './scripts/fruitymon/assets/money.gif', 'money.gif'
+  );
+  const embed = new Discord.MessageEmbed()
+    .setTitle(`Fruit Performance - ${num} Day`)
+    .setColor("#88CC77")
+    .addField("Top 10:", top_str, true)
+    .addField("Bottom 10:", bot_str, true)
+    .attachFiles(attachment)
+    .setThumbnail('attachment://money.gif');
+  msg.channel.send(embed)
+}
+
+function f_chart(msg, content) {
   // Pull fruit_str from whatever the heck they said
   let fruit_str = '';
   if (content.trim() in c.emoji_to_string) {
@@ -26,8 +71,12 @@ function f_chart(msg, content) {
     fruit_str = content.trim()
   } else if (content.trim().toUpperCase() in c.ticker_to_string) {
     fruit_str = c.ticker_to_string[content.trim().toUpperCase()].str;
+  } else if (/^[1-4][0-9]d$|^[1-9]d$/.test(content.trim())) {
+    console.log("regexp worked")
+    f_chart_top(msg, parseInt(content.trim().replace('d', '')));
+    return;
   } else {
-    msg.reply("That ain't no fruit!!!")
+    msg.reply("Try a valid input, bucko!!")
     return ;
   }
 
@@ -64,7 +113,7 @@ function f_chart(msg, content) {
   // Scale noisy result so its range is 10% of graph height
   let min = Math.min(...prices);
   let max = Math.max(...prices);
-  let range = Math.max(50, max - min); // Can't be zero or else math gets messed up!
+  let range = Math.max(20, max - min); // Can't be zero or else math gets messed up!
   // go through and subtract min from everything. Then multiply everything by
   // a scaling factor.
   let scale_mult = (scale_factor * graph_height) / range;

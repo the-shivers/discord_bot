@@ -8,6 +8,8 @@ const record_filename_full = './scripts/fruitymon/f_record.json';
 const f_record = require(record_filename);
 const f_command_dict = require('./f_command_dict.js').f_command_dict;
 const f_prices = require('./f_prices.js');
+const f_petUpdate = require('./f_petUpdate.js');
+
 
 // Command combiner
 function f(msg, content) {
@@ -44,6 +46,9 @@ function f(msg, content) {
     let rem_list = [];
     for (let i = 0; i < f_record[msg.author.id]["Item Inventory"].length; i++) {
       let curr_item = new c.Item(f_record[msg.author.id]["Item Inventory"][i].name);
+      if (["vault"].includes(curr_item.name)) {
+        continue;
+      }
       let item_date = f_record[msg.author.id]["Item Inventory"][i].date
       if (item_date + (curr_item.exp * 1000) <= msg.createdTimestamp) {
         rem_list = rem_list.concat([i]);
@@ -63,6 +68,13 @@ function f(msg, content) {
       // UPDATE
       let dates_to_update = f_prices.generatePastDaysWithYears(50);
       f_prices.updateAllPrices(dates_to_update)
+    }
+
+    // Update item info based on which command was run.
+    if ([
+      "petinv", "petshop", "pettiers", "buypet", "slaughter", "collect", "feed"
+        ].includes(command)) {
+      f_petUpdate.updatePets(msg);
     }
 
     // Execute command
