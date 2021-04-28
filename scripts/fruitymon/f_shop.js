@@ -90,7 +90,8 @@ function generateGreedyItems() {
   item_arr = item_arr.concat(
     new c.Item("deperker"),
     new c.Item("lock"),
-    new c.Item("vault")
+    new c.Item("vault"),
+    new c.Item("trough")
   )
   return item_arr;
 }
@@ -100,7 +101,8 @@ function generateLuckyItems() {
   item_arr = item_arr.concat(
     new c.Item("deperker"),
     new c.Item("lock"),
-    new c.Item("vault")
+    new c.Item("vault"),
+    new c.Item("trough")
   )
   return item_arr;
 }
@@ -290,6 +292,9 @@ function f_buy(msg, content) {
       if (buy_items[i].name === "vault" && "vault" in f_record[msg.author.id]) {
         msg.channel.send("You can only have one vault!");
         return;
+      } else if (buy_items[i].name === "trough" && "trough" in f_record[msg.author.id]) {
+        msg.channel.send("You can only have one trough!");
+        return;
       }
       // Check if they can afford it
       if (f_record[msg.author.id]["Fruitbux"] >= buy_items[i].price) {
@@ -306,8 +311,8 @@ function f_buy(msg, content) {
           f_record[msg.author.id]["Number of Dice"] = 5;
           f_record[msg.author.id]["Dice Sides"] = 100;
         }
-        if (buy_items[i].name === 'vault') {
-          f_record[msg.author.id]["vault"] = {}
+        if (buy_items[i].name === 'vault' || buy_items[i].name === 'trough') {
+          f_record[msg.author.id][buy_items[i].name] = {}
         }
         fs.writeFileSync(record_filename_full, JSON.stringify(f_record, null, 2), function writeJSON(err) {
           if (err) return console.log(err);

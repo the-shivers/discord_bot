@@ -96,7 +96,7 @@
     "base_price": 20000,
     "base_freq": 0,
     "generation": {
-      "milk": {
+      "mushroom": {
         "str": "mushroom",
         "emoji": "🍄",
         "freq": 1
@@ -167,7 +167,7 @@
     "hours_to_maturity": 24,
     "base_speed": 10,
     "base_health": 10,
-    "base_spoils": 3,
+    "base_spoils": 6,
     "base_price": 15000,
     "base_freq": 0,
     "generation": {

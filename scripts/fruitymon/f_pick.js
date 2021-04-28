@@ -87,13 +87,9 @@ function fruitArray(arr, msg) {
         break; // j is our tier index, j+1 is tier
       }
     }
-    console.log("raw j is", j)
     j = Math.min(j, c.fruit_tiers.length - 3) // Account for possibility of roles higher than 100, leading to j = 6
-    console.log("j is", j)
     let tier_rarity = c.tierRarity(c.fruit_tiers[j].fruit.length); // 1-indexed!
-    console.log('tier rarity is', tier_rarity)
     let temp_val = c.fruit_tiers[j].fruit[tier_rarity - 1];
-    console.log('temp val is', temp_val)
     let fruit_str = c.emoji_to_string[temp_val];
     let curr_fruit = new c.Fruit(fruit_str)
     // Coon logic
@@ -261,7 +257,9 @@ function pick(msg, content) {
       .addField("Discarded Exp.", fill + discard_exp_str + discard_exp_ttl, true)
       // .addField(expb1, expb2, false)
     msg.reply(template);
-    if (can_megaroll) msg.channel.send("🎲Megaroll!🎲");
+    if (can_megaroll) {
+      msg.channel.send("🎲Megaroll!🎲");
+    }
     // Update stats
     f_record = updateFruitStats(msg, keep_fruit, curr_exp + new_exp, f_record);
     fs.writeFile(record_filename_full, JSON.stringify(f_record, null, 2), function writeJSON(err) {

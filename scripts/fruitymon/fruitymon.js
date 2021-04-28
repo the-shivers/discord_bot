@@ -46,7 +46,7 @@ function f(msg, content) {
     let rem_list = [];
     for (let i = 0; i < f_record[msg.author.id]["Item Inventory"].length; i++) {
       let curr_item = new c.Item(f_record[msg.author.id]["Item Inventory"][i].name);
-      if (["vault"].includes(curr_item.name)) {
+      if (["vault", "trough"].includes(curr_item.name)) {
         continue;
       }
       let item_date = f_record[msg.author.id]["Item Inventory"][i].date

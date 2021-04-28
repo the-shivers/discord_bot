@@ -88,6 +88,12 @@ let item_dict = {
     "desc": "Store as many copies of ten unique items in a vault. These will be unstealable and unaffected by sell all. Additionally, it allows you to track the value of your vault contents over time. Good for keeping investments safe!",
     "exp": 0,
     "price": 5000
+  },
+  "trough": {
+    "name": "trough",
+    "desc": "Store as many copies of ten unique items in a trough. These will be unstealable and unaffected by sell all. Additionally, it allows you automatically feed all pets with the contents using !f feed auto!",
+    "exp": 0,
+    "price": 5000
   }
 }
 

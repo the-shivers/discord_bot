@@ -2,6 +2,7 @@
 
 // Imports
 const f = require('../../funcs.js');
+const c = require('./f_config.js');
 const fs = require('fs');
 const fruit_dict = require('./fruit_dict.json')
 const seedrandom = require('seedrandom')
@@ -18,27 +19,32 @@ const rare_variant_prob = 1/4; // Usually 1/4
 let late_bloomer = {
   "str": "Late Bloomer",
   "proper": "Late Bloomer",
-  "effects": {"hours_to_maturity": 3}
+  "effects": {"hours_to_maturity": 3},
+  "desc": "Takes much longer to become an adult."
 };
 let precocious = {
   "str": "precocious",
   "proper": "Precocious",
-  "effects": {"hours_to_maturity": 0.25}
+  "effects": {"hours_to_maturity": 0.25},
+  "desc": "Becomes an adult much more quickly."
 };
 let productive = {
   "str": "productive",
   "proper": "Productive",
-  "effects": {"base_speed": 1.5}
+  "effects": {"base_speed": 1.5},
+  "desc": "Produces items more quickly."
 };
 let prodigious = {
   "str": "prodigious",
   "proper": "Prodigious",
-  "effects": {"base_speed": 2}
+  "effects": {"base_speed": 2},
+  "desc": "Produces items much more quickly."
 };
 let lazy = {
   "str": "lazy",
   "proper": "Lazy",
-  "effects": {"base_speed": 0.5}
+  "effects": {"base_speed": 0.5},
+  "desc": "Produces items slower."
 };
 let hearty = {
   "str": "hearty",
@@ -232,6 +238,7 @@ function getMorePetInfo(msg, pet_info) {
       }
     }
   }
+  pet_info["base_health"] = Math.max(5, pet_info["base_health"])
   pet_info["base_hunger"] = 16 + Math.floor(Math.random() * 25) // 16 to 40
   pet_info["curr_hunger"] = pet_info["base_hunger"]
   pet_info['curr_health'] = pet_info['base_health'];
@@ -374,7 +381,7 @@ function f_petInv(msg, content) {
     .setColor('#CC22CC')
     .setTitle(`${msg.author.username}'s Pets`)
     .setDescription("Options:\n\n`!f namepet <slot> <name>` to rename a pet.\n\
-    `!f slaughter <slot>` to transform a pet into meat.\n\
+    `!f slaughter <slot/nickname>` to transform a pet into meat. Works best on adults.\n\
     `!f feed <slot/nickname> <qty.> <fruit/emoji>` to feed a pet.\n\
     `!f collect` to get the items your pets produced.\n\n\
     Healing can be accomplished by feeding a pet extraordinary fruits or rare trash.")
@@ -386,7 +393,7 @@ function f_petInv(msg, content) {
     let body = "Name: `" + curr_animal.nickname + "`\n";
     body += "Age: `" + getPetAgeStr(msg, curr_animal) + "`\n"
     body += `Health: \`${curr_animal.curr_health}\` / \`${curr_animal.base_health}\`\n`
-    body += `Hunger: \`${curr_animal.curr_hunger}\` / \`${curr_animal.base_hunger}\`\n`
+    body += `Fullness: \`${curr_animal.curr_hunger}\` / \`${curr_animal.base_hunger}\`\n`
     body += `Speed: \`${curr_animal.base_speed}\`\n`
     body += `Special: \`${curr_animal.base_freq}\`\n`
     body += "Quirks: "
@@ -416,6 +423,10 @@ function f_namePet(msg, content) {
       return;
     }
     let name = split.slice(1).join(" ").trim();
+    if (name.length > 32) {
+      msg.channel.send("That's too long, jerk! Quit trying to break things!")
+      return ;
+    }
     f_record[msg.author.id]["Animals"][slot - 1].nickname = name;
     msg.reply(`Your animal in slot \`${slot}\` is now named \`${name}\`!`)
     fs.writeFileSync(record_filename_full, JSON.stringify(f_record, null, 2), function writeJSON(err) {
@@ -454,8 +465,238 @@ function f_collect(msg, content) {
   });
 }
 
+function autoFeed(msg, content) {
+  if (!("trough" in f_record[msg.author.id])) {
+    "You don't have a trough! Buy one in order to autofeed."
+    return;
+  } else if (Object.keys(f_record[msg.author.id].trough).length === 0) {
+    "There's no food in your trough! Add some with !f trough"
+    return;
+  }
 
-module.exports = {f_petshop, f_buyPet, f_pettiers, f_petInv, f_namePet, f_collect};
+  let trough_arr = [];
+  let total_food = 0
+  for (var key of Object.keys(f_record[msg.author.id].trough)) {
+    trough_arr.push(key);
+    total_food += f_record[msg.author.id].trough[key]
+  }
+  let total_feeds = 0;
+  for (let i = 0; i < f_record[msg.author.id]["Animals"].length; i++) {
+    let curr_pet = f_record[msg.author.id]["Animals"][i];
+    while (curr_pet.curr_hunger < curr_pet.base_hunger) {
+      if (total_food === 0) {break;}
+      let rand_food = trough_arr[Math.floor(Math.random() * trough_arr.length)];
+      curr_pet.curr_hunger += fruit_dict[rand_food].tier - 1;
+      f_record[msg.author.id].trough[rand_food]--;
+      total_feeds++;
+      total_food--;
+      if (f_record[msg.author.id].trough[rand_food] === 0) {
+        delete f_record[msg.author.id].trough[rand_food]
+        trough_arr = [];
+        for (var key in Object.keys(f_record[msg.author.id].trough)) {
+          trough_arr.push(key);
+        }
+      }
+    }
+  }
+  if (total_feeds === 0) {
+    msg.channel.send("None of your pets were hungry!")
+  } else {
+    msg.channel.send(`Success! You fed your pets a total of \`${total_feeds}\` items.`)
+  }
+}
+
+function f_feedPet(msg, content) {
+  // Check if they have pets
+  if (
+    !("Animals" in f_record[msg.author.id]) ||
+    f_record[msg.author.id]["Animals"].length === 0
+  ) {
+    msg.channel.send("You don't have any animals to feed!")
+    return ;
+  }
+
+  // Check if autofeed
+  if (content.trim() === "auto") {
+    autoFeed(msg, content);
+    return ;
+  }
+
+  let split = content.split(" ").filter(Boolean);
+
+  // Check if last component is an integer > 0.
+  let qty = 0;
+  if (!f.isNumeric(split[split.length - 2])) {
+    msg.channel.send("Must include a valid quantity!")
+    return ;
+  } else {
+    qty = parseInt(split[split.length - 2]);
+    if (qty < 1) {
+      msg.channel.send("Must include a valid quantity!")
+      return ;
+    }
+  }
+
+  // Check if fruit component was valid
+  let fruit = split[split.length - 1];
+  let fruit_str = '';
+  if (fruit.trim() in c.emoji_to_string) {
+    fruit_str = c.emoji_to_string[fruit.trim()];
+  } else if (fruit.trim() in fruit_dict) {
+    fruit_str = fruit.trim()
+  } else if (fruit.trim().toUpperCase() in c.ticker_to_string) {
+    fruit_str = c.ticker_to_string[fruit.trim().toUpperCase()].str;
+  } else {
+    msg.channel.send("Must use a valid fruit string, emoji, or ticker!");
+    return ;
+  }
+
+  // Check if yucky
+  let tier = fruit_dict[fruit_str].tier;
+  let emoji = fruit_dict[fruit_str].emoji;
+  if ([1, 7].includes(tier)) {
+    msg.channel.send("Animals don't like to eat that stuff!")
+    return ;
+  }
+
+  // Check if slot/nickname is valid
+  let ref = split.slice(0, -2).join(" ").toLowerCase();
+  let index = false;
+  console.log("Ref aka name is", ref)
+  console.log(f_record[msg.author.id]["Animals"][0].nickname.toLowerCase())
+  for (let i = 0; i < f_record[msg.author.id]["Animals"].length; i++) {
+    if (
+      ref === f_record[msg.author.id]["Animals"][i].nickname.toLowerCase() ||
+      (f.isNumeric(ref) && parseInt(ref) - 1 === i)
+    ) {
+      index = i;
+      console.log("index is...", index)
+      break;
+    }
+  }
+  console.log(index, !(index))
+  if (index === false) {
+    msg.channel.send("Couldn't find that animal, sorry!")
+    return ;
+  }
+
+  // Check if actually hungry/injured/alive
+  let pet = f_record[msg.author.id]["Animals"][index]
+  if ([2, 3, 4, 5].includes(tier) && pet.curr_hunger === pet.base_hunger) {
+    msg.channel.send("They aren't hungry!!")
+    return ;
+  }
+  if ([0, 6].includes(tier) && pet.curr_health === pet.base_health) {
+    msg.channel.send("They're already at full health!");
+    return ;
+  }
+  if ("status" in pet && pet.status === "dead") {
+    msg.channel.send("That pet is dead!");
+    return ;
+  }
+
+  // Feeding time
+  let counter = 0;
+  for (let i = f_record[msg.author.id]["Fruit Inventory"].length - 1; i >= 0; i--) {
+    console.log(counter, i, qty)
+    if (fruit_str === f_record[msg.author.id]["Fruit Inventory"][i]) {
+      f_record[msg.author.id]["Fruit Inventory"].splice(i, 1)
+      counter++;
+      if ([2, 3, 4, 5].includes(tier)) {
+        pet.curr_hunger+= tier - 1;
+        if (pet.curr_hunger === pet.base_hunger) {break;}
+      } else {
+        pet.curr_health += 3;
+        if (pet.curr_health === pet.base_health) {break;}
+      }
+      if (counter === qty) {break;}
+    }
+  }
+  // Check if they were able to feed their pet
+  if (counter === 0) {
+    msg.channel.send("You didn't have what you wanted to feed your pet with.")
+    return ;
+  }
+
+  // Message and update
+  msg.channel.send(`Success! You fed \`${pet.nickname}\` \`${counter}\` ${emoji}!`)
+  fs.writeFileSync(record_filename_full, JSON.stringify(f_record, null, 2), function writeJSON(err) {
+    if (err) return console.log(err);
+  });
+}
+
+
+function f_slaughter(msg, content) {
+  msg.channel.send("killing a cute pet!")
+  // Check if they have pets
+  if (
+    !("Animals" in f_record[msg.author.id]) ||
+    f_record[msg.author.id]["Animals"].length === 0
+  ) {
+    msg.channel.send("You don't have any animals to kill!")
+    return ;
+  }
+
+  //Check if slot/nickname is valid
+  let ref = content.trim();
+  let index = false;
+  console.log("Ref aka name is", ref)
+  console.log(f_record[msg.author.id]["Animals"][0].nickname.toLowerCase())
+  for (let i = 0; i < f_record[msg.author.id]["Animals"].length; i++) {
+    if (
+      ref === f_record[msg.author.id]["Animals"][i].nickname.toLowerCase() ||
+      (f.isNumeric(ref) && parseInt(ref) - 1 === i)
+    ) {
+      index = i;
+      console.log("index is...", index)
+      break;
+    }
+  }
+  console.log(index, !(index))
+  if (index === false) {
+    msg.channel.send("Couldn't find that animal, sorry!")
+    return ;
+  }
+
+  // Killing pet
+  console.log("index is ", index)
+  let pet = f_record[msg.author.id]["Animals"][index]
+  let age = getPetAgeStr(msg, pet);
+  if (age === "Teen") {
+    pet.base_spoils *= 0.75;
+  } else if (age === "Adolescent") {
+    pet.base_spoils *= 0.5;
+  } else if (age !== "Adult") {
+  pet.base_spoils *= 0.25;
+  }
+  let arr = [];
+  for (var item in pet.death) {
+    arr = arr.concat(Array(pet.death[item].freq).fill(pet.death[item].str))
+  }
+  let ind = 0;
+  let spoils_arr = [];
+  let spoils_emojis = [];
+  let str = ""
+  let exp = 0;
+  for (let i = 0; i < Math.ceil(pet.base_spoils); i++) {
+    ind = Math.min(arr.length - 1, Math.floor(Math.random() * arr.length) + pet.base_freq);
+    ind = Math.max(0, ind);
+    str = pet.death[arr[ind]].str;
+    spoils_arr.push(str);
+    spoils_emojis.push(fruit_dict[str].emoji);
+    exp += fruit_dict[str].exp;
+  }
+
+  // Message and update
+  f_record[msg.author.id]["Animals"].splice(index, 1)
+  f_record[msg.author.id]["Experience"] += exp
+  f_record[msg.author.id]["Fruit Inventory"] = f_record[msg.author.id]["Fruit Inventory"].concat(spoils_arr);
+  msg.channel.send(`You successfully transformed \`${pet.nickname}\` into ${spoils_emojis.join()} and got \`${exp}\` experience!`)
+
+}
+
+
+module.exports = {f_petshop, f_buyPet, f_pettiers, f_petInv, f_namePet, f_collect, f_feedPet, f_slaughter};
 
 
 // Exotics: dragon (eggs, scales), t-rex, (eggs, scales), unicorn (milk, sparkles)

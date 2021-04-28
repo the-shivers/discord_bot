@@ -16,7 +16,7 @@ const give = require('./give.js');
 const f_chart = require('./f_chart.js');
 const f_petshop = require('./f_petshop.js');
 const f_vault = require('./f_vault.js');
-
+const f_trough = require('./f_trough.js');
 
 
 let f_command_dict = {
@@ -112,6 +112,10 @@ let f_command_dict = {
     "log": "Looking at a pet inventory!",
     "func": f_petshop.f_petInv
   },
+  "pets": {
+    "log": "Looking at a pet inventory!",
+    "func": f_petshop.f_petInv
+  },
   "namepet": {
     "log": "Naming a pet",
     "func": f_petshop.f_namePet
@@ -124,9 +128,29 @@ let f_command_dict = {
     "log": "Unvaulting...",
     "func": f_vault.f_unvault
   },
+  "trough": {
+    "log": "Troughing...",
+    "func": f_trough.f_trough
+  },
+  "untrough": {
+    "log": "Untroughing...",
+    "func": f_trough.f_untrough
+  },
   "collect": {
-    "log": "Unvaulting...",
+    "log": "Collecting animal goodies...",
     "func": f_petshop.f_collect
+  },
+  "feed": {
+    "log": "Feeding a pet...",
+    "func": f_petshop.f_feedPet
+  },
+  "kill": {
+    "log": "Murdering a pet...",
+    "func": f_petshop.f_slaughter
+  },
+  "slaughter": {
+    "log": "Murdering a pet...",
+    "func": f_petshop.f_slaughter
   }
 }
 
