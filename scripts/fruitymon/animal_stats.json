@@ -183,15 +183,15 @@
       }
     },
     "death": {
-      "poultry_leg": {
-        "str": "poultry_leg",
-        "emoji": "🍗",
-        "freq": 2
-      },
       "feather": {
         "str": "feather",
         "emoji": "🪶",
         "freq": 1
+      },
+      "poultry_leg": {
+        "str": "poultry_leg",
+        "emoji": "🍗",
+        "freq": 2
       }
     },
     "variants": {
@@ -351,6 +351,11 @@
       "poop": {
         "str": "poop",
         "emoji": "💩",
+        "freq": 5
+      },
+      "gem": {
+        "str": "gem",
+        "emoji": "💎",
         "freq": 1
       }
     },

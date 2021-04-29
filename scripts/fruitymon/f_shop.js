@@ -12,9 +12,10 @@ const stock_filename_full = './scripts/fruitymon/f_shop.json';
 var stock = require(stock_filename);
 const Discord = require('discord.js');
 const fruit_dict = require('./fruit_dict.json')
+const fruit_dict_full = './scripts/fruitymon/fruit_dict.json'
 const f_prices = require('./f_prices.js');
-
-const trash_day = 3;
+var animal_stats = require('./animal_stats.json');
+const f_petshop = require('./f_petshop.js')
 
 function updateStock() {
   // activates on any shop activity (buy, sell, shop)
@@ -67,42 +68,21 @@ function priceFruit(fruit_str, msg) {
     (trash_tiers.includes(fruit.tier) && f_record[msg.author.id]["Perks"].includes("pawnstar")) ||
     (rare_tiers.includes(fruit.tier) && f_record[msg.author.id]["Perks"].includes("beloved"))
   ) {
-    return base_price * 2;
+    return base_price * 1.5;
   }
   return base_price;
 }
 
 function generateItems(msg) {
-  // Generates items for a particular user
-  let item_arr = [];
-  if (f_record[msg.author.id]["Perks"].includes("greedy")) {
-    item_arr = generateGreedyItems();
-  } else if (f_record[msg.author.id]["Perks"].includes("lucky")) {
-    item_arr = generateLuckyItems();
-  } else {
-    item_arr = generateLuckyItems();
-  }
-  return item_arr;
-}
-
-function generateGreedyItems() {
   let item_arr = [];
   item_arr = item_arr.concat(
     new c.Item("deperker"),
     new c.Item("lock"),
     new c.Item("vault"),
-    new c.Item("trough")
-  )
-  return item_arr;
-}
-
-function generateLuckyItems() {
-  let item_arr = [];
-  item_arr = item_arr.concat(
-    new c.Item("deperker"),
-    new c.Item("lock"),
-    new c.Item("vault"),
-    new c.Item("trough")
+    new c.Item("trough"),
+    new c.Item("requirk"),
+    new c.Item("price_fix"),
+    new c.Item("trophy")
   )
   return item_arr;
 }
@@ -288,13 +268,53 @@ function f_buy(msg, content) {
   }
   // Check if item is available
   for (let i = 0; i < buy_items.length; i++) {
-    if (content === buy_items[i].name) {
+    if (content.split(' ')[0].trim() === buy_items[i].name) {
       if (buy_items[i].name === "vault" && "vault" in f_record[msg.author.id]) {
         msg.channel.send("You can only have one vault!");
         return;
       } else if (buy_items[i].name === "trough" && "trough" in f_record[msg.author.id]) {
         msg.channel.send("You can only have one trough!");
         return;
+      } else if (buy_items[i].name === "requirk") {
+        // make sure they have a pet and selected it properly
+        if (!("Animals" in f_record[msg.author.id]) || f_record[msg.author.id]["Animals"].length === 0) {
+          msg.channel.send("You don't have any animals!")
+          return ;
+        } else {
+          let ref = content.split(' ').slice(1).join(" ").toLowerCase();
+          var animal_index = false;
+          console.log("Ref aka name is", ref)
+          console.log(f_record[msg.author.id]["Animals"][0].nickname.toLowerCase())
+          for (let i = 0; i < f_record[msg.author.id]["Animals"].length; i++) {
+            if (
+              ref === f_record[msg.author.id]["Animals"][i].nickname.toLowerCase() ||
+              (f.isNumeric(ref) && parseInt(ref) - 1 === i)
+            ) {
+              animal_index = i;
+              console.log("animal_index is...", animal_index)
+              break;
+            }
+          }
+          console.log(animal_index, !(animal_index))
+          if (animal_index === false) {
+            msg.channel.send("Couldn't find that animal, sorry!")
+            return ;
+          }
+        }
+      } else if (buy_items[i].name === "price_fix") {
+        //make sure they picked a valid stock
+        var ticker_fruit_str = '';
+        let ref = content.split(' ')[1].trim()
+        if (ref in c.emoji_to_string) {
+          ticker_fruit_str = c.emoji_to_string[ref];
+        } else if (ref in fruit_dict) {
+          ticker_fruit_str = ref
+        } else if (ref.toUpperCase() in c.ticker_to_string) {
+          ticker_fruit_str = c.ticker_to_string[ref.toUpperCase()].str;
+        } else {
+          msg.channel.send("Pick a valid stock!!")
+          return ;
+        }
       }
       // Check if they can afford it
       if (f_record[msg.author.id]["Fruitbux"] >= buy_items[i].price) {
@@ -313,6 +333,29 @@ function f_buy(msg, content) {
         }
         if (buy_items[i].name === 'vault' || buy_items[i].name === 'trough') {
           f_record[msg.author.id][buy_items[i].name] = {}
+        }
+        if (buy_items[i].name === "price_fix") {
+          let date = f_prices.generatePastDaysWithYears(1)[0];
+          fruit_dict[ticker_fruit_str].hist_prices[date] = fruit_dict[ticker_fruit_str].exp
+          fs.writeFileSync(fruit_dict_full, JSON.stringify(fruit_dict, null, 2), function writeJSON(err) {
+            if (err) return console.log(err);
+          });
+        }
+        if (buy_items[i].name === "trophy") {
+          if (!("Trophies" in f_record[msg.author.id])) {
+            f_record[msg.author.id]["Trophies"] = 1;
+          } else {f_record[msg.author.id]["Trophies"]++}
+        }
+        if (buy_items[i].name === "requirk") {
+          let pet = f_record[msg.author.id]["Animals"][animal_index];
+          pet.base_speed = animal_stats[pet.animal_type].base_speed;
+          pet.hours_to_maturity = animal_stats[pet.animal_type].hours_to_maturity;
+          pet.base_health = animal_stats[pet.animal_type].base_health;
+          pet.base_spoils = animal_stats[pet.animal_type].base_spoils;
+          pet.base_freq = animal_stats[pet.animal_type].base_freq;
+          pet.quirks = []
+          pet.capacity = 3;
+          pet = f_petshop.getMorePetInfo(msg, pet, pet.nickname);
         }
         fs.writeFileSync(record_filename_full, JSON.stringify(f_record, null, 2), function writeJSON(err) {
           if (err) return console.log(err);

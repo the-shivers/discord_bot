@@ -394,7 +394,18 @@ function god(msg, content) {
       ) {
         f_record[msg.author.id]["Fruitbux"] -= amt;
         let result = analyzeOffering(amt);
-        let god_roll = f.rollDie(result + difficulty);
+        // logic to prevent people from breaking the game
+        let god_roll = 0
+        if (f_record[msg.author.id]["Perks"].includes("lucky")) {
+          let dice_num = f_record[msg.author.id]["Number of Dice"]
+          if (f_record[msg.author.id]["Perks"].includes("blessed")) {dice_num -= 15}
+          god_roll = f_record[msg.author.id]["Number of Dice"] - 40
+          result -= Math.floor(f_record[msg.author.id]["Number of Dice"] / 2)
+        } else if (f_record[msg.author.id]["Perks"].includes("greedy")) {
+          god_roll = f_record[msg.author.id]["Pick Limit"] - 60
+          result -= Math.floor(f_record[msg.author.id]["Pick Limit"] / 2)
+        }
+        god_roll += f.rollDie(result + difficulty);
         let boon = analyzeDiff(result - god_roll);
         console.log(`Your result ${result} and gods score ${god_roll} \nfor a diff of ${result-god_roll} and boon of ${boon}`)
         boon_dict[boon](msg, template, true);

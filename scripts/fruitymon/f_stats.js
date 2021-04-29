@@ -84,6 +84,10 @@ function stats(msg, content) {
     //.addField(fill, expb2 + '\n' + fill, false)
     .addField("Details:", detail_str, true)
     .addField("Perks:", fill + perk_str, true)
+  if ("Trophies" in f_record[msg.author.id]) {
+
+    template.addField("Trophies:", `${Array(f_record[msg.author.id].Trophies).fill("🏆").join(" ")}`, false)
+  }
   msg.channel.send(template);
 }
 

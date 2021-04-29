@@ -31,31 +31,25 @@ function f_autoTrough(msg) {
 }
 
 function f_troughInv(msg) {
+  let fill = '\u200b';
   let dates = f_prices.generatePastDaysWithYears(8);
   let today = dates[dates.length - 1]
   let yday = dates[dates.length - 1 - 1]
   let lweek = dates[dates.length - 1 - 7]
-  let body = "";
-  let body2 = "";
-  let body3 = "";
-  let today_total = 0;
-  let yday_total = 0;
-  let lw_total = 0;
+  let body = fill;
   for (const [key, qty] of Object.entries(f_record[msg.author.id]["trough"])) {
     let today_value = fruit_dict[key].hist_prices[today];
     let tier = fruit_dict[key].tier;
     console.log(`${key}: ${qty}`);
     body += `\`${fruit_dict[key].proper}\` ${fruit_dict[key].emoji} \`x${qty}\` - Hunger Value: \`${tier - 1}\`\n`
   }
-  let desc = "Food trough!\n\n"
 
   const attachment = new Discord.MessageAttachment(
     './scripts/fruitymon/assets/foodbowl.png', 'foodbowl.png'
   );
   const embed = new Discord.MessageEmbed()
     .setTitle(` Your Trough `)
-    .setColor("#88CC77")
-    .setDescription(desc)
+    .setColor("#FF661e")
     .addField("Vault Items", body, false)
     .attachFiles(attachment)
     .setThumbnail('attachment://foodbowl.png');

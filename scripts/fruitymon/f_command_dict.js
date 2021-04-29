@@ -151,6 +151,10 @@ let f_command_dict = {
   "slaughter": {
     "log": "Murdering a pet...",
     "func": f_petshop.f_slaughter
+  },
+  "petquirks": {
+    "log": "showing pet quirks",
+    "func": f_petshop.petQuirks
   }
 }
 

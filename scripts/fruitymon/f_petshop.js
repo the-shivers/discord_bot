@@ -49,47 +49,56 @@ let lazy = {
 let hearty = {
   "str": "hearty",
   "proper": "Hearty",
-  "effects": {"base_health": 10}
+  "effects": {"base_health": 10},
+  "desc": "More health."
 };
 let beast = {
   "str": "beast",
   "proper": "Beast",
-  "effects": {"base_health": 15}
+  "effects": {"base_health": 15},
+  "desc": "Much more health."
 };
 let frail = {
   "str": "frail",
   "proper": "Frail",
-  "effects": {"base_health": -10}
+  "effects": {"base_health": -10},
+  "desc": "Lower health."
 };
 let artisan = {
   "str": "artisan",
   "proper": "Artisan",
-  "effects": {"base_freq": 2}
+  "effects": {"base_freq": 2},
+  "desc": "Get rarer items."
 };
 let basic = {
   "str": "basic",
   "proper": "Basic",
-  "effects": {"base_freq": -10}
+  "effects": {"base_freq": -10},
+  "desc": "Never get rare items."
 };
 let meaty = {
   "str": "meaty",
   "proper": "Meaty",
-  "effects": {"base_spoils": 4}
+  "effects": {"base_spoils": 4},
+  "desc": "Slaughtering yields more items."
 };
 let gourmet = {
   "str": "gourmet",
   "proper": "Gourmet",
-  "effects": {"base_spoils": 8}
+  "effects": {"base_spoils": 8},
+  "desc": "Slaughtering yields far more items."
 };
 let skeletal = {
   "str": "skeletal",
   "proper": "Skeletal",
-  "effects": {"base_spoils": 0.5}
+  "effects": {"base_spoils": 0.5},
+  "desc": "Slaughtering yields fewer items."
 };
 let hoarder = {
   "str": "hoarder",
   "proper": "Hoarder",
-  "effects": {"capacity": 2}
+  "effects": {"capacity": 2},
+  "desc": "Can hold more items."
 };
 let incredible = {
   "str": "incredible",
@@ -97,7 +106,8 @@ let incredible = {
   "effects": {
     "hours_to_maturity": 0.5, "base_speed": 1.25,
     "base_health": 5, "base_spoils": 4
-  }
+  },
+  "desc": "Better in virtually every way."
 };
 let ultimate = {
   "str": "ultimate",
@@ -105,7 +115,8 @@ let ultimate = {
   "effects": {
     "hours_to_maturity": 0.25, "base_speed": 2,
    "base_health": 15, "base_spoils": 8
-  }
+ },
+ "desc": "Much better in virtually every way."
 };
 let worthless = {
   "str": "worthless",
@@ -113,34 +124,54 @@ let worthless = {
   "effects": {
     "hours_to_maturity": 4, "base_speed": 0.5,
    "base_health": -10, "base_spoils": 0.5
-  }
+ },
+ "desc": "Worse in virtually every way."
 };
 let comfy = {
   "str": "comfy",
   "proper": "Comfy",
   "effects": {
     "hours_to_maturity": 1.5, "base_speed": 0.5, "base_freq": 3
-  }
+  },
+  "desc": "Slower to grow and produce, but generates rarer items."
 };
 let fat = {
   "str": "fat",
   "proper": "Fat",
   "effects": {
     "base_health": 15, "base_speed": 0.75
-  }
+  },
+  "desc": "Slower but higher health."
 };
 let hurried = {
-  "str": "fat",
-  "proper": "Fat",
+  "str": "hurried",
+  "proper": "Hurried",
   "effects": {
     "base_freq": -1, "base_speed": 1.5
-  }
+  },
+  "desc": "Produces common items faster."
 };
 let animal_quirks = [
   worthless, ultimate, incredible, skeletal, gourmet, meaty, basic, artisan,
   frail, beast, hearty, lazy, prodigious, productive, precocious, late_bloomer,
   comfy, fat, hurried
 ]
+
+function petQuirks(msg, content) {
+  let body = "";
+  for (let i = 0; i < animal_quirks.length; i++) {
+    body += `\`${animal_quirks[i].proper}\` - ${animal_quirks[i].desc}\n`
+  }
+  const attachment = new Discord.MessageAttachment('./scripts/fruitymon/assets/breadcat.gif', 'breadcat.gif');
+  const template = new Discord.MessageEmbed()
+    .setColor('#AAFF22')
+    .setTitle("✨🐑✨  Pet Quirks! ✨🐑✨")
+    .setDescription("Each pet comes with a random set of 1-4 quirks. Here is where you find what they mean!")
+    .attachFiles(attachment)
+    .setThumbnail('attachment://breadcat.gif')
+    .addField('Quirk List', body, true)
+  msg.channel.send(template)
+}
 
 function generatePets(msg, user_specific=false) {
   let pet_array = [];
@@ -218,7 +249,7 @@ function getPetInfo(msg, pet_str, index=0, user_specific=false) {
   return pet_info;
 }
 
-function getMorePetInfo(msg, pet_info) {
+function getMorePetInfo(msg, pet_info, name="Dumbass") {
   let num_quirks = 1 + Math.floor(Math.pow(Math.random(), 2) * 3);
   console.log("num_quirks", num_quirks)
   let shuffled_quirks = f.shuffle(animal_quirks);
@@ -242,7 +273,7 @@ function getMorePetInfo(msg, pet_info) {
   pet_info["base_hunger"] = 16 + Math.floor(Math.random() * 25) // 16 to 40
   pet_info["curr_hunger"] = pet_info["base_hunger"]
   pet_info['curr_health'] = pet_info['base_health'];
-  pet_info["nickname"] = "Dumbass"
+  pet_info["nickname"] = name;
   pet_info["dob"] = msg.createdTimestamp;
   console.log("Pet info after quirk modifications", pet_info)
   return pet_info;
@@ -486,6 +517,7 @@ function autoFeed(msg, content) {
     while (curr_pet.curr_hunger < curr_pet.base_hunger) {
       if (total_food === 0) {break;}
       let rand_food = trough_arr[Math.floor(Math.random() * trough_arr.length)];
+      console.log(trough_arr, rand_food)
       curr_pet.curr_hunger += fruit_dict[rand_food].tier - 1;
       f_record[msg.author.id].trough[rand_food]--;
       total_feeds++;
@@ -673,6 +705,7 @@ function f_slaughter(msg, content) {
   for (var item in pet.death) {
     arr = arr.concat(Array(pet.death[item].freq).fill(pet.death[item].str))
   }
+  console.log("death_arr", arr)
   let ind = 0;
   let spoils_arr = [];
   let spoils_emojis = [];
@@ -680,6 +713,7 @@ function f_slaughter(msg, content) {
   let exp = 0;
   for (let i = 0; i < Math.ceil(pet.base_spoils); i++) {
     ind = Math.min(arr.length - 1, Math.floor(Math.random() * arr.length) + pet.base_freq);
+    console.log("getting spoil", ind)
     ind = Math.max(0, ind);
     str = pet.death[arr[ind]].str;
     spoils_arr.push(str);
@@ -696,7 +730,7 @@ function f_slaughter(msg, content) {
 }
 
 
-module.exports = {f_petshop, f_buyPet, f_pettiers, f_petInv, f_namePet, f_collect, f_feedPet, f_slaughter};
+module.exports = {f_petshop, f_buyPet, f_pettiers, f_petInv, f_namePet, f_collect, f_feedPet, f_slaughter, petQuirks, getMorePetInfo};
 
 
 // Exotics: dragon (eggs, scales), t-rex, (eggs, scales), unicorn (milk, sparkles)

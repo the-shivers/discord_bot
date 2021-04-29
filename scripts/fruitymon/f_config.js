@@ -61,8 +61,7 @@ let item_dict = {
     "desc": "Much luckier rolls for 24 hours",
     "exp": 3600 * 24,
     "price": 1000000000000000000
-  }
-  ,
+  },
   "megagreed": {
     "name": "megagreed",
     "desc": "5 extra fruits per pick for 24 hours",
@@ -94,6 +93,24 @@ let item_dict = {
     "desc": "Store as many copies of ten unique items in a trough. These will be unstealable and unaffected by sell all. Additionally, it allows you automatically feed all pets with the contents using !f feed auto!",
     "exp": 0,
     "price": 5000
+  },
+  "price_fix": {
+    "name": "price_fix",
+    "desc": "Resets the price of a stock to its base price. `!f buy price_fix <fruit/emoji/ticker>`",
+    "exp": 0,
+    "price": 10000
+  },
+  "requirk": {
+    "name": "requirk",
+    "desc": "Rerolls the stats of a pet. `!f buy requirk <pet nickname/slot>`",
+    "exp": 0,
+    "price": 5000
+  },
+  "trophy": {
+    "name": "trophy",
+    "desc": "Shows up with `!f stats` to show everyone how good you are at Fruitymon!",
+    "exp": 5,
+    "price": 100000
   }
 }
 
@@ -138,8 +155,8 @@ raccoon = new Perk(
   {"Roll Delay": 0}
 );
 pawnstar = new Perk(
-  "pawnstar", "greedy", "Trash sells for 2x as much!",
-  {"Roll Delay": 0}
+  "pawnstar", "greedy", "4 more dice, 4 more picks, and trash sells for 1.5x as much!",
+  {"Pick Limit": 4, "Number of Dice": 4}
 );
 lucky = new Perk(
   "lucky", "lucky", "Increases your chances of getting rare fruit!",
@@ -154,11 +171,11 @@ diversify = new Perk(
   {"Pick Limit": 7, "Number of Dice": 7}
 );
 blessed = new Perk(
-  "blessed", "lucky", "Your rolls will be insanely lucky!",
+  "blessed", "lucky", "Your rolls will be insanely lucky! God won't hold these dice against you.",
   {"Number of Dice": 15}
 );
 beloved = new Perk(
-  "beloved", "lucky", "Ultra rares and extraordinaries sell for 2x!",
+  "beloved", "lucky", "Ultra rares and extraordinaries sell for 1.5x!",
   {"Roll Delay": 0}
 );
 null_perk_l = new Perk(
@@ -271,6 +288,7 @@ let emoji_to_string = {
   "🧈": "butter",
   "🍄": "mushroom",
   "🧀": "cheese",
+  "💎": "gem",
   "🦴": "bone",
   "🥩": "cut_of_meat",
   "🍗": "poultry_leg",
