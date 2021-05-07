@@ -30,15 +30,15 @@ function updateStock() {
       if ([0, 1, 7, 8].includes(fruit_dict[key].tier)) {
         stock.stock[key] = 0
       } else if (fruit_dict[key].tier === 2) {
-        stock.stock[key] = 20;
+        stock.stock[key] = 50;
       } else if (fruit_dict[key].tier === 3) {
-        stock.stock[key] = 10;
+        stock.stock[key] = 30;
       } else if (fruit_dict[key].tier === 4) {
-        stock.stock[key] = 5;
+        stock.stock[key] = 15;
       } else if (fruit_dict[key].tier === 5) {
-        stock.stock[key] = 3;
+        stock.stock[key] = 8;
       } else if (fruit_dict[key].tier === 6) {
-        stock.stock[key] = 1;
+        stock.stock[key] = 5;
       }
     }
     fs.writeFileSync(stock_filename_full, JSON.stringify(stock, null, 2), function writeJSON(err) {
@@ -152,7 +152,7 @@ function f_sell(msg, content) {
     inv = []
   } else if ( // Check if they sold an entire tier
     f.isNumeric(content.split(' ')[0]) &&
-    parseInt(content.split(' ')[0]) < 7 &&
+    parseInt(content.split(' ')[0]) < 9 &&
     parseInt(content.split(' ')[0]) >= 0
   ) {
     let rem_list = [];

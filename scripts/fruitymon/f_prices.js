@@ -93,7 +93,7 @@ function getNextPrice(fruit_str, last_price, date) {
   );
   let noise_part = noise(fruit_dict[fruit_str].rw_amplitude);
   console.log("noise:", noise_part, "sin:", sin_part)
-  return last_price + noise_part + sin_part;
+  return Math.max(0, last_price + noise_part + sin_part);
 }
 
 function updateAllPrices(dates_to_update) {

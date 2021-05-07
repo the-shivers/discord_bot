@@ -183,11 +183,6 @@
       }
     },
     "death": {
-      "feather": {
-        "str": "feather",
-        "emoji": "🪶",
-        "freq": 1
-      },
       "poultry_leg": {
         "str": "poultry_leg",
         "emoji": "🍗",

@@ -66,6 +66,10 @@ let expression_dict = {
   "fire": {
     "full": "./scripts/god/assets/god_fire.jpg",
     "name": "god_fire.jpg"
+  },
+  "pirate": {
+    "full": "./scripts/god/assets/god_pirate.jpg",
+    "name": "god_pirate.jpg"
   }
 }
 
@@ -368,6 +372,12 @@ let boon_dict = {
 function god(msg, content) {
   const template = new Discord.MessageEmbed()
     .setColor("#FFFF00");
+  setAttachmentExpression(template, "pirate");
+  template
+    .setTitle("Yarr, matey! Ahoy!!!")
+    .setFooter("\"Sorry, I don't do God stuff anymore. I've decided to give it up to follow my dream of becoming a pirate! Now, get ye gone 'fore I make ye walk the plank! Haha!\"")
+  msg.channel.send(template)
+  return; 
   if (content.split(' ').length === 1) {
     // Default mode
     let freshness = determineFreshness(msg);

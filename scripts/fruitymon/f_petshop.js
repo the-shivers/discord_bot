@@ -233,7 +233,7 @@ function getPetInfo(msg, pet_str, index=0, user_specific=false) {
   pet_info['generation'] = animal_stats[pet_str].generation;
   pet_info['death'] = animal_stats[pet_str].death;
   pet_info['inv'] = [];
-  pet_info['capacity'] = 3;
+  pet_info['capacity'] = 6;
   pet_info['animal_type'] = pet_info['name'];
   pet_info['rarity'] = "common"
   let rng = seedrandom(date_int + pet_str + index)
@@ -498,10 +498,10 @@ function f_collect(msg, content) {
 
 function autoFeed(msg, content) {
   if (!("trough" in f_record[msg.author.id])) {
-    "You don't have a trough! Buy one in order to autofeed."
+    msg.channel.send("You don't have a trough! Buy one in order to autofeed.")
     return;
   } else if (Object.keys(f_record[msg.author.id].trough).length === 0) {
-    "There's no food in your trough! Add some with !f trough"
+    msg.channel.send("There's no food in your trough! Add some with !f trough")
     return;
   }
 
@@ -550,6 +550,7 @@ function f_feedPet(msg, content) {
 
   // Check if autofeed
   if (content.trim() === "auto") {
+    console.log("Auto feeding")
     autoFeed(msg, content);
     return ;
   }

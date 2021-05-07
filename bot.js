@@ -27,7 +27,7 @@ bot.on("ready", () => {
 
 let ignore_list = [
   "twg", "end", "join", "start", "info", "vote", "votes", "unvote", "leave",
-   "players"
+   "players", "stock"
 ]
 
 bot.on("message", async msg => {

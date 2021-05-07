@@ -24,6 +24,14 @@ const brain = require('./scripts/brain/brain.js');
 const test = require('./scripts/test/test.js');
 const god = require('./scripts/god/god.js');
 const grid = require('./scripts/grid/grid.js');
+const kill = require('./scripts/kill/kill.js');
+const kings = require('./scripts/kings/kings.js');
+const say = require('./scripts/say/say.js');
+const stamper = require('./scripts/stamp/stamper.js');
+const fake_bing = require('./scripts/bing/fake_bing.js');
+const face = require('./scripts/face/face.js');
+
+console.log(stamper)
 
 let command_dict = {
   "tarot": {
@@ -138,6 +146,22 @@ let command_dict = {
     "log": "Test.",
     "func": test.test
   },
+  "kings": {
+    "log": "Kings.",
+    "func": kings.kings
+  },
+  "draw": {
+    "log": "Drawing for kings.",
+    "func": kings.draw
+  },
+  "kill": {
+    "log": "KILLING.",
+    "func": kill.kill
+  },
+  "murder": {
+    "log": "MURDERING.",
+    "func": kill.kill
+  },
   "god": {
     "log": "Talking to god...",
     "func": god.god
@@ -145,6 +169,30 @@ let command_dict = {
   "grid": {
     "log": "Gridding...",
     "func": grid.grid
+  },
+  "say": {
+    "log": "saying something",
+    "func": say.say
+  },
+  "stamp": {
+    "log": "Stampy wampy!",
+    "func": stamper.stamp
+  },
+  "based": {
+    "log": "Stamping based",
+    "func": stamper.based
+  },
+  "cringe": {
+    "log": "stamping cringe",
+    "func": stamper.cringe
+  },
+  "fbi": {
+    "log": "Fake binging images...",
+    "func": fake_bing.fake_bing
+  },
+  "face": {
+    "log": "Analyzing face...",
+    "func": face.face
   }
 };
 

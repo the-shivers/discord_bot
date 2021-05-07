@@ -46,8 +46,8 @@ function updatePet(msg, animal) {
   if (animal.inv.length >= animal.capacity) return animal;
   // Make new stuff
   if (!("remainder" in animal)) {animal["remainder"] = 0}
-  let new_items = Math.floor((animal.remainder + animal.base_speed) / 20);
-  animal["remainder"] = (animal.remainder + animal.base_speed) % 20;
+  let new_items = Math.floor((animal.remainder + animal.base_speed) / 10);
+  animal["remainder"] = (animal.remainder + animal.base_speed) % 10;
   // Get item array...
   let arr = [];
   for (var item in animal.generation) {

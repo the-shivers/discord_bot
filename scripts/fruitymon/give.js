@@ -67,7 +67,7 @@ function f_give_m(msg, content) {
   console.log(content.split(' '))
   if (msg.mentions.users.size > 0 && f.isNumeric(content.split(' ')[1])) {
     let target = msg.mentions.users.first();
-    let amount = parseInt(content.split(' ')[1]);
+    let amount = Math.abs(parseInt(content.split(' ')[1]));
     if (
       msg.author.id in f_record &&
       target.id in f_record &&

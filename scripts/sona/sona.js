@@ -1,6 +1,7 @@
 const fs = require('fs');
 const f = require('../../funcs.js');
 const bing = require('../bing/bing.js');
+const f_bing = require('../bing/fake_bing.js');
 const Discord = require('discord.js');
 const sona_vars = JSON.parse(
   fs.readFileSync('scripts/sona/sona.json', 'utf8')
@@ -40,7 +41,8 @@ async function sona(msg, content) {
   + ' "' + species.name + '" '
   ;
 
-  let url = await bing.getBingUrl(query);
+  //let url = await bing.getBingUrl(query);
+  let url = await f_bing.getFakeBingUrl(query);
   const template = new Discord.MessageEmbed()
     .setColor(color_arr[0])
     .setTitle("Your New Fursona!")
