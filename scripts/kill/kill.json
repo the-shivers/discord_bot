@@ -1,35 +1,35 @@
 {
   "790037139546570802": {
-    "last_kill": 1620363772780,
+    "last_kill": 1633024057675,
     "kill_exp": 5000,
-    "last_killed_at": 1620363772780,
+    "last_killed_at": 1632543389123,
     "death_exp": 86400000,
-    "kills": 16,
-    "deaths": 7,
+    "kills": 58,
+    "deaths": 34,
     "username": "Shivers"
   },
   "645753112568528916": {
-    "last_killed_at": 1620355644042,
+    "last_killed_at": 1628295261001,
     "death_exp": 86400000,
-    "deaths": 6,
+    "deaths": 27,
     "username": "Quil",
-    "last_kill": 1619833858180,
+    "last_kill": 1626770447096,
     "kill_exp": 5000,
-    "kills": 0
+    "kills": 48
   },
   "243314148698619905": {
-    "last_kill": 1619733567057,
-    "kill_exp": 5,
-    "kills": 1,
+    "last_kill": 1632543398800,
+    "kill_exp": 5000,
+    "kills": 17,
     "username": "bird_d",
-    "last_killed_at": 1620355601783,
+    "last_killed_at": 1628770021752,
     "death_exp": 86400000,
-    "deaths": 2
+    "deaths": 8
   },
   "83398835652530176": {
-    "last_kill": 1619733648078,
-    "kill_exp": 5,
-    "kills": 1,
+    "last_kill": 1621695964570,
+    "kill_exp": 5000,
+    "kills": 4,
     "username": "League",
     "last_killed_at": 1620338243792,
     "death_exp": 86400000,
@@ -42,76 +42,82 @@
     "username": "Alright Mashi"
   },
   "102043046295633920": {
-    "kills": 5,
+    "kills": 25,
     "username": "Volcanise",
-    "last_kill": 1620244476483,
+    "last_kill": 1629738766425,
     "kill_exp": 5000,
-    "last_killed_at": 1620355611701,
+    "last_killed_at": 1628770025511,
     "death_exp": 86400000,
-    "deaths": 4
+    "deaths": 23
   },
   "112282804225654784": {
-    "deaths": 5,
+    "deaths": 23,
     "username": "Jub",
-    "last_killed_at": 1620355586451,
+    "last_killed_at": 1629826771571,
     "death_exp": 86400000,
-    "last_kill": 1620158019215,
+    "last_kill": 1627641448009,
     "kill_exp": 5000,
-    "kills": null
+    "kills": 6
   },
   "831357409192443905": {
-    "kills": 7,
+    "kills": 10,
     "username": "Shivers Bot",
-    "last_kill": 1620244558848,
+    "last_kill": 1624519916910,
     "kill_exp": 5000,
-    "last_killed_at": 1620355676006,
+    "last_killed_at": 1632543398800,
     "death_exp": 86400000,
-    "deaths": 5
+    "deaths": 27
   },
   "83090942256480256": {
     "kills": 31,
     "username": "Mashi",
     "last_kill": 1620338250603,
     "kill_exp": 5000,
-    "last_killed_at": 1620186188508,
+    "last_killed_at": 1621695955007,
     "death_exp": 86400000,
-    "deaths": 3
+    "deaths": 6
   },
   "82592378711445504": {
-    "deaths": 2,
+    "deaths": 3,
     "username": "Veegie",
-    "last_killed_at": 1619842574770,
+    "last_killed_at": 1632966681498,
     "death_exp": 86400000
   },
   "83398001577431040": {
-    "deaths": 4,
+    "deaths": 5,
     "username": "Fawfil",
-    "last_killed_at": 1620338250603,
-    "death_exp": 86400000
+    "last_killed_at": 1621695974972,
+    "death_exp": 86400000,
+    "last_kill": 1621695974972,
+    "kill_exp": 5000,
+    "kills": null
   },
   "283068887988436992": {
-    "deaths": 2,
+    "deaths": 5,
     "username": "Evil Mashi",
-    "last_killed_at": 1619842446704,
+    "last_killed_at": 1621695964570,
     "death_exp": 86400000,
     "last_kill": 1620187147800,
     "kill_exp": 5000,
     "kills": null
   },
   "87689816128368640": {
-    "deaths": 1,
+    "deaths": 5,
     "username": "Nesuki",
-    "last_killed_at": 1619828093122,
-    "death_exp": 86400000
+    "last_killed_at": 1632543378905,
+    "death_exp": 86400000,
+    "last_kill": 1629844104466,
+    "kill_exp": 5000,
+    "kills": 4
   },
   "340310812952363009": {
     "kills": 1,
     "username": "Drinky_Bot",
     "last_kill": 1619833876458,
     "kill_exp": 5000,
-    "last_killed_at": 1620355593560,
+    "last_killed_at": 1629738265751,
     "death_exp": 86400000,
-    "deaths": null
+    "deaths": 5
   },
   "109540583084675072": {
     "deaths": 2,
@@ -166,9 +172,9 @@
     "username": "Wiseoni",
     "last_killed_at": 1620277558630,
     "death_exp": 86400000,
-    "last_kill": 1620186188508,
+    "last_kill": 1620523556653,
     "kill_exp": 5000,
-    "kills": null
+    "kills": 3
   },
   "84992475382444032": {
     "deaths": 1,
@@ -192,7 +198,10 @@
     "deaths": 1,
     "username": "Kyoni",
     "last_killed_at": 1619842598459,
-    "death_exp": 86400000
+    "death_exp": 86400000,
+    "last_kill": 1630199503364,
+    "kill_exp": 5000,
+    "kills": null
   },
   "259568290299379714": {
     "kills": 1,
@@ -201,39 +210,72 @@
     "kill_exp": 5000
   },
   "105278150979629056": {
-    "deaths": 4,
+    "deaths": 37,
     "username": "nasen",
-    "last_killed_at": 1620355623293,
+    "last_killed_at": 1633024057675,
     "death_exp": 86400000,
-    "last_kill": 1620244452994,
+    "last_kill": 1629826771571,
     "kill_exp": 5000,
-    "kills": 5
+    "kills": 36
   },
   "130246810492076032": {
-    "deaths": 1,
+    "deaths": 7,
     "username": "parf",
-    "last_killed_at": 1620024647837,
+    "last_killed_at": 1626706351327,
     "death_exp": 86400000
   },
   "721448917811593246": {
-    "deaths": 1,
+    "deaths": 10,
     "username": "Snackie ﷺ",
-    "last_killed_at": 1620025833120,
-    "death_exp": 86400000
+    "last_killed_at": 1628305447140,
+    "death_exp": 86400000,
+    "last_kill": 1628770025511,
+    "kill_exp": 5000,
+    "kills": 3
   },
   "244939924162347009": {
     "kills": 1,
     "username": "YRP",
     "last_kill": 1620158089697,
     "kill_exp": 5000,
-    "last_killed_at": 1620355633270,
+    "last_killed_at": 1620463874995,
     "death_exp": 86400000,
-    "deaths": null
+    "deaths": 1
   },
   "136576542871519232": {
     "kills": 1,
     "username": "crashies",
     "last_kill": 1620158470941,
     "kill_exp": 5000
+  },
+  "109034286505549824": {
+    "kills": 1,
+    "username": "Big Gay",
+    "last_kill": 1621014210902,
+    "kill_exp": 5000,
+    "last_killed_at": 1621264570827,
+    "death_exp": 86400000,
+    "deaths": 1
+  },
+  "516665268252966922": {
+    "deaths": 4,
+    "username": "Mako",
+    "last_killed_at": 1628295268213,
+    "death_exp": 86400000,
+    "last_kill": 1627094238487,
+    "kill_exp": 5000,
+    "kills": 2
+  },
+  "131268847293562880": {
+    "deaths": 1,
+    "username": "Noff",
+    "last_killed_at": 1628295294670,
+    "death_exp": 86400000
+  },
+  "197917353130983424": {
+    "deaths": 1,
+    "username": "Hugo",
+    "last_killed_at": 1630199452037,
+    "death_exp": 86400000
   }
 }

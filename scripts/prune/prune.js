@@ -4,6 +4,10 @@
 const f = require('../../funcs.js');
 
 async function prune(msg, content) {
+  if (msg.author.id === "243314148698619905" || msg.author.id === "340310812952363009" || msg.author.id === "831357409192443905") {
+    msg.channel.send("fuck off bird!");
+    return;
+  }
   if (
     content.split(' ').length === 2
     && f.isNumeric(content.split(" ")[1])

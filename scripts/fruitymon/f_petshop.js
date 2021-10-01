@@ -527,6 +527,9 @@ function autoFeed(msg, content) {
         trough_arr = [];
         for (var key in Object.keys(f_record[msg.author.id].trough)) {
           trough_arr.push(key);
+          console.log(f_record[msg.author.id].trough)
+          console.log("I'm in the sub loop")
+          console.log(trough_arr)
         }
       }
     }

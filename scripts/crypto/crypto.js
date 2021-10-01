@@ -9,6 +9,26 @@ const Discord = require('discord.js');
 // API Options
 var coin_market_cap = api_keys.coin_market_cap;
 
+function pink(msg, content) {
+  if (content.trim() === "pink") {
+    msg.channel.send("AAAAAAAAAAAAAAAAAAAAAAAAAA!!!!");
+    var full_loc = './scripts/crypto/assets/pink.gif';
+    var loc = 'pink.gif';
+    let attachment = new Discord.MessageAttachment(full_loc, loc);
+    msg.channel.send(attachment);
+  }
+}
+
+function green(msg, content) {
+  if (content.trim() === "green") {
+    msg.channel.send("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO!!!!");
+    var full_loc = './scripts/crypto/assets/green.gif';
+    var loc = 'green.gif';
+    let attachment = new Discord.MessageAttachment(full_loc, loc);
+    msg.channel.send(attachment);
+  }
+}
+
 function interpretNumber(num) {
   // returns epic emojis based on the number and formats it
   if (num < -20) {return "`" + (num).toFixed(2) + "%` \n⬇️ ⬇️ ⬇️"}
@@ -88,4 +108,4 @@ function crypto(msg, content) {
   }
 }
 
-module.exports = {crypto};
+module.exports = {crypto, pink, green};

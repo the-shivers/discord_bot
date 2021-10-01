@@ -41,8 +41,8 @@ async function sona(msg, content) {
   + ' "' + species.name + '" '
   ;
 
-  //let url = await bing.getBingUrl(query);
-  let url = await f_bing.getFakeBingUrl(query);
+  let url = await bing.getBingUrl(query);
+  //let url = await f_bing.getFakeBingUrl(query);
   const template = new Discord.MessageEmbed()
     .setColor(color_arr[0])
     .setTitle("Your New Fursona!")

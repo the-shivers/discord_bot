@@ -26,17 +26,21 @@ function weather(msg, content) {
   var units = 'imperial';
   var t_unit = '°F';
   var s_unit = 'mph';
-  if (components[1] === "-u") {
-    if (components[2].toLowerCase() === "metric") {
+  if (components.length <= 1) {
+    msg.channel.send("pls dont break bot...");
+    return;
+  }
+  if (components[2] === "-u") {
+    if (components[3].toLowerCase() === "metric") {
       units = "metric"
       t_unit = '°C';
       s_unit = 'm/s'
-    } else if (components[2].toLowerCase() === "standard") {
+    } else if (components[3].toLowerCase() === "standard") {
       units = "standard"
       t_unit = 'K';
       s_unit = 'm/s'
     }
-    open_weather_options.qs.q = components.slice(3).join(' ');
+    open_weather_options.qs.q = components.slice(1, -2).join(' ');
   } else {
     open_weather_options.qs.q = components.slice(1).join(' ');
   }
@@ -61,7 +65,6 @@ function weather(msg, content) {
       + deg_to_comp(parsed.wind.deg);
       msg.channel.send(str);
     }
-
   });
 }
 

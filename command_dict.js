@@ -126,6 +126,14 @@ let command_dict = {
     "log": "HODLing against fudders...",
     "func": crypto.crypto
   },
+  "pink": {
+    "log": "le pink face has arrived...",
+    "func": crypto.pink
+  },
+  "green": {
+    "log": "le greeeeeen face has arrived...",
+    "func": crypto.green
+  },
   "ml": {
     "log": "Running mad libs.",
     "func": ml.ml

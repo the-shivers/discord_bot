@@ -115,7 +115,7 @@ let item_dict = {
 }
 
 let levels = [
-  0, 100, 200, 300, 500, 800, 1300, 2100, 3400, 5500, 9000, 14000, 20000, 34000
+  0, 100, 200, 300, 500, 800, 1300, 2100, 3400, 5500, 9000, 14000, 20000, 34000, 100000, 200000, 300000, 500000, 1000000, 2000000, 3000000, 5000000, 10000000
 ];
 levels = levels.map(function(x) { return x * 20; });
 let ranks = [
@@ -127,11 +127,19 @@ let ranks = [
   "Citric Scholar",
   "Fruitographer",
   "Berry Bandit",
+  "Fruitville Shefiff",
   "Mayor of Fruitytown",
   "📜 Fructose Sage 📜",
   "💰 Fructose Tycoon 💰",
+  "🕵️ Fruit Spy 🕵️",
   "👑 Legendary Fruit Lord 👑",
-  "👑💎 God-King of Fruit 💎👑"
+  "👑💎 God-King of Fruit 💎👑",
+  "🏴‍☠️ Fruit Pirate 🏴‍☠️",
+  "🧙 Fruitymancer 🧙",
+  "🥷 Fruit Ninja 🥷",
+  "👻 Fruit Ghost 👻",
+  "💃🥭 Mango Tango 🥭💃",
+  "🍆🍆🍆🍆🍆🍆🍆"
 ]
 
 let default_pick_limit = 5;
