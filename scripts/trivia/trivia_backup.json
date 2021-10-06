@@ -1,0 +1,68 @@
+{
+  "status": 0,
+  "scoreboard": {},
+  "questions": [
+    {
+      "question": "What's the capital of Peru?",
+      "answers": [
+        "Lima"
+      ],
+      "tags": [
+        "geography"
+      ]
+    },
+    {
+      "question": "What's the capital of France?",
+      "answers": [
+        "Paris"
+      ],
+      "tags": [
+        "geography"
+      ]
+    },
+    {
+      "question": "Who was the first president of the United States?",
+      "answers": [
+        "George Washington",
+        "Washington"
+      ],
+      "tags": [
+        "history",
+        "america"
+      ]
+    }
+  ],
+  "mc_questions": [
+    {
+      "question": "What's the capital of Peru?",
+      "answers": [
+        "Lima", "Santiago", "Cusco", "Trujillo"
+      ],
+      "tags": [
+        "geography"
+      ],
+      "difficulty": 3
+    },
+    {
+      "question": "What's the capital of France?",
+      "answers": [
+        "Paris", "Marseille", "Lyon", "Texas"
+      ],
+      "tags": [
+        "geography"
+      ],
+      "difficulty": 1
+    },
+    {
+      "question": "Who was the first president of the United States?",
+      "answers": [
+        "George Washington", "John Adams", "Thomas Jefferson", "Donald Trump"
+      ],
+      "tags": [
+        "history",
+        "america"
+      ],
+      "difficulty": 1
+    }
+  ]
+}
