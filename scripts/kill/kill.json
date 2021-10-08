@@ -1,10 +1,10 @@
 {
   "790037139546570802": {
-    "last_kill": 1633024057675,
+    "last_kill": 1633154268380,
     "kill_exp": 5000,
     "last_killed_at": 1632543389123,
     "death_exp": 86400000,
-    "kills": 58,
+    "kills": 59,
     "deaths": 34,
     "username": "Shivers"
   },
@@ -51,22 +51,22 @@
     "deaths": 23
   },
   "112282804225654784": {
-    "deaths": 23,
+    "deaths": 24,
     "username": "Jub",
-    "last_killed_at": 1629826771571,
+    "last_killed_at": 1633598774339,
     "death_exp": 86400000,
-    "last_kill": 1627641448009,
+    "last_kill": 1633598774339,
     "kill_exp": 5000,
-    "kills": 6
+    "kills": 7
   },
   "831357409192443905": {
     "kills": 10,
     "username": "Shivers Bot",
     "last_kill": 1624519916910,
     "kill_exp": 5000,
-    "last_killed_at": 1632543398800,
+    "last_killed_at": 1633154268380,
     "death_exp": 86400000,
-    "deaths": 27
+    "deaths": 28
   },
   "83090942256480256": {
     "kills": 31,

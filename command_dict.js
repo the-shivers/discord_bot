@@ -15,7 +15,7 @@ const bing = require('./scripts/bing/bing.js');
 const bingw = require('./scripts/bing/bingw.js');
 const wa = require('./scripts/wolframalpha/wolframalpha.js');
 const smack = require('./scripts/smack/smack.js');
-const fruitymon = require('./scripts/fruitymon/fruitymon.js');
+//const fruitymon = require('./scripts/fruitymon/fruitymon.js');
 const sona = require('./scripts/sona/sona.js');
 const crypto = require('./scripts/crypto/crypto.js');
 const ml = require('./scripts/ml/ml.js');
@@ -30,6 +30,8 @@ const say = require('./scripts/say/say.js');
 const stamper = require('./scripts/stamp/stamper.js');
 const fake_bing = require('./scripts/bing/fake_bing.js');
 const face = require('./scripts/face/face.js');
+const trivia = require('./scripts/trivia/trivia.js');
+const wwtbam = require('./scripts/trivia/wwtbam.js');
 
 console.log(stamper)
 
@@ -102,10 +104,10 @@ let command_dict = {
     "log": "Initiating violence!",
     "func": smack.smack
   },
-  "f": {
-    "log": "Initiating fruit!",
-    "func": fruitymon.f
-  },
+  // "f": {
+  //   "log": "Initiating fruit!",
+  //   "func": fruitymon.f
+  // },
   "bw": {
     "log": "Binging words.",
     "func": bingw.bingw
@@ -201,6 +203,18 @@ let command_dict = {
   "face": {
     "log": "Analyzing face...",
     "func": face.face
+  },
+  "trivia": {
+    "log": "Trivia time...",
+    "func": trivia.trivia
+  },
+  "mc_trivia": {
+    "log": "MC Trivia time...",
+    "func": trivia.mc_trivia
+  },
+  "wwtbam": {
+    "log": "Someone wants to be a millionaire!",
+    "func": wwtbam.wwtbam
   }
 };
 
