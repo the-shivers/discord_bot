@@ -7,7 +7,8 @@ const auth = require("./auth.json");
 const f = require('./funcs.js');
 const b = require('./funcs.js');
 const command_dict = require('./command_dict.js').command_dict;
-const bot = new Discord.Client();
+//const bot = new Discord.Client();
+const bot = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] })
 const trig = "!";
 
 // Live bot behavior

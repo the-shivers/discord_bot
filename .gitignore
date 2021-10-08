@@ -2,8 +2,5 @@
 **/api_keys.json
 **/f_record.json
 **/ml.json
-**/*.jpg
-**/*.gif
-**/*.png
 **/node_modules/**
 **/backups/**
