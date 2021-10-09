@@ -6,6 +6,7 @@
     "canvas": "^2.8.0",
     "discord-api-types": "^0.23.1",
     "discord.js": "^13.2.0",
+    "mysql2": "^2.3.0",
     "probe-image-size": "^7.2.1",
     "request": "^2.88.2",
     "valid-url": "^1.0.9"
