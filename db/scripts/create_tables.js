@@ -23,7 +23,7 @@ con.connect(function(err) {
     let query = fs.readFileSync(queries_dir + query_name, 'utf-8')
     console.log(query_name);
     console.log(query);
-    con.query(, function (err, result) {
+    con.query(query, function (err, result) {
       if (err) throw err;
       console.log("Table created based on " + query_name + ".");
     });
