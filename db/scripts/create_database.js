@@ -1,5 +1,5 @@
 var mysql = require('mysql2');
-const auth = require("../../config.json");
+const auth = require("./config.json");
 
 var con = mysql.createConnection(auth.db_connection);
 
