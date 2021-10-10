@@ -33,11 +33,7 @@ for (const file of eventFiles) {
 
 
 function insert_and_clear() {
-	console.log(
-		'interactions data: ', interactions_data,
-		'interactions_opt_data:', interaction_opt_data,
-		'message_data:', message_data);
-	upload_data(interactions_data, interaction_opt_data, message_data);
+	dp.upload_data(interactions_data, interaction_opt_data, message_data);
 	interactions_data = [];
 	interaction_opt_data = [];
 	message_data = [];
@@ -48,7 +44,7 @@ function insert_and_clear() {
 client.login(auth.token);
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
-	setInterval(insert_and_clear, 12000);
+	setInterval(insert_and_clear, 60000);
 });
 
 // Receive commands
@@ -59,7 +55,8 @@ client.on('interactionCreate', async interaction => {
 	try {
 		await command.execute(interaction);
 		interactions_data.push(dp.process_interaction(interaction));
-		interaction_opt_data.push(dp.process_interaction_options(interaction));
+    let processed_options = dp.process_interaction_options(interaction);
+		interaction_opt_data = interaction_opt_data.concat(processed_options);
 	} catch (error) {
 		console.error(error);
 		await interaction.reply({content: 'There was an error while \

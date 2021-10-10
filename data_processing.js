@@ -1,5 +1,5 @@
 var mysql = require('mysql2');
-const auth = require("../../config.json");
+const auth = require("./config.json");
 
 // Establish Connection
 var con = mysql.createConnection(auth.db_connection);
@@ -10,54 +10,48 @@ function clean_createdAt(date_obj) {
 }
 
 function process_interaction(interaction) {
-	let row_data = [interaction.commandId];
-	row_data.push(interaction.guildId);
-	row_data.push(interaction.channelId);
-	row_data.push(interaction.user.id);
-	row_data.push(interaction.commandName);
-	row_data.push(clean_createdAt(interaction.createdAt));
-	return row_data;
+	return [
+    interaction.id, interaction.guildId, interaction.channelId, 
+    interaction.user.id, interaction.commandId, interaction.commandName,
+    clean_createdAt(interaction.createdAt)
+  ];
 }
 
 function process_interaction_options(interaction) {
 	let all_data = [];
 	for (let i = 0; i < interaction.options.data.length; i++) {
-		let row_data = [interaction.commandId + '_' + i]
-		row_data.push(interaction.commandId);
-		row_data.push(interaction.options.data[i].name);
-		row_data.push(interaction.options.data[i].type);
-		row_data.push(interaction.options.data[i].value);
-		row_data.push(clean_createdAt(interaction.createdAt));
-		all_data.push(row_data);
+    all_data.push([
+      interaction.id + '_' + i, interaction.id, interaction.options.data[i].name, 
+      interaction.options.data[i].type, interaction.options.data[i].value, 
+      clean_createdAt(interaction.createdAt)
+    ]);
 	}
 	return all_data;
 }
 
 function process_message(msg) {
-	row_data = [msg.id];
-	row_data.push(msg.guildId);
-	row_data.push(msg.channelId);
-	row_data.push(msg.author.id);
-	row_data.push(msg.content);
-	row_data.push(clean_createdAt(msg.createdAt));
-	return row_data;
+	return [
+    msg.id, msg.guildId, msg.channelId, msg.author.id,
+    msg.content, clean_createdAt(msg.createdAt)
+  ];
 }
 
 function upload_data(int_arr, int_o_arr, msg_arr) {
 	let queries = [];
-	queries.push("INSERT INTO data.interactions VALUES ");
-	queries[0] += con.escape(int_arr) + ';'
-	queries.push("INSERT INTO data.interaction_options VALUES ");
-	queries[1] += con.escape(int_o_arr) + ';'
-	queries.push("INSERT INTO data.messages VALUES ");
-	queries[2] += con.escape(msg_query) + ';'
+  if (int_arr.length > 0) {
+    queries.push("INSERT INTO data.interactions VALUES " + con.escape(int_arr) + ';');
+  }
+	if (int_o_arr.length > 0) {
+    queries.push("INSERT INTO data.interaction_options VALUES " + con.escape(int_o_arr) + ';');
+  }
+	if (msg_arr.length > 0) {
+    queries.push("INSERT INTO data.messages VALUES " + con.escape(msg_arr) + ';');
+  }
 	for (let i = 0; i < queries.length; i++) {
-		console.log("Here is query number " + i + ":\n" + queries[i])
 		con.connect(function(err) {
 		  if (err) throw err;
-		  con.query(query, function (err, result) {
+		  con.query(queries[i], function (err, result) {
 		    if (err) throw err;
-		    console.log("Data inserted." + i);
 		  });
 		});
 	}
