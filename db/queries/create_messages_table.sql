@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS data.messages (
   guildId CHAR(18) NOT NULL,
   channelId CHAR(18) NOT NULL,
   userId CHAR(18) NOT NULL,
-  content VARCHAR(2000) NOT NULL,
+  content VARCHAR(4000) NOT NULL,
   createdAt DATETIME NOT NULL,
   PRIMARY KEY ( id )
 );
