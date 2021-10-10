@@ -17,8 +17,10 @@ module.exports = {
       .setRequired(false)
     ),
 	async execute(interaction) {
-		console.log(interaction);
-   console.log(interaction.options.data)
+	  console.log(interaction);
+    console.log(interaction.options.data)
+    console.log("createdAt", interaction.createdAt)
+    console.log("createdTimestamp", interaction.createdTimestamp)
 		return interaction.reply({
       content: 'Cool test!',
       ephemeral: true
