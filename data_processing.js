@@ -52,7 +52,7 @@ function upload_data(int_arr, int_o_arr, msg_arr) {
 	queries.push("INSERT INTO data.messages VALUES ");
 	queries[2] += con.escape(msg_query) + ';'
 	for (let i = 0; i < queries.length; i++) {
-		console.log(queries[i])
+		console.log("Here is query number " + i + ":\n" + queries[i])
 		con.connect(function(err) {
 		  if (err) throw err;
 		  con.query(query, function (err, result) {
