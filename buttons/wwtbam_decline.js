@@ -9,6 +9,7 @@ const logo = new MessageAttachment(assets_dir + logo_name, logo_name);
 
 module.exports = {
 	async execute(interaction) {
+    console.log("in the decline func");
     interaction.reply({
       content: "Maybe next time!",
 			ephemeral: true
