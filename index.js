@@ -20,6 +20,14 @@ for (const file of commandFiles) {
 	client.commands.set(command.data.name, command);
 }
 
+// Collect buttons
+client.buttons = new Collection();
+const buttonFiles = fs.readdirSync('./buttons').filter(file => file.endsWith('.js'));
+for (const file of buttonFiles) {
+	const button = require(`./buttons/${file}`);
+	client.buttons.set(button.data.name, button);
+}
+
 // Collect events
 const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
 for (const file of eventFiles) {
@@ -49,14 +57,18 @@ client.on("ready", () => {
 
 // Receive commands
 client.on('interactionCreate', async interaction => {
-	if (!interaction.isCommand()) return;
-	const command = client.commands.get(interaction.commandName);
-	if (!command) return;
-	try {
-		await command.execute(interaction);
+	if (interaction.isCommand()) {
+		const command = client.commands.get(interaction.commandName);
+		if (!command) return;
 		interactions_data.push(dp.process_interaction(interaction));
     let processed_options = dp.process_interaction_options(interaction);
 		interaction_opt_data = interaction_opt_data.concat(processed_options);
+	} else if (interaction.isButton()) {
+		const command = client.buttons.get(interaction.customId);
+		if (!command) return;
+	}
+	try {
+		await command.execute(interaction);
 	} catch (error) {
 		console.error(error);
 		await interaction.reply({content: 'There was an error while \

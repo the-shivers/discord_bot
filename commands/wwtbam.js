@@ -10,7 +10,7 @@ const logo = new MessageAttachment(assets_dir + logo_name, logo_name);
 module.exports = {
 	type: "public",
   cat: "games",
-  desc: "Launches the single-player trivia game, Who Wants to Be a Millionaire",
+  desc: "Explains the single-player trivia game, Who Wants to Be a Millionaire",
 	data: new SlashCommandBuilder()
 		.setName('wwtbam')
 		.setDescription('Play Who Wants to Be a Millionaire'),
@@ -25,11 +25,11 @@ module.exports = {
         questions.', true)
       .setDescription('Welcome to Who Wants to Be a Millionaire! I\'m your \
         host, Regis Philbin. To win one million dollars, you\'ll have to \
-        answer 15 questions correctly in a row, winning more and more money \
-        with each correct answer. If you get one wrong, you\'ll lose \
+        answer 15 questions correctly in a row, winning more as the questions \
+				grow more difficult. If you get one wrong, you\'ll lose \
         everything after the last milestone you hit. You can leave at any time \
         to keep what you\'ve won, and you also have three lifelines to help \
-        you (described below). When you\'re ready, type \`!wwtbam start\`.')
+        you (described below). Are you ready?')
       .setThumbnail('attachment://' + logo_name)
       .setImage('attachment://' + regis_name);
     const buttons = new MessageActionRow()
@@ -44,7 +44,10 @@ module.exports = {
 					.setStyle('DANGER')
         )
     interaction.reply({
-      embeds: [embed], files: [regis, logo], components: [buttons]
+      embeds: [embed],
+			files: [regis, logo],
+			components: [buttons],
+			ephemeral: true
     });
 	},
 };
