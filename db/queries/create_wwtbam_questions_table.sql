@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS data.wwtbam_questions (
+  id INT NOT NULL AUTO_INCREMENT,
+  question VARCHAR(2000) NOT NULL,
+  answer VARCHAR(1000) NOT NULL,
+  wrong1 VARCHAR(1000) NOT NULL,
+  wrong2 VARCHAR(1000) NOT NULL,
+  wrong3 VARCHAR(1000) NOT NULL,
+  source VARCHAR(10) NOT NULL,
+  difficulty INT NOT NULL,
+  PRIMARY KEY ( id )
+);
