@@ -5,7 +5,7 @@ const auth = require("../../config.json");
 // Constants
 const queries_dir = '../queries/';
 
-// Collect events
+// Collect filenames
 const table_creation_filename_arr = fs.readdirSync(queries_dir).filter(
   file => file.startsWith('create_') && file.endsWith('table.sql')
 );
