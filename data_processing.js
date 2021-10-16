@@ -11,7 +11,7 @@ function clean_createdAt(date_obj) {
 
 function process_interaction(interaction) {
 	return [
-    interaction.id, interaction.guildId, interaction.channelId, 
+    interaction.id, interaction.guildId, interaction.channelId,
     interaction.user.id, interaction.commandId, interaction.commandName,
     clean_createdAt(interaction.createdAt)
   ];
@@ -21,8 +21,8 @@ function process_interaction_options(interaction) {
 	let all_data = [];
 	for (let i = 0; i < interaction.options.data.length; i++) {
     all_data.push([
-      interaction.id + '_' + i, interaction.id, interaction.options.data[i].name, 
-      interaction.options.data[i].type, interaction.options.data[i].value, 
+      interaction.id, interaction.options.data[i].name,
+      interaction.options.data[i].type, interaction.options.data[i].value,
       clean_createdAt(interaction.createdAt)
     ]);
 	}

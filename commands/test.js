@@ -1,5 +1,16 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageActionRow, MessageButton } = require('discord.js');
+const Discord = require('discord.js');
+
+const embed = new Discord.MessageEmbed()
+    .setColor('#9EFF9A')
+    .setTitle('Question?')
+    .setDescription('');
+
+const wait = 30000;
+let count;
+
+
 
 module.exports = {
   type: "private",
@@ -18,63 +29,29 @@ module.exports = {
       .setRequired(false)
     ),
 	async execute(interaction) {
-	  // console.log(interaction);
-    // console.log(interaction.options.data)
-    // console.log("createdAt", interaction.createdAt)
-    // console.log("createdTimestamp", interaction.createdTimestamp)
 
-    const row = new MessageActionRow()
-			.addComponents(
-				new MessageButton()
-					.setCustomId('1')
-					.setLabel('1')
-					.setStyle('PRIMARY'),
-        new MessageButton()
-					.setCustomId('2')
-					.setLabel('2')
-					.setStyle('SECONDARY'),  
-        new MessageButton()
-					.setCustomId('3')
-					.setLabel('3')
-					.setStyle('SUCCESS'),      
-        new MessageButton()
-					.setCustomId('4')
-					.setLabel('4')
-					.setStyle('DANGER'),  
-        new MessageButton()
-					.setLabel('5')
-					.setStyle('LINK')
-          .setURL('https://discord.js.org/#/docs/main/stable/class/MessageButton?scrollTo=setURL'),                            
-			);
-      
-      const row2 = new MessageActionRow()
-			.addComponents(
-				new MessageButton()
-					.setCustomId('12')
-					.setLabel('1')
-					.setStyle('PRIMARY'),
-        new MessageButton()
-					.setCustomId('22')
-					.setLabel('2')
-					.setStyle('SECONDARY'),  
-        new MessageButton()
-					.setCustomId('32')
-					.setLabel('3')
-					.setStyle('SUCCESS'),      
-        new MessageButton()
-					.setCustomId('42')
-					.setLabel('4')
-					.setStyle('DANGER'),  
-        new MessageButton()
-					.setLabel('5')
-					.setStyle('LINK')
-          .setURL('https://discord.js.org/#/docs/main/stable/class/MessageButton?scrollTo=setURL'),                            
-			);
+    var filter = response => {
+      return response.author.id === interaction.user.id;
+    };
 
-    return interaction.reply({
-      content: 'Cool test!',
-      components: [row, row2],
-      // ephemeral: true
-    });
-	},
-};
+    interaction.reply({
+      embeds: [embed],
+      fetchReply: true,
+      ephemeral: false
+    }).then(embedMessage => {
+        let b = embedMessage.channel.awaitMessages(
+        { filter, max: 1, time: wait, errors: ['time'] })
+        b.then(collected => {
+            embedMessage.delete();
+            count = collected.first().content;
+        }).catch(() => {
+            embedMessage.delete();
+            return message.reply('No reply after ' + (wait / 1000) + ' seconds, operation canceled.').then(m => {
+                m.delete({ timeout: 15000 });
+            });
+        });
+    })
+
+
+  }
+}

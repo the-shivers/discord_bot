@@ -1,9 +1,18 @@
-var mysql = require('mysql2');
+var mysql = require('promise-mysql');
 const auth = require("../../config.json");
 
-var con = mysql.createConnection(auth.db_connection);
+async function run_query(str) {
+  let con = await mysql.createConnection(auth.db_connection);
+  let res = await con.query('select * from data.wwtbam_status;');
+  console.log(res);
+}
+async function run_query2(str) {
+  let con = await mysql.createConnection(auth.db_connection);
+  con.query('select * from data.wwtbam_status;')
+    .then( result => {
+      console.log(result)
+    });
+}
 
-con.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
-});
+run_query('a')
+run_query2('b')
