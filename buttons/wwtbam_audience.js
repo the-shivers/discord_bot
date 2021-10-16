@@ -14,11 +14,9 @@ function f_n(int) {
 }
 
 function ask_the_audience(answer, q_num) {
-  console.log('audience answer is', answer, typeof(answer));
   let prob = 1-Math.pow(((q_num + 1) / 15), 0.6) * 0.75
   let rem_letters = ['A', 'B', 'C', 'D']
   rem_letters.splice(rem_letters.indexOf(answer), 1);
-  console.log('rem letters', rem_letters)
   let results_obj = {'A':0, 'B':0, 'C':0, 'D':0}
   for (let i = 0; i < 10; i++) {
     if (Math.random() < prob) {
@@ -27,7 +25,6 @@ function ask_the_audience(answer, q_num) {
       results_obj[rem_letters[Math.floor(Math.random()*rem_letters.length)]]++;
     }
   }
-  console.log(results_obj)
   let text = "```A: │"+'██'.repeat(results_obj.A)+' '+f_n(results_obj.A)+"0%" +
     "\nB: │"+'██'.repeat(results_obj.B)+' '+f_n(results_obj.B)+"0%" +
     "\nC: │"+'██'.repeat(results_obj.C)+' '+f_n(results_obj.C)+"0%" +

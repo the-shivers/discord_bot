@@ -7,8 +7,8 @@ const assets_dir = './assets/wwtbam/';
 const logo_name = 'wwtbam_logo.gif';
 const logo = new MessageAttachment(assets_dir + logo_name, logo_name);
 const diff_arr = [
-  [1], [1, 2], [1, 2, 3], [2, 3, 4], [3, 4], [4, 5], [4, 5, 6], [5, 6, 7],
-  [5, 6, 7], [6, 7, 8], [7, 8], [7, 8], [8, 9], [9], [10]
+  [1], [1, 2], [1, 2, 3], [2, 3], [2, 3, 4], [3, 4, 5], [4, 5], [4, 5, 6],
+  [5, 6], [5, 6, 7], [6, 7], [7, 8], [8, 9], [9], [10]
 ];
 const money_arr = [
   '$100', '$200', '$300', '$500', '$1,000', '$2,000', '$4,000', '$8,000',
@@ -17,10 +17,26 @@ const money_arr = [
 ];
 
 async function start_round(interaction, status, content) {
-  let query = 'SELECT * FROM data.wwtbam_questions WHERE difficulty IN (?) '
-  query += 'ORDER BY RAND() LIMIT 1;'
+  if (status.question_num === 15) {
+    interaction.reply("Congrats! You just won \`$1,000,000\`! Nicely done!")
+    let query = 'UPDATE data.wwtbam_status SET channelId = ?, guildId = ?, ';
+    query += 'userId = ?, status = ?, question_num = ?, is_available_50_50 =';
+    query += ' ?, is_available_audience = ?, is_available_friend = ?, ';
+    query += 'updatedAt = ? WHERE channelId = ?;';
+    status.userId = '0' * 18; status.status = 0;
+    status.question_num = 0; status.is_available_50_50 = 1;
+    status.is_available_friend = 1; status.is_available_audience = 1;
+    status.updatedAt = interaction.createdAt;
+    let values = Object.values(status)
+    values.push(values[0])
+    async_query(query, values);
+    return;
+  }
+
+  let query = 'SELECT * FROM data.wwtbam_questions WHERE difficulty IN (?);'
   let values = [diff_arr[status.question_num]];
-  let question = await async_query(query, values);
+  let questions = await async_query(query, values);
+  let question = questions[Math.floor(Math.random()*questions.length)]
 
   let disable_triggers = [
     'wwtbam_t', 'wwtbam_f1', 'wwtbam_f2', 'wwtbam_f3', 'wwtbam_quit'
@@ -45,7 +61,7 @@ async function start_round(interaction, status, content) {
   }
 
   interaction.reply(
-		generate_embed(interaction, status, question[0], content)
+		generate_embed(interaction, status, question, content)
 	)
   .then(embedMessage => {
 		embedMessage.channel.awaitMessageComponent({
@@ -99,7 +115,8 @@ function generate_embed(interaction, status, question, content) {
     .setTitle("The " + money_arr[curr_q] + ' Question' + milestone)
     .setColor("#6622AA")
     .addField(question.question, formatted_choices, false)
-    .setThumbnail('attachment://' + logo_name);
+    .setThumbnail('attachment://' + logo_name)
+    .setAuthor(interaction.user.username + ' wants to be a Millionaire!');
   const a_button = new MessageButton()
 		.setCustomId((answer_index === 0) ? 'wwtbam_t' : wrong_ids.shift())
 		.setLabel('A')

@@ -13,23 +13,26 @@ const regis = new MessageAttachment(assets_dir + regis_name, regis_name);
 const logo_name = 'wwtbam_logo.gif';
 const logo = new MessageAttachment(assets_dir + logo_name, logo_name);
 
+let phone_text = 'Call a friend for advice. Good on all questions, but not all';
+phone_text += ' your friends are very reliable.';
+let audience_text = 'Poll the audience. More reliable on easy questions.';
+let fifty_fifty_text = 'Eliminate half the answers. Simple.';
+let description = `Welcome to Who Wants to Be a Millionaire! I'm your host, `;
+description += `Regis Philbin. To win one million dollars, you'll have to `;
+description += `answer 15 questions correctly in a row, winning more as the `;
+description += `questions grow more difficult. If you get one wrong, you'll `;
+description += `lose everything after the last milestone you hit. You can `;
+description += `leave at any time to keep what you\'ve won, and you also have `;
+description += `three lifelines to help you (described below). Are you ready?`;
 
 function generate_reply_data(interaction, status) {
 	const embed = new MessageEmbed()
 		.setTitle(`${interaction.user.username} wants to be a millionaire!`)
 		.setColor("#6622AA")
-		.addField('50/50', 'Eliminate half the answers. Simple.', true)
-		.addField("Phone a friend", 'Call a friend for advice. Good on all \
-			questions, but not all your friends are very reliable.', true)
-		.addField("Ask the audience", 'Poll the audience. More reliable on easy \
-			questions.', true)
-		.setDescription('Welcome to Who Wants to Be a Millionaire! I\'m your \
-			host, Regis Philbin. To win one million dollars, you\'ll have to \
-			answer 15 questions correctly in a row, winning more as the questions \
-			grow more difficult. If you get one wrong, you\'ll lose \
-			everything after the last milestone you hit. You can leave at any time \
-			to keep what you\'ve won, and you also have three lifelines to help \
-			you (described below). Are you ready?')
+		.addField('50/50', fifty_fifty_text, true)
+		.addField("Phone a friend", phone_text, true)
+		.addField("Ask the audience", audience_text, true)
+		.setDescription(description)
 		.setThumbnail('attachment://' + logo_name)
 		.setImage('attachment://' + regis_name);
 	const buttons = new MessageActionRow()
@@ -37,7 +40,8 @@ function generate_reply_data(interaction, status) {
 		.setCustomId('wwtbam_decline')
 		.setLabel('No thanks!')
 		.setStyle('DANGER');
-	if (status.length === 0 || status[0].status === 0) {
+	if (status.length === 0 || status[0].status === 0 || (interaction.createdAt - status[0].updatedAt) / 1000 > 300) {
+    console.log("Time since channels last game", interaction.createdAt - status[0].updatedAt)
 		var accept = new MessageButton()
 			.setCustomId('wwtbam_start')
 			.setLabel('Let\'s go!')

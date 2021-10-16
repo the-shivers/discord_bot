@@ -15,14 +15,16 @@ module.exports = {
         ephemeral: true
       })
     } else {
-      money_arr.unshift('$0')
-      let winnings = money_arr[status[0].question_num];
+      let new_money_arr = money_arr.slice()
+      new_money_arr.unshift('$0')
+      console.log("you just quit. New money array is ", new_money_arr, 'quesiton_num', status[0].question_num)
+      let winnings = new_money_arr[status[0].question_num];
       query = 'UPDATE data.wwtbam_status SET channelId = ?, guildId = ?, ';
       query += 'userId = ?, status = ?, question_num = ?, is_available_50_50 =';
       query += ' ?, is_available_audience = ?, is_available_friend = ?, ';
       query += 'updatedAt = ? WHERE channelId = ?;';
       status[0].userId = '0' * 18; status[0].status = 0;
-      status[0].question_num = 1; status[0].is_available_50_50 = 1;
+      status[0].question_num = 0; status[0].is_available_50_50 = 1;
       status[0].is_available_friend = 1; status[0].is_available_audience = 1;
       status[0].updatedAt = interaction.createdAt;
       values = Object.values(status[0])

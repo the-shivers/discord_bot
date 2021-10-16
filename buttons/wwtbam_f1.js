@@ -35,7 +35,7 @@ module.exports = {
       query += ' ?, is_available_audience = ?, is_available_friend = ?, ';
       query += 'updatedAt = ? WHERE channelId = ?;';
       status[0].userId = '0' * 18; status[0].status = 0;
-      status[0].question_num = 1; status[0].is_available_50_50 = 1;
+      status[0].question_num = 0; status[0].is_available_50_50 = 1;
       status[0].is_available_friend = 1; status[0].is_available_audience = 1;
       status[0].updatedAt = interaction.createdAt;
       values = Object.values(status[0])

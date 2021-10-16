@@ -10,7 +10,7 @@ const assets_dir = './assets/wwtbam/';
 const cletus_name = 'cletus.png'
 const cletus_path = assets_dir + cletus_name;
 const zodiac_name = 'zodiac.png'
-const zodiac_path = assets_dir + cletus_name;
+const zodiac_path = assets_dir + zodiac_name;
 const owl_name = 'owl.png'
 const owl_path = assets_dir + owl_name;
 const cletus = new MessageAttachment(cletus_path, cletus_name);
@@ -34,7 +34,6 @@ function update_lifelines(row_components, id) {
       new_options.addComponents(row_components[i])
     }
   }
-  console.log(new_options)
   return new_options;
 }
 
@@ -44,14 +43,14 @@ function call_a_friend(correct_answer) {
   rem_letters.splice(rem_letters.indexOf(correct_answer), 1);
   if (luck_val < .2) {
     let identified_answer = rem_letters[Math.floor(Math.random()*rem_letters.length)]
-    var flavor_text = `You decide to call your middle school buddy, Cletus.\
-    He picks up the phone and you can barely make out what he's saying. It\
-    sounds like he's in an argument with his wife, and neither of them sound\
-    sober. Eventually he calms down enough for you to explain the situation\
-    and read the question to him.
-
-    _"Look buddy. I ain't some kinda know-a-lot guy, but all I know is it's\
-    definitely not ` + identified_answer + ".\"_";
+    var flavor_text = 'You decide to call your middle school buddy, Cletus. He';
+    flavor_text += " picks up the phone and you can barely make out what he's ";
+    flavor_text += "saying. It sounds like he's in an argument with his wife, ";
+    flavor_text += "and neither of them sound sober. Eventually he calms down ";
+    flavor_text += "enough for you to explain the situation and read the ";
+    flavor_text += "question to him.\n\n _\"Look buddy. I ain't some kinda ";
+    flavor_text += "know-a-lot guy, but all I know is it's definitely not `";
+    flavor_text += identified_answer + ".\"_";
     var file = cletus;
     var filename = cletus_name;
   } else if (luck_val < .75) {
@@ -60,15 +59,14 @@ function call_a_friend(correct_answer) {
     } else {
       var identified_answers = 'A or D'
     }
-    var flavor_text = `You decide to call your pen pal, the Zodiac Killer. He\
-    picks up and all you can hear is deep breathing and what sounds like latin.\
-    Suddenly he shouts out a sequence of letters and symbols:\
-
-    _"+ H E G < V ¶ A + ⌖ P X < ∧ B E O + X H ⌖"_
-
-    He then makes a loud kissing noise and hangs up. You know from your\
-    correspondence with him that this means he's confident the answer is\
-    ` + identified_answers + '.';
+    var flavor_text = `You decide to call your pen pal, the Zodiac Killer. He `;
+    flavor_text += `picks up and all you can hear is deep breathing and what `;
+    flavor_text += `sounds like latin (classic Big Z). Suddenly he shouts out a`;
+    flavor_text += ` sequence of letters and symbols:\n\n_"+ H E G < V ¶ A + ⌖`;
+    flavor_text += ` P X < ∧ B E O + X H ⌖"_\n\nHe then makes a loud kissing `;
+    flavor_text += `noise and hangs up. You know from your correspondence with `;
+    flavor_text += `him that this means he's confident the answer is `;
+    flavor_text += identified_answers + '.';
     var file = zodiac;
     var filename = zodiac_name;
   } else {
@@ -77,15 +75,15 @@ function call_a_friend(correct_answer) {
     } else {
       var identified_answer = rem_letters[Math.floor(Math.random()*rem_letters.length)];
     }
-    var flavor_text = `You decide to call your ophthalmologist, Hooty the\
-    talking owl. He claims to be in the middle of an important surgery, but\
-    you promise to give him a dead field mouse if he helps you and he\
-    reluctantly agrees.
-
-    _"Well," he begins, "you certainly called the right owl! I happened to\
-    study this subject greatly when I was a hatchling, and I'm something of an\
-    expert! Absolutely, unequivocally and without a single doubt, the answer\
-    must be ` + identified_answer + ".\"_";
+    var flavor_text = `You decide to call your ophthalmologist, Hooty the `;
+    flavor_text += `talking owl. He claims to be in the middle of an important`;
+    flavor_text += ` surgery, but you promise to give him a dead field mouse `;
+    flavor_text += `if he helps you and he reluctantly agrees.\n\n_"Well," he `;
+    flavor_text += `begins, "you certainly called the right owl! I happened to`;
+    flavor_text += ` study this subject greatly when I was a hatchling, and `;
+    flavor_text += `I'm something of an expert! Absolutely, unequivocally and `;
+    flavor_text += `without a single doubt, the answer must be `;
+    flavor_text += identified_answer + `.\n\nWell... 95% chance anyway.\"_`;
     var file = owl;
     var filename = owl_name;
   }
@@ -110,7 +108,6 @@ module.exports = {
 module.exports = {
   identify_correct_answer, update_lifelines,
 	async execute(interaction) {
-    console.log('componetts\n',interaction.message.components)
     let query = "SELECT * FROM data.wwtbam_status WHERE channelId = ?";
     let values = [interaction.channelId];
     let status = await async_query(query, values);
@@ -130,7 +127,6 @@ module.exports = {
       let lifes = update_lifelines(
         interaction.message.components[1].components, 'wwtbam_friend'
       )
-      console.log("here are the two components we're trying to use", interaction.message.components[0], lifes)
       interaction.update({
         components: [interaction.message.components[0], lifes]
       })
