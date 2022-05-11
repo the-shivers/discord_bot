@@ -30,4 +30,4 @@ function secondsAndMinutes(seconds) {
 }
 
 
-module.exports = { isNumeric, rollDie, shuffle, secondsAndMinutes, backup };
+module.exports = { isNumeric, rollDie, shuffle, secondsAndMinutes };
