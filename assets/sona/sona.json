@@ -527,6 +527,18 @@
       "coat": "feathers",
       "sounds": true,
       "sound": "roaring sounds"
+    },
+    {
+      "name": "axolotl",
+      "coat": "slimy skin",
+      "sounds": true,
+      "sound": "chirping sounds"
+    },
+    {
+      "name": "salamander",
+      "coat": "slimy skin",
+      "sounds": true,
+      "sound": "chirping sounds"
     }
   ],
   "gender": [
@@ -768,7 +780,26 @@
     "like you haven't showered in a year",
     "like you just walked across a desert, very sweaty",
     "like a damp cave", "like a girl", "like patchouli",
-    "like lavender and urine", "like a public restroom", "like a locker room"
+    "like lavender and urine", "like a public restroom", "like a locker room",
+    "like pheremones", "like sex", "like rosewater and pistachios",
+    "like play-doh", "like freshly cut grass", "like cotton candy",
+    "like tomato basil soup", "like soap", "like strawberries and cream",
+    "like pinot noir", "like leather and tobacco", "like cigarettes",
+    "like old parchment", "fantastic", "amazing", "like mahogany",
+    "like olive oil and garlic", "quite oniony", "like an Italian kitchen",
+    "like a margarita", "like citrus", "minty", "so fresh", "like earl grey",
+    "like a garden supply store", "unbearably floral", "delightfully floral",
+    "overpoweringly musky", "like seafood", "lemon fresh", "manly",
+    "like Chanel N°5", "like Calvin Klein CK One", "like Yves Saint Laurent Opium",
+    "like freshly baked bread", "like a buttery croissant",
+    "like a blueberry muffin", "like spearmint", "like a wedding cake",
+    "like trail mix", "like pine and rosemary", "like burning sage",
+    "like you smoke a lot of weed", "like Mexican food",
+    "like lime and ginger", "like a freshly baked apple pie",
+    "like brown sugar and cinnamon", "like an everything bagel",
+    "like coconut", "like cloves and honey", "like gingerbread",
+    "like snickerdoodles", "like espresso", "like caramel",
+    "like a hamburger", "really, really, REALLY good"
   ],
   "stats": [
     "being gay", "respecting women", "speed", "strength", "defense", "dexterity",

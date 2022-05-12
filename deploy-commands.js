@@ -13,19 +13,21 @@ for (const file of commandFiles) {
 
 const rest = new REST({ version: '9' }).setToken(token);
 
-console.log(commands);
-
 (async () => {
 	try {
 		console.log('Started refreshing application (/) commands.');
 		await rest.put(
 			Routes.applicationCommands(clientId),
-			{body: commands.public},
+			//{body: commands.public.concat()},
+			{body: commands.public.concat(commands.private)},
+			//{body: []},
 		);
 		for (let i = 0; i < guildIds.length; i++) {
 			await rest.put(
 				Routes.applicationGuildCommands(clientId, guildIds[i].id),
-				{body: commands.private},
+				//{body: commands.private},
+				//{body: commands.public.concat(commands.private)},
+				{body: []},
 			);
 		};
 		console.log('Successfully reloaded application (/) commands.');
