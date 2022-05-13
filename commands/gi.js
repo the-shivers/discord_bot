@@ -24,29 +24,29 @@ module.exports = {
     ).addStringOption(option => option
       .setName('color')
       .setDescription('Dominant color in image')
-      .addChoice('black', 'black').addChoice('blue', 'blue')
-      .addChoice('brown', 'brown').addChoice('gray', 'gray')
-      .addChoice('green', 'green').addChoice('orange', 'orange')
-      .addChoice('pink', 'pink').addChoice('purple', 'purple')
-      .addChoice('red', 'red').addChoice('teal', 'teal')
-      .addChoice('white', 'white').addChoice('yellow', 'yellow')
+      .addChoices({name:'black', value:'black'}).addChoices({name:'blue', value:'blue'})
+      .addChoices({name:'brown', value:'brown'}).addChoices({name:'gray', value:'gray'})
+      .addChoices({name:'green', value:'green'}).addChoices({name:'orange', value:'orange'})
+      .addChoices({name:'pink', value:'pink'}).addChoices({name:'purple', value:'purple'})
+      .addChoices({name:'red', value:'red'}).addChoices({name:'teal', value:'teal'})
+      .addChoices({name:'white', value:'white'}).addChoices({name:'yellow', value:'yellow'})
     ).addStringOption(option => option
       .setName('size')
       .setDescription('Image size')
-      .addChoice('icon', 'icon').addChoice('small', 'small')
-      .addChoice('medium', 'medium').addChoice('large', 'large')
-      .addChoice('huge', 'huge').addChoice('xlarge', 'xlarge')
-      .addChoice('xxlarge', 'xxlarge')
+      .addChoices({name:'icon', value:'icon'}).addChoices({name:'small', value:'small'})
+      .addChoices({name:'medium', value:'medium'}).addChoices({name:'large', value:'large'})
+      .addChoices({name:'huge', value:'huge'}).addChoices({name:'xlarge', value:'xlarge'})
+      .addChoices({name:'xxlarge', value:'xxlarge'})
     ).addStringOption(option => option
       .setName('safety')
       .setDescription('Safe search on or off')
-      .addChoice('active', 'active').addChoice('off', 'off')
+      .addChoices({name:'active', value:'active'}).addChoices({name:'off', value:'off'})
     ).addStringOption(option => option
       .setName('type')
       .setDescription('What type of image to return')
-      .addChoice('clipart', 'clipart').addChoice('face', 'face')
-      .addChoice('lineart', 'lineart').addChoice('stock', 'stock')
-      .addChoice('photo', 'photo').addChoice('animated', 'animated')
+      .addChoices({name:'clipart', value:'clipart'}).addChoices({name:'face', value:'face'})
+      .addChoices({name:'lineart', value:'lineart'}).addChoices({name:'stock', value:'stock'})
+      .addChoices({name:'photo', value:'photo'}).addChoices({name:'animated', value:'animated'})
     ),
 	async execute(interaction) {
     const query = interaction.options.getString('query');

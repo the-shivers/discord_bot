@@ -69,6 +69,10 @@ client.on('interactionCreate', async interaction => {
 		interactions_data.push(dp.process_interaction(interaction));
     let processed_options = dp.process_interaction_options(interaction);
 		interaction_opt_data = interaction_opt_data.concat(processed_options);
+	} else if (interaction.isContextMenu()) {
+		var command = client.commands.get(interaction.commandName);
+		if (!command) return;
+		interactions_data.push(dp.process_interaction(interaction));
 	} else if (interaction.isButton()) {
 		var command = client.buttons.get(interaction.customId);
 		if (!command) return;
