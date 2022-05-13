@@ -4,7 +4,7 @@ const api_options = require("../api_keys.json").googleSearch
 
 
 module.exports = {
-  type: "private",
+  type: "public",
   cat: "utility",
   desc: "Search using Google Images. Contains lots of parameters to help \
     filter your search.",

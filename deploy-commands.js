@@ -8,8 +8,16 @@ const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('
 
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
-	commands[command.type].push(command.data.toJSON())
+	if (Array.isArray(command)) {
+		for (let i = 0; i < command.length; i++) {
+			commands[command[i].type].push(command[i].data.toJSON());
+		}
+	} else {
+		commands[command.type].push(command.data.toJSON());
+	}
 }
+
+console.log('Comands are:\n', commands)
 
 const rest = new REST({ version: '9' }).setToken(token);
 
@@ -18,16 +26,16 @@ const rest = new REST({ version: '9' }).setToken(token);
 		console.log('Started refreshing application (/) commands.');
 		await rest.put(
 			Routes.applicationCommands(clientId),
-			//{body: commands.public.concat()},
-			{body: commands.public.concat(commands.private)},
+			{body: commands.public},
+			//{body: commands.public.concat(commands.private)},
 			//{body: []},
 		);
 		for (let i = 0; i < guildIds.length; i++) {
 			await rest.put(
 				Routes.applicationGuildCommands(clientId, guildIds[i].id),
-				//{body: commands.private},
+				{body: commands.private},
 				//{body: commands.public.concat(commands.private)},
-				{body: []},
+				//{body: []},
 			);
 		};
 		console.log('Successfully reloaded application (/) commands.');

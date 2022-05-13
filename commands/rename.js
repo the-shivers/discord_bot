@@ -4,7 +4,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 
 module.exports = {
-  type: "private",
+  type: "public",
   cat: "utility",
   desc: "Change someone's nickname.",
 	data: new SlashCommandBuilder()

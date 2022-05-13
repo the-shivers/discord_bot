@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 
 module.exports = {
-	type: "private",
+	type: "public",
   cat: "utility",
   desc: "Ping the bot to check if it's functioning. Or for fun.",
 	data: new SlashCommandBuilder()

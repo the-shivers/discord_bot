@@ -7,7 +7,7 @@ const assets_dir = '../assets/sona/';
 var sona_vars = require(assets_dir + 'sona.json');
 
 module.exports = {
-  type: "private",
+  type: "public",
   cat: "utility",
   desc: "Generate a fursona.",
 	data: new SlashCommandBuilder()

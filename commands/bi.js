@@ -33,7 +33,7 @@ async function getBingUrl(query) {
 
 // Export the command
 module.exports = {
-  type: "private",
+  type: "public",
   cat: "utility",
   desc: "Search using Bing Images. Fewer options than its Google counterpart.",
 	data: new SlashCommandBuilder()

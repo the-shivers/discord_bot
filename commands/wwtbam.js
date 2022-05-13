@@ -41,7 +41,6 @@ function generate_reply_data(interaction, status) {
 		.setLabel('No thanks!')
 		.setStyle('DANGER');
 	if (status.length === 0 || status[0].status === 0 || (interaction.createdAt - status[0].updatedAt) / 1000 > 300) {
-    console.log("Time since channels last game", interaction.createdAt - status[0].updatedAt)
 		var accept = new MessageButton()
 			.setCustomId('wwtbam_start')
 			.setLabel('Let\'s go!')

@@ -56,7 +56,7 @@ async function urbanDictionary(search_term, def_num) {
 
 // Export the command
 module.exports = {
-  type: "private",
+  type: "public",
   cat: "utility",
   desc: "Find out how to communicate with the youth via urban dictionary.",
 	data: new SlashCommandBuilder()

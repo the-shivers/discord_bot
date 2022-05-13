@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 
 module.exports = {
-  type: "private",
+  type: "public",
   cat: "utility",
   desc: "Remove the last 1-30 messages. Try not to abuse this.",
 	data: new SlashCommandBuilder()

@@ -124,7 +124,7 @@ async function tarot(seed) {
 }
 
 module.exports = {
-  type: "private",
+  type: "public",
   cat: "utility",
   desc: "Get a tarot reading",
 	data: new SlashCommandBuilder()
