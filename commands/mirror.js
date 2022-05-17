@@ -19,7 +19,10 @@ function get_img_details(msgs) {
   let shouldSkip = false; // Because we can't break
   msgs.forEach(msg => {
     if (msg.embeds.length > 0 && !shouldSkip) {
-      if (msg.embeds[0].type == 'image') {
+      if (
+        msg.embeds[0].type == 'image' &&
+        !(msg.embeds[0].thumbnail.url).includes('.webp')
+      ) {
         url = msg.embeds[0].thumbnail.url;
         width = msg.embeds[0].thumbnail.width;
         height = msg.embeds[0].thumbnail.height;
