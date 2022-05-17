@@ -24,3 +24,10 @@ It's a node.js bot for discord. What more do you need to know? This bot was comp
 #### Image Manipulation
  - /mirror - Mirror an image
  - /swirl - Swirl an image
+
+#### Wishlist
+These are things I'll probably add in the future, when I get around to it.
+ - /remind
+ - Further image manipulation: /flip, /flop, /rotat, /spin, /bw, /sepia, /stamp, /pinch, /bulge
+ - Fix from the old version: /crypto, /dice, /kill, /wolfram
+ - Additional games: /familyfeud, /deal (or no deal)
