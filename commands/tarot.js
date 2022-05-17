@@ -4,7 +4,6 @@
 const Discord = require("discord.js");
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const Canvas = require('canvas');
-const f = require('../funcs.js');
 const loc_str = './assets/tarot/';
 const cards = require('.' + loc_str + 'tarot.json').tarot;
 const ttl_cards = cards.length;

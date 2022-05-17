@@ -5,7 +5,13 @@ const {Client, Collection, Intents} = require('discord.js');
 const fs = require('fs');
 const dp = require('./data_processing.js');
 const auth = require("./config.json");
-const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES ]})
+const client = new Client({intents:
+	[
+		Intents.FLAGS.GUILDS,
+		Intents.FLAGS.GUILD_MESSAGES,
+		Intents.FLAGS.GUILD_MEMBERS
+	]
+});
 
 // Define data arrays to collect within
 let interactions_data = [];
