@@ -47,14 +47,10 @@ module.exports = {
     sona += `You ${sona_info.like} ${acts[3]}, ${acts[0]}, `;
     sona += `and ${acts[1]} but ${sona_info.dislike} ${acts[2]}.`;
 
-    console.log('sona is ', sona);
-
     query = gender.name + " " + " " + color_arr[0] + " "
     + sona_info.mode
     + ' "' + species.name + '" furry' ;
     query = query.split('_').join(' ');
-
-    console.log('query is ', query);
 
     let full_url = (
       api_options.url + "?cx=" + api_options.cx + "&key=" + api_options.key
@@ -65,8 +61,6 @@ module.exports = {
     } else {
       full_url += "&safe=off";
     }
-
-    console.log('full url', full_url);
 
     let img_url;
     const template = new Discord.MessageEmbed()
@@ -79,8 +73,6 @@ module.exports = {
 
     axios.get(full_url)
       .then(response => {
-        //console.log('response', response)
-        console.log('response data', response.data)
         if (response.data.items.length > 0) {
           img_url = response.data.items[0].link;
         } else {

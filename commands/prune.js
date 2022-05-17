@@ -14,7 +14,7 @@ module.exports = {
     ),
 	async execute(interaction) {
 		const amount = interaction.options.getInteger('amount');
-		if (amount <= 1 || amount > 30) {
+		if (amount < 1 || amount > 30) {
 			return interaction.reply({
         content: 'You need to input a number between 1 and 30.',
         ephemeral: true

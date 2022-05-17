@@ -28,7 +28,16 @@ function get_img_details(msgs) {
         width = msg.embeds[0].thumbnail.width;
         height = msg.embeds[0].thumbnail.height;
         shouldSkip = true;
+      } else if (
+        msg.embeds[0].type == 'rich' &&
+        !(msg.embeds[0].image.url).includes('.webp')
+      ) {
+        url = msg.embeds[0].image.url;
+        width = msg.embeds[0].image.width;
+        height = msg.embeds[0].image.height;
+        shouldSkip = true;
       }
+
     }
     if (msg.attachments.size > 0 && !shouldSkip) {
       if (['image/jpeg', 'image/png', 'image/gif'].includes(msg.attachments.first().contentType)) {
@@ -52,21 +61,21 @@ module.exports = {
 		.setDescription('Swirl the last posted image.')
     .addIntegerOption(option => option
       .setName('amount')
-      .setDescription('Amount of swirl, -20 to 20. (default: 2)')
+      .setDescription('Amount of swirl, -30 to 30. (default: 4)')
     ).addIntegerOption(option => option
       .setName('radius')
-      .setDescription('Diameter of swirl as % of image width/height.')
+      .setDescription('Diameter of swirl as % of image width/height (default: 90).')
     ),
 	async execute(interaction) {
     await interaction.deferReply();
-    let amount = 2;
+    let amount = 4;
     let radius = 90;
     if (!(interaction.options.getInteger('amount') == null)) {
       amount = interaction.options.getInteger('amount');
       if (amount < 0) {
-        amount = Math.max(amount, -20);
+        amount = Math.max(amount, -30);
       } else {
-        amount = Math.min(amount, 20);
+        amount = Math.min(amount, 30);
       }
     }
     if (!(interaction.options.getInteger('radius') == null)) {
@@ -75,6 +84,10 @@ module.exports = {
 
     let msgs = await get_msgs(interaction);
     let img_details = get_img_details(msgs);
+    if (img_details.width * img_details.height > 2000 * 2000) {
+      interaction.editReply({ content: "Too big. :(", ephemeral: false });
+      return;
+    }
     const canvas = Canvas.createCanvas(img_details.width, img_details.height);
     const ctx = canvas.getContext('2d');
     const img = await Canvas.loadImage(img_details.url);
@@ -102,7 +115,7 @@ module.exports = {
           alpha = Math.atan2(y, x);
 
           degrees = (alpha * 180.0) / Math.PI; // To degrees
-          degrees += amount/2 * (t_radius - r) // The rotation amount
+          degrees += 200 * amount/4 * (t_radius - r) / img_details.width // The rotation amount
 
           // Transform back from polar coordinates to cartesian
           alpha = (degrees * Math.PI) / 180.0; // To Radians
