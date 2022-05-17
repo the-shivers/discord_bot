@@ -31,3 +31,4 @@ These are things I'll probably add in the future, when I get around to it.
  - Further image manipulation: /flip, /flop, /rotat, /spin, /bw, /sepia, /stamp, /pinch, /bulge
  - Fix from the old version: /crypto, /dice, /kill, /wolfram
  - Additional games: /familyfeud, /deal (or no deal)
+ - Pokemon-based game
