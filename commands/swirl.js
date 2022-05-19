@@ -28,16 +28,19 @@ function get_img_details(msgs) {
         width = msg.embeds[0].thumbnail.width;
         height = msg.embeds[0].thumbnail.height;
         shouldSkip = true;
-      } else if (
-        msg.embeds[0].type == 'rich' &&
-        !(msg.embeds[0].image.url).includes('.webp')
-      ) {
-        url = msg.embeds[0].image.url;
-        width = msg.embeds[0].image.width;
-        height = msg.embeds[0].image.height;
-        shouldSkip = true;
+      } else if (msg.embeds[0].type == 'rich') {
+        if (msg.embeds[0].image !== null && !(msg.embeds[0].image.url.includes('.webp'))) {
+          url = msg.embeds[0].image.url;
+          width = msg.embeds[0].image.width;
+          height = msg.embeds[0].image.height;
+          shouldSkip = true;
+        } else if (msg.embeds[0].thumbnail !== null && !(msg.embeds[0].thumbnail.url.includes('.webp'))) {
+          url = msg.embeds[0].thumbnail.url;
+          width = msg.embeds[0].thumbnail.width;
+          height = msg.embeds[0].thumbnail.height;
+          shouldSkip = true;
+        }
       }
-
     }
     if (msg.attachments.size > 0 && !shouldSkip) {
       if (['image/jpeg', 'image/png', 'image/gif'].includes(msg.attachments.first().contentType)) {

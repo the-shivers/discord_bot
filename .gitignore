@@ -5,3 +5,4 @@
 **/node_modules/**
 **/backups/**
 **assets/tarot/*.jpg
+**assets/pokemon/**/*.png

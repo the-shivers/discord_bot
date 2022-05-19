@@ -1,0 +1,151 @@
+{
+	"types": {
+		"Normal": {
+			"color": "#a8a878",
+			"immunes": ["Ghost"],
+			"weaknesses": ["Rock", "Steel"],
+			"strengths": []
+		},
+		"Fire": {
+			"color": "#f08030",
+			"immunes": [],
+			"weaknesses": ["Fire", "Water", "Rock", "Dragon"],
+			"strengths": ["Grass", "Ice", "Bug", "Steel"]
+		},
+		"Water": {
+			"color": "#6890f0",
+			"immunes": [],
+			"weaknesses": ["Water", "Grass", "Dragon"],
+			"strengths": ["Fire", "Ground", "Rock"]
+		},
+		"Electric": {
+			"color": "#f8d030",
+			"immunes": ["Ground"],
+			"weaknesses": ["Electric", "Grass", "Dragon"],
+			"strengths": ["Water", "Flying"]
+		},
+		"Grass": {
+			"color": "#78c850",
+			"immunes": [],
+			"weaknesses": ["Fire", "Grass", "Poison", "Flying", "Bug", "Dragon", "Steel"],
+			"strengths": ["Water", "Ground", "Rock"]
+		},
+		"Ice": {
+			"color": "#98d8d8",
+			"immunes": [],
+			"weaknesses": ["Fire", "Water", "Ice", "Steel"],
+			"strengths": ["Grass", "Ground", "Flying", "Dragon"]
+		},
+		"Fighting": {
+			"color": "#c03028",
+			"immunes": ["Ghost"],
+			"weaknesses": ["Poison", "Flying", "Psychic", "Bug", "Fairy"],
+			"strengths": ["Normal", "Ice", "Rock", "Dark", "Steel"]
+		},
+		"Poison": {
+			"color": "#a040a0",
+			"immunes": ["Steel"],
+			"weaknesses": ["Poison", "Ground", "Rock", "Ghost"],
+			"strengths": ["Grass", "Fairy"]
+		},
+		"Ground": {
+			"color": "#e0c068",
+			"immunes": ["Flying"],
+			"weaknesses": ["Grass", "Bug"],
+			"strengths": ["Fire", "Electric", "Poison", "Rock", "Steel"]
+		},
+		"Flying": {
+			"color": "#a890f0",
+			"immunes": [],
+			"weaknesses": ["Electric", "Rock", "Steel"],
+			"strengths": ["Grass", "Fighting", "Bug"]
+		},
+		"Psychic": {
+			"color": "#f85888",
+			"immunes": ["Dark"],
+			"weaknesses": ["Psychic", "Steel"],
+			"strengths": ["Fighting", "Poison"]
+		},
+		"Bug": {
+			"color": "#a8b820",
+			"immunes": [],
+			"weaknesses": ["Fire", "Fighting", "Poison", "Flying", "Ghost", "Steel", "Fairy"],
+			"strengths": ["Grass", "Psychic", "Dark"]
+		},
+		"Rock": {
+			"color": "#b8a038",
+			"immunes": [],
+			"weaknesses": ["Fighting", "Ground", "Steel"],
+			"strengths": ["Fire", "Ice", "Flying", "Bug"]
+		},
+		"Ghost": {
+			"color": "#705898",
+			"immunes": ["Normal"],
+			"weaknesses": ["Dark"],
+			"strengths": ["Psychic", "Ghost"]
+		},
+		"Dragon": {
+			"color": "#7038f8",
+			"immunes": ["Fairy"],
+			"weaknesses": ["Steel"],
+			"strengths": ["Dragon"]
+		},
+		"Dark": {
+			"color": "#705848",
+			"immunes": [],
+			"weaknesses": ["Fighting", "Dark", "Fairy"],
+			"strengths": ["Psychic", "Ghost"]
+		},
+		"Steel": {
+			"color": "#b8b8d0",
+			"immunes": [],
+			"weaknesses": ["Fire", "Water", "Electric", "Steel"],
+			"strengths": ["Ice", "Rock", "Fairy"]
+		},
+		"Fairy": {
+			"color": "#f0b6bc",
+			"immunes": [],
+			"weaknesses": ["Fire", "Poison", "Steel"],
+			"strengths": ["Fighting", "Dragon", "Dark"]
+		}
+	},
+  "gens": {
+    "I": {"min": 1, "max": 151},
+    "II": {"min": 152, "max": 251},
+    "III": {"min": 252, "max": 386},
+    "IV": {"min": 387, "max": 493},
+    "V": {"min": 494, "max": 649},
+    "VI": {"min": 650, "max": 721},
+    "VII": {"min": 722, "max": 807}
+  },
+  "frequencies": [
+    "1",
+    "2", "2",
+    "3", "3", "3", "3",
+    "4", "4", "4", "4", "4", "4",
+    "5", "5", "5", "5", "5", "5", "5", "5",
+    "6", "6", "6", "6", "6", "6", "6", "6", "6", "6", "6",
+    "8", "8", "8", "8", "8", "8", "8", "8", "8", "8", "8", "8", "8", "8", "8", "8", "8", "8", "8", "8", "8",
+    "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9"
+  ],
+  "rarities": {
+    "1": "Legendary",
+    "2": "Ultra Rare",
+    "3": "Very Rare",
+    "4": "Rare",
+    "5": "Uncommon",
+    "6": "Average",
+    "7": "Common",
+    "8": "Very Common",
+    "9": "Most Common"
+  },
+	"characteristics": [
+		"grumpy", "playful", "sad", "goofy", "hungry", "thirsty", "smelly", "cuddly",
+		"lonely", "angry", "daredevil", "adventurous", "boring", "aggressive",
+		"alpha", "annoying", "loud", "quiet", "energetic", "lazy", "comfy",
+		"needy", "messy", "clean", "confident", "shy", "stupid", "smart",
+		"beautiful", "ugly", "loyal", "friendly", "mean", "mature", "immature",
+		"young", "old", "wise", "suave", "graceful", "clumsy", "sensitive",
+		"empathetic", "short", "small", "tiny", "large", "gigantic"
+	]
+}
