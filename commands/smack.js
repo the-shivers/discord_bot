@@ -10,7 +10,6 @@ module.exports = {
 		.setName('smack')
 		.setType(ApplicationCommandType.User),
 	async execute(interaction) {
-    console.log(interaction)
 
     let smack_info = {};
     Object.keys(smack_json).forEach(function(key) {
