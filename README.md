@@ -38,6 +38,14 @@ It's a node.js bot for discord. What more do you need to know? This bot was comp
 #### Wishlist
 These are things I'll probably add in the future, when I get around to it.
  - /remind
- - Further image manipulation: /flip, /flop, /rotate, /spin, /bw, /sepia, /stamp, /pinch, /bulge
+ - Further image manipulation: /flip, /flop, /rotate, /spin, /bw, /sepia, /stamp, /pinch, /bulge, /append, /superimpose, etc.
  - Fix from the old version: /crypto, /wolfram
+ - /stock or /ticker
+ - /forecast
  - Additional games: /familyfeud, /deal (or no deal)
+ - /song (ambitious part-writing harmony generator)
+
+#### Other To Do
+ - Change mysql connection to pooled, or at least fix disconnect issue with better error handling. `Error: Connection lost: The server closed the connection.`
+ - Refactor code - kill and the image code is in need of consolidation since a lot of code is copied and pasted
+ - Rehost bot somewhere decent
