@@ -18,6 +18,7 @@ description += "exceeds the Pokemon's capture difficulty, you'll catch it! ";
 description += "Throwing a Great Ball takes the highest two of three dice, and ";
 description += "throwing an Ultra Ball takes the highest two of four.\n\n";
 description += "But remember, you have limited balls, and the pokmeon runs away if you take too long!"
+const recharge = 60 * 60 * 2;
 
 function clamp(v) {
   if (v < 0) {return 0}
@@ -91,7 +92,8 @@ function getCaptureDifficulty(frequency) {
   return Math.min(catch_difficulty, 11);
 }
 
-async function generate_embed(interaction, generation) {
+async function generate_embed(interaction, generation, curr_epoch_s) {
+
   let pokemon, captureDifficulty, traits, isShiny, shinyShift, gender, gender_symbol;
   let user_id = interaction.user.id;
   let date = interaction.createdAt.getFullYear() + '-'
@@ -99,9 +101,9 @@ async function generate_embed(interaction, generation) {
     + interaction.createdAt.getDate().toString().padStart(2, '0');
 
   // Find out if they captured toady
-  let status_query = 'SELECT * FROM data.pokemon_status WHERE userId = ? AND date = ?;';
+  let status_query = 'SELECT MAX(epoch) AS m_epoch FROM data.pokemon_status WHERE userId = ?;';
   let status_result = await async_query(status_query, [user_id, date]);
-  let can_catch = (status_result.length === 0);
+  let can_catch = (status_result.length === 0 || curr_epoch_s - status_result[0].m_epoch > recharge);
 
   // Get owned pokemon
   let owned_query = "SELECT nick FROM data.pokemon_status WHERE userId = ? AND owned = 1;";
@@ -112,7 +114,7 @@ async function generate_embed(interaction, generation) {
   let pokeballs = 15;
   let greatballs = 3;
   let ultraballs = 1;
-  let balls_query = "SELECT date, pokeballs, greatballs, ultraballs FROM data.pokemon_status WHERE userId = ? ORDER BY date DESC LIMIT 1;";
+  let balls_query = "SELECT date, pokeballs, greatballs, ultraballs FROM data.pokemon_status WHERE userId = ? ORDER BY epoch DESC LIMIT 1;";
   let balls_result = await async_query (balls_query, [user_id]);
   if (balls_result.length > 0 && balls_result[0].date.getMonth() == interaction.createdAt.getMonth()) {
     pokeballs = balls_result[0].pokeballs;
@@ -126,7 +128,10 @@ async function generate_embed(interaction, generation) {
     return [{content: "You already have 6 pokemon! Release one to catch again."},{}]
   } else if (!can_catch) {
   // } else if (1==2) {
-    return [{content: "You have to wait until tomorrow to catch another Pokemon!"},{}]
+    let remaining_seconds = recharge - (curr_epoch_s - status_result[0].m_epoch);
+    let minutes = Math.floor(remaining_seconds / 60);
+    let seconds = Math.floor(remaining_seconds - (minutes * 60));
+    return [{content: `You have to wait ${minutes} minutes and ${seconds} seconds to catch another Pokemon!`},{}]
   } else {
     // First get the frequency and pokemon
     let frequency = f.shuffle(config.frequencies)[0];
@@ -161,8 +166,8 @@ async function generate_embed(interaction, generation) {
       gender_symbol = ''
     }
 
-    update_query += 'INSERT INTO data.pokemon_status VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
-    await async_query(update_query, [user_id, date, captureDifficulty, pokemon.pokemonId, pokemon.name, traits[0], traits[1], isShiny, shinyShift, gender, 0, 0, pokemon.name + Math.ceil(Math.random() * 1000), pokeballs, greatballs, ultraballs]);
+    update_query += 'INSERT INTO data.pokemon_status VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
+    await async_query(update_query, [user_id, date, captureDifficulty, pokemon.pokemonId, pokemon.name, traits[0], traits[1], isShiny, shinyShift, gender, 0, 0, pokemon.name + Math.ceil(Math.random() * 1000), pokeballs, greatballs, ultraballs, curr_epoch_s]);
   }
 
   // Get image
@@ -245,11 +250,12 @@ module.exports = {
       .addChoices({name:'Gen VII', value:'VII'}).addChoices({name:'Any Gen', value:'any'})
     ),
 	async execute(interaction) {
+    let curr_epoch_s = Math.floor(new Date().getTime() / 1000);
     let generation = 'any';
     if (!(interaction.options.getString('generation') == null)) {
       generation = interaction.options.getString('generation');
     }
-    let response = await generate_embed(interaction, generation);
+    let response = await generate_embed(interaction, generation, curr_epoch_s);
     let reply_content = response[0];
     let catch_data = response[1];
 
@@ -296,13 +302,13 @@ module.exports = {
             content += total_rolls + '`. '
             if (total_rolls >= catch_data.captureDifficulty) {
               content += `You caught the wild ${catch_data.pokemon.name}!`
-              final_query = "UPDATE data.pokemon_status SET owned = ?, slot = ? WHERE userId = ? AND date = ? AND name = ?;";
-              async_query(final_query, [1, catch_data.owned_pokemon + 1, interaction.user.id, catch_data.date, catch_data.pokemon.name]);
+              final_query = "UPDATE data.pokemon_status SET owned = ?, slot = ? WHERE userId = ? AND epoch = ? AND name = ?;";
+              async_query(final_query, [1, catch_data.owned_pokemon + 1, interaction.user.id, curr_epoch_s, catch_data.pokemon.name]);
             } else {
               content += `Oh no! The wild ${catch_data.pokemon.name} escaped!`
             }
-            final_query = "UPDATE data.pokemon_status SET pokeballs = ?, greatballs = ?, ultraballs = ? WHERE userId = ? AND date = ?;";
-            async_query(final_query, [catch_data.pokeballs, catch_data.greatballs, catch_data.ultraballs, interaction.user.id, catch_data.date]);
+            final_query = "UPDATE data.pokemon_status SET pokeballs = ?, greatballs = ?, ultraballs = ? WHERE userId = ? AND epoch = ?;";
+            async_query(final_query, [catch_data.pokeballs, catch_data.greatballs, catch_data.ultraballs, interaction.user.id, curr_epoch_s]);
           }
           i.reply({ content: content, ephemeral: false });
           interaction.editReply({ components: [new_row] })

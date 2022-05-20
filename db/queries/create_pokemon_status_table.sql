@@ -14,5 +14,6 @@ CREATE TABLE IF NOT EXISTS data.pokemon_status (
   nick VARCHAR(32) NOT NULL,
   pokeballs SMALLINT NOT NULL,
   greatballs SMALLINT NOT NULL,
-  ultraballs SMALLINT NOT NULL
+  ultraballs SMALLINT NOT NULL,
+  epoch BIGINT NOT NULL
 );
