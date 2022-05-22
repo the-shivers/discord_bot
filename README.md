@@ -38,10 +38,9 @@ It's a node.js bot for discord. What more do you need to know? This bot was comp
 #### Wishlist
 These are things I'll probably add in the future, when I get around to it.
  - /remind
- - Further image manipulation: /flip, /flop, /rotate, /spin, /bw, /sepia, /stamp, /pinch, /bulge, /append, /superimpose, etc.
+ - Further image manipulation: /rotate, /spin, /bw, /sepia, /stamp
  - Fix from the old version: /crypto, /wolfram
  - /stock or /ticker
- - /forecast
  - Additional games: /familyfeud, /deal (or no deal)
  - /song (ambitious part-writing harmony generator)
 
