@@ -141,12 +141,16 @@
   },
 	"characteristics": [
 		"grumpy", "playful", "sad", "goofy", "hungry", "thirsty", "smelly", "cuddly",
-		"lonely", "angry", "daredevil", "adventurous", "boring", "aggressive",
+		"lonely", "angry", "adventurous", "boring", "aggressive",
 		"alpha", "annoying", "loud", "quiet", "energetic", "lazy", "comfy",
 		"needy", "messy", "clean", "confident", "shy", "stupid", "smart",
 		"beautiful", "ugly", "loyal", "friendly", "mean", "mature", "immature",
 		"young", "old", "wise", "suave", "graceful", "clumsy", "sensitive",
 		"empathetic", "short", "small", "tiny", "large", "gigantic", "attractive",
-		"stupid", "brilliant", "muscular", "awkward", "sleepy", "cute"
+		"stupid", "brilliant", "muscular", "awkward", "sleepy", "cute", "seductive",
+		"racist", "fat", "bloodthirsty", "infanticidal", "naughty", "redpilled",
+		"bluepilled", "greedy", "scheming", "musky", "neurodivergent",
+		"slutty", "narcissistic", "sexist", "squeaky", "noisy", "bloated",
+		"non-binary", "femmy", "androgynous", "dominant", "eggy", "pregnant"
 	]
 }

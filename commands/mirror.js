@@ -15,10 +15,10 @@ module.exports = {
     .addStringOption(option => option
       .setName('direction')
       .setDescription('Image half to be duplicated.')
-      .addChoices({name:'north', value:'south'})
-      .addChoices({name:'south', value:'north'})
-      .addChoices({name:'east', value:'west'})
-      .addChoices({name:'west', value:'east'})
+      .addChoices({name:'north', value:'north'})
+      .addChoices({name:'south', value:'south'})
+      .addChoices({name:'east', value:'east'})
+      .addChoices({name:'west', value:'west'})
     ),
   async execute(interaction) {
     await interaction.deferReply();
@@ -29,17 +29,37 @@ module.exports = {
       return;
     }
     console.log(img_details);
-    let x, y, flipflop;
-    if (direction == 'west' || direction == 'east') {
-      x = img_details.width/2;
-      y = img_details.height;
-      flipflop = '-flop'
-    } else {
-      x = img_details.width;
-      y = img_details.height/2;
-      flipflop = '-flip'
+    let args = [];
+    if (direction === 'north') {
+      args = [
+        img_details.url,
+        '-gravity', 'north', '(', '-clone', '0', '-crop', `${img_details.width}x${Math.ceil(img_details.height/2)}+0+0`, ')',
+        '-gravity', 'south', '(', '-clone', '0', '-flip', '-crop', `${img_details.width}x${Math.floor(img_details.height/2)}+0+0`, ')',
+        '-delete', '0', '-append', '-'
+      ]
+    } else if (direction === 'south') {
+      args = [
+        img_details.url,
+        '-gravity', 'north', '(', '-clone', '0', '-flip', '-crop', `${img_details.width}x${Math.ceil(img_details.height/2)}+0+0`, ')',
+        '-gravity', 'south', '(', '-clone', '0', '-crop', `${img_details.width}x${Math.floor(img_details.height/2)}+0+0`, ')',
+        '-delete', '0', '-append', '-'
+      ]
+    } else if (direction === 'west') {
+      args = [
+        img_details.url,
+        '-gravity', 'west', '(', '-clone', '0', '-crop', `${Math.ceil(img_details.width/2)}x${img_details.height}+0+0`, ')',
+        '-gravity', 'east', '(', '-clone', '0', '-flop', '-crop', `${Math.floor(img_details.width/2)}x${img_details.height}+0+0`, ')',
+        '-delete', '0', '+append', '-'
+      ]
+    } else if (direction === 'east') {
+      args = [
+        img_details.url,
+        '-gravity', 'west', '(', '-clone', '0', '-flop', '-crop', `${Math.ceil(img_details.width/2)}x${img_details.height}+0+0`, ')',
+        '-gravity', 'east', '(', '-clone', '0', '-crop', `${Math.floor(img_details.width/2)}x${img_details.height}+0+0`, ')',
+        '-delete', '0', '+append', '-'
+      ]
     }
-    im.convert([img_details.url, '-gravity', direction, '(', '+clone', flipflop, '-crop', `${x}x${y}+0+0`, ')', '-composite', '-'],
+    im.convert(args,
     function(err, stdout) {
       if (err) {
         console.log("error", err.message); throw err;
