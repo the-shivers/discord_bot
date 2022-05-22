@@ -45,6 +45,7 @@ These are things I'll probably add in the future, when I get around to it.
  - /song (ambitious part-writing harmony generator)
 
 #### Other To Do
+ - Fix mirror north and east - they mess up for transparent images!
  - Change mysql connection to pooled, or at least fix disconnect issue with better error handling. `Error: Connection lost: The server closed the connection.`
  - Refactor code - kill and the image code is in need of consolidation since a lot of code is copied and pasted
  - Rehost bot somewhere decent
