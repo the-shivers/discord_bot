@@ -84,7 +84,7 @@ module.exports = {
 		.setName('pteam')
 		.setDescription('Show your Pokemon team!'),
 	async execute(interaction) {
-    let query = "SELECT ps.*, DATEDIFF(CURDATE(), date) AS days_old, p.evLevel, p.evIds FROM data.pokemon_status AS ps LEFT JOIN data.pokedex AS p ON ps.pokemonId = p.pokemonId WHERE userId = ? AND owned = 1 ORDER BY date ASC;"
+    let query = "SELECT ps.*, DATEDIFF(CURDATE(), date) AS days_old, p.evLevel, p.evIds FROM data.pokemon_status AS ps LEFT JOIN data.pokedex AS p ON ps.pokemonId = p.pokemonId WHERE userId = ? AND owned = 1 ORDER BY epoch ASC;"
     let values = [interaction.user.id]
     let team = await async_query(query, values);
     if (team.length === 0) {

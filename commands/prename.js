@@ -27,7 +27,7 @@ module.exports = {
     let slot = interaction.options.getInteger('slot')
     let nick = interaction.options.getString('nickname')
     nick = nick.slice(0, 31);
-    let query = 'SELECT * FROM data.pokemon_status WHERE userId = ? AND owned = 1 ORDER BY date ASC;';
+    let query = 'SELECT * FROM data.pokemon_status WHERE userId = ? AND owned = 1 ORDER BY epoch ASC;';
     let values = [interaction.user.id];
     let status = await async_query(query, values);
     if (slot > status.length) {
@@ -37,7 +37,7 @@ module.exports = {
       let rename_vals = [nick, interaction.user.id, status[slot-1].nick, status[slot-1].name];
       console.log(rename_vals)
       await async_query(rename_query, rename_vals);
-      interaction.reply(`Pokemon renamed!`);
+      interaction.reply(`Pokemon renamed! Your ${status[slot-1].name} is now knwon as ${nick}!`);
     }
 	}
 };

@@ -1,103 +1,9 @@
 "use strict";
 
-// Define Constants
 const Discord = require("discord.js");
+const im = require('imagemagick');
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const Canvas = require('canvas');
-const msg_limit = 3;
-
-
-async function get_msgs(interaction) {
-  return interaction.channel.messages.fetch({ limit: msg_limit});
-}
-
-
-function get_img_details(msgs) {
-  let url = '';
-  let width = 0;
-  let height = 0;
-  let shouldSkip = false; // Because we can't break
-  msgs.forEach(msg => {
-    if (msg.embeds.length > 0 && !shouldSkip) {
-      if (
-        msg.embeds[0].type == 'image' &&
-        !(msg.embeds[0].thumbnail.url).includes('.webp')
-      ) {
-        url = msg.embeds[0].thumbnail.url;
-        width = msg.embeds[0].thumbnail.width;
-        height = msg.embeds[0].thumbnail.height;
-        shouldSkip = true;
-      } else if (
-        msg.embeds[0].type == 'rich' &&
-        !(msg.embeds[0].image.url).includes('.webp')
-      ) {
-        url = msg.embeds[0].image.url;
-        width = msg.embeds[0].image.width;
-        height = msg.embeds[0].image.height;
-        shouldSkip = true;
-      }
-
-    }
-    if (msg.attachments.size > 0 && !shouldSkip) {
-      if (['image/jpeg', 'image/png', 'image/gif'].includes(msg.attachments.first().contentType)) {
-        url = msg.attachments.first().url;
-        width = msg.attachments.first().width;
-        height = msg.attachments.first().height;
-        shouldSkip = true;
-      }
-    }
-  })
-  return({'url': url, 'width': width, 'height': height})
-}
-
-
-async function create_mirror_attachment(url, width, height, direction) {
-  const canvas = Canvas.createCanvas(width, height);
-  const ctx = canvas.getContext('2d');
-  const img = await Canvas.loadImage(url);
-  ctx.drawImage(img, 0, 0, width, height);
-  if (direction == 'west' || direction == 'east') {
-    ctx.scale(-1, 1);
-    if (direction  == 'east') {
-      ctx.drawImage(
-        img,
-        width/2, 0, // Start at width/2 from the left, 0 from the top
-        width/2, height, // Get width/2 x height crop on source image
-        -width/2, 0, // Place the result width/2 across, 0 from top on canvas
-        width/2, height // Should be w/2 wide, height tall (scale)
-      );
-    } else {
-      ctx.drawImage(
-        img,
-        0, 0,
-        width/2, height,
-        -width, 0,
-        width/2, height
-      );
-    }
-  } else {
-    ctx.scale(1, -1);
-    if (direction == 'south') {
-      ctx.drawImage(
-        img,
-        0, height/2,
-        width, height/2,
-        0, -height/2,
-        width, height/2
-      );
-    } else {
-      ctx.drawImage(
-        img,
-        0, 0,
-        width, height/2,
-        0, -height,
-        width, height/2
-      );
-    }
-  }
-  return(new Discord.MessageAttachment(canvas.toBuffer(), 'mirror.png'))
-}
-
+const { get_msgs, get_img_details } = require('../assets/img_manip/funcs.js');
 
 module.exports = {
   type: "private",
@@ -109,24 +15,38 @@ module.exports = {
     .addStringOption(option => option
       .setName('direction')
       .setDescription('Image half to be duplicated.')
-      .addChoices({name:'north', value:'north'})
-      .addChoices({name:'south', value:'south'})
-      .addChoices({name:'east', value:'east'})
-      .addChoices({name:'west', value:'west'})
+      .addChoices({name:'north', value:'south'})
+      .addChoices({name:'south', value:'north'})
+      .addChoices({name:'east', value:'west'})
+      .addChoices({name:'west', value:'east'})
     ),
-	async execute(interaction) {
-    let direction = 'west';
-    if (!(interaction.options.getString('direction') == null)) {
-      direction = interaction.options.getString('direction');
+  async execute(interaction) {
+    await interaction.deferReply();
+    let direction = interaction.options.getString('direction') ?? 'west';
+    let img_details = await get_img_details(await get_msgs(interaction));
+    if (img_details.width * img_details.height > 2000 * 2500) {
+      interaction.editReply("Sorry, that image is too big for me to mirror :(")
+      return;
     }
-    let msgs = await get_msgs(interaction);
-    let img_details = get_img_details(msgs);
-    let attach = await create_mirror_attachment(
-      img_details.url,
-      img_details.width,
-      img_details.height,
-      direction
-    );
-    interaction.reply({ files: [attach], ephemeral: false });
+    console.log(img_details);
+    let x, y, flipflop;
+    if (direction == 'west' || direction == 'east') {
+      x = img_details.width/2;
+      y = img_details.height;
+      flipflop = '-flop'
+    } else {
+      x = img_details.width;
+      y = img_details.height/2;
+      flipflop = '-flip'
+    }
+    im.convert([img_details.url, '-gravity', direction, '(', '+clone', flipflop, '-crop', `${x}x${y}+0+0`, ')', '-composite', '-'],
+    function(err, stdout) {
+      if (err) {
+        console.log("error", err.message); throw err;
+      }
+      const buf = Buffer.from(stdout, 'binary');
+      let attach = new Discord.MessageAttachment(buf, 'mirror.png')
+      interaction.editReply({ files: [attach], ephemeral: false });
+    });
   }
 }

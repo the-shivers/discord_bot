@@ -21,14 +21,20 @@ async function update_game_status(interaction, status_result) {
   if (status_result.length === 0) {
     var query = 'INSERT INTO data.wwtbam_status VALUES (?, ?, ?, ?, ?, ?, ?, '
     query += '?, ?);'
-  } else if (status_result[0].status === 1) {
-    console.log("You should never see this. It should not be possible.")
-  } else if (status_result[0].status === 0) {
+  } else if (
+    status_result[0].status === 0 ||
+    (
+      status_result[0].status === 1 &&
+      (interaction.createdAt - status_result[0].updatedAt) / 1000 > 300
+    )
+  ) {
     var query = 'UPDATE data.wwtbam_status SET channelId = ?, guildId = ?, ';
     query += 'userId = ?, status = ?, question_num = ?, is_available_50_50 =';
     query += ' ?, is_available_audience = ?, is_available_friend = ?, ';
     query += 'updatedAt = ? WHERE channelId = ?;';
     values.push(interaction.channelId);
+  } else if (status_result[0].status === 1 ) {
+    console.log("You should never see this. It should not be possible.")
   }
   await async_query(query, values);
 }

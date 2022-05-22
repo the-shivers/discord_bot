@@ -22,7 +22,7 @@ module.exports = {
     ),
 	async execute(interaction) {
     let slot = interaction.options.getInteger('slot')
-    let query = 'SELECT * FROM data.pokemon_status WHERE userId = ? AND owned = 1 ORDER BY date ASC;';
+    let query = 'SELECT * FROM data.pokemon_status WHERE userId = ? AND owned = 1 ORDER BY epoch ASC;';
     let values = [interaction.user.id];
     let status = await async_query(query, values);
     if (slot > status.length) {

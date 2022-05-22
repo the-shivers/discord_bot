@@ -5,9 +5,10 @@ const request = require("request");
 const api_options_json = require("../api_keys.json")
 var open_weather_options = api_options_json.open_weather_options;
 const assets_dir = '../assets/weather/';
-const getFlag = require(assets_dir + 'flags.js').getFlag;
-const getSymb = require(assets_dir + 'symbols.js').getSymb;
-const getDesc = require(assets_dir + 'descriptions.js').getDescription;
+let weather_funcs = require(assets_dir + 'weather_funcs.js');
+const getFlag = weather_funcs.getFlag;
+const getSymb = weather_funcs.getSymb;
+const getDesc = weather_funcs.getDescription;
 
 
 function deg_to_comp(deg) {
