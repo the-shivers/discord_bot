@@ -125,6 +125,7 @@
     "4", "4", "4", "4", "4", "4",
     "5", "5", "5", "5", "5", "5", "5", "5",
     "6", "6", "6", "6", "6", "6", "6", "6", "6", "6", "6",
+		"7", "7", "7", "7", "7", "7", "7", "7", "7", "7", "7", "7", "7", "7",
     "8", "8", "8", "8", "8", "8", "8", "8", "8", "8", "8", "8", "8", "8", "8", "8", "8", "8", "8", "8", "8",
     "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9"
   ],
@@ -148,9 +149,11 @@
 		"young", "old", "wise", "suave", "graceful", "clumsy", "sensitive",
 		"empathetic", "short", "small", "tiny", "large", "gigantic", "attractive",
 		"stupid", "brilliant", "muscular", "awkward", "sleepy", "cute", "seductive",
-		"racist", "fat", "bloodthirsty", "infanticidal", "naughty", "redpilled",
-		"bluepilled", "greedy", "scheming", "musky", "neurodivergent",
+		"racist", "fat", "bloodthirsty", "infanticidal", "naughty",
+		"greedy", "scheming", "musky", "neurodivergent", "gay", "bisexual",
 		"slutty", "narcissistic", "sexist", "squeaky", "noisy", "bloated",
-		"non-binary", "femmy", "androgynous", "dominant", "eggy", "pregnant"
+		"non-binary", "feminine", "masculine", "androgynous", "dominant", "pregnant",
+		"majestic", "sexy", "moldy", "German", "based", "cringe", "stoned",
+		"lovable", "radical", "cool", "dexterous", "plump"
 	]
 }

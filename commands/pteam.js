@@ -8,16 +8,6 @@ const { async_query } = require('../db/scripts/db_funcs.js')
 const assets_dir = './assets/pokemon/thumbnails/';
 const f = require('../funcs.js');
 
-function parseDate(input) {
-  var parts = input.match(/(\d+)/g);
-  // new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
-  return new Date(parts[0], parts[1]-1, parts[2]); // months are 0-based
-}
-
-function datediff(first, second) {
-  return Math.round((second-first)/(1000*60*60*24));
-}
-
 function clamp(v) {
   if (v < 0) {return 0}
   if (v > 255) {return 255}

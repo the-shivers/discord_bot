@@ -102,28 +102,5 @@ let a = {
 	},
 };
 
-let b = {
-  type: "public",
-  cat: "utility",
-  desc: "Check a location's weather (celsius only).",
-	data: new SlashCommandBuilder()
-		.setName('cweather')
-		.setDescription('Celsius weather')
-		.addStringOption(option => option
-      .setName('location')
-      .setDescription('The location to fetch weather info for.')
-      .setRequired(true)
-    ),
-	async execute(interaction) {
-    let location = interaction.options.getString('location');
-    result = await weather(location, true);
-    if (result.length === 0) {
-      interaction.reply("Open Weather messed it up!");
-    } else {
-      interaction.reply(result);
-    }
-	},
-}
-
 // Export the command
-module.exports = [a, b];
+module.exports = [a];

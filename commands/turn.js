@@ -26,9 +26,8 @@ module.exports = {
       interaction.editReply("Sorry, that image is too big for me to ca :(")
       return;
     }
-    im.convert([img_details.url, '-set', '-delay', '3', '-dispose', 'previous',
-        '(', '+clone', '+repage', ')', '(', '-clone', '0', '-flop', ')',
-        '-delete', '0', '-layers', 'Optimize', '-loop', '0', 'gif:-'],
+    im.convert(['-set', 'dispose', 'background', img_details.url, '-set', '-delay', '3',
+        '(', '+clone', '-flop', ')', '-loop', '0', 'gif:-'],
     function(err, stdout) {
       if (err) {throw err}
       const buf1 = Buffer.from(stdout, 'binary');
