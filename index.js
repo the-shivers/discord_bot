@@ -5,6 +5,7 @@ const {Client, Collection, Intents} = require('discord.js');
 const fs = require('fs');
 const dp = require('./data_processing.js');
 const auth = require("./config.json");
+const { async_query } = require('./db/scripts/db_funcs.js')
 const client = new Client({intents:
 	[
 		Intents.FLAGS.GUILDS,
@@ -60,11 +61,25 @@ function insert_and_clear() {
 }
 
 
+async function remind() {
+	let query = 'SELECT * FROM data.reminders WHERE responded = 0 AND epoch <= ?;';
+	let values = [Math.floor(new Date().getTime() / 1000)]; // Epoch Seconds
+	let result = await async_query(query, values);
+	for (let i = 0; i < result.length; i++) {
+		let channel = client.channels.cache.get(result[i].channelId);
+		channel.send('<@' + result[i].userId + '> ' + ' ' + result[i].message);
+		let update_query = "UPDATE data.reminders SET responded = 1 WHERE id = ?;";
+		let update_values = [result[i].id]
+		async_query(update_query, update_values);
+	}
+}
+
 // Login and Ready
 client.login(auth.token);
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
 	setInterval(insert_and_clear, 60000);
+	setInterval(remind, 20000);
 });
 
 // Receive commands

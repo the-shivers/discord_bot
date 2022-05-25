@@ -61,9 +61,7 @@ async function getPokePic(full_path, filename, shinyShift) {
     }
     ctx.putImageData(new_img_data, 0, 0)
   }
-  console.log("making attachment...")
   let attach = new MessageAttachment(canvas.toBuffer(), 'poke_pic.png');
-  console.log("attachment made", attach)
   return attach;
 }
 
@@ -160,10 +158,8 @@ module.exports = {
       gender = '\\♀'
     }
     let title = pokemon.nick + gender + ` - Lvl. ${pokemon.days_old}`;
-    let description = pokemon.description + ev_str;
-    let field1 = `${pokemon.height} m`;
-    let field2 = `${pokemon.weight} kg`;
-    let field3 = `${config.rarities[pokemon.frequency.toString()]}`;
+    let description = `*Rarity: ${config.rarities[pokemon.frequency.toString()]}.* `
+    description += pokemon.description + ev_str;
     let type2 = (pokemon.type2 != '') ? `, \`${pokemon.type2}\`` : '';
     let field4 = `\`${pokemon.type1}\`` + type2;
     let egg2 = (pokemon.egg2 != '') ? `, \`${pokemon.egg2}\`` : '';
@@ -181,7 +177,7 @@ module.exports = {
       stats_block += key.slice(0, 3).padStart(3, ' ') + ' ' + stats[key].val.toString().padStart(3, ' ');
       stats_block += ` ${stats[key].symb} |${'|'.repeat(Math.ceil(stats[key].val / 5))}\n`
     }
-    stats_block = stats_block.slice(0,-1) + '```'
+    stats_block = stats_block.slice(0,-1).toUpperCase() + '```'
 
     const embed = new MessageEmbed()
       .setTitle(title)
@@ -190,9 +186,6 @@ module.exports = {
       .setImage('attachment://poke_pic.png')
       .setAuthor(author)
       .addFields(
-    		{ name: 'Height', value: field1, inline: true },
-    		{ name: 'Weight', value: field2, inline: true },
-        { name: 'Rarity', value: field3, inline: true },
         { name: 'Types', value: field4, inline: true },
         { name: 'Egg Groups', value: field5, inline: true },
         { name: 'Traits', value: field6, inline: true },
