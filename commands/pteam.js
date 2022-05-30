@@ -72,10 +72,16 @@ module.exports = {
   desc: "See your Pokemon team!",
 	data: new SlashCommandBuilder()
 		.setName('pteam')
-		.setDescription('Show your Pokemon team!'),
+		.setDescription('Show your Pokemon team!')
+    .addUserOption(option => option
+      .setName('target')
+      .setDescription('Pokemon team to look at (defaults to your own)')
+      .setRequired(false)
+    ),
 	async execute(interaction) {
+    let user = interaction.options.getUser('target') ?? interaction.user;
     let query = "SELECT ps.*, DATEDIFF(CURDATE(), date) AS days_old, p.evLevel, p.evIds FROM data.pokemon_status AS ps LEFT JOIN data.pokedex AS p ON ps.pokemonId = p.pokemonId WHERE userId = ? AND owned = 1 ORDER BY epoch ASC;"
-    let values = [interaction.user.id]
+    let values = [user.id]
     let team = await async_query(query, values);
     if (team.length === 0) {
       interaction.reply("You don't have any Pokemon! Try catching one with `/pcatch`!");
@@ -85,12 +91,12 @@ module.exports = {
       let ev_message = '';
       for (let i = 0; i < team.length; i++) {
         if (team[i].evLevel != null && team[i].days_old >= team[i].evLevel) {
-          ev_message = 'Looks like one (or more!) of your pokemon evolved!\n\n';
+          ev_message = 'Looks like one (or more!) of the pokemon evolved!\n\n';
           let ev_query = "SELECT name, pokemonId FROM data.pokedex WHERE pokemonId = ?;"
           let ev_vals = [f.shuffle(team[i].evIds.split('|'))[0]];
           let evo = await async_query(ev_query, ev_vals);
           let update_query = "UPDATE data.pokemon_status SET pokemonId = ?, name = ? WHERE userId = ? AND pokemonId = ? AND owned = ? AND nick = ?;";
-          let update_vals = [evo[0].pokemonId, evo[0].name, interaction.user.id, team[i].pokemonId, 1, team[i].nick];
+          let update_vals = [evo[0].pokemonId, evo[0].name, user.id, team[i].pokemonId, 1, team[i].nick];
           await async_query(update_query, update_vals);
         }
       }
@@ -121,7 +127,7 @@ module.exports = {
       }
       let team_pic = await getTeamPic(full_path_arr, filename_arr, shinyShift_arr);
       const embed = new MessageEmbed()
-        .setTitle(`${interaction.user.username}'s Pokemon team!`)
+        .setTitle(`${user.username}'s Pokemon team!`)
         .setColor("#c03028")
         .setDescription(ev_message + desc)
         .setImage('attachment://team_pic.png');

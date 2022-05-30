@@ -94,6 +94,34 @@ function getCaptureDifficulty(frequency) {
 
 async function generate_embed(interaction, generation, curr_epoch_s) {
 
+  let dt = new Date(curr_epoch_s * 1000);
+  let hours = dt.getHours()
+  let last_hour, next_hour;
+  if (hours % 2 === 0) {
+    last_hour = hours;
+    next_hour = hours + 2;
+  } else {
+    last_hour = hours - 1;
+    next_hour = hours + 1;
+  }
+  let last_chunk = new Date(curr_epoch_s * 1000);
+  let next_chunk = new Date(curr_epoch_s * 1000);
+  last_chunk.setHours(last_hour);
+  last_chunk.setMinutes(0);
+  last_chunk.setSeconds(0);
+  next_chunk.setHours(next_hour);
+  next_chunk.setMinutes(0);
+  next_chunk.setSeconds(0);
+  let n_epoch = next_chunk.getTime();
+  let l_epoch = last_chunk.getTime();
+  console.log('test', new Date());
+  console.log(new Date(l_epoch))
+  console.log(new Date(curr_epoch_s * 1000))
+  console.log(new Date(n_epoch))
+  console.log(l_epoch, `l_epoch`)
+  console.log(curr_epoch_s, `curr_epoch_s`)
+  console.log(n_epoch, `n_epoch`)
+
   let pokemon, captureDifficulty, traits, isShiny, shinyShift, gender, gender_symbol;
   let user_id = interaction.user.id;
   let date = interaction.createdAt.getFullYear() + '-'
@@ -103,7 +131,10 @@ async function generate_embed(interaction, generation, curr_epoch_s) {
   // Find out if they captured toady
   let status_query = 'SELECT MAX(epoch) AS m_epoch FROM data.pokemon_status WHERE userId = ?;';
   let status_result = await async_query(status_query, [user_id, date]);
-  let can_catch = (status_result.length === 0 || curr_epoch_s - status_result[0].m_epoch > recharge);
+  console.log(status_result[0].m_epoch * 1000, 'max epoch from mysql data * 1000')
+  console.log(new Date(status_result[0].m_epoch * 1000), 'date version * 1000')
+  // let can_catch = (status_result.length === 0 || curr_epoch_s - status_result[0].m_epoch > recharge);
+  let can_catch = (status_result.length === 0 || status_result[0].m_epoch * 1000 < l_epoch);
 
   // Get owned pokemon
   let owned_query = "SELECT nick FROM data.pokemon_status WHERE userId = ? AND owned = 1;";
@@ -128,7 +159,7 @@ async function generate_embed(interaction, generation, curr_epoch_s) {
     return [{content: "You already have 6 pokemon! Release one to catch again."},{}]
   } else if (!can_catch) {
   // } else if (1==2) {
-    let remaining_seconds = recharge - (curr_epoch_s - status_result[0].m_epoch);
+    let remaining_seconds = Math.floor((n_epoch - curr_epoch_s * 1000) / 1000);
     let minutes = Math.floor(remaining_seconds / 60);
     let seconds = Math.floor(remaining_seconds - (minutes * 60));
     return [{content: `You have to wait ${minutes} minutes and ${seconds} seconds to catch another Pokemon!`},{}]

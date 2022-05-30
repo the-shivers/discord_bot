@@ -35,7 +35,6 @@ module.exports = {
     } else {
       let rename_query = 'UPDATE data.pokemon_status SET nick = ? WHERE userId = ? AND owned = 1 AND nick = ? AND name = ?';
       let rename_vals = [nick, interaction.user.id, status[slot-1].nick, status[slot-1].name];
-      console.log(rename_vals)
       await async_query(rename_query, rename_vals);
       interaction.reply(`Pokemon renamed! Your ${status[slot-1].name} is now known as ${nick}!`);
     }

@@ -68,6 +68,7 @@ async function remind() {
 	for (let i = 0; i < result.length; i++) {
 		let channel = client.channels.cache.get(result[i].channelId);
 		channel.send('<@' + result[i].userId + '> ' + ' ' + result[i].message);
+		await new Promise(resolve => setTimeout(resolve, 5000));
 		let update_query = "UPDATE data.reminders SET responded = 1 WHERE id = ?;";
 		let update_values = [result[i].id]
 		async_query(update_query, update_values);

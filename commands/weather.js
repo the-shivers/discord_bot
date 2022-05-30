@@ -1,15 +1,51 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const request = require("request");
+"use strict";
 
-// Weather stuff
-const api_options_json = require("../api_keys.json")
-var open_weather_options = api_options_json.open_weather_options;
+// Imports
+const axios = require('axios');
+const { SlashCommandBuilder } = require('@discordjs/builders');
+const api_info = require("../api_keys.json").openWeather;
 const assets_dir = '../assets/weather/';
 let weather_funcs = require(assets_dir + 'weather_funcs.js');
 const getFlag = weather_funcs.getFlag;
 const getSymb = weather_funcs.getSymb;
 const getDesc = weather_funcs.getDescription;
 
+
+// Helper Funcs
+async function getGeoInfo(location) {
+  let full_url = api_info.geocoding_endpoint + location + `&appid=${api_info.key}`;
+  try {
+    const response = await axios.get(full_url);
+    return {
+      name: response.data[0].name,
+      country: response.data[0].country,
+      lat: response.data[0].lat,
+      lon: response.data[0].lon,
+      state: response.data[0].state ?? ''
+    }
+  } catch (error) {
+    console.error(error);
+    return {};
+  }
+}
+
+async function getWeather(lat, lon, celsius) {
+  let full_url = api_info.onecall_endpoint;
+  full_url += `lat=${lat}&lon=${lon}&appid=${api_info.key}`;
+  full_url += '&exclude=minutely,hourly,alerts,daily';
+  if (celsius) {
+    full_url += '&units=metric'
+  } else {
+    full_url += '&units=imperial'
+  }
+  try {
+    const response = await axios.get(full_url);
+    return response.data.current
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
 
 function deg_to_comp(deg) {
   // Converts a degree number (0-360) to a compass bearing.
@@ -22,85 +58,51 @@ function deg_to_comp(deg) {
 }
 
 
-// Promisify the result
-function getBody(location, celsius) {
-  let units = (celsius) ? "metric" : "imperial";
-  open_weather_options.qs.q = location;
-  open_weather_options.qs['units'] = units;
-  return new Promise(function(resolve, reject) {
-    request.get(open_weather_options, function(err, resp, body) {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(JSON.parse(body));
-      }
-    })
-  })
-}
-
-
-// Process the result
-async function weather(location, celsius) {
-  // Processing
-  result = await getBody(location, celsius);
-  console.log(result)
-
-  var t_unit = '°F';
-  var s_unit = 'mph';
-  if (celsius) {
-    t_unit = '°C';
-    s_unit = 'm/s'
-  }
-
-  if (result.cod === '404') {
-    return("I couldn't find that place. 😭")
-  } else {
-    let symb = getSymb(result.weather[0].id);
-    let desc = getDesc(result.weather[0].id);
-    let str = ""
-    + "**Place: **" + result.name + " " + getFlag(result.sys.country) + "\n"
-    + "**Weather: **" + desc + " " + symb + " (" + result.clouds.all + "% cloudy)" + "\n"
-    + "**Temperature: **" + result.main.temp.toFixed(1) + t_unit + " | "
-    + "**Feels like: **" + result.main.feels_like.toFixed(1) + t_unit + " \n"
-    + "**Hum: **" + result.main.humidity.toFixed(1) + "% "
-    + "| **Wind: **" + result.wind.speed.toFixed(1) + " " + s_unit + " "
-    + deg_to_comp(result.wind.deg);
-    if ("gust" in result.wind) {
-      str += " (" + result.wind.gust + " gusts)"
-    }
-    return(str);
-  }
-}
-
-let a = {
-  type: "public",
+module.exports = {
+	type: "private",
   cat: "utility",
-  desc: "Check a location's weather.",
+  desc: "Shows weather for a location.",
 	data: new SlashCommandBuilder()
 		.setName('weather')
-		.setDescription('Weather')
-		.addStringOption(option => option
+		.setDescription('Shows weather for a location.')
+    .addStringOption(option => option
       .setName('location')
-      .setDescription('The location to fetch weather info for.')
+      .setDescription('The location to fetch weather for.')
       .setRequired(true)
     ).addBooleanOption(option => option
       .setName('celsius')
       .setDescription('If you want values in Celsius.')
     ),
 	async execute(interaction) {
+    await interaction.deferReply();
     let location = interaction.options.getString('location');
-    let celsius = false;
-    if (!(interaction.options.getBoolean('celsius') == null)) {
-      celsius = interaction.options.getBoolean('celsius');
+    let geo_result = await getGeoInfo(location);
+    if (Object.keys(geo_result).length === 0) {
+      interaction.reply("I couldn't find that place. :(");
+      return;
     }
-    result = await weather(location, celsius);
-    if (result.length === 0) {
-      interaction.reply("Open Weather messed it up!");
-    } else {
-      interaction.reply(result);
+    let celsius = (geo_result.country == 'US') ? false : true;
+    celsius = interaction.options.getBoolean('celsius') ?? celsius;
+    let weather = await getWeather(geo_result.lat, geo_result.lon, celsius);
+    if (weather.length === 0) {
+      interaction.reply("Open Weather API messed it up!");
+      return;
     }
-	},
+    let symb = getSymb(weather.weather[0].id);
+    let desc = getDesc(weather.weather[0].id);
+    let state_str = (geo_result.state.length > 0) ? ', ' + geo_result.state : '';
+    let t_unit = (celsius) ? '°C' : '°F';
+    let s_unit = (celsius) ? 'm/s' : 'mph';
+    let str = `Weather for **${geo_result.name}${state_str}**  ${getFlag(geo_result.country)}\n`;
+    str += "**Weather: **" + desc + " " + symb + " (" + weather.clouds + "% cloudy)" + "\n"
+    + "**Temperature: **" + weather.temp.toFixed(1) + t_unit + " | "
+    + "**Feels like: **" + weather.feels_like.toFixed(1) + t_unit + " \n"
+    + "**Hum: **" + weather.humidity.toFixed(1) + "% "
+    + "| **Wind: **" + weather.wind_speed.toFixed(1) + " " + s_unit + " "
+    + deg_to_comp(weather.wind_deg);
+    if ("wind_gust" in weather) {
+      str += " (" + weather.wind_gust.toFixed(1) + " gusts)"
+    }
+    interaction.editReply(str);
+	}
 };
-
-// Export the command
-module.exports = [a];

@@ -65,12 +65,13 @@ module.exports = {
 	async execute(interaction) {
     await interaction.deferReply();
     let location = interaction.options.getString('location');
-    let celsius = interaction.options.getBoolean('celsius') ?? false;
     let geo_result = await getGeoInfo(location);
     if (Object.keys(geo_result).length === 0) {
       interaction.reply("I couldn't find that place. :(");
       return;
     }
+    let celsius = (geo_result.country == 'US') ? false : true;
+    celsius = interaction.options.getBoolean('celsius') ?? celsius;
     let forecast = await getForecast(geo_result.lat, geo_result.lon, celsius);
     if (forecast.length === 0) {
       interaction.reply("Open Weather API messed it up!");
@@ -79,7 +80,6 @@ module.exports = {
     let t_unit = (celsius) ? '°C' : '°F';
     let s_unit = (celsius) ? 'm/s' : 'mph';
     let days = ['`Sun:`','`Mon:`','`Tue:`','`Wed:`','`Thu:`','`Fri:`','`Sat:`'];
-    // let days = ['Ｓｕｎ','Ｍｏｎ','Ｔｕｅ','Ｗｅｄ','Ｔｈｕ','Ｆｒｉ','Ｓａｔ']
     let state_str = (geo_result.state.length > 0) ? ', ' + geo_result.state : '';
     let reply = `Forecast for **${geo_result.name}${state_str}**  ${getFlag(geo_result.country)}`;
     for (let i = 0; i < forecast.length; i++) {

@@ -110,13 +110,13 @@ module.exports = {
 
     // Evolution logic. See if they evolved (one or more times)
     let ev_message = ''
-      if (pokemon.evLevel != null && pokemon.days_old >= pokemon.evLevel) {
+      if (pokemon.evLevel != null && pokemon.days_old + 1 >= pokemon.evLevel) {
         ev_message = 'Your Pokemon evolved!';
         let ev_query = "SELECT name, pokemonId, evIds, evLevel FROM data.pokedex WHERE pokemonId = ?;"
         let ev_vals = [f.shuffle(pokemon.evIds.split('|'))[0]];
         let evo = await async_query(ev_query, ev_vals);
         let update_vals;
-        if (evo[0].evLevel != null && pokemon.days_old >= evo[0].evLevel) {
+        if (evo[0].evLevel != null && pokemon.days_old + 1 >= evo[0].evLevel) {
           let ev2_query = "SELECT name, pokemonId, evIds, evLevel FROM data.pokedex WHERE pokemonId = ?;"
           let ev2_vals = [f.shuffle(evo[0].evIds.split('|'))[0]];
           let evo2 = await async_query(ev2_query, ev2_vals);
@@ -157,14 +157,14 @@ module.exports = {
     } else if (pokemon.gender == 'female') {
       gender = '\\♀'
     }
-    let title = pokemon.nick + gender + ` - Lvl. ${pokemon.days_old}`;
+    let title = pokemon.nick + gender + ` - Lvl. ${pokemon.days_old + 1}`;
     let description = `*Rarity: ${config.rarities[pokemon.frequency.toString()]}.* `
     description += pokemon.description + ev_str;
     let type2 = (pokemon.type2 != '') ? `, \`${pokemon.type2}\`` : '';
-    let field4 = `\`${pokemon.type1}\`` + type2;
+    let field1 = `\`${pokemon.type1}\`` + type2;
     let egg2 = (pokemon.egg2 != '') ? `, \`${pokemon.egg2}\`` : '';
-    let field5 = `\`${pokemon.egg1}\`` + egg2;
-    let field6 = `\`${pokemon.pokemonChar1}\`, \`${pokemon.pokemonChar2}\``;
+    let field2 = `\`${pokemon.egg1}\`` + egg2;
+    let field3 = `\`${pokemon.pokemonChar1}\`, \`${pokemon.pokemonChar2}\``;
     let color = config.types[pokemon.type1].color;
     let filename = pokemon.pokemonId.toString().padStart(3, '0') + '.png'
     let full_path = assets_dir + filename;
@@ -172,13 +172,14 @@ module.exports = {
 
     // Generate stats block.
     let stats_block = "\n```";
-    let stats = getStats(pokemon.epoch, pokemon.days_old, pokemon);
+    let stats = getStats(pokemon.epoch, pokemon.days_old + 1, pokemon);
     for (var key of Object.keys(stats)) {
       stats_block += key.slice(0, 3).padStart(3, ' ') + ' ' + stats[key].val.toString().padStart(3, ' ');
       stats_block += ` ${stats[key].symb} |${'|'.repeat(Math.ceil(stats[key].val / 5))}\n`
     }
     stats_block = stats_block.slice(0,-1).toUpperCase() + '```'
 
+    // Generate embed
     const embed = new MessageEmbed()
       .setTitle(title)
       .setColor(color)
@@ -186,16 +187,11 @@ module.exports = {
       .setImage('attachment://poke_pic.png')
       .setAuthor(author)
       .addFields(
-        { name: 'Types', value: field4, inline: true },
-        { name: 'Egg Groups', value: field5, inline: true },
-        { name: 'Traits', value: field6, inline: true },
+        { name: 'Types', value: field1, inline: true },
+        { name: 'Egg Groups', value: field2, inline: true },
+        { name: 'Traits', value: field3, inline: true },
     	);
-    interaction.editReply(
-      {
-        embeds: [embed],
-        files: [poke_pic]
-      }
-    )
+    interaction.editReply({ embeds: [embed], files: [poke_pic] })
 
 	}
 };
