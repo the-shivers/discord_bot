@@ -61,23 +61,6 @@ module.exports = {
       interaction.reply("You don't have any Pokemon! Try catching one with `/pcatch`!");
     } else {
 
-      // Evolution logic.
-      // let ev_message = '';
-      // for (let i = 0; i < team.length; i++) {
-      //   if (team[i].evLevel != null && team[i].days_old >= team[i].evLevel) {
-      //     ev_message = 'Looks like one (or more!) of the pokemon evolved!\n\n';
-      //     let ev_query = "SELECT name, pokemonId FROM data.pokedex WHERE pokemonId = ?;"
-      //     let ev_vals = [f.shuffle(team[i].evIds.split('|'))[0]];
-      //     let evo = await async_query(ev_query, ev_vals);
-      //     let update_query = "UPDATE data.pokemon_encounters SET pokemonId = ?, name = ? WHERE userId = ? AND pokemonId = ? AND owned = ? AND nick = ?;";
-      //     let update_vals = [evo[0].pokemonId, evo[0].name, user.id, team[i].pokemonId, 1, team[i].nick];
-      //     await async_query(update_query, update_vals);
-      //   }
-      // }
-      // if(ev_message.length > 0) {
-      //   team = await async_query(query, values);
-      // };
-
       let full_path_arr = [];
       let filename_arr = [];
       let shinyShift_arr = [];

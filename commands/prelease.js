@@ -36,11 +36,8 @@ module.exports = {
       let release_query = 'UPDATE data.pokemon_encounters SET owned = 0 WHERE id = ?;';
       let release_values = [status[slot - 1].id];
       await async_query(release_query, release_values);
-			console.log(status[slot - 1])
 			let money = rvals[status[slot - 1].frequency]
-			console.log(money)
 			money = (status[slot - 1].isShiny == 1) ? money * 2 : money;
-			console.log(money)
 			let money_query = 'UPDATE data.pokemon_trainers SET cash = cash + ? WHERE userId = ?;'
 			await async_query(money_query, [money, interaction.user.id]);
       interaction.reply(`Goodbye ${status[slot - 1].name}! Other slots have updated. You got ₽${money} for releasing them.`);

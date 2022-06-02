@@ -55,46 +55,6 @@ module.exports = {
     }
     let pokemon = team[slot-1];
 
-    // Evolution logic. See if they evolved (one or more times)
-    // let ev_message = ''
-    //   if (pokemon.evLevel != null && pokemon.days_old + 1 >= pokemon.evLevel) {
-    //     ev_message = 'Your Pokemon evolved!';
-    //     let ev_query = "SELECT name, pokemonId, evIds, evLevel FROM data.pokedex WHERE pokemonId = ?;"
-    //     let ev_vals = [f.shuffle(pokemon.evIds.split('|'))[0]];
-    //     let evo = await async_query(ev_query, ev_vals);
-    //     let update_vals;
-    //     if (evo[0].evLevel != null && pokemon.days_old + 1 >= evo[0].evLevel) {
-    //       let ev2_query = "SELECT name, pokemonId, evIds, evLevel FROM data.pokedex WHERE pokemonId = ?;"
-    //       let ev2_vals = [f.shuffle(evo[0].evIds.split('|'))[0]];
-    //       let evo2 = await async_query(ev2_query, ev2_vals);
-    //       update_vals = [evo2[0].pokemonId, evo2[0].name, interaction.user.id, pokemon.pokemonId, 1, pokemon.nick];
-    //     } else {
-    //       update_vals = [evo[0].pokemonId, evo[0].name, interaction.user.id, pokemon.pokemonId, 1, pokemon.nick];
-    //     }
-    //     let update_query = "UPDATE data.pokemon_encounters SET pokemonId = ?, name = ? WHERE userId = ? AND pokemonId = ? AND owned = ? AND nick = ?;";
-    //     await async_query(update_query, update_vals);
-    //   }
-    // if(ev_message.length > 0) {
-    //   team = await async_query(query1, values1);
-    //   pokemon = team[slot-1];
-    // };
-
-    // Fetch evolution names from IDs
-    // let ev_str = '';
-    // if (pokemon.evIds != '') {
-    //   ev_str += ` Your ${pokemon.name} evolves at level ${pokemon.evLevel} into `;
-    //   let id_array = pokemon.evIds.split('|');
-    //   let evo_names_query = 'SELECT name FROM data.pokedex WHERE pokemonId IN (?';
-    //   let query_addition = ', ?'.repeat(id_array.length - 1);
-    //   evo_names_query = evo_names_query + query_addition + ');'
-    //   let evo_names = await async_query(evo_names_query, id_array);
-    //   let evo_names_arr = []
-    //   for (let i = 0; i < evo_names.length; i++) {
-    //     evo_names_arr.push(evo_names[i].name);
-    //   }
-    //   ev_str += evo_names_arr.join(', ').replace(/, ([^,]*)$/, ' or $1')+"."
-    // }
-
     // Generate components
     let author = '#' + pokemon.pokemonId.toString().padStart(3, '0');
     author += ' - ' + pokemon.name + ` (${pokemon.species})`
