@@ -1,5 +1,7 @@
 "use strict";
 
+const { MessageAttachment } = require('discord.js');
+const Canvas = require('canvas');
 const IV = 16;
 const EV = 100;
 
@@ -53,4 +55,95 @@ function getStats(epoch, lvl, pkmn_obj) {
   return stats;
 }
 
-module.exports = { getOtherStat, getHPStat, mulb32, getSymb, getMult, getStats };
+function clamp(v) {
+  if (v < 0) {return 0}
+  if (v > 255) {return 255}
+  return Math.round(v + 0.5);
+}
+
+function d_to_r(degrees) {
+  return degrees * (Math.PI/180);
+}
+
+function getHueMatrix(degrees) {
+  let matrix = [[1,0,0],[0,1,0],[0,0,1]];
+  let cosA = Math.cos(d_to_r(degrees))
+  let sinA = Math.sin(d_to_r(degrees))
+  matrix[0][0] = cosA + (1.0 - cosA) / 3.0
+  matrix[0][1] = 1.0/3.0 * (1.0 - cosA) - Math.sqrt(1./3.) * sinA
+  matrix[0][2] = 1.0/3.0 * (1.0 - cosA) + Math.sqrt(1./3.) * sinA
+  matrix[1][0] = 1.0/3.0 * (1.0 - cosA) + Math.sqrt(1./3.) * sinA
+  matrix[1][1] = cosA + 1./3.*(1.0 - cosA)
+  matrix[1][2] = 1.0/3.0 * (1.0 - cosA) - Math.sqrt(1./3.) * sinA
+  matrix[2][0] = 1.0/3.0 * (1.0 - cosA) - Math.sqrt(1./3.) * sinA
+  matrix[2][1] = 1.0/3.0 * (1.0 - cosA) + Math.sqrt(1./3.) * sinA
+  matrix[2][2] = cosA + 1.0/3.0 * (1.0 - cosA)
+  return matrix;
+}
+
+function applyHueMatrix(matrix, r, g, b) {
+  let rx = r * matrix[0][0] + g * matrix[0][1] + b * matrix[0][2]
+  let gx = r * matrix[1][0] + g * matrix[1][1] + b * matrix[1][2]
+  let bx = r * matrix[2][0] + g * matrix[2][1] + b * matrix[2][2]
+  return [clamp(rx), clamp(gx), clamp(bx)]
+}
+
+async function getShinyAttachment(full_path, filename, shinyShift) {
+  const width = 100;
+  const height = 100;
+  const canvas = Canvas.createCanvas(width, height);
+	const ctx = canvas.getContext('2d');
+  const background = await Canvas.loadImage(full_path);
+  ctx.drawImage(background, 0, 0, width, height);
+  let img_data = ctx.getImageData(0, 0, width, height);
+  let new_img_data = ctx.getImageData(0, 0, width, height);
+  for (let i = 0; i < height * width; i++) {
+    let matrix = getHueMatrix(shinyShift);
+    let pos = i * 4;
+    let new_rgb = applyHueMatrix(matrix, img_data.data[pos], img_data.data[pos+1], img_data.data[pos+2])
+    new_img_data.data[pos] = new_rgb[0];
+    new_img_data.data[pos+1] = new_rgb[1];
+    new_img_data.data[pos+2] = new_rgb[2];
+  }
+  ctx.putImageData(new_img_data, 0, 0)
+  let attach = new MessageAttachment(canvas.toBuffer(), filename);
+  return attach;
+}
+
+function getCaptureDifficulty(frequency) {
+  let catch_difficulty = Math.ceil(Math.random()*6) + Math.ceil(Math.random()*6);
+  if (frequency >= 8) {
+    catch_difficulty -= 1;
+  }
+  if (frequency <= 5) {
+    catch_difficulty += 1;
+  }
+  if (frequency <= 3) {
+    catch_difficulty += 1;
+  }
+  return Math.min(catch_difficulty, 11);
+}
+
+async function getPokePic(full_path, filename, shinyShift) {
+  const canvas = Canvas.createCanvas(512, 512);
+  const ctx = canvas.getContext('2d');
+  let img = await Canvas.loadImage(full_path);
+  ctx.drawImage(img, 0, 0, 512, 512);
+  if (shinyShift != 0) {
+    let img_data = ctx.getImageData(0, 0, 512, 512);
+    let new_img_data = ctx.getImageData(0, 0, 512, 512);
+    for (let j = 0; j < 512 * 512; j++) {
+      let matrix = getHueMatrix(shinyShift)
+      let pos = j * 4;
+      let new_rgb = applyHueMatrix(matrix, img_data.data[pos], img_data.data[pos+1], img_data.data[pos+2]);
+      new_img_data.data[pos] = new_rgb[0];
+      new_img_data.data[pos+1] = new_rgb[1];
+      new_img_data.data[pos+2] = new_rgb[2];
+    }
+    ctx.putImageData(new_img_data, 0, 0)
+  }
+  let attach = new MessageAttachment(canvas.toBuffer(), 'poke_pic.png');
+  return attach;
+}
+
+module.exports = { getOtherStat, getHPStat, mulb32, getSymb, getMult, getStats, clamp, d_to_r, getHueMatrix, applyHueMatrix, getShinyAttachment, getCaptureDifficulty, getPokePic };

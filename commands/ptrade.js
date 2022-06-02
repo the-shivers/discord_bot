@@ -23,6 +23,9 @@ module.exports = {
       .addChoices({name:'1', value:1}).addChoices({name:'2', value:2})
       .addChoices({name:'3', value:3}).addChoices({name:'4', value:4})
       .addChoices({name:'5', value:5}).addChoices({name:'6', value:6})
+			.addChoices({name:'7', value:7}).addChoices({name:'8', value:8})
+			.addChoices({name:'9', value:9}).addChoices({name:'10', value:10})
+			.addChoices({name:'11', value:11}).addChoices({name:'12', value:12})
       .setRequired(true)
     ).addUserOption(option => option
       .setName('target')
@@ -34,6 +37,9 @@ module.exports = {
       .addChoices({name:'1', value:1}).addChoices({name:'2', value:2})
       .addChoices({name:'3', value:3}).addChoices({name:'4', value:4})
       .addChoices({name:'5', value:5}).addChoices({name:'6', value:6})
+			.addChoices({name:'7', value:7}).addChoices({name:'8', value:8})
+			.addChoices({name:'9', value:9}).addChoices({name:'10', value:10})
+			.addChoices({name:'11', value:11}).addChoices({name:'12', value:12})
       .setRequired(true)
     ),
 	async execute(interaction) {
@@ -42,7 +48,7 @@ module.exports = {
     let target = interaction.options.getUser('target');
     let user_slot = interaction.options.getInteger('your_slot');
     let target_slot = interaction.options.getInteger('their_slot');
-    let query = "SELECT * FROM data.pokemon_status WHERE userId = ? AND owned = 1 ORDER BY epoch ASC;";
+    let query = "SELECT * FROM data.pokemon_encounters WHERE userId = ? AND owned = 1 ORDER BY slot ASC;";
     let user_team = await async_query(query, [user.id]);
     let target_team = await async_query(query, [target.id]);
 
@@ -108,9 +114,9 @@ module.exports = {
         } else if (i.customId.split(',')[0] == 'accept') {
           content = 'The trade was accepted! Team slots have updated, check with `/pteam`!';
           // Update logic will go here.
-          let update_q = "UPDATE data.pokemon_status SET userId = ? WHERE userId = ? AND epoch = ? AND name = ?;";
-          let vals1 = [user.id, target.id, target_team[target_slot-1].epoch, target_team[target_slot-1].name];
-          let vals2 = [target.id, user.id, user_team[user_slot-1].epoch, user_team[user_slot-1].name];
+          let update_q = "UPDATE data.pokemon_encounters SET userId = ?, slot = ? WHERE id = ?;";
+          let vals1 = [user.id, user_team[user_slot-1].slot, target_team[target_slot-1].id];
+          let vals2 = [target.id, target_team[target_slot-1].slot, user_team[user_slot-1].id];
           async_query(update_q, vals1);
           async_query(update_q, vals2);
         }

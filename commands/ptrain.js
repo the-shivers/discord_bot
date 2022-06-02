@@ -3,16 +3,33 @@
 // TO DO: fix genderless thing
 
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { getCaptureDifficulty, getShinyAttachment } = require('../assets/pokemon/poke_funcs.js');
 const {
   MessageAttachment, MessageEmbed, MessageActionRow, MessageButton
 } = require('discord.js');
 const Canvas = require('canvas');
 const { async_query } = require('../db/scripts/db_funcs.js')
+const { getCaptureDifficulty, getShinyAttachment } = require('../assets/pokemon/poke_funcs.js');
 const assets_dir = './assets/pokemon/';
 const config = require('../assets/pokemon/poke_info.json')
 const f = require('../funcs.js');
-
+const streak = [
+  {"rarities": ["1", "2", "3", "4", "5", "6", "7", "8", "9"], "cash": 200},
+  {"rarities": ["1", "2", "3", "4", "5", "6", "7", "8"], "cash": 225},
+  {"rarities": ["1", "2", "3", "4", "5", "6", "7", "8"], "cash": 250},
+  {"rarities": ["1", "2", "3", "4", "5", "6", "7"], "cash": 300},
+  {"rarities": ["1", "2", "3", "4", "5", "6", "7"], "cash": 350},
+  {"rarities": ["1", "2", "3", "4", "5", "6"], "cash": 400}
+]
+const continents = {
+  'I':'in Kanto',
+  'II':'in Johto',
+  'III':'in Hoenn',
+  'IV':'in Sinnoh',
+  'V':'in Unova',
+  'VI':'in Kalos',
+  'VII':'in Alola',
+  'any':'all over the place',
+}
 var description = "Throw a ball to try capturing the Pokemon! Throwing a ";
 description += "Pokeball rolls two 6-sided dice. If their sum matches or ";
 description += "exceeds the Pokemon's capture difficulty, you'll catch it! ";
@@ -20,43 +37,45 @@ description += "Throwing a Great Ball takes the highest two of three dice, and "
 description += "throwing an Ultra Ball takes the highest two of four.\n\n";
 description += "But remember, you have limited balls, and the pokmeon runs away if you take too long!"
 
-async function generate_embed(interaction, generation, curr_epoch_s) {
-  // Deal with times
-  let dt = new Date(curr_epoch_s * 1000);
-  let hours = dt.getHours()
-  let last_hour, next_hour;
-  if (hours % 2 === 0) {
-    last_hour = hours;
-    next_hour = hours + 2;
-  } else {
-    last_hour = hours - 1;
-    next_hour = hours + 1;
-  }
-  let last_chunk = new Date(curr_epoch_s * 1000);
-  let next_chunk = new Date(curr_epoch_s * 1000);
-  last_chunk.setHours(last_hour);
-  last_chunk.setMinutes(0);
-  last_chunk.setSeconds(0);
-  next_chunk.setHours(next_hour);
-  next_chunk.setMinutes(0);
-  next_chunk.setSeconds(0);
-  let n_epoch = next_chunk.getTime();
-  let l_epoch = last_chunk.getTime();
-  let pokemon, captureDifficulty, traits, isShiny, shinyShift, gender, gender_symbol;
-  let user_id = interaction.user.id;
+function getMaxOfArray(numArray) {
+  return Math.max.apply(null, numArray);
+}
 
-  // Find out if they can capture
+async function generate_embed(interaction, generation, curr_epoch_s) {
+  // Get cutoffs.
+  let chunk = new Date(curr_epoch_s * 1000);
+  chunk.setHours(0);
+  chunk.setMinutes(0);
+  chunk.setSeconds(0);
+  chunk.setDate(chunk.getDate() + 1)
+  let n_epoch = chunk.getTime();
+  chunk.setDate(chunk.getDate() - 1)
+  let l_epoch = chunk.getTime();
+  chunk.setDate(chunk.getDate() - 1);
+  let miss = chunk.getTime();
+
+  // TO DO: ADD LOGIC FOR STREAK RESET
+
+  let pokemon, captureDifficulty, traits, isShiny, shinyShift, gender, gender_symbol, rem_freqs;
+  let user_id = interaction.user.id;
+  let new_streak = 0;
+
+  // Find out if they can train
   let trainer_query = 'SELECT * FROM data.pokemon_trainers WHERE userId = ?;';
   let trainer_result = await async_query(trainer_query, [user_id]);
-  let status_query = 'SELECT MAX(epoch) AS m_epoch FROM data.pokemon_encounters WHERE userId = ? AND isTraining = 0;';
-  let status_result = await async_query(status_query, [user_id]);
-  let can_catch = (status_result.length === 0 || status_result[0].m_epoch * 1000 < l_epoch);
-  // can_catch = (interaction.user.id == 790037139546570802) ? true : can_catch;
+  let can_train = (trainer_result.length === 0 || trainer_result[0].lastTrainEpoch * 1000 < l_epoch);
+  if (trainer_result.length == 0 || trainer_result[0].lastTrainEpoch * 1000 < miss) {
+    new_streak = 0
+  } else {
+    new_streak = trainer_result[0].trainStreak;
+  }
+  // can_train = (interaction.user.id == 790037139546570802) ? true : can_train;
 
   // Get owned pokemon
   let owned_query = "SELECT nick FROM data.pokemon_encounters WHERE userId = ? AND owned = 1;";
   let owned_pokemon_result = await async_query(owned_query, [user_id]) // determines if we have too many pokemon
   let owned_pokemon = owned_pokemon_result.length;
+  let can_catch = (trainer_result.length === 0 || owned_pokemon < trainer_result[0].slots);
 
   // Get ball quantities
   let pokeballs = 15;
@@ -71,17 +90,15 @@ async function generate_embed(interaction, generation, curr_epoch_s) {
   }
 
   // Get pokemon if catching is possible, then see what pokemon appears
-  let slots = 6;
-  slots = (trainer_result.length > 0) ? trainer_result[0].slots : slots;
-  if (owned_pokemon >= slots) {
-    return [{content: "You already have the maximum number of pokemon! Release one to catch again, or buy a new slot."},{}]
-  } else if (!can_catch) {
+  if (!can_train) {
     let remaining_seconds = Math.floor((n_epoch - curr_epoch_s * 1000) / 1000);
     let minutes = Math.floor(remaining_seconds / 60);
     let seconds = Math.floor(remaining_seconds - (minutes * 60));
-    return [{content: `You have to wait ${minutes} minutes and ${seconds} seconds to catch another Pokemon!`},{}]
+    return [{content: `You have to wait ${minutes} minutes and ${seconds} seconds to train another Pokemon!`},{}]
   } else {
-    let frequency = f.shuffle(config.frequencies)[0];
+    let allowed_freqs = streak[Math.min(new_streak, 5)].rarities;
+    rem_freqs = config.frequencies.filter(item => allowed_freqs.includes(item));
+    let frequency = f.shuffle(rem_freqs)[0];
     let pkmn_query = 'SELECT * FROM data.pokedex WHERE frequency = ? '
     let values = [parseInt(frequency)];
     if (generation != 'any') {
@@ -113,13 +130,13 @@ async function generate_embed(interaction, generation, curr_epoch_s) {
 
     update_query = `
     INSERT INTO data.pokemon_encounters (userId, pokemonId, name, nick,
-      level, gender, pokemonChar1, pokemonChar2, isShiny, shinyShift,
-      attempted, caught, owned, captureDifficulty, slot, epoch)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+      level, gender, pokemonChar1, pokemonChar2, isShiny, shinyShift, attempted,
+      caught, owned, captureDifficulty, slot, epoch, isTraining)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     `;
     update_vals = [user_id, pokemon.pokemonId, pokemon.name, pokemon.name + Math.ceil(Math.random() * 1000),
-      1, gender, traits[0], traits[1], isShiny, shinyShift,
-      '', 0, 0, captureDifficulty, Math.ceil(Math.random() * 1000000), curr_epoch_s];
+      1, gender, traits[0], traits[1], isShiny, shinyShift, '',
+      0, 0, captureDifficulty, Math.ceil(Math.random() * 1000000), curr_epoch_s, 1];
     await async_query(update_query, update_vals);
   }
 
@@ -133,6 +150,16 @@ async function generate_embed(interaction, generation, curr_epoch_s) {
     image = new MessageAttachment(img_src, filename);
   }
 
+  let header = `
+  You decide to train your pokemon ${continents[generation]} and they all gain one level!\
+  Because of how hard you've been training (Streak: ${new_streak} days)\
+  you've earned ₽${streak[Math.min(new_streak, 5)].cash}\
+  today. You've also gotten better at finding rare Pokemon, and are guaranteed\
+  to find Pokemon during this training with a minimum rarity of:\
+  ${config.rarities[getMaxOfArray(rem_freqs)]}!\n\n`;
+  let footer = `
+  `;
+
   // Embed assembly
   const embed = new MessageEmbed()
     .setTitle(`Wild ${pokemon.name}${gender_symbol} appeared!`)
@@ -140,29 +167,29 @@ async function generate_embed(interaction, generation, curr_epoch_s) {
     .addField('Rarity', config.rarities[pokemon.frequency.toString()], true)
     .addField("Capture Difficulty", captureDifficulty.toString() + ' / 12', true)
     .addField("Characteristics", "`" + traits[0] + "`, `" + traits[1] + "`", true)
-    .setDescription(description)
+    .setDescription(header + description)
     .setThumbnail('attachment://' + filename);
   const buttons = new MessageActionRow();
   const poke = new MessageButton()
     .setCustomId(`p_catch_poke,${interaction.id}`)
     .setLabel(`Pokeball (${pokeballs})`)
     .setStyle('SUCCESS');
-  if (pokeballs === 0) {poke.setDisabled(true)}
+  if (pokeballs === 0 || !can_catch) {poke.setDisabled(true)}
   const great = new MessageButton()
     .setCustomId(`p_catch_great,${interaction.id}`)
     .setLabel(`Great Ball (${greatballs})`)
     .setStyle('SUCCESS');
-  if (greatballs === 0) {great.setDisabled(true)}
+  if (greatballs === 0 || !can_catch) {great.setDisabled(true)}
   const ultra = new MessageButton()
     .setCustomId(`p_catch_ultra,${interaction.id}`)
     .setLabel(`Ultra Ball (${ultraballs})`)
     .setStyle('SUCCESS');
-  if (ultraballs === 0) {ultra.setDisabled(true)}
+  if (ultraballs === 0 || !can_catch) {ultra.setDisabled(true)}
   const omega = new MessageButton()
     .setCustomId(`p_catch_omega,${interaction.id}`)
     .setLabel(`Omega Ball (${omegaballs})`)
     .setStyle('SUCCESS');
-  if (omegaballs === 0) {omega.setDisabled(true)}
+  if (omegaballs === 0 || !can_catch) {omega.setDisabled(true)}
   const decline = new MessageButton()
     .setCustomId(`p_catch_decline,${interaction.id}`)
     .setLabel("I'm afraid...")
@@ -186,7 +213,8 @@ async function generate_embed(interaction, generation, curr_epoch_s) {
     isShiny: isShiny,
     shinyShift: shinyShift,
     owned_pokemon: owned_pokemon,
-    // date: date
+    cash: streak[Math.min(new_streak, 5)].cash,
+    trainStreak: new_streak
   }])
 
 }
@@ -195,19 +223,22 @@ async function generate_embed(interaction, generation, curr_epoch_s) {
 module.exports = {
 	type: "private",
   cat: "games",
-  desc: "Catch a pokemon!",
+  desc: "Train your pokemon in the wild!",
 	data: new SlashCommandBuilder()
-		.setName('pcatch')
-		.setDescription('Catch a pokemon!')
+		.setName('ptrain')
+		.setDescription('Train your pokemon in the wild!')
     .addStringOption(option => option
       .setName('generation')
-      .setDescription('Select gen to catch pokemon from!')
+      .setDescription('Select gen to train amongst!')
       .addChoices({name:'Gen I', value:'I'}).addChoices({name:'Gen II', value:'II'})
       .addChoices({name:'Gen III', value:'III'}).addChoices({name:'Gen IV', value:'IV'})
       .addChoices({name:'Gen V', value:'V'}).addChoices({name:'Gen VI', value:'VI'})
       .addChoices({name:'Gen VII', value:'VII'}).addChoices({name:'Any Gen', value:'any'})
     ),
 	async execute(interaction) {
+    // First, level up the pokemon.
+    let lvl_q = "UPDATE data.pokemon_encounters SET level = LEAST(100, level + 1) WHERE userId = ? AND owned = 1;";
+    await async_query(lvl_q, [interaction.user.id]);
     let curr_epoch_s = Math.floor(new Date().getTime() / 1000);
     let generation = interaction.options.getString('generation') ?? 'any';
     let response = await generate_embed(interaction, generation, curr_epoch_s);
@@ -217,7 +248,7 @@ module.exports = {
     if (!("content" in reply_content)) {
       interaction.reply(reply_content);
       let filter = button => button.customId.includes(interaction.id);
-      let collector = interaction.channel.createMessageComponentCollector({ filter, componentType: 'BUTTON', time: 300 * 1000 });
+      let collector = interaction.channel.createMessageComponentCollector({ filter, componentType: 'BUTTON', time: 120 * 1000 });
       let responded = false;
       let new_row = new MessageActionRow();
       let row = reply_content.components[0].components;
@@ -227,14 +258,17 @@ module.exports = {
       }
       let trainer_update = `
         INSERT INTO data.pokemon_trainers
-        (userId, pokeballs, greatballs, ultraballs, omegaballs)
-        VALUES(?, ?, ?, ?, ?)
+        (userId, pokeballs, greatballs, ultraballs, omegaballs, trainStreak, cash, lastTrainEpoch)
+        VALUES(?, ?, ?, ?, ?, ?, ?, ?)
         ON DUPLICATE KEY UPDATE
           pokeballs = ?,
           greatballs = ?,
           ultraballs = ?,
-          omegaballs = ?
-      `;
+          omegaballs = ?,
+          trainStreak = ?,
+          cash = cash + ?,
+          lastTrainEpoch = ?
+      ;`;
 
       collector.on('collect', i => {
         if (i.user.id === interaction.user.id) {
@@ -285,7 +319,8 @@ module.exports = {
           interaction.editReply({ components: [new_row] })
           responded = true;
           let trainer_update_vals = [interaction.user.id, catch_data.pokeballs,
-            catch_data.greatballs, catch_data.ultraballs, catch_data.omegaballs];
+            catch_data.greatballs, catch_data.ultraballs, catch_data.omegaballs,
+            catch_data.trainStreak + 1, catch_data.cash, curr_epoch_s];
           async_query(trainer_update, trainer_update_vals.concat(trainer_update_vals.slice(1)));
         } else {
           // Wrong person responded
@@ -298,7 +333,8 @@ module.exports = {
           interaction.editReply({ components: [new_row] })
           interaction.channel.send("The pokemon got away!")
           let trainer_update_vals = [interaction.user.id, catch_data.pokeballs,
-            catch_data.greatballs, catch_data.ultraballs, catch_data.omegaballs];
+            catch_data.greatballs, catch_data.ultraballs, catch_data.omegaballs,
+            catch_data.trainStreak + 1, catch_data.cash, curr_epoch_s];
           async_query(trainer_update, trainer_update_vals.concat(trainer_update_vals.slice(1)));
         }
       });

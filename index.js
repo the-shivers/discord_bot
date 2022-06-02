@@ -6,6 +6,7 @@ const fs = require('fs');
 const dp = require('./data_processing.js');
 const auth = require("./config.json");
 const { async_query } = require('./db/scripts/db_funcs.js')
+const { pballs, plevels } = require('./assets/pokemon/interval_funcs.js')
 const client = new Client({intents:
 	[
 		Intents.FLAGS.GUILDS,
@@ -52,14 +53,13 @@ for (const file of eventFiles) {
 	}
 }
 
-
+// Define interval functions
 function insert_and_clear() {
 	dp.upload_data(interactions_data, interaction_opt_data, message_data);
 	interactions_data = [];
 	interaction_opt_data = [];
 	message_data = [];
 }
-
 
 async function remind() {
 	let query = 'SELECT * FROM data.reminders WHERE responded = 0 AND epoch <= ?;';
@@ -75,12 +75,14 @@ async function remind() {
 	}
 }
 
-// Login and Ready
+// Login and Ready, set intervals
 client.login(auth.token);
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
 	setInterval(insert_and_clear, 60000);
 	setInterval(remind, 20000);
+	setInterval(plevels, 60 * 60 * 1000);
+	setInterval(pballs, 6 * 60 * 60 * 1000);
 });
 
 // Receive commands

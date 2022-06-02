@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS data.pokemon_status (
   shinyShift SMALLINT NOT NULL,
   gender VARCHAR(32) NOT NULL,
   owned BOOLEAN NOT NULL,
+  caught BOOLEAN NOT NULL,
   slot TINYINT NOT NULL,
   nick VARCHAR(32) NOT NULL,
   pokeballs SMALLINT NOT NULL,
