@@ -69,7 +69,7 @@ async function generate_embed(interaction, generation, curr_epoch_s) {
   } else {
     new_streak = trainer_result[0].trainStreak;
   }
-  // can_train = (interaction.user.id == 790037139546570802) ? true : can_train;
+  //can_train = (interaction.user.id == 790037139546570802) ? true : can_train;
 
   // Get owned pokemon
   let owned_query = "SELECT nick FROM data.pokemon_encounters WHERE userId = ? AND owned = 1;";
@@ -113,7 +113,7 @@ async function generate_embed(interaction, generation, curr_epoch_s) {
     let update_query, update_vals;
     captureDifficulty = await getCaptureDifficulty(frequency)
     traits = f.shuffle(config.characteristics).slice(0, 2);
-    isShiny = Math.floor(Math.random() * 20) == 0;
+    isShiny = Math.floor(Math.random() * Math.max(20 - new_streak, 5)) == 0;
     if (isShiny) {
       shinyShift = Math.floor((Math.random() * 66 + 16) * 3.6);
     } else {
@@ -136,7 +136,7 @@ async function generate_embed(interaction, generation, curr_epoch_s) {
     `;
     update_vals = [user_id, pokemon.pokemonId, pokemon.name, pokemon.name + Math.ceil(Math.random() * 1000),
       1, gender, traits[0], traits[1], isShiny, shinyShift, '',
-      0, 0, captureDifficulty, Math.ceil(Math.random() * 1000000), curr_epoch_s, 1];
+      0, 0, captureDifficulty, curr_epoch_s, curr_epoch_s, 1];
     await async_query(update_query, update_vals);
   }
 

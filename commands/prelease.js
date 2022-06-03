@@ -1,9 +1,14 @@
 "use strict";
 
+// Constants
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageAttachment, MessageEmbed } = require('discord.js');
+const { MessageAttachment, MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
 const { async_query } = require('../db/scripts/db_funcs.js')
+const assets_dir = './assets/pokemon/images/';
+const config = require('../assets/pokemon/poke_info.json')
+const { getStats, getPokePic } = require('../assets/pokemon/poke_funcs.js');
 const rvals = require('../assets/pokemon/poke_info.json').release_values;
+
 
 
 module.exports = {
@@ -26,21 +31,93 @@ module.exports = {
       .setRequired(true)
     ),
 	async execute(interaction) {
+		await interaction.deferReply();
     let slot = interaction.options.getInteger('slot')
-    let query = 'SELECT p.*, pd.frequency FROM data.pokemon_encounters AS p LEFT JOIN data.pokedex AS pd ON p.pokemonId = pd.pokemonId WHERE userId = ? AND owned = 1 ORDER BY slot ASC;';
+    let query = 'SELECT p.*, pd.frequency, pd.type1 FROM data.pokemon_encounters AS p LEFT JOIN data.pokedex AS pd ON p.pokemonId = pd.pokemonId WHERE userId = ? AND owned = 1 ORDER BY slot ASC;';
     let values = [interaction.user.id];
     let status = await async_query(query, values);
     if (slot > status.length) {
-      interaction.reply("You don't have a pokemon in that slot!")
-    } else {
-      let release_query = 'UPDATE data.pokemon_encounters SET owned = 0 WHERE id = ?;';
-      let release_values = [status[slot - 1].id];
-      await async_query(release_query, release_values);
-			let money = rvals[status[slot - 1].frequency]
-			money = (status[slot - 1].isShiny == 1) ? money * 2 : money;
-			let money_query = 'UPDATE data.pokemon_trainers SET cash = cash + ? WHERE userId = ?;'
-			await async_query(money_query, [money, interaction.user.id]);
-      interaction.reply(`Goodbye ${status[slot - 1].name}! Other slots have updated. You got ₽${money} for releasing them.`);
+      interaction.editReply("You don't have a pokemon in that slot!")
+			return;
     }
+		let pokemon = status[slot - 1];
+
+		// console.log(config.types[pokemon.type1].color)
+		console.log(pokemon);
+		console.log(config.types);
+
+		let money = rvals[pokemon.frequency]
+		money = (pokemon.isShiny == 1) ? money * 2 : money;
+		let gender = ''
+    if (pokemon.gender == 'male') {
+      gender = '\♂'
+    } else if (pokemon.gender == 'female') {
+      gender = '\♀'
+    }
+		let title = `Are you sure you want to release ${pokemon.nick}?`
+		let field1 = `\`${pokemon.name} ${gender}\``;
+		let field2 = `\`${pokemon.level}\``;
+		let field3 = `\`${pokemon.pokemonChar1}\`, \`${pokemon.pokemonChar2}\``;
+		let desc = `You will gain ₽${money} if you choose to release this Pokemon.`;
+		let filename = pokemon.pokemonId.toString().padStart(3, '0') + '.png';
+    let full_path = assets_dir + filename;
+		let poke_pic = await getPokePic(full_path, filename, pokemon.shinyShift);
+		const buttons = new MessageActionRow();
+		const release = new MessageButton()
+			.setCustomId(`release,${interaction.id}`)
+			.setLabel(`Release`)
+			.setStyle('SUCCESS');
+		const keep = new MessageButton()
+			.setCustomId(`keep,${interaction.id}`)
+			.setLabel(`No, I wanna keep the Pokemon!`)
+			.setStyle('DANGER');
+		buttons.addComponents(release, keep);
+		const embed = new MessageEmbed()
+      .setTitle(title)
+      .setColor(config.types[pokemon.type1].color)
+      .setDescription(desc)
+      .setImage('attachment://poke_pic.png')
+      .addFields(
+        { name: 'Pokemon', value: field1, inline: true },
+        { name: 'Level', value: field2, inline: true },
+        { name: 'Traits', value: field3, inline: true },
+    	);
+    interaction.editReply({ embeds: [embed], files: [poke_pic], components: [buttons] })
+
+		let responded = false;
+		let filter = button => button.customId.includes(interaction.id);
+		let collector = interaction.channel.createMessageComponentCollector({ filter, componentType: 'BUTTON', time: 300 * 1000 });
+		let new_row = new MessageActionRow();
+		for (let i = 0; i < buttons.components.length; i++) {
+			buttons.components[i].setDisabled(true);
+			new_row.addComponents(buttons.components[i]);
+		}
+
+		collector.on('collect', i => {
+			if (i.user.id === interaction.user.id) {
+				responded = true;
+				interaction.editReply({ components: [new_row] })
+				if (i.customId.split(',')[0] == 'keep') {
+					i.reply('You kept your pokemon!')
+				} else if (i.customId.split(',')[0] == 'release') {
+					i.reply(`Goodbye ${pokemon.name}! Other slots have updated. You got ₽${money} for releasing them.`);
+					let release_query = 'UPDATE data.pokemon_encounters SET owned = 0 WHERE id = ?;';
+		      let release_values = [pokemon.id];
+					let money_query = 'UPDATE data.pokemon_trainers SET cash = cash + ? WHERE userId = ?;'
+					async_query(release_query, release_values);
+					async_query(money_query, [money, interaction.user.id]);
+				}
+			} else {
+				i.reply({ content: "That's not your pokemon to release or keep!", ephemeral: false });
+			}
+		})
+
+		collector.on('end', collected => {
+			if (!responded) {
+				interaction.editReply({ components: [new_row] })
+				interaction.channel.send("Took too long to decide!");
+			}
+		})
+
 	}
-};
+}

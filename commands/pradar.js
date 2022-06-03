@@ -20,7 +20,7 @@ description += "Throwing a Great Ball takes the highest two of three dice, and "
 description += "throwing an Ultra Ball takes the highest two of four.\n\n";
 description += "But remember, you have limited balls, and the pokmeon runs away if you take too long!"
 
-async function generate_embed(interaction, generation, curr_epoch_s) {
+async function generate_embed(interaction, generation, frequency, curr_epoch_s) {
   // Deal with times
   let dt = new Date(curr_epoch_s * 1000);
   let hours = dt.getHours()
@@ -45,13 +45,9 @@ async function generate_embed(interaction, generation, curr_epoch_s) {
   let pokemon, captureDifficulty, traits, isShiny, shinyShift, gender, gender_symbol;
   let user_id = interaction.user.id;
 
-  // Find out if they can capture
+  // Trainer data
   let trainer_query = 'SELECT * FROM data.pokemon_trainers WHERE userId = ?;';
   let trainer_result = await async_query(trainer_query, [user_id]);
-  let status_query = 'SELECT MAX(epoch) AS m_epoch FROM data.pokemon_encounters WHERE userId = ? AND isTraining = 0 AND isRadar = 0;';
-  let status_result = await async_query(status_query, [user_id]);
-  let can_catch = (status_result.length === 0 || status_result[0].m_epoch * 1000 < l_epoch);
-  // can_catch = (interaction.user.id == 790037139546570802) ? true : can_catch;
 
   // Get owned pokemon
   let owned_query = "SELECT nick FROM data.pokemon_encounters WHERE userId = ? AND owned = 1;";
@@ -75,26 +71,17 @@ async function generate_embed(interaction, generation, curr_epoch_s) {
   slots = (trainer_result.length > 0) ? trainer_result[0].slots : slots;
   if (owned_pokemon >= slots) {
     return [{content: "You already have the maximum number of pokemon! Release one to catch again, or buy a new slot."},{}]
-  } else if (!can_catch) {
-    let remaining_seconds = Math.floor((n_epoch - curr_epoch_s * 1000) / 1000);
-    let minutes = Math.floor(remaining_seconds / 60);
-    let seconds = Math.floor(remaining_seconds - (minutes * 60));
-    return [{content: `You have to wait ${minutes} minutes and ${seconds} seconds to catch another Pokemon!`},{}]
+  } else if (trainer_result[0].rareChances == 0) {
+    return [{content: "You don't have the Poke Radar Item! Buy one at the shop with /pmart."},{}]
   } else {
-    let frequency = f.shuffle(config.frequencies)[0];
-    let pkmn_query = 'SELECT * FROM data.pokedex WHERE frequency = ? '
-    let values = [parseInt(frequency)];
-    if (generation != 'any') {
-      pkmn_query += 'AND gen = ? '
-      values.push(generation)
-    }
-    pkmn_query += 'ORDER BY RAND() LIMIT 1;'
-    let pokemon_result = await async_query(pkmn_query, values);
+    let pkmn_query = 'SELECT * FROM data.pokedex WHERE frequency = ? AND gen = ? ORDER BY RAND() LIMIT 1;';
+    let pokemon_result = await async_query(pkmn_query, [frequency, generation]);
     pokemon = pokemon_result[0];
 
     // Now we can update or insert after collecting capture difficulty/traits
     let update_query, update_vals;
     captureDifficulty = await getCaptureDifficulty(frequency)
+    captureDifficulty = Math.min(11, captureDifficulty + 1);
     traits = f.shuffle(config.characteristics).slice(0, 2);
     isShiny = Math.floor(Math.random() * 20) == 0;
     if (isShiny) {
@@ -114,12 +101,12 @@ async function generate_embed(interaction, generation, curr_epoch_s) {
     update_query = `
     INSERT INTO data.pokemon_encounters (userId, pokemonId, name, nick,
       level, gender, pokemonChar1, pokemonChar2, isShiny, shinyShift,
-      attempted, caught, owned, captureDifficulty, slot, epoch)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+      attempted, caught, owned, captureDifficulty, slot, epoch, isRadar)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     `;
     update_vals = [user_id, pokemon.pokemonId, pokemon.name, pokemon.name + Math.ceil(Math.random() * 1000),
       1, gender, traits[0], traits[1], isShiny, shinyShift,
-      '', 0, 0, captureDifficulty, curr_epoch_s, curr_epoch_s];
+      '', 0, 0, captureDifficulty, curr_epoch_s, curr_epoch_s, 1];
     await async_query(update_query, update_vals);
   }
 
@@ -186,7 +173,7 @@ async function generate_embed(interaction, generation, curr_epoch_s) {
     isShiny: isShiny,
     shinyShift: shinyShift,
     owned_pokemon: owned_pokemon,
-    // date: date
+    rareChances: trainer_result[0].rareChances
   }])
 
 }
@@ -195,22 +182,33 @@ async function generate_embed(interaction, generation, curr_epoch_s) {
 module.exports = {
 	type: "private",
   cat: "games",
-  desc: "Catch a pokemon!",
+  desc: "Use Poke Radar!",
 	data: new SlashCommandBuilder()
-		.setName('pcatch')
-		.setDescription('Catch a pokemon!')
-    .addStringOption(option => option
-      .setName('generation')
-      .setDescription('Select gen to catch pokemon from!')
-      .addChoices({name:'Gen I', value:'I'}).addChoices({name:'Gen II', value:'II'})
-      .addChoices({name:'Gen III', value:'III'}).addChoices({name:'Gen IV', value:'IV'})
-      .addChoices({name:'Gen V', value:'V'}).addChoices({name:'Gen VI', value:'VI'})
-      .addChoices({name:'Gen VII', value:'VII'}).addChoices({name:'Any Gen', value:'any'})
-    ),
+		.setName('pradar')
+		.setDescription('Use Poke Radar!')
+  .addStringOption(option => option
+    .setName('generation')
+    .setDescription('Select gen to catch pokemon from!')
+    .addChoices({name:'Gen I', value:'I'}).addChoices({name:'Gen II', value:'II'})
+    .addChoices({name:'Gen III', value:'III'}).addChoices({name:'Gen IV', value:'IV'})
+    .addChoices({name:'Gen V', value:'V'}).addChoices({name:'Gen VI', value:'VI'})
+    .addChoices({name:'Gen VII', value:'VII'}).addChoices({name:'Any Gen', value:'any'})
+    .setRequired(true)
+  ).addIntegerOption(option => option
+    .setName('rarity')
+    .setDescription('Select gen to catch pokemon from!')
+    .addChoices({name:'Most Common', value:9}).addChoices({name:'Very Common', value:8})
+    .addChoices({name:'Common', value:7}).addChoices({name:'Average', value:6})
+    .addChoices({name:'Uncommon', value:5}).addChoices({name:'Rare', value:4})
+    .addChoices({name:'Very Rare', value:3}).addChoices({name:'Ultra Rare', value:2})
+    .addChoices({name:'Legendary', value:1})
+    .setRequired(true)
+  ),
 	async execute(interaction) {
     let curr_epoch_s = Math.floor(new Date().getTime() / 1000);
-    let generation = interaction.options.getString('generation') ?? 'any';
-    let response = await generate_embed(interaction, generation, curr_epoch_s);
+    let generation = interaction.options.getString('generation');
+    let frequency = interaction.options.getInteger('rarity');
+    let response = await generate_embed(interaction, generation, frequency, curr_epoch_s);
     let reply_content = response[0];
     let catch_data = response[1];
 
@@ -227,13 +225,14 @@ module.exports = {
       }
       let trainer_update = `
         INSERT INTO data.pokemon_trainers
-        (userId, pokeballs, greatballs, ultraballs, omegaballs)
-        VALUES(?, ?, ?, ?, ?)
+        (userId, pokeballs, greatballs, ultraballs, omegaballs, rareChances)
+        VALUES(?, ?, ?, ?, ?, ?)
         ON DUPLICATE KEY UPDATE
           pokeballs = ?,
           greatballs = ?,
           ultraballs = ?,
-          omegaballs = ?
+          omegaballs = ?,
+          rareChances = ?
       `;
 
       collector.on('collect', i => {
@@ -285,7 +284,7 @@ module.exports = {
           interaction.editReply({ components: [new_row] })
           responded = true;
           let trainer_update_vals = [interaction.user.id, catch_data.pokeballs,
-            catch_data.greatballs, catch_data.ultraballs, catch_data.omegaballs];
+            catch_data.greatballs, catch_data.ultraballs, catch_data.omegaballs, catch_data.rareChances - 1];
           async_query(trainer_update, trainer_update_vals.concat(trainer_update_vals.slice(1)));
         } else {
           // Wrong person responded
@@ -298,7 +297,7 @@ module.exports = {
           interaction.editReply({ components: [new_row] })
           interaction.channel.send("The pokemon got away!")
           let trainer_update_vals = [interaction.user.id, catch_data.pokeballs,
-            catch_data.greatballs, catch_data.ultraballs, catch_data.omegaballs];
+            catch_data.greatballs, catch_data.ultraballs, catch_data.omegaballs, catch_data.rareChances - 1];
           async_query(trainer_update, trainer_update_vals.concat(trainer_update_vals.slice(1)));
         }
       });

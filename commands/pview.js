@@ -3,10 +3,8 @@
 // Constants
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageAttachment, MessageEmbed } = require('discord.js');
-const Canvas = require('canvas');
 const { async_query } = require('../db/scripts/db_funcs.js')
 const assets_dir = './assets/pokemon/images/';
-const f = require('../funcs.js');
 const config = require('../assets/pokemon/poke_info.json')
 const { getStats, getPokePic } = require('../assets/pokemon/poke_funcs.js');
 
@@ -54,6 +52,19 @@ module.exports = {
       return;
     }
     let pokemon = team[slot-1];
+    let ev_id_array = pokemon.evIds.split('|');
+    let ev_text = '';
+    if (ev_id_array.length > 0) {
+      ev_text = ' evolves into ';
+      let name_arr = []
+      let ev_query = `SELECT * FROM data.pokedex WHERE pokemonId IN (?${', ?'.repeat(ev_id_array.length - 1)});`;
+      let ev_result = await async_query(ev_query, ev_id_array);
+      for (let i = 0; i < ev_result.length; i++) {
+        name_arr.push(ev_result[i].name);
+      }
+      ev_text += name_arr.join(', ').replace(/, ([^,]*)$/, ' or $1')
+      ev_text += ` at level ${pokemon.evLevel}.`
+    }
 
     // Generate components
     let author = '#' + pokemon.pokemonId.toString().padStart(3, '0');
@@ -90,9 +101,10 @@ module.exports = {
     const embed = new MessageEmbed()
       .setTitle(title)
       .setColor(color)
-      .setDescription(description + stats_block)
+      .setDescription(description + ev_text + stats_block)
       .setImage('attachment://poke_pic.png')
-      .setAuthor(author)
+      .setAuthor({name: author})
+      .setFooter({ text: `${(pokemon.experience * 100).toFixed(1)}% to next level` })
       .addFields(
         { name: 'Types', value: field1, inline: true },
         { name: 'Egg Groups', value: field2, inline: true },

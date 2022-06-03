@@ -25,8 +25,10 @@ module.exports = {
     \`/pteam [Optional: target]\` - See your Pokemon team, and which Pokemon are in each slot. This gives you some basic stats about your Pokemon as well. Supply the optional target argument to see another user's team.
     \`/ptiers [generation] [Optional: order]\` - See all the Pokemon in a particular generation along with their rarity. You'll note that only the earliest evolutions in each line are available to be caught!
     \`/ptrade [your_slot] [target] [their_slot]\` - Trade Pokemon with someone. Make sure you get the correct slots with /pteam. This opens a prompt for them which they can accept or reject.
-    \`/pcatch [Optional: generation]\` - Similar to /pcatch, only it's daily. Does that make it worse? Not at all. Using this on consecutive days results in rarer Pokemon appearing, getting you more money, and leveling your Pokemon team.
+    \`/ptrain [Optional: generation]\` - Similar to /pcatch, only it's daily. Does that make it worse? Not at all. Using this on consecutive days results in rarer Pokemon appearing, getting you more money, and leveling your Pokemon team.
     \`/pview [slot]\` - View detailed stats of one of your Pokemon. Use /pteam to check the slots your Pokemon are in.
+		\`/pradar [generation] [rarity]\` - Use your Poke Radar item if you have one (see /pmart).
+		\`/pstats [Optional: target]\` - See your Pokemon stats.
 
     __**Frequently Asked Questions**__
     **1. How do Pokemon evolve?**

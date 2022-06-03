@@ -9,6 +9,8 @@ async function plevels() {
   let dex_query = 'SELECT * FROM data.pokedex ORDER BY pokemonId ASC;';
   let dex = await async_query(dex_query, []);
 	for (let i = 0; i < result.length; i++) {
+		// if (result[i].userId != 790037139546570802) {continue}
+		// console.log(result[i].name, result[i].level, result[i].experience)
     let new_level = result[i].level;
     let increment = 1/24;
 		let new_exp = result[i].experience + increment;
@@ -24,10 +26,33 @@ async function plevels() {
       new_id = ev_ids_arr[Math.floor(Math.random() * ev_ids_arr.length)]
       let ev_pokemon_row = dex[new_id - 1]
       new_name = ev_pokemon_row.name;
-    }
-    let update_query = "UPDATE data.pokemon_encounters SET pokemonId = ?, name = ?, level = ?, experience = ? WHERE id = ?;";
-    let update_values = [new_id, new_name, new_level, new_exp, result[i].id]
-		async_query(update_query, update_values);
+
+			let insert_query = `
+			INSERT INTO data.pokemon_encounters (
+				userId, pokemonId, name, nick, level, experience, gender, pokemonChar1,
+				pokemonChar2, isShiny, shinyShift, attempted, caught, owned,
+				captureDifficulty, slot, epoch, isTraining, isRadar
+			)
+			VALUES (
+				?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+			);
+			`;
+			let insert_vals = [
+				result[i].userId, new_id, new_name, result[i].nick, new_level, 0,
+				result[i].gender, result[i].pokemonChar1, result[i].pokemonChar2,
+				result[i].isShiny, result[i].shinyShift, '', 1, 1,
+				result[i].captureDifficulty, result[i].slot, result[i].epoch,
+				0, 0
+			]
+	    let update_query = "UPDATE data.pokemon_encounters SET owned = 0 WHERE id = ?;";
+	    let update_values = [result[i].id]
+			async_query(insert_query, insert_vals)
+			async_query(update_query, update_values);
+    } else {
+			let update_query = "UPDATE data.pokemon_encounters SET level = ?, experience = ? WHERE id = ?;";
+	    let update_values = [new_level, new_exp, result[i].id]
+			async_query(update_query, update_values);
+		}
 	}
 }
 
