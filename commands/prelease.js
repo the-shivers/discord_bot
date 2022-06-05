@@ -42,11 +42,8 @@ module.exports = {
     }
 		let pokemon = status[slot - 1];
 
-		// console.log(config.types[pokemon.type1].color)
-		console.log(pokemon);
-		console.log(config.types);
-
 		let money = rvals[pokemon.frequency]
+		money += pokemon.level * 20;
 		money = (pokemon.isShiny == 1) ? money * 2 : money;
 		let gender = ''
     if (pokemon.gender == 'male') {

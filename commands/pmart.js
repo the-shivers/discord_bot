@@ -15,12 +15,13 @@ function generate_embed(interaction, cash, slots) {
   let image = new MessageAttachment(img_src, filename);
 
   // Get Description
-  let description = `New Pokemon Slot - \`₽5000\` - Hold an additional Pokemon (Max: 12 slots)
-  Poke Radar - \`₽3000\` - Choose the encounter's gen. and rarity (it may be harder to catch)
-  Omega Ball - \`₽3000\` - Roll 6 dice, massively increasing capture chance.
+  let description = `Omega Ball - \`₽3000\` - Roll 7 dice, massively increasing capture chance.
   Ultra Ball - \`₽1500\` - Roll 4 dice, greatly increasing capture chance.
   Great Ball - \`₽750\` - Roll 3 dice, increasing capture chance.
-  Poke Ball - \`₽400\` - Roll 2 dice, for a standard capture chance.`;
+  Poke Ball - \`₽400\` - Roll 2 dice, for a standard capture chance.
+  New Pokemon Slot - \`₽5000\` - Hold an additional Pokemon (Max: 12 slots)
+  Poke Radar - \`₽3000\` - Choose one encounter's gen. and rarity (slightly harder to catch)
+  Hormones - \`₽2000\` - Change a Pokemon's gender with /phormones.`;
 
   // Embed assembly
   const embed = new MessageEmbed()
@@ -33,40 +34,45 @@ function generate_embed(interaction, cash, slots) {
   const buttons2 = new MessageActionRow();
   const slot = new MessageButton()
     .setCustomId(`p_buy_slot,${interaction.id}`)
-    .setLabel(`Slot - ₽5000`)
+    .setLabel(`Slot`)
     .setStyle('PRIMARY');
   if (cash <= 5000 || slots >= 12) {slot.setDisabled(true)}
   const radar = new MessageButton()
     .setCustomId(`p_buy_radar,${interaction.id}`)
-    .setLabel(`Radar - ₽3000`)
+    .setLabel(`Radar`)
     .setStyle('PRIMARY');
   if (cash <= 3000) {radar.setDisabled(true)}
   const omega = new MessageButton()
     .setCustomId(`p_buy_omega,${interaction.id}`)
-    .setLabel(`Omega Ball - ₽3000`)
+    .setLabel(`Omega Ball`)
     .setStyle('PRIMARY');
   if (cash <= 3000) {omega.setDisabled(true)}
   const ultra = new MessageButton()
     .setCustomId(`p_buy_ultra,${interaction.id}`)
-    .setLabel(`Ultra Ball - ₽1500`)
+    .setLabel(`Ultra Ball`)
     .setStyle('PRIMARY');
   if (cash <= 1500) {ultra.setDisabled(true)}
   const great = new MessageButton()
     .setCustomId(`p_buy_great,${interaction.id}`)
-    .setLabel(`Great Ball - ₽750`)
+    .setLabel(`Great Ball`)
     .setStyle('PRIMARY');
   if (cash <= 750) {great.setDisabled(true)}
   const poke = new MessageButton()
     .setCustomId(`p_buy_poke,${interaction.id}`)
-    .setLabel(`Poke Ball - ₽400`)
+    .setLabel(`Poke Ball`)
     .setStyle('PRIMARY');
   if (cash <= 400) {poke.setDisabled(true)}
+  const hormones = new MessageButton()
+    .setCustomId(`p_buy_hormones,${interaction.id}`)
+    .setLabel(`Hormones`)
+    .setStyle('PRIMARY');
+  if (cash <= 2000) {hormones.setDisabled(true)}
   const decline = new MessageButton()
     .setCustomId(`p_buy_decline,${interaction.id}`)
     .setLabel("Too expensive!")
     .setStyle('DANGER');
-  buttons1.addComponents(slot, radar, omega, ultra);
-  buttons2.addComponents(great, poke, decline);
+  buttons1.addComponents(omega, ultra, great, poke);
+  buttons2.addComponents(slot, radar, hormones, decline);
 
   return {
     embeds: [embed],
@@ -164,6 +170,13 @@ module.exports = {
           item = " Poke Ball";
           price = 400;
           let update_q = 'UPDATE data.pokemon_trainers SET cash = ?, pokeballs = pokeballs + 1 WHERE userId = ?;';
+          async_query(update_q, [cash, userId])
+          interaction.editReply(generate_embed(interaction, cash, slots));
+        } else if (i.customId.split(',')[0] == 'p_buy_hormones') {
+          cash -= 2000;
+          item = " hormones";
+          price = 2000;
+          let update_q = 'UPDATE data.pokemon_trainers SET cash = ?, hormones = hormones + 1 WHERE userId = ?;';
           async_query(update_q, [cash, userId])
           interaction.editReply(generate_embed(interaction, cash, slots));
         }

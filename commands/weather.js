@@ -3,6 +3,7 @@
 // Imports
 const axios = require('axios');
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const { async_query } = require('../db/scripts/db_funcs.js')
 const api_info = require("../api_keys.json").openWeather;
 const assets_dir = '../assets/weather/';
 let weather_funcs = require(assets_dir + 'weather_funcs.js');
@@ -16,6 +17,9 @@ async function getGeoInfo(location) {
   let full_url = api_info.geocoding_endpoint + location + `&appid=${api_info.key}`;
   try {
     const response = await axios.get(full_url);
+    if (response.data.length == 0) {
+      return {};
+    }
     return {
       name: response.data[0].name,
       country: response.data[0].country,
@@ -68,24 +72,32 @@ module.exports = {
     .addStringOption(option => option
       .setName('location')
       .setDescription('The location to fetch weather for.')
-      .setRequired(true)
     ).addBooleanOption(option => option
       .setName('celsius')
       .setDescription('If you want values in Celsius.')
     ),
 	async execute(interaction) {
     await interaction.deferReply();
-    let location = interaction.options.getString('location');
+    let location = interaction.options.getString('location') ?? 'fetch';
+    if (location == 'fetch') {
+      let query_result = await async_query("SELECT * FROM data.setloc WHERE userId = ?;", [interaction.user.id])
+      if (query_result.length == 0) {
+        interaction.editReply("You need to set a location with /setloc if you wish to use this command without a location parameter!")
+        return
+      } else {
+        location = query_result[0].locString;
+      }
+    }
     let geo_result = await getGeoInfo(location);
     if (Object.keys(geo_result).length === 0) {
-      interaction.reply("I couldn't find that place. :(");
+      interaction.editReply("I couldn't find that place. :(");
       return;
     }
     let celsius = (geo_result.country == 'US') ? false : true;
     celsius = interaction.options.getBoolean('celsius') ?? celsius;
     let weather = await getWeather(geo_result.lat, geo_result.lon, celsius);
     if (weather.length === 0) {
-      interaction.reply("Open Weather API messed it up!");
+      interaction.editReply("Open Weather API messed it up!");
       return;
     }
     let symb = getSymb(weather.weather[0].id);

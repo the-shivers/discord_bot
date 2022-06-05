@@ -182,17 +182,18 @@ async function generate_embed(interaction, generation, frequency, curr_epoch_s) 
 module.exports = {
 	type: "private",
   cat: "games",
-  desc: "Use Poke Radar!",
+  desc: "Use Poke Radar! Remember that this item is single use!",
 	data: new SlashCommandBuilder()
 		.setName('pradar')
-		.setDescription('Use Poke Radar!')
+		.setDescription('Use Poke Radar! Remember that this item is single use!')
   .addStringOption(option => option
     .setName('generation')
     .setDescription('Select gen to catch pokemon from!')
     .addChoices({name:'Gen I', value:'I'}).addChoices({name:'Gen II', value:'II'})
     .addChoices({name:'Gen III', value:'III'}).addChoices({name:'Gen IV', value:'IV'})
     .addChoices({name:'Gen V', value:'V'}).addChoices({name:'Gen VI', value:'VI'})
-    .addChoices({name:'Gen VII', value:'VII'}).addChoices({name:'Any Gen', value:'any'})
+    .addChoices({name:'Gen VII', value:'VII'}).addChoices({name:'Gen VIII', value:'VIII'})
+    .addChoices({name:'Any Gen', value:'any'})
     .setRequired(true)
   ).addIntegerOption(option => option
     .setName('rarity')

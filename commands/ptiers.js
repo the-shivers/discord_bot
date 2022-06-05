@@ -19,7 +19,7 @@ module.exports = {
       .addChoices({name:'Gen I', value:'I'}).addChoices({name:'Gen II', value:'II'})
       .addChoices({name:'Gen III', value:'III'}).addChoices({name:'Gen IV', value:'IV'})
       .addChoices({name:'Gen V', value:'V'}).addChoices({name:'Gen VI', value:'VI'})
-      .addChoices({name:'Gen VII', value:'VII'})
+      .addChoices({name:'Gen VII', value:'VII'}).addChoices({name:'Gen VIII', value:'VIII'})
       .setRequired(true)
     ).addStringOption(option => option
       .setName('order')

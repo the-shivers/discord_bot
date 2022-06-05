@@ -25,12 +25,16 @@ module.exports = {
 			.addChoices({name:'9', value:9}).addChoices({name:'10', value:10})
 			.addChoices({name:'11', value:11}).addChoices({name:'12', value:12})
       .setRequired(true)
+    ).addUserOption(option => option
+      .setName('target')
+      .setDescription('The slot of the pokemon to view.')
     ),
 	async execute(interaction) {
     await interaction.deferReply();
 
     // Fetch information about Pokemon.
     let slot = interaction.options.getInteger('slot');
+    let user = interaction.options.getUser('target') ?? interaction.user;
     let query1 = `
     SELECT
       ps.*,
@@ -42,20 +46,20 @@ module.exports = {
     ON ps.pokemonId = p.pokemonId
     WHERE userId = ? AND owned = 1
     ORDER BY slot ASC;`
-    let values1 = [interaction.user.id]
+    let values1 = [user.id]
     let team = await async_query(query1, values1);
     if (team.length === 0) {
-      interaction.editReply("You don't have any Pokemon! Try catching one with `/pcatch`!");
+      interaction.editReply(`${user.username} doesn't have any Pokemon! Catch some with `/pcatch`!`);
       return;
     } else if (slot > team.length) {
-      interaction.editReply("You don't have a pokemon in that slot!")
+      interaction.editReply("No pokemon in that slot!")
       return;
     }
     let pokemon = team[slot-1];
     let ev_id_array = pokemon.evIds.split('|');
     let ev_text = '';
-    if (ev_id_array.length > 0) {
-      ev_text = ' evolves into ';
+    if (ev_id_array[0].length > 0) {
+      ev_text = ' Evolves into ';
       let name_arr = []
       let ev_query = `SELECT * FROM data.pokedex WHERE pokemonId IN (?${', ?'.repeat(ev_id_array.length - 1)});`;
       let ev_result = await async_query(ev_query, ev_id_array);

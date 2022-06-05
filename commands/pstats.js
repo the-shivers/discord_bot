@@ -56,14 +56,14 @@ module.exports = {
       if (!unique_caught_arr.includes(encounter.name) && encounter.caught == 1) {
         unique_caught_arr.push(encounter.name);
       }
-      if (encounter.type1 in types && encounter.caught == 1) {
+      if (encounter.type1 in types && (encounter.caught == 1 || encounter.attempted == 1)) {
         types[encounter.type1] += (encounter.owned == 1) ? 2 : 1;
-      } else {
+      } else if (encounter.caught == 1 || encounter.attempted == 1) {
         types[encounter.type1] = (encounter.owned == 1) ? 2 : 1;
       }
-      if (encounter.type2.length > 0 && encounter.type2 in types && encounter.caught == 1) {
+      if (encounter.type2.length > 0 && encounter.type2 in types && (encounter.caught == 1 || encounter.attempted == 1)) {
         types[encounter.type2] += (encounter.owned == 1) ? 2 : 1;
-      } else {
+      } else if (encounter.type2.length > 0 && (encounter.caught == 1 || encounter.attempted == 1)) {
         types[encounter.type2] = (encounter.owned == 1) ? 2 : 1;
       }
     }
@@ -72,10 +72,10 @@ module.exports = {
     let desc = `You have seen \`${unique_seen_arr.length}\` and caught \
     \`${unique_caught_arr.length}\` Pokemon. Your favorite type is \`${best_type}\` and \
     \`${oldest_mon.nick} the ${oldest_mon.name}\` is your best friend. Your train \
-    streak is currently \`${trainer.trainStreak}\`. You have \`${trainer.pokeballs}\` \
+    streak is currently \`${trainer.trainStreak}\`. You have \`₽${trainer.cash}\` to spend and \`${trainer.pokeballs}\` \
     Poke, \`${trainer.greatballs}\` Great, \`${trainer.ultraballs}\` Ultra and \
-    \`${trainer.omegaballs}\` Omega Balls, along with \`${trainer.rareChances}\`\
-    Poke Radar uses.`;
+    \`${trainer.omegaballs}\` Omega Balls to catch with. You have \`${trainer.rareChances}\`\
+    Poke Radar uses and \`${trainer.hormones}\` hormones.`;
 
     let filename = 'pokeball.gif';
     let img_src = assets_dir + filename;

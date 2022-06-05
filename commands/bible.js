@@ -60,7 +60,7 @@ module.exports = {
         return;
       }
     } else {
-      book_obj = f.shuffle(books)[0];
+			book_obj = books[Math.floor(Math.random() * books.length)]
     }
     book = book_obj.abbr.trim().toLowerCase();
 
@@ -71,10 +71,10 @@ module.exports = {
       if (chapter <= book_obj.chapters.length) {
         chapter_obj = book_obj.chapters[chapter - 1];
       } else {
-        chapter_obj = f.shuffle(book_obj.chapters)[0];
+				chapter_obj = book_obj.chapters[Math.floor(Math.random() * book_obj.chapters.length)]
       }
     } else {
-      chapter_obj = f.shuffle(book_obj.chapters)[0];
+			chapter_obj = book_obj.chapters[Math.floor(Math.random() * book_obj.chapters.length)]
     }
     chapter = parseInt(chapter_obj.chapter);
     console.log("AFTERWARDS CHATPER OBJ", chapter_obj)

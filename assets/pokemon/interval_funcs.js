@@ -66,9 +66,9 @@ async function pballs() {
     console.log("Time to refresh balls!")
     let update_query = `
     UPDATE data.pokemon_trainers SET
-      pokeballs = GREATEST(15, pokeballs),
-      greatballs = GREATEST(3, greatballs),
-      ultraballs = GREATEST(1, ultraballs),
+      pokeballs = GREATEST(20, pokeballs),
+      greatballs = GREATEST(5, greatballs),
+      ultraballs = GREATEST(2, ultraballs),
       omegaballs = GREATEST(0, omegaballs),
       ballRefreshMonth = ?;
     `;
