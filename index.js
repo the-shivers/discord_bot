@@ -81,8 +81,8 @@ client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
 	setInterval(insert_and_clear, 60000);
 	setInterval(remind, 20000);
-	setInterval(plevels, 60 * 60 * 1000);
-	setInterval(pballs, 6 * 60 * 60 * 1000);
+	setInterval(plevels, 10 * 60 * 1000);
+	setInterval(pballs, 2 * 60 * 60 * 1000);
 });
 
 // Receive commands

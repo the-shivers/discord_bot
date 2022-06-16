@@ -37,7 +37,7 @@ description += "Pokeball rolls two 6-sided dice. If their sum matches or ";
 description += "exceeds the Pokemon's capture difficulty, you'll catch it! ";
 description += "Throwing a Great Ball takes the highest two of three dice, and ";
 description += "throwing an Ultra Ball takes the highest two of four.\n\n";
-description += "But remember, you have limited balls, and the pokmeon runs away if you take too long!"
+description += "But remember, you have limited balls, and the pokemon runs away if you take too long!"
 
 function getMaxOfArray(numArray) {
   return Math.max.apply(null, numArray);
@@ -250,6 +250,20 @@ module.exports = {
     let response = await generate_embed(interaction, generation, curr_epoch_s);
     let reply_content = response[0];
     let catch_data = response[1];
+    let trainer_update = `
+      INSERT INTO data.pokemon_trainers
+      (userId, pokeballs, greatballs, ultraballs, omegaballs,
+        trainStreak, cash, lastTrainEpoch)
+      VALUES(?, ?, ?, ?, ?, ?, ?, ?)
+      ON DUPLICATE KEY UPDATE
+        pokeballs = ?,
+        greatballs = ?,
+        ultraballs = ?,
+        omegaballs = ?,
+        trainStreak = ?,
+        cash = cash + ?,
+        lastTrainEpoch = ?
+    ;`;
 
     if (!("content" in reply_content)) {
       interaction.reply(reply_content);
@@ -274,6 +288,10 @@ module.exports = {
           if (i.customId.split(',')[0] == 'p_catch_decline') {
             content = 'You ran away from the wild Pokemon!'
             i.reply(content);
+            let trainer_update_vals = [interaction.user.id, catch_data.pokeballs,
+              catch_data.greatballs, catch_data.ultraballs, catch_data.omegaballs,
+              catch_data.trainStreak + 1, catch_data.cash, curr_epoch_s];
+            async_query(trainer_update, trainer_update_vals.concat(trainer_update_vals.slice(1)));
             return;
           } else if (i.customId.split(',')[0] == 'p_catch_poke') {
             catch_data.pokeballs -= 1;
@@ -292,20 +310,6 @@ module.exports = {
               roll_arr.push(Math.ceil(Math.random() * 6));
               content += '`' + roll_arr[i] + '`, '
             }
-            let trainer_update = `
-              INSERT INTO data.pokemon_trainers
-              (userId, pokeballs, greatballs, ultraballs, omegaballs,
-                trainStreak, cash, lastTrainEpoch)
-              VALUES(?, ?, ?, ?, ?, ?, ?, ?)
-              ON DUPLICATE KEY UPDATE
-                pokeballs = ?,
-                greatballs = ?,
-                ultraballs = ?,
-                omegaballs = ?,
-                trainStreak = ?,
-                cash = cash + ?,
-                lastTrainEpoch = ?
-            ;`;
             content += "giving you a total of `"
             let final_query;
             roll_arr.sort(function(a, b){return b-a});
@@ -346,7 +350,7 @@ module.exports = {
                   .setColor("BLURPLE")
                   .setDescription(content);
                 i.reply({ embeds: [release_embed], components: [release_components_row], ephemeral: false });
-                let release_collector = interaction.channel.createMessageComponentCollector({ filter, componentType: 'SELECT_MENU', time: 10 * 1000 });
+                let release_collector = interaction.channel.createMessageComponentCollector({ filter, componentType: 'SELECT_MENU', time: 300 * 1000 });
                 let released = false;
                 release_collector.on('collect', k => {
                   if (k.user.id === i.user.id) {
@@ -409,9 +413,9 @@ module.exports = {
               }
             } else {
               content += `Oh no! The wild ${catch_data.pokemon.name} escaped!`
-              // encounter_update_v = encounter_update_v.concat([0, 0, interaction.user.id, curr_epoch_s, catch_data.pokemon.name])
+              encounter_update_v = encounter_update_v.concat([0, 0, interaction.user.id, curr_epoch_s, catch_data.pokemon.name])
               i.reply({ content: content, ephemeral: false });
-              // async_query(encounter_update_q, encounter_update_v);
+              async_query(encounter_update_q, encounter_update_v);
               let trainer_update_vals = [interaction.user.id, catch_data.pokeballs,
                 catch_data.greatballs, catch_data.ultraballs, catch_data.omegaballs,
                 catch_data.trainStreak + 1, catch_data.cash, curr_epoch_s];
@@ -430,7 +434,7 @@ module.exports = {
           interaction.channel.send("The pokemon got away!")
           let trainer_update_vals = [interaction.user.id, catch_data.pokeballs,
             catch_data.greatballs, catch_data.ultraballs, catch_data.omegaballs,
-            catch_data.new_streak + 1, catch_data.cash, curr_epoch_s];
+            catch_data.trainStreak + 1, catch_data.cash, curr_epoch_s];
           async_query(trainer_update, trainer_update_vals.concat(trainer_update_vals.slice(1)));
         }
       });

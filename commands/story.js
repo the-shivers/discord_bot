@@ -120,6 +120,7 @@ module.exports = {
             desc = desc + '\n\nThe End'
           }
           embed.setDescription(desc)
+          console.log('a', desc.length);
           interaction.editReply({embeds: [embed], components: [new_row]})
           i.reply({content: "Nicely done, hopefully there was a happy ending.", fetchReply: true}).then(msg => {setTimeout(() => msg.delete(), 5000)})
         } else if (i.customId.split(',')[0] == 'story_continue') {
@@ -135,13 +136,15 @@ module.exports = {
             desc = 'Character limit reached! Removing story intro.\n\n...' + desc.slice(desc.length - 4030);
           }
           embed.setDescription(desc);
+          console.log('b', desc.length);
           interaction.editReply({embeds: [embed]});
-          i.editReply({content: "Story continued.", fetchReply: true}).then(msg => {setTimeout(() => msg.delete(), 5000)})
+          i.editReply({content: "Story continued.", fetchReply: true}).then(msg => {setTimeout(() => msg.delete(), 2000)})
         } else if (i.customId.split(',')[0] == 'story_undo') {
           desc = desc.replace(result.data.output, '');
           embed.setDescription(desc);
+          console.log('c', desc.length);
           interaction.editReply({embeds: [embed]});
-          i.reply({content: "Story undone.", fetchReply: true}).then(msg => {setTimeout(() => msg.delete(), 5000)})
+          i.reply({content: "Story undone.", fetchReply: true}).then(msg => {setTimeout(() => msg.delete(), 2000)})
         } else if (i.customId.split(',')[0] == 'story_edit') {
           const modal = new Modal()
       			.setCustomId(`story_edit_modal,${interaction.id}`)
@@ -161,9 +164,10 @@ module.exports = {
               if (modal_content.length > 0) {
                 desc = modal_content
                 embed.setDescription(modal_content);
+                console.log('d', desc.length);
                 interaction.editReply({embeds: [embed]});
               }
-              submisision.reply({content: "Story edited.", fetchReply: true}).then(msg => {setTimeout(() => msg.delete(), 5000)})
+              submisision.reply({content: "Story edited.", fetchReply: true}).then(msg => {setTimeout(() => msg.delete(), 2000)})
             })
             .catch(console.error);
         }
@@ -180,6 +184,7 @@ module.exports = {
         desc = desc + '\n\nThe End'
       }
       embed.setDescription(desc)
+      console.log('e', desc.length);
       interaction.editReply({embeds: [embed], components: [new_row]})
       i.reply({content: "Nicely done, hopefully there was a happy ending.", fetchReply: true}).then(msg => {setTimeout(() => msg.delete(), 5000)})
     });

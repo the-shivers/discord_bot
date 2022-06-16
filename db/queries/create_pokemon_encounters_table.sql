@@ -18,5 +18,7 @@ CREATE TABLE IF NOT EXISTS data.pokemon_encounters (
   slot BIGINT NOT NULL,
   epoch BIGINT NOT NULL,
   isTraining BOOLEAN NOT NULL DEFAULT 0,
+  isRadar BOOLEAN NOT NULL DEFAULT 0,
+  formIndex SMALLINT NOT NULL DEFAULT 0,
   PRIMARY KEY (id)
 );

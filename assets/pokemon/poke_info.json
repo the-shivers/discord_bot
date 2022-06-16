@@ -4,109 +4,127 @@
 			"color": "#a8a878",
 			"immunes": ["Ghost"],
 			"weaknesses": ["Rock", "Steel"],
-			"strengths": []
+			"strengths": [],
+			"adjectives": ["Ordinary", "Plain", "Typical", "Simple", "Everyday"]
 		},
 		"Fire": {
 			"color": "#f08030",
 			"immunes": [],
 			"weaknesses": ["Fire", "Water", "Rock", "Dragon"],
-			"strengths": ["Grass", "Ice", "Bug", "Steel"]
+			"strengths": ["Grass", "Ice", "Bug", "Steel"],
+			"adjectives": ["Flaming", "Blazing", "Fiery", "Smoldering", "Red-hot", "Roaring", "Scorching", "Hot", "Warm"]
 		},
 		"Water": {
 			"color": "#6890f0",
 			"immunes": [],
 			"weaknesses": ["Water", "Grass", "Dragon"],
-			"strengths": ["Fire", "Ground", "Rock"]
+			"strengths": ["Fire", "Ground", "Rock"],
+			"adjectives": ["Wet", "Soaking", "Drenched", "Drowning", "Watery", "Damp", "Moist", "Soggy", "Dripping"]
 		},
 		"Electric": {
 			"color": "#f8d030",
 			"immunes": ["Ground"],
 			"weaknesses": ["Electric", "Grass", "Dragon"],
-			"strengths": ["Water", "Flying"]
+			"strengths": ["Water", "Flying"],
+			"adjectives": ["Galvanic", "Electric", "Shocking", "Charged", "Voltaic", "Magnetic"]
 		},
 		"Grass": {
 			"color": "#78c850",
 			"immunes": [],
 			"weaknesses": ["Fire", "Grass", "Poison", "Flying", "Bug", "Dragon", "Steel"],
-			"strengths": ["Water", "Ground", "Rock"]
+			"strengths": ["Water", "Ground", "Rock"],
+			"adjectives": ["Grassy", "Leafy", "Verdant", "Lawnlike", "Tangled", "Woody", "Marijuana"]
 		},
 		"Ice": {
 			"color": "#98d8d8",
 			"immunes": [],
 			"weaknesses": ["Fire", "Water", "Ice", "Steel"],
-			"strengths": ["Grass", "Ground", "Flying", "Dragon"]
+			"strengths": ["Grass", "Ground", "Flying", "Dragon"],
+			"adjectives": ["Icy", "Frozen", "Frosty", "Snowy", "Slushy", "Slippery", "Cold", "Cool", "Frigid", "Bitter", "Polar", "Arctic"]
 		},
 		"Fighting": {
 			"color": "#c03028",
 			"immunes": ["Ghost"],
 			"weaknesses": ["Poison", "Flying", "Psychic", "Bug", "Fairy"],
-			"strengths": ["Normal", "Ice", "Rock", "Dark", "Steel"]
+			"strengths": ["Normal", "Ice", "Rock", "Dark", "Steel"],
+			"adjectives": ["Brutal", "Violent", "Abusive", "Bone-breaking", "Crippling", "Mortal"]
 		},
 		"Poison": {
 			"color": "#a040a0",
 			"immunes": ["Steel"],
 			"weaknesses": ["Poison", "Ground", "Rock", "Ghost"],
-			"strengths": ["Grass", "Fairy"]
+			"strengths": ["Grass", "Fairy"],
+			"adjectives": ["Toxic", "Poisonous", "Noxious", "Virulent", "Polluting", "Stinky"]
 		},
 		"Ground": {
 			"color": "#e0c068",
 			"immunes": ["Flying"],
 			"weaknesses": ["Grass", "Bug"],
-			"strengths": ["Fire", "Electric", "Poison", "Rock", "Steel"]
+			"strengths": ["Fire", "Electric", "Poison", "Rock", "Steel"],
+			"adjectives": ["Dirty", "Earthly", "Quaking", "Trembling", "Seismic", "Sandy"]
 		},
 		"Flying": {
 			"color": "#a890f0",
 			"immunes": [],
 			"weaknesses": ["Electric", "Rock", "Steel"],
-			"strengths": ["Grass", "Fighting", "Bug"]
+			"strengths": ["Grass", "Fighting", "Bug"],
+			"adjectives": ["Supersonic", "Aerial", "Floating", "Soaring", "Flapping", "Fluttering", "Gliding", "Flying"]
 		},
 		"Psychic": {
 			"color": "#f85888",
 			"immunes": ["Dark"],
 			"weaknesses": ["Psychic", "Steel"],
-			"strengths": ["Fighting", "Poison"]
+			"strengths": ["Fighting", "Poison"],
+			"adjectives": ["Telekinetic", "Thought-provoking", "Psychic", "Paranormal", "Supernatural", "Mysterious", "Intellectual", "Emotional"]
 		},
 		"Bug": {
 			"color": "#a8b820",
 			"immunes": [],
 			"weaknesses": ["Fire", "Fighting", "Poison", "Flying", "Ghost", "Steel", "Fairy"],
-			"strengths": ["Grass", "Psychic", "Dark"]
+			"strengths": ["Grass", "Psychic", "Dark"],
+			"adjectives": ["Buzzing", "Stinging", "Pesky", "Infesting"]
 		},
 		"Rock": {
 			"color": "#b8a038",
 			"immunes": [],
 			"weaknesses": ["Fighting", "Ground", "Steel"],
-			"strengths": ["Fire", "Ice", "Flying", "Bug"]
+			"strengths": ["Fire", "Ice", "Flying", "Bug"],
+			"adjectives": ["Stony", "Metamorphic", "Diamond", "Rocky", "Hard"]
 		},
 		"Ghost": {
 			"color": "#705898",
 			"immunes": ["Normal"],
 			"weaknesses": ["Dark"],
-			"strengths": ["Psychic", "Ghost"]
+			"strengths": ["Psychic", "Ghost"],
+			"adjectives": ["Spooky", "Ghostly", "Haunted", "Astonishing", "Possessing", "Spiritual", "Scary"]
 		},
 		"Dragon": {
 			"color": "#7038f8",
 			"immunes": ["Fairy"],
 			"weaknesses": ["Steel"],
-			"strengths": ["Dragon"]
+			"strengths": ["Dragon"],
+			"adjectives": ["Draconic", "Fire-breathing", "Scaly", "Greedy", "Bloated", "Violent"]
 		},
 		"Dark": {
 			"color": "#705848",
 			"immunes": [],
 			"weaknesses": ["Fighting", "Dark", "Fairy"],
-			"strengths": ["Psychic", "Ghost"]
+			"strengths": ["Psychic", "Ghost"],
+			"adjectives": ["Dirty", "Tricky", "Cheating", "Unfair", "Mischievous", "Misleading"]
 		},
 		"Steel": {
 			"color": "#b8b8d0",
 			"immunes": [],
 			"weaknesses": ["Fire", "Water", "Electric", "Steel"],
-			"strengths": ["Ice", "Rock", "Fairy"]
+			"strengths": ["Ice", "Rock", "Fairy"],
+			"adjectives": ["Metallic", "Iron", "Steel", "Titanium", "Welded"]
 		},
 		"Fairy": {
 			"color": "#f0b6bc",
 			"immunes": [],
 			"weaknesses": ["Fire", "Poison", "Steel"],
-			"strengths": ["Fighting", "Dragon", "Dark"]
+			"strengths": ["Fighting", "Dragon", "Dark"],
+			"adjectives": ["Cute", "Playful", "Lovely", "Romantic", "Flirty"]
 		}
 	},
   "gens": {
@@ -131,6 +149,7 @@
     "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9", "9"
   ],
 	"rarities": {
+		"0": "Evolved",
     "1": "Legendary",
     "2": "Ultra Rare",
     "3": "Very Rare",
@@ -142,8 +161,9 @@
     "9": "Most Common"
   },
 	"release_values": {
+		"0": 1500,
     "1": 2000,
-    "2": 1500,
+    "2": 1200,
     "3": 1000,
     "4": 800,
     "5": 600,

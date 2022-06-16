@@ -8,7 +8,8 @@ const assets_dir = './assets/pokemon/images/';
 const config = require('../assets/pokemon/poke_info.json')
 const { getStats, getPokePic } = require('../assets/pokemon/poke_funcs.js');
 const rvals = require('../assets/pokemon/poke_info.json').release_values;
-
+const fs = require('fs');
+let filenames = fs.readdirSync(assets_dir)
 
 
 module.exports = {
@@ -56,9 +57,11 @@ module.exports = {
 		let field2 = `\`${pokemon.level}\``;
 		let field3 = `\`${pokemon.pokemonChar1}\`, \`${pokemon.pokemonChar2}\``;
 		let desc = `You will gain ₽${money} if you choose to release this Pokemon.`;
-		let filename = pokemon.pokemonId.toString().padStart(3, '0') + '.png';
+		let filename_arr = filenames.filter(filename => filename.startsWith(pokemon.pokemonId.toString().padStart(3, '0')));
+    filename_arr.unshift(filename_arr.pop());
+    let filename = filename_arr[pokemon.formIndex];
     let full_path = assets_dir + filename;
-		let poke_pic = await getPokePic(full_path, filename, pokemon.shinyShift);
+    let poke_pic = await getPokePic(full_path, filename, pokemon.shinyShift);
 		const buttons = new MessageActionRow();
 		const release = new MessageButton()
 			.setCustomId(`release,${interaction.id}`)

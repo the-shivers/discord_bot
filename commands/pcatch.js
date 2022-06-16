@@ -19,7 +19,7 @@ description += "Pokeball rolls two 6-sided dice. If their sum matches or ";
 description += "exceeds the Pokemon's capture difficulty, you'll catch it! ";
 description += "Throwing a Great Ball takes the highest two of three dice, and ";
 description += "throwing an Ultra Ball takes the highest two of four.\n\n";
-description += "But remember, you have limited balls, and the pokmeon runs away if you take too long!"
+description += "But remember, you have limited balls, and the pokemon runs away if you take too long!"
 
 async function generate_embed(interaction, generation, curr_epoch_s) {
   // Deal with times
@@ -286,7 +286,8 @@ module.exports = {
                   mon.nick = mon.nick ?? '???';
                   let money = rvals[mon.frequency]
               		money += mon.level * 20;
-              		money = (mon.isShiny == 1) ? money * 2 : money;
+                  let shiny = mon.isShiny ?? catch_data.isShiny;
+              		money = (shiny == 1) ? money * 2 : money;
                   options_arr.push({label: `${j+1}. ${mon.name}`, description: `Release slot ${j+1}`, value: `${j}`})
                   content += `\n${j+1}. ${mon.nick} | Lvl. ${mon.level} ${mon.name} | ₽${money}`
                 }
@@ -307,7 +308,7 @@ module.exports = {
                   .setColor("BLURPLE")
                   .setDescription(content);
                 i.reply({ embeds: [release_embed], components: [release_components_row], ephemeral: false });
-                let release_collector = interaction.channel.createMessageComponentCollector({ filter, componentType: 'SELECT_MENU', time: 10 * 1000 });
+                let release_collector = interaction.channel.createMessageComponentCollector({ filter, componentType: 'SELECT_MENU', time: 300 * 1000 });
                 let released = false;
                 release_collector.on('collect', k => {
                   if (k.user.id === i.user.id) {
@@ -366,9 +367,9 @@ module.exports = {
               }
             } else {
               content += `Oh no! The wild ${catch_data.pokemon.name} escaped!`
-              // encounter_update_v = encounter_update_v.concat([0, 0, interaction.user.id, curr_epoch_s, catch_data.pokemon.name])
+              encounter_update_v = encounter_update_v.concat([0, 0, interaction.user.id, curr_epoch_s, catch_data.pokemon.name])
               i.reply({ content: content, ephemeral: false });
-              // async_query(encounter_update_q, encounter_update_v);
+              async_query(encounter_update_q, encounter_update_v);
             }
           }
         } else {
@@ -385,7 +386,6 @@ module.exports = {
       });
 
     } else {
-      // Something went wrong, you used /pcatch too soon or are full up on 'mons
       interaction.reply(reply_content);
     }
 	}

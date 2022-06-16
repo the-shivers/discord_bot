@@ -27,6 +27,7 @@ module.exports = {
       .setDescription('Tags to search for, space-separated.')
     ),
 	async execute(interaction) {
+    await interaction.deferReply()
     let tags = '';
     if (!(interaction.options.getString('tags') == null)) {
       tags = interaction.options.getString('tags');
@@ -44,14 +45,14 @@ module.exports = {
           && response.data.posts.length > 0
         ) {
           let post = f.shuffle(response.data.posts)[0];
-          interaction.reply(post.file.url)
+          interaction.editReply(post.file.url ?? 'File was missing. Was it because you were looking for something naughty?')
         } else {
-          interaction.reply("e621 messed it up (no posts found)!")
+          interaction.editReply("e621 messed it up (no posts found)!")
         }
       })
       .catch(error => {
         console.log("Error is:\n", error)
-        interaction.reply("e621 messed it up!")
+        interaction.editReply("e621 messed it up!")
       });
   }
 }

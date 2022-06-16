@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS data.pokemon_battles (
+  id MEDIUMINT NOT NULL AUTO_INCREMENT,
+  userId VARCHAR(32) NOT NULL,
+  epoch BIGINT NOT NULL,
+  type VARCHAR(32) NOT NULL,
+  targetId SMALLINT,
+  gymLevel SMALLINT,
+  userWon BOOLEAN NOT NULL,
+  PRIMARY KEY (id)
+);

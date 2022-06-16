@@ -2,11 +2,15 @@
 
 // Constants
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageAttachment, MessageEmbed } = require('discord.js');
+const {
+  MessageAttachment, MessageEmbed, MessageActionRow, MessageButton
+} = require('discord.js');
 const { async_query } = require('../db/scripts/db_funcs.js')
 const assets_dir = './assets/pokemon/images/';
 const config = require('../assets/pokemon/poke_info.json')
 const { getStats, getPokePic } = require('../assets/pokemon/poke_funcs.js');
+const fs = require('fs');
+let filenames = fs.readdirSync(assets_dir)
 
 module.exports = {
   type: "private",
@@ -30,7 +34,7 @@ module.exports = {
       .setDescription('The slot of the pokemon to view.')
     ),
 	async execute(interaction) {
-    await interaction.deferReply();
+    await interaction.deferReply({fetchReply: true});
 
     // Fetch information about Pokemon.
     let slot = interaction.options.getInteger('slot');
@@ -58,7 +62,7 @@ module.exports = {
     let pokemon = team[slot-1];
     let ev_id_array = pokemon.evIds.split('|');
     let ev_text = '';
-    if (ev_id_array[0].length > 0) {
+    if (ev_id_array[0].length > 0 && pokemon.canEvolve == 1) {
       ev_text = ' Evolves into ';
       let name_arr = []
       let ev_query = `SELECT * FROM data.pokedex WHERE pokemonId IN (?${', ?'.repeat(ev_id_array.length - 1)});`;
@@ -88,7 +92,11 @@ module.exports = {
     let field2 = `\`${pokemon.egg1}\`` + egg2;
     let field3 = `\`${pokemon.pokemonChar1}\`, \`${pokemon.pokemonChar2}\``;
     let color = config.types[pokemon.type1].color;
-    let filename = pokemon.pokemonId.toString().padStart(3, '0') + '.png'
+    // let filename = pokemon.pokemonId.toString().padStart(3, '0') + '.png'
+    let filename_arr = filenames.filter(filename => filename.startsWith(pokemon.pokemonId.toString().padStart(3, '0')));
+    filename_arr.unshift(filename_arr.pop());
+    pokemon['forms'] = filename_arr.length;
+    let filename = filename_arr[pokemon.formIndex];
     let full_path = assets_dir + filename;
     let poke_pic = await getPokePic(full_path, filename, pokemon.shinyShift);
 
@@ -100,6 +108,22 @@ module.exports = {
       stats_block += ` ${stats[key].symb} |${'|'.repeat(Math.ceil(stats[key].val / 5))}\n`
     }
     stats_block = stats_block.slice(0,-1).toUpperCase() + '```'
+
+    const buttons = new MessageActionRow();
+    const evo_toggle = new MessageButton()
+      .setCustomId(`p_view_evo,${interaction.id}`)
+      .setLabel(`${(pokemon.canEvolve) == 1 ? 'Disable Evolution' : 'Enable Evolution'}`)
+      .setStyle('PRIMARY');
+    const form_cycle = new MessageButton()
+      .setCustomId(`p_view_cycle,${interaction.id}`)
+      .setLabel(`Cycle Forms`)
+      .setStyle('PRIMARY');
+    if (pokemon.forms < 2) {form_cycle.setDisabled(true)}
+    const close = new MessageButton()
+      .setCustomId(`p_view_close,${interaction.id}`)
+      .setLabel("Close")
+      .setStyle('DANGER');
+    buttons.addComponents(evo_toggle, form_cycle, close);
 
     // Generate embed
     const embed = new MessageEmbed()
@@ -114,7 +138,54 @@ module.exports = {
         { name: 'Egg Groups', value: field2, inline: true },
         { name: 'Traits', value: field3, inline: true },
     	);
-    interaction.editReply({ embeds: [embed], files: [poke_pic] })
+    interaction.editReply({ embeds: [embed], files: [poke_pic], components: [buttons] })
+
+    let filter = button => button.customId.includes(interaction.id);
+    let collector = interaction.channel.createMessageComponentCollector({ filter, componentType: 'BUTTON', time: 180 * 1000 });
+
+    let responded = false;
+    let content;
+
+    collector.on('collect', async i => {
+      if (i.user.id === user.id) {
+        if (i.customId.split(',')[0] == 'p_view_close') {
+          i.reply({content: 'Done viewing Pokemon. Deleting giant embed.', fetchReply: true}).then(msg => {setTimeout(() => msg.delete(), 5000)})
+          interaction.fetchReply()
+            .then(reply => {setTimeout(() => reply.delete(), 2000)})
+            .catch(console.error);
+        } else if (i.customId.split(',')[0] == 'p_view_cycle') {
+          pokemon.formIndex = (pokemon.formIndex + 1) % pokemon.forms
+          filename = filename_arr[pokemon.formIndex];
+          full_path = assets_dir + filename;
+          let new_poke_pic = await getPokePic(full_path, filename, pokemon.shinyShift);
+          let cycle_q = `UPDATE data.pokemon_encounters SET formIndex = ? WHERE id = ?`;
+          let cycle_v = [pokemon.formIndex, pokemon.id]
+          async_query(cycle_q, cycle_v);
+          interaction.editReply({files: [new_poke_pic]})
+          i.reply({content: `Changed forms! (Form ${pokemon.formIndex + 1}/${pokemon.forms})`, fetchReply: true}).then(msg => {setTimeout(() => msg.delete(), 5000)});
+        } else if (i.customId.split(',')[0] == 'p_view_evo') {
+          content = `Toggled evolution. Your Pokemon can ${(pokemon.canEvolve) == 1 ? 'no longer evolve!' : 'now evolve!'}`;
+          pokemon.canEvolve = 1 - pokemon.canEvolve;
+          buttons.components[0].setLabel(`${(pokemon.canEvolve) == 1 ? 'Disable Evolution' : 'Enable Evolution'}`)
+          interaction.editReply({components: [buttons]})
+          i.reply({content: content, fetchReply: true}).then(msg => {setTimeout(() => msg.delete(), 5000)});
+          let update_q = "UPDATE data.pokemon_encounters SET canEvolve = 1 - canEvolve WHERE id = ?;";
+          async_query(update_q, [pokemon.id]);
+        }
+        responded = true;
+      } else {
+        i.reply({ content: "Don't touch other people's Pokemon!", ephemeral: false });
+      }
+    });
+
+    collector.on('end', collected => {
+      if (!responded) {
+        interaction.channel.send(`Deleting giant Pokemon embed.`).then(msg => {setTimeout(() => msg.delete(), 5000)});
+        interaction.fetchReply()
+          .then(reply => {setTimeout(() => reply.delete(), 2000)})
+          .catch(console.error);
+      }
+    });
 
 	}
 };

@@ -8,6 +8,8 @@ const { async_query } = require('../db/scripts/db_funcs.js')
 const assets_dir = './assets/pokemon/thumbnails/';
 const f = require('../funcs.js');
 const { getHueMatrix, applyHueMatrix } = require('../assets/pokemon/poke_funcs.js');
+const fs = require('fs');
+let server_filenames = fs.readdirSync(assets_dir)
 
 async function getTeamPic(full_path_arr, filename_arr, shinyShift_arr) {
   let canvas;
@@ -69,9 +71,14 @@ module.exports = {
       let gender_symbol = '';
       for (let i = 0; i < team.length; i++) {
         let pokemon = team[i];
-        filename = pokemon.pokemonId.toString().padStart(3, '0') + '.png'
+
+        let server_filename_arr = server_filenames.filter(filename => filename.startsWith(pokemon.pokemonId.toString().padStart(3, '0')));
+        server_filename_arr.unshift(server_filename_arr.pop());
+        filename = server_filename_arr[pokemon.formIndex];
         full_path_arr.push(assets_dir + filename);
         filename_arr.push(filename);
+
+
         shinyShift_arr.push(pokemon.shinyShift);
         if (pokemon.gender == 'male') {
           gender_symbol = '\♂';

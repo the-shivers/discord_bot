@@ -161,7 +161,7 @@ module.exports = {
         } else if (i.customId.split(',')[0] == 'p_buy_great') {
           cash -= 750;
           item = " Great Ball";
-          price = 1500;
+          price = 750;
           let update_q = 'UPDATE data.pokemon_trainers SET cash = ?, greatballs = greatballs + 1 WHERE userId = ?;';
           async_query(update_q, [cash, userId])
           interaction.editReply(generate_embed(interaction, cash, slots));

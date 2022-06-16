@@ -18,7 +18,7 @@ description += "Pokeball rolls two 6-sided dice. If their sum matches or ";
 description += "exceeds the Pokemon's capture difficulty, you'll catch it! ";
 description += "Throwing a Great Ball takes the highest two of three dice, and ";
 description += "throwing an Ultra Ball takes the highest two of four.\n\n";
-description += "But remember, you have limited balls, and the pokmeon runs away if you take too long!"
+description += "But remember, you have limited balls, and the pokemon runs away if you take too long!"
 
 async function generate_embed(interaction, generation, frequency, curr_epoch_s) {
   // Deal with times
@@ -255,7 +255,7 @@ module.exports = {
             dice += 2;
           } else if (i.customId.split(',')[0] == 'p_catch_omega') {
             catch_data.omegaballs -= 1;
-            dice += 4;
+            dice += 5;
           }
           if (i.customId.split(',')[0] != 'p_catch_decline') {
             // Non-decline branch, encounter updates necessary.
