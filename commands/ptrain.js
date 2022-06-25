@@ -329,7 +329,8 @@ module.exports = {
                   mon.nick = mon.nick ?? '???';
                   let money = rvals[mon.frequency]
               		money += mon.level * 20;
-              		money = (mon.isShiny == 1) ? money * 2 : money;
+                  let shiny = mon.isShiny ?? catch_data.isShiny;
+              		money = (shiny == 1) ? money * 2 : money;
                   options_arr.push({label: `${j+1}. ${mon.name}`, description: `Release slot ${j+1}`, value: `${j}`})
                   content += `\n${j+1}. ${mon.nick} | Lvl. ${mon.level} ${mon.name} | ₽${money}`
                 }

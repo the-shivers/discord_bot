@@ -24,8 +24,12 @@ let special_words = [
   'Aura', 'Wave', 'Ray', 'Pump', 'Quake',
   'Blast', 'Beam', 'Explosion', 'Torment', 'Nightmare'
 ]
+let payouts = [1500, 1750, 2000, 2250, 2500, 2750, 3000, 3250, 3500, 3750, 4000, 4250, 10000]
 
-async function canUserTrain(userId, curr_epoch_s) {
+async function canUserBattle(userId, curr_epoch_s) {
+  if (userId == 790037139546570802) {
+    return {status: true, msg: ''}
+  }
   let last_battle_result = await async_query(
     "SELECT * FROM data.pokemon_battles WHERE userId = ? ORDER BY epoch DESC;",
     [userId]
@@ -39,7 +43,7 @@ async function canUserTrain(userId, curr_epoch_s) {
     let n_epoch = chunk.getTime();
     chunk.setDate(chunk.getDate() - 1);
     let l_epoch = chunk.getTime();
-    if (trainer_result[0].lastTrainEpoch * 1000 < l_epoch) {
+    if (last_battle_result[0].epoch * 1000 < l_epoch) {
       return {status: true, msg: ''}
     } else {
       let remaining_seconds = Math.floor((n_epoch - curr_epoch_s * 1000) / 1000);
@@ -261,7 +265,7 @@ function limitDesc(desc) {
 }
 
 async function generateGymBattleEmbed(interaction, leader_name, user_team, leader_team) {
-  let th_filename = leader_name.toLowerCase() + '.png';
+  let th_filename = leader_name.toLowerCase().replaceAll(' ', '_') + '.png';
   let th_img_src = assets_dir + th_filename;
   let th_image = new MessageAttachment(th_img_src, th_filename);
   let battlefield = await getBattlefield(user_team, leader_team, '', '', false, false)
@@ -275,7 +279,7 @@ async function generateGymBattleEmbed(interaction, leader_name, user_team, leade
   return {embeds: [embed], files: [th_image, battlefield], ephemeral: false, fetchReply: true}
 }
 
-async function gymBattle(interaction, userId, user_pkmn) {
+async function gymBattle(interaction, userId, user_pkmn, curr_epoch_s) {
   let last_gym_battle_result = await async_query(
     "SELECT * FROM data.pokemon_battles WHERE userId = ? AND type = 'gym' ORDER BY epoch DESC;",
     [userId]
@@ -299,7 +303,12 @@ async function gymBattle(interaction, userId, user_pkmn) {
   console.log(user_team[0], '\n', leader_team[0])
   let new_embed = response_data.embeds[0]
   let userTurn = user_team[0].speed > leader_team[0].speed;
+  let recentDeath = false;
   while (leader_team.length > 0 && user_team.length > 0) {
+    if (recentDeath) {
+      userTurn = user_team[0].speed > leader_team[0].speed;
+      recentDeath = false;
+    }
     let damage_info;
     if (userTurn) {
       damage_info = dealDamage(user_team[0], leader_team[0])
@@ -315,6 +324,7 @@ async function gymBattle(interaction, userId, user_pkmn) {
       await new Promise(resolve => setTimeout(resolve, 2000));
       // Death logic
       if (leader_team[0].currentHealth < 1) {
+        recentDeath = true;
         // Make pokemon disappear, faint message, ball update.
         let faint_msg = leader_team[0].nick + ' fainted!'
         leader_team = leader_team.slice(1);
@@ -334,8 +344,6 @@ async function gymBattle(interaction, userId, user_pkmn) {
         interaction.editReply({embeds: [new_embed], files: [response_data.files[0], new_battlefield]})
         await new Promise(resolve => setTimeout(resolve, 2000));
       }
-      userTurn = !userTurn
-      continue
     } else {
       damage_info = dealDamage(leader_team[0], user_team[0])
       // damage animation and message
@@ -350,6 +358,7 @@ async function gymBattle(interaction, userId, user_pkmn) {
       await new Promise(resolve => setTimeout(resolve, 2000));
       // Death logic
       if (user_team[0].currentHealth < 1) {
+        recentDeath = true;
         // Make pokemon disappear, faint message, ball update.
         let faint_msg = user_team[0].nick + ' fainted!'
         user_team = user_team.slice(1);
@@ -369,10 +378,29 @@ async function gymBattle(interaction, userId, user_pkmn) {
         interaction.editReply({embeds: [new_embed], files: [response_data.files[0], new_battlefield]})
         await new Promise(resolve => setTimeout(resolve, 2000));
       }
-      userTurn = !userTurn
-      continue
     }
-
+    userTurn = !userTurn
+    continue
+  }
+  console.log("Just escaped the while loop!")
+  console.log("Here are the teams...")
+  console.log("Leader team:", leader_team)
+  console.log("User team", user_team)
+  if (leader_team.length == 0) {
+    console.log("In here.")
+    let trainer_update_q = 'UPDATE data.pokemon_trainers SET cash = cash + ? WHERE userId = ?';
+    let trainer_update_v = [payouts[gym_level - 1], interaction.user.id]
+    async_query(trainer_update_q, trainer_update_v)
+    let battle_update_q = 'INSERT INTO data.pokemon_battles (userId, epoch, type, gymLevel, userWon) VALUES (?, ?, ?, ?, ?)'
+    let battle_update_v = [interaction.user.id, curr_epoch_s, 'gym', gym_level, 1]
+    async_query(battle_update_q, battle_update_v)
+    interaction.followUp(`Congrats! You won \`₽${payouts[gym_level - 1]}\` for your effort!`)
+  } else {
+    console.log("In here actually.")
+    let battle_update_q = 'INSERT INTO data.pokemon_battles (userId, epoch, type, gymLevel, userWon) VALUES (?, ?, ?, ?, ?)'
+    let battle_update_v = [interaction.user.id, curr_epoch_s, 'gym', gym_level, 0]
+    async_query(battle_update_q, battle_update_v)
+    interaction.followUp(`Too bad, you lost! Better luck next time!`)
   }
 }
 
@@ -392,7 +420,7 @@ module.exports = {
     await interaction.deferReply();
     let curr_epoch_s = Math.floor(new Date().getTime() / 1000);
     let userId = interaction.user.id;
-    let trainInfo = await canUserTrain(userId, curr_epoch_s);
+    let trainInfo = await canUserBattle(userId, curr_epoch_s);
     if (!trainInfo.status) {
       interaction.editReply(trainInfo.msg)
       return
@@ -404,11 +432,9 @@ module.exports = {
     }
     let target = interaction.options.getString('target') ?? 'gym';
     if (target === 'gym') {
-      gymBattle(interaction, userId, user_pkmn)
+      gymBattle(interaction, userId, user_pkmn, curr_epoch_s)
     } else {
       interaction.editReply("Not ready yet!")
-      // let target_pkmn = async_query("SELECT * FROM data.pokemon_encounters WHERE userId = ? AND owned = 1 ORDER BY slot ASC;", [target.id])
-      // userBattle(interaction, userId, user_pkmn, target.id, target_pkmn)
     }
 	}
 };

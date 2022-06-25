@@ -19,7 +19,7 @@ function generate_embed(interaction, cash, slots) {
   Ultra Ball - \`₽1500\` - Roll 4 dice, greatly increasing capture chance.
   Great Ball - \`₽750\` - Roll 3 dice, increasing capture chance.
   Poke Ball - \`₽400\` - Roll 2 dice, for a standard capture chance.
-  New Pokemon Slot - \`₽5000\` - Hold an additional Pokemon (Max: 12 slots)
+  New Pokemon Slot - \`₽5000\` - Hold an additional Pokemon (Max: 18 slots)
   Poke Radar - \`₽3000\` - Choose one encounter's gen. and rarity (slightly harder to catch)
   Hormones - \`₽2000\` - Change a Pokemon's gender with /phormones.`;
 
@@ -36,7 +36,7 @@ function generate_embed(interaction, cash, slots) {
     .setCustomId(`p_buy_slot,${interaction.id}`)
     .setLabel(`Slot`)
     .setStyle('PRIMARY');
-  if (cash <= 5000 || slots >= 12) {slot.setDisabled(true)}
+  if (cash <= 5000 || slots >= 18) {slot.setDisabled(true)}
   const radar = new MessageButton()
     .setCustomId(`p_buy_radar,${interaction.id}`)
     .setLabel(`Radar`)

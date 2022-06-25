@@ -29,6 +29,9 @@ module.exports = {
 			.addChoices({name:'7', value:7}).addChoices({name:'8', value:8})
 			.addChoices({name:'9', value:9}).addChoices({name:'10', value:10})
 			.addChoices({name:'11', value:11}).addChoices({name:'12', value:12})
+			.addChoices({name:'13', value:13}).addChoices({name:'14', value:14})
+			.addChoices({name:'15', value:15}).addChoices({name:'16', value:16})
+			.addChoices({name:'17', value:17}).addChoices({name:'18', value:18})
       .setRequired(true)
     ),
 	async execute(interaction) {

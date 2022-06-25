@@ -69,13 +69,13 @@ module.exports = {
     }
     let best_type = Object.keys(types).reduce(function(a, b){ return types[a] > types[b] ? a : b });
 
-    let desc = `You have seen \`${unique_seen_arr.length}\` and caught \
-    \`${unique_caught_arr.length}\` Pokemon. Your favorite type is \`${best_type}\` and \
-    \`${oldest_mon.nick} the ${oldest_mon.name}\` is your best friend. Your train \
-    streak is currently \`${trainer.trainStreak}\`. You have \`₽${trainer.cash}\` to spend and \`${trainer.pokeballs}\` \
-    Poke, \`${trainer.greatballs}\` Great, \`${trainer.ultraballs}\` Ultra and \
-    \`${trainer.omegaballs}\` Omega Balls to catch with. You have \`${trainer.rareChances}\`\
-    Poke Radar uses and \`${trainer.hormones}\` hormones.`;
+    let desc = `You have seen \`${unique_seen_arr.length}\` and caught `
+    desc += `\`${unique_caught_arr.length}\` Pokemon. Your favorite type is \`${best_type}\` and `
+    desc += `\`${oldest_mon.nick} the ${oldest_mon.name}\` is your best friend. Your train `
+    desc += `streak is currently \`${trainer.trainStreak}\`. You have \`₽${trainer.cash}\` to spend and \`${trainer.pokeballs}\` `
+    desc += `Poke, \`${trainer.greatballs}\` Great, \`${trainer.ultraballs}\` Ultra and `
+    desc += `\`${trainer.omegaballs}\` Omega Balls to catch with. You have \`${trainer.rareChances}\``
+    desc += `Poke Radar uses and \`${trainer.hormones}\` hormones. Finally you have \`${trainer.slots}\` slots.`
 
     let filename = 'pokeball.gif';
     let img_src = assets_dir + filename;

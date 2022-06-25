@@ -28,6 +28,9 @@ module.exports = {
 			.addChoices({name:'7', value:7}).addChoices({name:'8', value:8})
 			.addChoices({name:'9', value:9}).addChoices({name:'10', value:10})
 			.addChoices({name:'11', value:11}).addChoices({name:'12', value:12})
+      .addChoices({name:'13', value:13}).addChoices({name:'14', value:14})
+			.addChoices({name:'15', value:15}).addChoices({name:'16', value:16})
+			.addChoices({name:'17', value:17}).addChoices({name:'18', value:18})
       .setRequired(true)
     ).addUserOption(option => option
       .setName('target')
@@ -74,6 +77,10 @@ module.exports = {
       ev_text += ` at level ${pokemon.evLevel}.`
     }
 
+    // Get trainer money information
+    let trainer_info = await async_query('SELECT * FROM data.pokemon_trainers WHERE userId = ?;', [user.id])
+    trainer_info = trainer_info[0]
+
     // Generate components
     let author = '#' + pokemon.pokemonId.toString().padStart(3, '0');
     author += ' - ' + pokemon.name + ` (${pokemon.species})`
@@ -119,11 +126,16 @@ module.exports = {
       .setLabel(`Cycle Forms`)
       .setStyle('PRIMARY');
     if (pokemon.forms < 2) {form_cycle.setDisabled(true)}
+    const rare_candy = new MessageButton()
+      .setCustomId(`p_rare_candy,${interaction.id}`)
+      .setLabel(`Rare Candy - ₽${Math.max(50, pokemon.level * 8)}`)
+      .setStyle('PRIMARY');
+    if (trainer_info.cash < Math.max(50, pokemon.level * 8)) {rare_candy.setDisabled(true)}
     const close = new MessageButton()
       .setCustomId(`p_view_close,${interaction.id}`)
       .setLabel("Close")
       .setStyle('DANGER');
-    buttons.addComponents(evo_toggle, form_cycle, close);
+    buttons.addComponents(evo_toggle, form_cycle, rare_candy, close);
 
     // Generate embed
     const embed = new MessageEmbed()
@@ -137,7 +149,8 @@ module.exports = {
         { name: 'Types', value: field1, inline: true },
         { name: 'Egg Groups', value: field2, inline: true },
         { name: 'Traits', value: field3, inline: true },
-    	);
+    	)
+      .setFooter({ text: `Your funds: ₽${trainer_info.cash}`});
     interaction.editReply({ embeds: [embed], files: [poke_pic], components: [buttons] })
 
     let filter = button => button.customId.includes(interaction.id);
@@ -171,6 +184,18 @@ module.exports = {
           i.reply({content: content, fetchReply: true}).then(msg => {setTimeout(() => msg.delete(), 5000)});
           let update_q = "UPDATE data.pokemon_encounters SET canEvolve = 1 - canEvolve WHERE id = ?;";
           async_query(update_q, [pokemon.id]);
+        } else if (i.customId.split(',')[0] == 'p_rare_candy') {
+          trainer_info.cash -= Math.max(50, pokemon.level * 8);
+          async_query(`UPDATE data.pokemon_trainers SET cash = ? WHERE userId = ?;`, [trainer_info.cash, user.id])
+          pokemon.level += 1;
+          async_query(`UPDATE data.pokemon_encounters SET level = level + 1 WHERE id = ?;`, [pokemon.id])
+          embed.setTitle(pokemon.nick + gender + ` - Lvl. ${pokemon.level}`)
+          embed.setFooter({ text: `Your funds: ₽${trainer_info.cash}`});
+          buttons.components[2].setLabel(`Rare Candy - ₽${Math.max(50, pokemon.level * 8)}`)
+          if (trainer_info.cash < Math.max(50, pokemon.level * 8)) {
+            buttons.components[2].setDisabled(true)
+          }
+          i.update({embeds: [embed], components: [buttons]})
         }
         responded = true;
       } else {

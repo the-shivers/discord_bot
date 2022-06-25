@@ -12,16 +12,14 @@ const fs = require('fs');
 let server_filenames = fs.readdirSync(assets_dir)
 
 async function getTeamPic(full_path_arr, filename_arr, shinyShift_arr) {
-  let canvas;
-  if (full_path_arr.length <= 6) {
-    canvas = Canvas.createCanvas(600, 100);
-  } else {
-    canvas = Canvas.createCanvas(600, 200);
-  }
+  // Increase height by 100px based on length of array using integer division.
+  let amount = ~~((full_path_arr.length - 1) / 6) + 1;
+  let canvas = Canvas.createCanvas(625, amount * 100);
 	const ctx = canvas.getContext('2d');
+
   for (let i = 0; i < full_path_arr.length; i++) {
-    let y_start = (i <= 5) ? 0 : 100;
-    let x_pnlty = (i <= 5) ? 0 : -600
+    let y_start = ~~(i / 6) * 100;
+    let x_pnlty = ~~(i / 6) * -600;
     let img = await Canvas.loadImage(full_path_arr[i]);
     ctx.drawImage(img, i * 100 + x_pnlty, y_start, 100, 100);
     if (shinyShift_arr[i] != 0) {
