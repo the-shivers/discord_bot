@@ -7,7 +7,7 @@ const Canvas = require('canvas');
 const { async_query } = require('../db/scripts/db_funcs.js')
 const assets_dir = './assets/pokemon/thumbnails/';
 const f = require('../funcs.js');
-const { getHueMatrix, applyHueMatrix } = require('../assets/pokemon/poke_funcs.js');
+const { getHueMatrix, applyHueMatrix, getValue } = require('../assets/pokemon/poke_funcs.js');
 const fs = require('fs');
 let server_filenames = fs.readdirSync(assets_dir)
 
@@ -51,10 +51,14 @@ module.exports = {
       .setName('target')
       .setDescription('Pokemon team to look at (defaults to your own)')
       .setRequired(false)
+    ).addBooleanOption(option => option
+      .setName('values')
+      .setDescription('If you want to see Pokemon sale values.')
     ),
 	async execute(interaction) {
     let user = interaction.options.getUser('target') ?? interaction.user;
-    let query = "SELECT * FROM data.pokemon_encounters WHERE userId = ? AND owned = 1 ORDER BY slot ASC;";
+    let show_values = interaction.options.getBoolean('values') ?? false;
+    let query = "SELECT pe.*, p.evStage, p.baseFreq FROM data.pokemon_encounters AS pe JOIN data.pokedex AS p ON pe.pokemonId = p.pokemonId WHERE userId = ? AND owned = 1 ORDER BY slot ASC;";
     let values = [user.id]
     let team = await async_query(query, values);
     if (team.length === 0) {
@@ -85,6 +89,9 @@ module.exports = {
         }
         desc += (i + 1) + '. ' + pokemon.nick + ' | ' + pokemon.name + `\\${gender_symbol}`;
         desc += " | Lvl. " + (pokemon.level);
+        if (show_values) {
+          desc += ` | ₽${getValue(pokemon)}`
+        }
         desc += " | `" + pokemon.pokemonChar1 + "`, `" + pokemon.pokemonChar2 + "`\n"
       }
       let team_pic = await getTeamPic(full_path_arr, filename_arr, shinyShift_arr);

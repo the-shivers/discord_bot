@@ -12,6 +12,7 @@ const { async_query } = require('../db/scripts/db_funcs.js')
 const assets_dir = './assets/pokemon/';
 const config = require('../assets/pokemon/poke_info.json')
 const f = require('../funcs.js');
+const { activate_user, deactivate_user } = require('../assets/pokemon/poke_funcs.js');
 
 var description = "Throw a ball to try capturing the Pokemon! Throwing a ";
 description += "Pokeball rolls two 6-sided dice. If their sum matches or ";
@@ -206,6 +207,10 @@ module.exports = {
     .setRequired(true)
   ),
 	async execute(interaction) {
+    if (!activate_user(interaction.user.id, 'lol')) {
+      interaction.reply("You're already doing a command.")
+      return;
+    }
     let curr_epoch_s = Math.floor(new Date().getTime() / 1000);
     let generation = interaction.options.getString('generation');
     let frequency = interaction.options.getInteger('rarity');
@@ -287,6 +292,7 @@ module.exports = {
           let trainer_update_vals = [interaction.user.id, catch_data.pokeballs,
             catch_data.greatballs, catch_data.ultraballs, catch_data.omegaballs, catch_data.rareChances - 1];
           async_query(trainer_update, trainer_update_vals.concat(trainer_update_vals.slice(1)));
+          deactivate_user(interaction.user.id)
         } else {
           // Wrong person responded
           i.reply({ content: "That's not your pokemon to catch!", ephemeral: false });
@@ -300,12 +306,14 @@ module.exports = {
           let trainer_update_vals = [interaction.user.id, catch_data.pokeballs,
             catch_data.greatballs, catch_data.ultraballs, catch_data.omegaballs, catch_data.rareChances - 1];
           async_query(trainer_update, trainer_update_vals.concat(trainer_update_vals.slice(1)));
+          deactivate_user(interaction.user.id)
         }
       });
 
     } else {
       // Something went wrong, you used /pcatch too soon or are full up on 'mons
       interaction.reply(reply_content);
+      deactivate_user(interaction.user.id)
     }
 	}
 };

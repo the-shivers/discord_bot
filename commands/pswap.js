@@ -3,7 +3,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageAttachment, MessageEmbed } = require('discord.js');
 const { async_query } = require('../db/scripts/db_funcs.js')
-
+const { activate_user, deactivate_user } = require('../assets/pokemon/poke_funcs.js');
 
 module.exports = {
 	type: "private",
@@ -40,6 +40,10 @@ module.exports = {
       .setRequired(true)
     ),
 	async execute(interaction) {
+		if (!activate_user(interaction.user.id, 'lol')) {
+      interaction.reply("You're already doing a command.")
+      return;
+    }
     await interaction.deferReply();
     let slot1 = interaction.options.getInteger('slot1');
     let slot2 = interaction.options.getInteger('slot2');
@@ -48,9 +52,11 @@ module.exports = {
     let team = await async_query(query, values);
     if (slot1 > team.length || slot2 > team.length) {
       interaction.editReply("You don't have a pokemon in that slot!")
+			deactivate_user(interaction.user.id)
       return
     } else if (slot1 == slot2) {
       interaction.editReply("That doesn't make any sense!")
+			deactivate_user(interaction.user.id)
       return
     }
     let update_q = 'UPDATE data.pokemon_encounters SET slot = ? WHERE id = ?;';
@@ -59,5 +65,6 @@ module.exports = {
     await async_query(update_q, update_v1);
     await async_query(update_q, update_v2);
     interaction.editReply(`Pokemon swapped! Your ${team[slot1-1].name} is now in slot ${slot2} and your ${team[slot2-1].name} is now in slot ${slot1}!`);
+		deactivate_user(interaction.user.id)
   }
 }

@@ -3,7 +3,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageAttachment, MessageEmbed } = require('discord.js');
 const { async_query } = require('../db/scripts/db_funcs.js')
-
+const { activate_user, deactivate_user } = require('../assets/pokemon/poke_funcs.js');
 
 module.exports = {
 	type: "private",
@@ -30,19 +30,25 @@ module.exports = {
       .setDescription('The new name.').setRequired(true)
     ),
 	async execute(interaction) {
+		if (!activate_user(interaction.user.id, 'lol')) {
+      interaction.reply("You're already doing a command.")
+      return;
+    }
     let slot = interaction.options.getInteger('slot')
     let nick = interaction.options.getString('nickname')
-    nick = nick.slice(0, 31);
+    nick = nick.slice(0, 63);
     let query = 'SELECT * FROM data.pokemon_encounters WHERE userId = ? AND owned = 1 ORDER BY slot ASC;';
     let values = [interaction.user.id];
     let status = await async_query(query, values);
     if (slot > status.length) {
       interaction.reply("You don't have a pokemon in that slot!")
+			deactivate_user(interaction.user.id)
     } else {
       let rename_query = 'UPDATE data.pokemon_encounters SET nick = ? WHERE id = ?';
       let rename_vals = [nick, status[slot-1].id];
       await async_query(rename_query, rename_vals);
       interaction.reply(`Pokemon renamed! Your ${status[slot-1].name} is now known as ${nick}!`);
+			deactivate_user(interaction.user.id)
     }
 	}
 };

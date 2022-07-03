@@ -3,7 +3,7 @@
 // TO DO: fix genderless thing
 
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { getCaptureDifficulty, getShinyAttachment } = require('../assets/pokemon/poke_funcs.js');
+const { getCaptureDifficulty, getShinyAttachment, activate_user, deactivate_user } = require('../assets/pokemon/poke_funcs.js');
 const {
   MessageAttachment, MessageEmbed, MessageActionRow, MessageButton, MessageSelectMenu
 } = require('discord.js');
@@ -11,7 +11,7 @@ const Canvas = require('canvas');
 const { async_query } = require('../db/scripts/db_funcs.js')
 const assets_dir = './assets/pokemon/';
 const config = require('../assets/pokemon/poke_info.json')
-const rvals = require('../assets/pokemon/poke_info.json').release_values;
+const { getValue } = require('../assets/pokemon/poke_funcs.js');
 const f = require('../funcs.js');
 
 var description = "Throw a ball to try capturing the Pokemon! Throwing a ";
@@ -52,10 +52,10 @@ async function generate_embed(interaction, generation, curr_epoch_s) {
   let status_query = 'SELECT MAX(epoch) AS m_epoch FROM data.pokemon_encounters WHERE userId = ? AND isTraining = 0 AND isRadar = 0;';
   let status_result = await async_query(status_query, [user_id]);
   let can_catch = (status_result.length === 0 || status_result[0].m_epoch * 1000 < l_epoch);
-  // can_catch = (interaction.user.id == 790037139546570802) ? true : can_catch;
+  can_catch = (interaction.user.id == 790037139546570802) ? true : can_catch;
 
   // Get owned pokemon
-  let owned_query = "SELECT pe.*, p.frequency FROM data.pokemon_encounters AS pe JOIN data.pokedex AS p ON pe.pokemonId = p.pokemonId WHERE userId = ? AND owned = 1 ORDER BY slot ASC;";
+  let owned_query = "SELECT pe.*, p.frequency, p.baseFreq, p.evStage FROM data.pokemon_encounters AS pe JOIN data.pokedex AS p ON pe.pokemonId = p.pokemonId WHERE userId = ? AND owned = 1 ORDER BY slot ASC;";
   let owned_pokemon_result = await async_query(owned_query, [user_id]) // determines if we have too many pokemon
   let owned_pokemon = owned_pokemon_result.length;
 
@@ -109,6 +109,10 @@ async function generate_embed(interaction, generation, curr_epoch_s) {
       gender = 'unknown'
       gender_symbol = ''
     }
+
+    // update the pokemon object just so we can put it into the getValue function
+    pokemon.level = 1;
+    pokemon.isShiny = isShiny;
 
     update_query = `
     INSERT INTO data.pokemon_encounters (userId, pokemonId, name, nick,
@@ -209,6 +213,10 @@ module.exports = {
       .addChoices({name:'Any Gen', value:'any'})
     ),
 	async execute(interaction) {
+    if (!activate_user(interaction.user.id, 'lol')) {
+      interaction.reply("You're already doing a command.")
+      return;
+    }
     let curr_epoch_s = Math.floor(new Date().getTime() / 1000);
     let generation = interaction.options.getString('generation') ?? 'any';
     let response = await generate_embed(interaction, generation, curr_epoch_s);
@@ -238,6 +246,7 @@ module.exports = {
           if (i.customId.split(',')[0] == 'p_catch_decline') {
             content = 'You ran away from the wild Pokemon!'
             i.reply(content);
+            deactivate_user(interaction.user.id)
             return;
           } else if (i.customId.split(',')[0] == 'p_catch_poke') {
             catch_data.pokeballs -= 1;
@@ -282,12 +291,12 @@ module.exports = {
                 let options_arr = []
                 for (let j = 0; j < catch_data.owned_pokemon; j++) {
                   let mon = catch_data.team[j] ?? catch_data.pokemon;
-                  mon.level = mon.level ?? 1;
                   mon.nick = mon.nick ?? '???';
-                  let money = rvals[mon.frequency]
-              		money += mon.level * 20;
-                  let shiny = mon.isShiny ?? catch_data.isShiny;
-              		money = (shiny == 1) ? money * 2 : money;
+                  // let money = rvals[mon.frequency]
+              		// money += mon.level * 20;
+                  // let shiny = mon.isShiny ?? catch_data.isShiny;
+              		// money = (shiny == 1) ? money * 2 : money;
+                  let money = getValue(mon);
                   options_arr.push({label: `${j+1}. ${mon.name}`, description: `Release slot ${j+1}`, value: `${j}`})
                   content += `\n${j+1}. ${mon.nick} | Lvl. ${mon.level} ${mon.name} | ₽${money}`
                 }
@@ -318,26 +327,24 @@ module.exports = {
                       // Releasing the newly caught one. One query.
                       encounter_update_v = encounter_update_v.concat([0, 1, interaction.user.id, curr_epoch_s, catch_data.pokemon.name])
                       async_query(encounter_update_q, encounter_update_v);
-                      release_money = rvals[catch_data.pokemon.frequency];
-                      release_money += 1 * 20;
-                  		release_money = (catch_data.isShiny == 1) ? release_money * 2 : release_money;
+                      release_money = getValue(catch_data.pokemon);
                       k.reply(`You released ${catch_data.pokemon.name} and got \`₽${release_money}!\``)
                       let trainer_update_vals = [interaction.user.id, catch_data.pokeballs,
                         catch_data.greatballs, catch_data.ultraballs, catch_data.omegaballs, release_money];
                       async_query(trainer_update, trainer_update_vals.concat(trainer_update_vals.slice(1)));
+                      deactivate_user(interaction.user.id)
                     } else {
                       // Releasing an old mon. Two queries, one for updating the encounter, one for releasing the mon.
                       encounter_update_v = encounter_update_v.concat([1, 1, interaction.user.id, curr_epoch_s, catch_data.pokemon.name])
                       async_query(encounter_update_q, encounter_update_v);
                       let release_q = "UPDATE data.pokemon_encounters SET owned = 0 WHERE id = ?;";
                       async_query(release_q, [catch_data.team[parseInt(k.values[0])].id])
-                      release_money = rvals[catch_data.team[parseInt(k.values[0])].frequency];
-                      release_money += catch_data.team[parseInt(k.values[0])].level * 20;
-                  		release_money = (catch_data.team[parseInt(k.values[0])].isShiny == 1) ? release_money * 2 : release_money;
+                      release_money = getValue(catch_data.team[parseInt(k.values[0])]);
                       k.reply(`You released ${catch_data.team[parseInt(k.values[0])].name} and got \`₽${release_money}!\``)
                       let trainer_update_vals = [interaction.user.id, catch_data.pokeballs,
                         catch_data.greatballs, catch_data.ultraballs, catch_data.omegaballs, release_money];
                       async_query(trainer_update, trainer_update_vals.concat(trainer_update_vals.slice(1)));
+                      deactivate_user(interaction.user.id)
                     }
                   }
                 })
@@ -346,13 +353,12 @@ module.exports = {
                     i.editReply({ components: [disabled_release_components_row] })
                     encounter_update_v = encounter_update_v.concat([0, 1, interaction.user.id, curr_epoch_s, catch_data.pokemon.name])
                     async_query(encounter_update_q, encounter_update_v);
-                    release_money = rvals[catch_data.pokemon.frequency];
-                    release_money += 1 * 20;
-                    release_money = (catch_data.isShiny == 1) ? release_money * 2 : release_money;
+                    release_money = getValue(catch_data.pokemon);
                     i.channel.send(`You released ${catch_data.pokemon.name} and got \`₽${release_money}!\``)
                     let trainer_update_vals = [interaction.user.id, catch_data.pokeballs,
                       catch_data.greatballs, catch_data.ultraballs, catch_data.omegaballs, release_money];
                     async_query(trainer_update, trainer_update_vals.concat(trainer_update_vals.slice(1)));
+                    deactivate_user(interaction.user.id)
                   }
                 });
 
@@ -364,12 +370,14 @@ module.exports = {
                 let trainer_update_vals = [interaction.user.id, catch_data.pokeballs,
                   catch_data.greatballs, catch_data.ultraballs, catch_data.omegaballs, release_money];
                 async_query(trainer_update, trainer_update_vals.concat(trainer_update_vals.slice(1)));
+                deactivate_user(interaction.user.id)
               }
             } else {
               content += `Oh no! The wild ${catch_data.pokemon.name} escaped!`
               encounter_update_v = encounter_update_v.concat([0, 0, interaction.user.id, curr_epoch_s, catch_data.pokemon.name])
               i.reply({ content: content, ephemeral: false });
               async_query(encounter_update_q, encounter_update_v);
+              deactivate_user(interaction.user.id)
             }
           }
         } else {
@@ -382,11 +390,13 @@ module.exports = {
         if (!responded) {
           interaction.editReply({ components: [new_row] })
           interaction.channel.send("The pokemon got away!")
+          deactivate_user(interaction.user.id)
         }
       });
 
     } else {
       interaction.reply(reply_content);
+      deactivate_user(interaction.user.id)
     }
 	}
 };

@@ -8,7 +8,7 @@ const {
 const { async_query } = require('../db/scripts/db_funcs.js')
 const assets_dir = './assets/pokemon/images/';
 const config = require('../assets/pokemon/poke_info.json')
-const { getStats, getPokePic } = require('../assets/pokemon/poke_funcs.js');
+const { getStats, getPokePic, activate_user, deactivate_user } = require('../assets/pokemon/poke_funcs.js');
 const fs = require('fs');
 let filenames = fs.readdirSync(assets_dir)
 
@@ -37,6 +37,10 @@ module.exports = {
       .setDescription('The slot of the pokemon to view.')
     ),
 	async execute(interaction) {
+    if (!activate_user(interaction.user.id, 'lol')) {
+      interaction.reply("You're already doing a command.")
+      return;
+    }
     await interaction.deferReply({fetchReply: true});
 
     // Fetch information about Pokemon.
@@ -57,9 +61,11 @@ module.exports = {
     let team = await async_query(query1, values1);
     if (team.length === 0) {
       interaction.editReply(`${user.username} doesn't have any Pokemon! Catch some with `/pcatch`!`);
+      deactivate_user(interaction.user.id)
       return;
     } else if (slot > team.length) {
       interaction.editReply("No pokemon in that slot!")
+      deactivate_user(interaction.user.id)
       return;
     }
     let pokemon = team[slot-1];
@@ -144,13 +150,12 @@ module.exports = {
       .setDescription(description + ev_text + stats_block)
       .setImage('attachment://poke_pic.png')
       .setAuthor({name: author})
-      .setFooter({ text: `${(pokemon.experience * 100).toFixed(1)}% to next level` })
+      .setFooter({ text: `${(pokemon.experience * 100).toFixed(1)}% to next level | Your funds: ₽${trainer_info.cash}` })
       .addFields(
         { name: 'Types', value: field1, inline: true },
         { name: 'Egg Groups', value: field2, inline: true },
         { name: 'Traits', value: field3, inline: true },
     	)
-      .setFooter({ text: `Your funds: ₽${trainer_info.cash}`});
     interaction.editReply({ embeds: [embed], files: [poke_pic], components: [buttons] })
 
     let filter = button => button.customId.includes(interaction.id);
@@ -166,6 +171,7 @@ module.exports = {
           interaction.fetchReply()
             .then(reply => {setTimeout(() => reply.delete(), 2000)})
             .catch(console.error);
+          deactivate_user(interaction.user.id)
         } else if (i.customId.split(',')[0] == 'p_view_cycle') {
           pokemon.formIndex = (pokemon.formIndex + 1) % pokemon.forms
           filename = filename_arr[pokemon.formIndex];
@@ -209,6 +215,7 @@ module.exports = {
         interaction.fetchReply()
           .then(reply => {setTimeout(() => reply.delete(), 2000)})
           .catch(console.error);
+        deactivate_user(interaction.user.id)
       }
     });
 

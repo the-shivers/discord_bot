@@ -13,6 +13,7 @@ async function plevels() {
 		// if (result[i].userId != 790037139546570802) {continue}
     let new_level = result[i].level;
     let increment = 1/144;
+		increment *= 3 * Math.exp(-0.0168 * result[i].level)
 		let new_exp = result[i].experience + increment;
     if (new_exp > 1) {
       new_level += 1;
@@ -47,12 +48,12 @@ async function plevels() {
 			]
 	    let update_query = "UPDATE data.pokemon_encounters SET owned = 0 WHERE id = ?;";
 	    let update_values = [result[i].id]
-			async_query(insert_query, insert_vals)
-			async_query(update_query, update_values);
+			await async_query(insert_query, insert_vals)
+			await async_query(update_query, update_values);
     } else {
 			let update_query = "UPDATE data.pokemon_encounters SET level = ?, experience = ? WHERE id = ?;";
 	    let update_values = [new_level, new_exp, result[i].id]
-			async_query(update_query, update_values);
+			await async_query(update_query, update_values);
 		}
 	}
 }

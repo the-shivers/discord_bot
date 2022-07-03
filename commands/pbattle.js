@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { getStats, getPokePic } = require('../assets/pokemon/poke_funcs.js');
+const { getStats, getPokePic, activate_user, deactivate_user } = require('../assets/pokemon/poke_funcs.js');
 const {
   MessageAttachment, MessageEmbed, MessageActionRow, MessageButton, MessageSelectMenu
 } = require('discord.js');
@@ -266,7 +266,7 @@ function limitDesc(desc) {
 
 async function generateGymBattleEmbed(interaction, leader_name, user_team, leader_team) {
   let th_filename = leader_name.toLowerCase().replaceAll(' ', '_') + '.png';
-  let th_img_src = assets_dir + th_filename;
+  let th_img_src = assets_dir + 'gym_leaders/' + th_filename;
   let th_image = new MessageAttachment(th_img_src, th_filename);
   let battlefield = await getBattlefield(user_team, leader_team, '', '', false, false)
   let desc = `${leader_name.toUpperCase()} sent out ${leader_team[0].name} (lvl ${leader_team[0].level})!\n${interaction.user.username} sent out ${user_team[0].nick} (lvl ${user_team[0].level})!`;
@@ -293,11 +293,16 @@ async function gymBattle(interaction, userId, user_pkmn, curr_epoch_s) {
     }
   }
   let leader_info = await getLeaderTeam(gym_level)
+  let music_filename = 'gen_I_gym.mp3';
+  let music_src = assets_dir + 'music/' + music_filename;
+  let music = new MessageAttachment(music_src, 'the_cum_song.mp3');
+  // interaction.followUp({content: "Test uwu", files: [music]})
   let leader_name = leader_info[0]
   let leader_team = leader_info[1]
   let user_team = await getUserTeam(user_pkmn)
   let response_data = await generateGymBattleEmbed(interaction, leader_name, user_team, leader_team)
-  interaction.editReply(response_data)
+  await interaction.editReply(response_data)
+  await interaction.followUp({files: [music]})
   await new Promise(resolve => setTimeout(resolve, 2000));
   // Core battle Loop
   console.log(user_team[0], '\n', leader_team[0])
@@ -382,12 +387,7 @@ async function gymBattle(interaction, userId, user_pkmn, curr_epoch_s) {
     userTurn = !userTurn
     continue
   }
-  console.log("Just escaped the while loop!")
-  console.log("Here are the teams...")
-  console.log("Leader team:", leader_team)
-  console.log("User team", user_team)
   if (leader_team.length == 0) {
-    console.log("In here.")
     let trainer_update_q = 'UPDATE data.pokemon_trainers SET cash = cash + ? WHERE userId = ?';
     let trainer_update_v = [payouts[gym_level - 1], interaction.user.id]
     async_query(trainer_update_q, trainer_update_v)
@@ -396,7 +396,6 @@ async function gymBattle(interaction, userId, user_pkmn, curr_epoch_s) {
     async_query(battle_update_q, battle_update_v)
     interaction.followUp(`Congrats! You won \`₽${payouts[gym_level - 1]}\` for your effort!`)
   } else {
-    console.log("In here actually.")
     let battle_update_q = 'INSERT INTO data.pokemon_battles (userId, epoch, type, gymLevel, userWon) VALUES (?, ?, ?, ?, ?)'
     let battle_update_v = [interaction.user.id, curr_epoch_s, 'gym', gym_level, 0]
     async_query(battle_update_q, battle_update_v)
@@ -417,24 +416,32 @@ module.exports = {
       .setDescription('Leave blank to battle Gym Leaders.')
     ),
 	async execute(interaction) {
+    if (!activate_user(interaction.user.id, 'lol')) {
+      interaction.reply("You're already doing a command.")
+      return;
+    }
     await interaction.deferReply();
     let curr_epoch_s = Math.floor(new Date().getTime() / 1000);
     let userId = interaction.user.id;
     let trainInfo = await canUserBattle(userId, curr_epoch_s);
     if (!trainInfo.status) {
       interaction.editReply(trainInfo.msg)
+      deactivate_user(interaction.user.id)
       return
     }
     let user_pkmn = await async_query("SELECT pe.*, p.hp, p.attack, p.defense, p.spAttack, p.spDefense, p.speed, p.type1, p.type2 FROM data.pokemon_encounters AS pe LEFT JOIN data.pokedex AS p ON pe.pokemonId = p.pokemonId WHERE pe.userId = ? AND pe.owned = 1 ORDER BY pe.slot ASC LIMIT 6;", [userId])
     if (user_pkmn.length == 0) {
       interaction.editReply("You need pokemon before you can battle! Catch some with /pcatch!")
+      deactivate_user(interaction.user.id)
       return;
     }
     let target = interaction.options.getString('target') ?? 'gym';
     if (target === 'gym') {
-      gymBattle(interaction, userId, user_pkmn, curr_epoch_s)
+      await gymBattle(interaction, userId, user_pkmn, curr_epoch_s)
+      deactivate_user(interaction.user.id)
     } else {
       interaction.editReply("Not ready yet!")
+      deactivate_user(interaction.user.id)
     }
 	}
 };

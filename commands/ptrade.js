@@ -8,6 +8,7 @@ const {
 } = require('discord.js');
 const Canvas = require('canvas');
 const { async_query } = require('../db/scripts/db_funcs.js')
+const { activate_user, deactivate_user } = require('../assets/pokemon/poke_funcs.js');
 
 
 module.exports = {
@@ -49,6 +50,10 @@ module.exports = {
       .setRequired(true)
     ),
 	async execute(interaction) {
+    if (!activate_user(interaction.user.id, 'lol')) {
+      interaction.reply("You're already doing a command.")
+      return;
+    }
     await interaction.deferReply();
     let user = interaction.user;
     let target = interaction.options.getUser('target');
@@ -60,18 +65,23 @@ module.exports = {
 
     if (user_team.length === 0) {
       interaction.editReply("You don't have any Pokemon! Try catching one with `/pcatch`!");
+      deactivate_user(interaction.user.id)
       return;
     } else if (target_team.length === 0) {
       interaction.editReply("They don't have any Pokemon! They can catch some with `/pcatch`!")
+      deactivate_user(interaction.user.id)
       return;
     } else if (user_slot > user_team.length) {
       interaction.editReply("You don't have a Pokemon in that slot! You can check with `/pteam`!")
+      deactivate_user(interaction.user.id)
       return;
     } else if (target_slot > target_team.length) {
       interaction.editReply("They don't have a Pokemon in that slot! You can check with `/pteam`!")
+      deactivate_user(interaction.user.id)
       return;
     } else if (target.id === user.id) {
       interaction.editReply("You can't trade with yourself!")
+      deactivate_user(interaction.user.id)
       return;
     }
 
@@ -129,6 +139,7 @@ module.exports = {
         responded = true;
         i.reply({ content: content, ephemeral: false });
         interaction.editReply({ components: [new_row] })
+        deactivate_user(interaction.user.id)
       } else {
         i.reply({ content: "That trade offer isn't for you!", ephemeral: false });
       }
@@ -138,6 +149,7 @@ module.exports = {
       if (!responded) {
         interaction.editReply({ components: [new_row] })
         interaction.channel.send(`The trade was declined because ${target.username} took too long.`)
+        deactivate_user(interaction.user.id)
       }
     });
 

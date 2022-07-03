@@ -3,7 +3,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageAttachment, MessageEmbed } = require('discord.js');
 const { async_query } = require('../db/scripts/db_funcs.js')
-
+const { activate_user, deactivate_user } = require('../assets/pokemon/poke_funcs.js');
 
 module.exports = {
 	type: "private",
@@ -27,23 +27,30 @@ module.exports = {
       .setRequired(true)
     ),
 	async execute(interaction) {
+		if (!activate_user(interaction.user.id, 'lol')) {
+      interaction.reply("You're already doing a command.")
+      return;
+    }
     let slot = interaction.options.getInteger('slot')
     let query = 'SELECT * FROM data.pokemon_encounters WHERE userId = ? AND owned = 1 ORDER BY slot ASC;';
     let values = [interaction.user.id];
     let status = await async_query(query, values);
     if (slot > status.length) {
       interaction.reply("You don't have a pokemon in that slot!")
+			deactivate_user(interaction.user.id)
       return
     }
     let pokemon = status[slot-1]
     if (pokemon.gender == 'unknown') {
       interaction.reply("You can't change this pokemon's gender!")
+			deactivate_user(interaction.user.id)
       return
     }
 		let trainer_result = await async_query("SELECT * FROM data.pokemon_trainers WHERE userId = ?;", [interaction.user.id]);
 		let trainer = trainer_result[0];
 		if (trainer.hormones == 0) {
 			interaction.reply("You don't have any hormones! Buy some with /pmart.");
+			deactivate_user(interaction.user.id)
 			return
 		}
     let new_gender = (pokemon.gender == 'male') ? 'female' : 'male';
@@ -54,5 +61,6 @@ module.exports = {
     let trainer_vals = [interaction.user.id];
     await async_query(trainer_query, trainer_vals);
     interaction.reply(`Pokemon changed! Your ${pokemon.name} is now ${new_gender}!`);
+		deactivate_user(interaction.user.id)
   }
 }

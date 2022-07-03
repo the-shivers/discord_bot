@@ -6,6 +6,7 @@ const {
 } = require('discord.js');
 const { async_query } = require('../db/scripts/db_funcs.js')
 const assets_dir = './assets/pokemon/';
+const { activate_user, deactivate_user } = require('../assets/pokemon/poke_funcs.js');
 
 
 function generate_embed(interaction, cash, slots) {
@@ -15,8 +16,8 @@ function generate_embed(interaction, cash, slots) {
   let image = new MessageAttachment(img_src, filename);
 
   // Get Description
-  let description = `Omega Ball - \`₽3000\` - Roll 7 dice, massively increasing capture chance.
-  Ultra Ball - \`₽1500\` - Roll 4 dice, greatly increasing capture chance.
+  let description = `Omega Ball - \`₽2500\` - Roll 7 dice, massively increasing capture chance.
+  Ultra Ball - \`₽1000\` - Roll 4 dice, greatly increasing capture chance.
   Great Ball - \`₽750\` - Roll 3 dice, increasing capture chance.
   Poke Ball - \`₽400\` - Roll 2 dice, for a standard capture chance.
   New Pokemon Slot - \`₽5000\` - Hold an additional Pokemon (Max: 18 slots)
@@ -46,12 +47,12 @@ function generate_embed(interaction, cash, slots) {
     .setCustomId(`p_buy_omega,${interaction.id}`)
     .setLabel(`Omega Ball`)
     .setStyle('PRIMARY');
-  if (cash <= 3000) {omega.setDisabled(true)}
+  if (cash <= 2500) {omega.setDisabled(true)}
   const ultra = new MessageButton()
     .setCustomId(`p_buy_ultra,${interaction.id}`)
     .setLabel(`Ultra Ball`)
     .setStyle('PRIMARY');
-  if (cash <= 1500) {ultra.setDisabled(true)}
+  if (cash <= 1000) {ultra.setDisabled(true)}
   const great = new MessageButton()
     .setCustomId(`p_buy_great,${interaction.id}`)
     .setLabel(`Great Ball`)
@@ -92,6 +93,10 @@ module.exports = {
 		.setName('pmart')
 		.setDescription('Shop at the PokeMart!'),
 	async execute(interaction) {
+    if (!activate_user(interaction.user.id, 'lol')) {
+      interaction.reply("You're already doing a command.")
+      return;
+    }
     await interaction.deferReply();
 
     // Get their info.
@@ -128,6 +133,7 @@ module.exports = {
           i.reply('You ran away from the PokeMart!')
           interaction.editReply({ components: [new_row1, new_row2] })
           responded = true;
+          deactivate_user(interaction.user.id)
           return;
         } else if (i.customId.split(',')[0] == 'p_buy_slot') {
           cash -= 5000;
@@ -145,16 +151,16 @@ module.exports = {
           async_query(update_q, [cash, userId])
           interaction.editReply(generate_embed(interaction, cash, slots));
         } else if (i.customId.split(',')[0] == 'p_buy_omega') {
-          cash -= 3000;
+          cash -= 2500;
           item = "n Omega Ball";
-          price = 3000;
+          price = 2500;
           let update_q = 'UPDATE data.pokemon_trainers SET cash = ?, omegaballs = omegaballs + 1 WHERE userId = ?;';
           async_query(update_q, [cash, userId])
           interaction.editReply(generate_embed(interaction, cash, slots));
         } else if (i.customId.split(',')[0] == 'p_buy_ultra') {
-          cash -= 1500;
+          cash -= 1000;
           item = "n Ultra Ball";
-          price = 1500;
+          price = 1000;
           let update_q = 'UPDATE data.pokemon_trainers SET cash = ?, ultraballs = ultraballs + 1 WHERE userId = ?;';
           async_query(update_q, [cash, userId])
           interaction.editReply(generate_embed(interaction, cash, slots));
@@ -190,6 +196,7 @@ module.exports = {
       if (!responded) {
         interaction.editReply({ components: [new_row1, new_row2] })
         interaction.channel.send("The shop closed!")
+        deactivate_user(interaction.user.id)
       }
     });
 

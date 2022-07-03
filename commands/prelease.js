@@ -6,8 +6,8 @@ const { MessageAttachment, MessageEmbed, MessageActionRow, MessageButton } = req
 const { async_query } = require('../db/scripts/db_funcs.js')
 const assets_dir = './assets/pokemon/images/';
 const config = require('../assets/pokemon/poke_info.json')
-const { getStats, getPokePic } = require('../assets/pokemon/poke_funcs.js');
-const rvals = require('../assets/pokemon/poke_info.json').release_values;
+const { getStats, getPokePic, activate_user, deactivate_user } = require('../assets/pokemon/poke_funcs.js');
+const { getValue } = require('../assets/pokemon/poke_funcs.js');
 const fs = require('fs');
 let filenames = fs.readdirSync(assets_dir)
 
@@ -35,20 +35,22 @@ module.exports = {
       .setRequired(true)
     ),
 	async execute(interaction) {
+		if (!activate_user(interaction.user.id, 'lol')) {
+      interaction.reply("You're already doing a command.")
+      return;
+    }
 		await interaction.deferReply();
     let slot = interaction.options.getInteger('slot')
-    let query = 'SELECT p.*, pd.frequency, pd.type1 FROM data.pokemon_encounters AS p LEFT JOIN data.pokedex AS pd ON p.pokemonId = pd.pokemonId WHERE userId = ? AND owned = 1 ORDER BY slot ASC;';
+    let query = 'SELECT p.*, pd.frequency, pd.type1, pd.baseFreq, pd.evStage FROM data.pokemon_encounters AS p LEFT JOIN data.pokedex AS pd ON p.pokemonId = pd.pokemonId WHERE userId = ? AND owned = 1 ORDER BY slot ASC;';
     let values = [interaction.user.id];
     let status = await async_query(query, values);
     if (slot > status.length) {
       interaction.editReply("You don't have a pokemon in that slot!")
+			deactivate_user(interaction.user.id)
 			return;
     }
 		let pokemon = status[slot - 1];
-
-		let money = rvals[pokemon.frequency]
-		money += pokemon.level * 20;
-		money = (pokemon.isShiny == 1) ? money * 2 : money;
+		let money = getValue(pokemon);
 		let gender = ''
     if (pokemon.gender == 'male') {
       gender = '\♂'
@@ -102,6 +104,7 @@ module.exports = {
 				interaction.editReply({ components: [new_row] })
 				if (i.customId.split(',')[0] == 'keep') {
 					i.reply('You kept your pokemon!')
+					deactivate_user(interaction.user.id)
 				} else if (i.customId.split(',')[0] == 'release') {
 					i.reply(`Goodbye ${pokemon.name}! Other slots have updated. You got ₽${money} for releasing them.`);
 					let release_query = 'UPDATE data.pokemon_encounters SET owned = 0 WHERE id = ?;';
@@ -109,6 +112,7 @@ module.exports = {
 					let money_query = 'UPDATE data.pokemon_trainers SET cash = cash + ? WHERE userId = ?;'
 					async_query(release_query, release_values);
 					async_query(money_query, [money, interaction.user.id]);
+					deactivate_user(interaction.user.id)
 				}
 			} else {
 				i.reply({ content: "That's not your pokemon to release or keep!", ephemeral: false });
@@ -119,6 +123,7 @@ module.exports = {
 			if (!responded) {
 				interaction.editReply({ components: [new_row] })
 				interaction.channel.send("Took too long to decide!");
+				deactivate_user(interaction.user.id)
 			}
 		})
 
