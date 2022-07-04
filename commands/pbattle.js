@@ -62,6 +62,7 @@ async function getLeaderTeam(gymLevel) {
     [gymLevel]
   )
   let leader_name = leader_result[0].leaderName;
+  let leader_gen = leader_result[0].gen;
   let leader_id_arr = [];
   for (let i = 0; i < leader_result.length; i++) {
     if (leader_result[i].leaderName == leader_name) {
@@ -70,7 +71,6 @@ async function getLeaderTeam(gymLevel) {
     }
   }
   let leader_team = [];
-  let user_team = [];
   for (let i = 0; i < leader_id_arr.length; i++) {
     let pkmn_pokedex = await async_query("SELECT * FROM data.pokedex WHERE pokemonId = ?;", [leader_id_arr[i]])
     let rand_level = Math.min(leader_lvls[gymLevel - 1] + Math.ceil((Math.random() - .5) * 14), 100);
@@ -96,7 +96,7 @@ async function getLeaderTeam(gymLevel) {
       }
     )
   }
-  return [leader_name, leader_team]
+  return [leader_name, leader_team, leader_gen]
 }
 
 async function getUserTeam(query_result) {
@@ -293,12 +293,12 @@ async function gymBattle(interaction, userId, user_pkmn, curr_epoch_s) {
     }
   }
   let leader_info = await getLeaderTeam(gym_level)
-  let music_filename = 'gen_I_gym.mp3';
-  let music_src = assets_dir + 'music/' + music_filename;
-  let music = new MessageAttachment(music_src, 'the_cum_song.mp3');
-  // interaction.followUp({content: "Test uwu", files: [music]})
   let leader_name = leader_info[0]
   let leader_team = leader_info[1]
+  let music_filename = `gen_${leader_info[2].toLowerCase()}_gym.mp3`;
+  let music_src = assets_dir + 'music/' + music_filename;
+  let music = new MessageAttachment(music_src, `${leader_name}'s_theme.mp3`);
+  // interaction.followUp({content: "Test uwu", files: [music]})
   let user_team = await getUserTeam(user_pkmn)
   let response_data = await generateGymBattleEmbed(interaction, leader_name, user_team, leader_team)
   await interaction.editReply(response_data)
@@ -429,7 +429,7 @@ module.exports = {
       deactivate_user(interaction.user.id)
       return
     }
-    let user_pkmn = await async_query("SELECT pe.*, p.hp, p.attack, p.defense, p.spAttack, p.spDefense, p.speed, p.type1, p.type2 FROM data.pokemon_encounters AS pe LEFT JOIN data.pokedex AS p ON pe.pokemonId = p.pokemonId WHERE pe.userId = ? AND pe.owned = 1 ORDER BY pe.slot ASC LIMIT 6;", [userId])
+    let user_pkmn = await async_query("SELECT pe.*, p.hp, p.attack, p.defense, p.spAttack, p.spDefense, p.speed, p.type1, p.type2 FROM data.pokemon_encounters AS pe LEFT JOIN data.pokedex AS p ON pe.pokemonId = p.pokemonId WHERE pe.userId = ? AND pe.owned = 1 AND pe.level > 0 ORDER BY pe.slot ASC LIMIT 6;", [userId])
     if (user_pkmn.length == 0) {
       interaction.editReply("You need pokemon before you can battle! Catch some with /pcatch!")
       deactivate_user(interaction.user.id)

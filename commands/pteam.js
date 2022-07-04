@@ -76,12 +76,15 @@ module.exports = {
 
         let server_filename_arr = server_filenames.filter(filename => filename.startsWith(pokemon.pokemonId.toString().padStart(3, '0')));
         server_filename_arr.unshift(server_filename_arr.pop());
-        filename = server_filename_arr[pokemon.formIndex];
+        if (pokemon.level > 0) {
+          filename = server_filename_arr[pokemon.formIndex];
+          shinyShift_arr.push(pokemon.shinyShift);
+        } else {
+          filename = 'egg_thumbnail.png'
+          shinyShift_arr.push(0);
+        }
         full_path_arr.push(assets_dir + filename);
         filename_arr.push(filename);
-
-
-        shinyShift_arr.push(pokemon.shinyShift);
         if (pokemon.gender == 'male') {
           gender_symbol = '\♂';
         } else if (pokemon.gender == 'female') {
@@ -92,7 +95,11 @@ module.exports = {
         if (show_values) {
           desc += ` | ₽${getValue(pokemon)}`
         }
-        desc += " | `" + pokemon.pokemonChar1 + "`, `" + pokemon.pokemonChar2 + "`\n"
+        if (pokemon.level > 0) {
+          desc += " | `" + pokemon.pokemonChar1 + "`, `" + pokemon.pokemonChar2 + "`\n"
+        } else {
+          desc += " | `???`, `???`\n"
+        }
       }
       let team_pic = await getTeamPic(full_path_arr, filename_arr, shinyShift_arr);
       const embed = new MessageEmbed()

@@ -61,12 +61,18 @@ module.exports = {
 		let field1 = `\`${pokemon.name} ${gender}\``;
 		let field2 = `\`${pokemon.level}\``;
 		let field3 = `\`${pokemon.pokemonChar1}\`, \`${pokemon.pokemonChar2}\``;
+		if (pokemon.level <= 0) {
+			field3 = `\`???\`, \`???\``;
+		}
 		let desc = `You will gain ₽${money} if you choose to release this Pokemon.`;
 		let filename_arr = filenames.filter(filename => filename.startsWith(pokemon.pokemonId.toString().padStart(3, '0')));
     filename_arr.unshift(filename_arr.pop());
     let filename = filename_arr[pokemon.formIndex];
     let full_path = assets_dir + filename;
     let poke_pic = await getPokePic(full_path, filename, pokemon.shinyShift);
+		if (pokemon.level <= 0) {
+      poke_pic = new MessageAttachment(assets_dir + 'egg.png', 'poke_pic.png');
+    }
 		const buttons = new MessageActionRow();
 		const release = new MessageButton()
 			.setCustomId(`release,${interaction.id}`)

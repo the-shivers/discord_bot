@@ -112,31 +112,37 @@ module.exports = {
     let filename = filename_arr[pokemon.formIndex];
     let full_path = assets_dir + filename;
     let poke_pic = await getPokePic(full_path, filename, pokemon.shinyShift);
+    if (pokemon.level <= 0) {
+      poke_pic = new MessageAttachment(assets_dir + 'egg.png', 'poke_pic.png');
+    }
 
     // Generate stats block.
     let stats_block = "\n```";
-    let stats = getStats(pokemon.epoch, pokemon.level, pokemon);
-    for (var key of Object.keys(stats)) {
-      stats_block += key.slice(0, 3).padStart(3, ' ') + ' ' + stats[key].val.toString().padStart(3, ' ');
-      stats_block += ` ${stats[key].symb} |${'|'.repeat(Math.ceil(stats[key].val / 5))}\n`
+    if (pokemon.level > 0) {
+      let stats = getStats(pokemon.epoch, pokemon.level, pokemon);
+      for (var key of Object.keys(stats)) {
+        stats_block += key.slice(0, 3).padStart(3, ' ') + ' ' + stats[key].val.toString().padStart(3, ' ');
+        stats_block += ` ${stats[key].symb} |${'|'.repeat(Math.ceil(stats[key].val / 5))}\n`
+      }
+      stats_block = stats_block.slice(0,-1).toUpperCase() + '```'
     }
-    stats_block = stats_block.slice(0,-1).toUpperCase() + '```'
 
     const buttons = new MessageActionRow();
     const evo_toggle = new MessageButton()
       .setCustomId(`p_view_evo,${interaction.id}`)
       .setLabel(`${(pokemon.canEvolve) == 1 ? 'Disable Evolution' : 'Enable Evolution'}`)
       .setStyle('PRIMARY');
+    if (pokemon.level <= 0) {evo_toggle.setDisabled(true)}
     const form_cycle = new MessageButton()
       .setCustomId(`p_view_cycle,${interaction.id}`)
       .setLabel(`Cycle Forms`)
       .setStyle('PRIMARY');
-    if (pokemon.forms < 2) {form_cycle.setDisabled(true)}
+    if (pokemon.forms < 2 || pokemon.level <= 0) {form_cycle.setDisabled(true)}
     const rare_candy = new MessageButton()
       .setCustomId(`p_rare_candy,${interaction.id}`)
       .setLabel(`Rare Candy - ₽${Math.max(50, pokemon.level * 8)}`)
       .setStyle('PRIMARY');
-    if (trainer_info.cash < Math.max(50, pokemon.level * 8)) {rare_candy.setDisabled(true)}
+    if (trainer_info.cash < Math.max(50, pokemon.level * 8) || pokemon.level <= 0) {rare_candy.setDisabled(true)}
     const close = new MessageButton()
       .setCustomId(`p_view_close,${interaction.id}`)
       .setLabel("Close")
@@ -147,20 +153,31 @@ module.exports = {
     const embed = new MessageEmbed()
       .setTitle(title)
       .setColor(color)
-      .setDescription(description + ev_text + stats_block)
       .setImage('attachment://poke_pic.png')
       .setAuthor({name: author})
-      .setFooter({ text: `${(pokemon.experience * 100).toFixed(1)}% to next level | Your funds: ₽${trainer_info.cash}` })
-      .addFields(
-        { name: 'Types', value: field1, inline: true },
-        { name: 'Egg Groups', value: field2, inline: true },
-        { name: 'Traits', value: field3, inline: true },
-    	)
+      .setFooter({text: `${(pokemon.experience * 100).toFixed(1)}% to next level | Your funds: ₽${trainer_info.cash}`});
+    if (pokemon.level > 0) {
+      embed
+        .setDescription(description + ev_text + stats_block)
+        .addFields(
+          { name: 'Types', value: field1, inline: true },
+          { name: 'Egg Groups', value: field2, inline: true },
+          { name: 'Traits', value: field3, inline: true },
+      	);
+    } else {
+      embed
+        .setDescription("It's some kind of slimy egg. This came out of a pokemon? You think you can feel something moving around inside.")
+        .addFields(
+          { name: 'Types', value: `\`egg\``, inline: true },
+          { name: 'Egg Groups', value: field2, inline: true },
+          { name: 'Traits', value: `\`???\`, \`???\``, inline: true },
+      	);
+    }
+
     interaction.editReply({ embeds: [embed], files: [poke_pic], components: [buttons] })
 
     let filter = button => button.customId.includes(interaction.id);
     let collector = interaction.channel.createMessageComponentCollector({ filter, componentType: 'BUTTON', time: 180 * 1000 });
-
     let responded = false;
     let content;
 

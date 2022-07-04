@@ -6,6 +6,17 @@ const IV = 16;
 const EV = 100;
 
 let active_users = {}
+let release_values = {
+  "1": 2000, // legendary
+  "2": 1500,
+  "3": 1000,
+  "4": 800,
+  "5": 600,
+  "6": 500,
+  "7": 300,
+  "8": 200,
+  "9": 100 // most common
+}
 
 function activate_user(id, message_id) { //return and check for boolean
   console.log("In activate users at beginning.", active_users)
@@ -23,16 +34,8 @@ function deactivate_user(id) {
 
 function getValue(pkmn_obj) {
   //pkmn obj should be pokemon id from encounters joined with pokedex info.
-  let release_values = {
-    "1": 2000, // legendary
-    "2": 1500,
-    "3": 1000,
-    "4": 800,
-    "5": 600,
-    "6": 500,
-    "7": 300,
-    "8": 200,
-    "9": 100 // most common
+  if (pkmn_obj.level <= 0) {
+    return 1
   }
   let base_money = release_values[pkmn_obj.baseFreq];
   let level_money = pkmn_obj.level * 20;
@@ -185,4 +188,4 @@ async function getPokePic(full_path, filename, shinyShift) {
   return attach;
 }
 
-module.exports = { activate_user, deactivate_user, getValue, getOtherStat, getHPStat, mulb32, getSymb, getMult, getStats, clamp, d_to_r, getHueMatrix, applyHueMatrix, getShinyAttachment, getCaptureDifficulty, getPokePic };
+module.exports = { release_values, activate_user, deactivate_user, getValue, getOtherStat, getHPStat, mulb32, getSymb, getMult, getStats, clamp, d_to_r, getHueMatrix, applyHueMatrix, getShinyAttachment, getCaptureDifficulty, getPokePic };
