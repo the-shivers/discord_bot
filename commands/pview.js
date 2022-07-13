@@ -37,10 +37,10 @@ module.exports = {
       .setDescription('The slot of the pokemon to view.')
     ),
 	async execute(interaction) {
-    if (!activate_user(interaction.user.id, 'lol')) {
-      interaction.reply("You're already doing a command.")
-      return;
-    }
+    // if (!activate_user(interaction.user.id, 'lol')) {
+    //   interaction.reply("You're already doing a command.")
+    //   return;
+    // }
     await interaction.deferReply({fetchReply: true});
 
     // Fetch information about Pokemon.
@@ -61,11 +61,11 @@ module.exports = {
     let team = await async_query(query1, values1);
     if (team.length === 0) {
       interaction.editReply(`${user.username} doesn't have any Pokemon! Catch some with `/pcatch`!`);
-      deactivate_user(interaction.user.id)
+      // deactivate_user(interaction.user.id)
       return;
     } else if (slot > team.length) {
       interaction.editReply("No pokemon in that slot!")
-      deactivate_user(interaction.user.id)
+      // deactivate_user(interaction.user.id)
       return;
     }
     let pokemon = team[slot-1];
@@ -188,7 +188,8 @@ module.exports = {
           interaction.fetchReply()
             .then(reply => {setTimeout(() => reply.delete(), 2000)})
             .catch(console.error);
-          deactivate_user(interaction.user.id)
+          // deactivate_user(interaction.user.id)
+          responded = true;
         } else if (i.customId.split(',')[0] == 'p_view_cycle') {
           pokemon.formIndex = (pokemon.formIndex + 1) % pokemon.forms
           filename = filename_arr[pokemon.formIndex];
@@ -220,7 +221,6 @@ module.exports = {
           }
           i.update({embeds: [embed], components: [buttons]})
         }
-        responded = true;
       } else {
         i.reply({ content: "Don't touch other people's Pokemon!", ephemeral: false });
       }
@@ -232,7 +232,7 @@ module.exports = {
         interaction.fetchReply()
           .then(reply => {setTimeout(() => reply.delete(), 2000)})
           .catch(console.error);
-        deactivate_user(interaction.user.id)
+        // deactivate_user(interaction.user.id)
       }
     });
 

@@ -87,10 +87,10 @@ module.exports = {
       deactivate_user(interaction.user.id)
       return
     }
-    pokemon1.egg1 = (pokemon1.egg1.length > 0) ? pokemon1.egg1 : 'NOTHING1'
-    pokemon1.egg2 = (pokemon1.egg2.length > 0) ? pokemon1.egg2 : 'NOTHING2'
-    pokemon2.egg1 = (pokemon2.egg1.length > 0) ? pokemon2.egg1 : 'NOTHING3'
-    pokemon2.egg2 = (pokemon2.egg2.length > 0) ? pokemon2.egg2 : 'NOTHING4'
+    pokemon1.egg1 = (pokemon1.egg1.length > 0 && pokemon1.egg1 != 'Undiscovered') ? pokemon1.egg1 : 'NOTHING1'
+    pokemon1.egg2 = (pokemon1.egg2.length > 0 && pokemon1.egg2 != 'Undiscovered') ? pokemon1.egg2 : 'NOTHING2'
+    pokemon2.egg1 = (pokemon2.egg1.length > 0 && pokemon2.egg1 != 'Undiscovered') ? pokemon2.egg1 : 'NOTHING3'
+    pokemon2.egg2 = (pokemon2.egg2.length > 0 && pokemon2.egg2 != 'Undiscovered') ? pokemon2.egg2 : 'NOTHING4'
     if (
       !((pokemon1.egg1 == pokemon2.egg1) ||
       (pokemon1.egg1 == pokemon2.egg2) ||
@@ -153,6 +153,7 @@ module.exports = {
           traits = f.shuffle(config.characteristics).slice(0, 2);
           let shiny_parents = (pokemon1.isShiny == 1) ? 1 : 0
           shiny_parents += (pokemon2.isShiny == 1) ? 1 : 0
+          console.log(shiny_parents)
           let shiny_chance_index = [20, 4, 2]
           isShiny = Math.floor(Math.random() * shiny_chance_index[shiny_parents]) == 0;
           if (isShiny) {
