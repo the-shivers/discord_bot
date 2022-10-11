@@ -32,6 +32,12 @@ function deactivate_user(id) {
   delete active_users[id];
 }
 
+function deactivate_all() {
+  console.log("Deactivating all", active_users)
+  active_users = {}
+}
+
+
 function getValue(pkmn_obj) {
   //pkmn obj should be pokemon id from encounters joined with pokedex info.
   if (pkmn_obj.level <= 0) {
@@ -188,4 +194,4 @@ async function getPokePic(full_path, filename, shinyShift) {
   return attach;
 }
 
-module.exports = { release_values, activate_user, deactivate_user, getValue, getOtherStat, getHPStat, mulb32, getSymb, getMult, getStats, clamp, d_to_r, getHueMatrix, applyHueMatrix, getShinyAttachment, getCaptureDifficulty, getPokePic };
+module.exports = { release_values, activate_user, deactivate_user, deactivate_all, getValue, getOtherStat, getHPStat, mulb32, getSymb, getMult, getStats, clamp, d_to_r, getHueMatrix, applyHueMatrix, getShinyAttachment, getCaptureDifficulty, getPokePic };

@@ -32,7 +32,7 @@ module.exports = {
     if (!(interaction.options.getString('tags') == null)) {
       tags = interaction.options.getString('tags');
     }
-    let full_url = api_options.url + "?tags=" + parseTags(tags); + "&limit=3"
+    let full_url = api_options.url + "?tags=" + parseTags(tags) + "&limit=3" + '&login=' + api_options.form.login + '&api_key=' + api_options.key
     axios({
       method: 'get',
       url: full_url,
@@ -45,6 +45,7 @@ module.exports = {
           && response.data.posts.length > 0
         ) {
           let post = f.shuffle(response.data.posts)[0];
+          console.log(post)
           interaction.editReply(post.file.url ?? 'File was missing. Was it because you were looking for something naughty?')
         } else {
           interaction.editReply("e621 messed it up (no posts found)!")

@@ -73,7 +73,7 @@ async function generate_embed(interaction, generation, curr_epoch_s) {
   } else {
     new_streak = trainer_result[0].trainStreak;
   }
-  can_train = (interaction.user.id == 790037139546570802) ? true : can_train;
+  // can_train = (interaction.user.id == 790037139546570802) ? true : can_train;
 
   // Get owned pokemon
   let owned_query = "SELECT pe.*, p.frequency, p.baseFreq, p.evStage FROM data.pokemon_encounters AS pe JOIN data.pokedex AS p ON pe.pokemonId = p.pokemonId WHERE userId = ? AND owned = 1 ORDER BY slot ASC;";
@@ -251,8 +251,6 @@ module.exports = {
       return;
     }
     // First, level up the pokemon.
-    let lvl_q = "UPDATE data.pokemon_encounters SET level = LEAST(100, level + 1) WHERE userId = ? AND owned = 1;";
-    await async_query(lvl_q, [interaction.user.id]);
     let curr_epoch_s = Math.floor(new Date().getTime() / 1000);
     let generation = interaction.options.getString('generation') ?? 'any';
     let response = await generate_embed(interaction, generation, curr_epoch_s);
@@ -274,7 +272,10 @@ module.exports = {
     ;`;
 
     if (!("content" in reply_content)) {
+      console.log('content key was not in reply_content')
       interaction.reply(reply_content);
+      let lvl_q = "UPDATE data.pokemon_encounters SET level = LEAST(100, level + 1) WHERE userId = ? AND owned = 1;";
+      await async_query(lvl_q, [interaction.user.id]);
       let filter = button => button.customId.includes(interaction.id);
       let collector = interaction.channel.createMessageComponentCollector({ filter, componentType: 'BUTTON', time: 300 * 1000 });
       let responded = false;
@@ -450,6 +451,7 @@ module.exports = {
       });
 
     } else {
+      console.log('content key WAS in reply_content')
       // Something went wrong, you used /pcatch too soon or are full up on 'mons
       interaction.reply(reply_content);
       deactivate_user(interaction.user.id)

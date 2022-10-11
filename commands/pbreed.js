@@ -19,7 +19,7 @@ module.exports = {
 		.setDescription("Breed two pokemon to create an egg!")
     .addIntegerOption(option => option
       .setName('slot1')
-      .setDescription('The slot of the first pokemon to be swapped.')
+      .setDescription('The slot of the first pokemon to be bred.')
 			.addChoices({name:'1', value:1}).addChoices({name:'2', value:2})
       .addChoices({name:'3', value:3}).addChoices({name:'4', value:4})
       .addChoices({name:'5', value:5}).addChoices({name:'6', value:6})
@@ -29,10 +29,13 @@ module.exports = {
 			.addChoices({name:'13', value:13}).addChoices({name:'14', value:14})
 			.addChoices({name:'15', value:15}).addChoices({name:'16', value:16})
 			.addChoices({name:'17', value:17}).addChoices({name:'18', value:18})
+      .addChoices({name:'19', value:19}).addChoices({name:'20', value:20})
+			.addChoices({name:'21', value:21}).addChoices({name:'22', value:22})
+			.addChoices({name:'23', value:23}).addChoices({name:'24', value:24})
       .setRequired(true)
     ).addIntegerOption(option => option
       .setName('slot2')
-      .setDescription('The slot of the second pokemon to be swapped.')
+      .setDescription('The slot of the second pokemon to be bred.')
 			.addChoices({name:'1', value:1}).addChoices({name:'2', value:2})
       .addChoices({name:'3', value:3}).addChoices({name:'4', value:4})
       .addChoices({name:'5', value:5}).addChoices({name:'6', value:6})
@@ -42,6 +45,9 @@ module.exports = {
 			.addChoices({name:'13', value:13}).addChoices({name:'14', value:14})
 			.addChoices({name:'15', value:15}).addChoices({name:'16', value:16})
 			.addChoices({name:'17', value:17}).addChoices({name:'18', value:18})
+      .addChoices({name:'19', value:19}).addChoices({name:'20', value:20})
+			.addChoices({name:'21', value:21}).addChoices({name:'22', value:22})
+			.addChoices({name:'23', value:23}).addChoices({name:'24', value:24})
       .setRequired(true)
     ),
 	async execute(interaction) {
@@ -82,7 +88,7 @@ module.exports = {
     let female_mon = (pokemon1.gender == 'female') ? pokemon1 : pokemon2;
     console.log(`femmon is `, female_mon)
     let price = release_values[female_mon.baseFreq]
-    if (pokemon1.level < 0 || pokemon2.level < 0) {
+    if (pokemon1.level < 0 || pokemon2.level <= 0) {
       interaction.editReply("Eggs can't breed!")
       deactivate_user(interaction.user.id)
       return

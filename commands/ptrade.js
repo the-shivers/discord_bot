@@ -30,6 +30,9 @@ module.exports = {
       .addChoices({name:'13', value:13}).addChoices({name:'14', value:14})
 			.addChoices({name:'15', value:15}).addChoices({name:'16', value:16})
 			.addChoices({name:'17', value:17}).addChoices({name:'18', value:18})
+      .addChoices({name:'19', value:19}).addChoices({name:'20', value:20})
+			.addChoices({name:'21', value:21}).addChoices({name:'22', value:22})
+			.addChoices({name:'23', value:23}).addChoices({name:'24', value:24})
       .setRequired(true)
     ).addUserOption(option => option
       .setName('target')
@@ -47,6 +50,9 @@ module.exports = {
       .addChoices({name:'13', value:13}).addChoices({name:'14', value:14})
 			.addChoices({name:'15', value:15}).addChoices({name:'16', value:16})
 			.addChoices({name:'17', value:17}).addChoices({name:'18', value:18})
+      .addChoices({name:'19', value:19}).addChoices({name:'20', value:20})
+			.addChoices({name:'21', value:21}).addChoices({name:'22', value:22})
+			.addChoices({name:'23', value:23}).addChoices({name:'24', value:24})
       .setRequired(true)
     ),
 	async execute(interaction) {
@@ -81,6 +87,11 @@ module.exports = {
       return;
     } else if (target.id === user.id) {
       interaction.editReply("You can't trade with yourself!")
+      deactivate_user(interaction.user.id)
+      return;
+    }
+    if (!activate_user(target.id, 'lol')) {
+      interaction.editReply("They're busy with another command!")
       deactivate_user(interaction.user.id)
       return;
     }
@@ -139,7 +150,8 @@ module.exports = {
         responded = true;
         i.reply({ content: content, ephemeral: false });
         interaction.editReply({ components: [new_row] })
-        deactivate_user(interaction.user.id)
+        deactivate_user(interaction.user.id);
+        deactivate_user(target.id);
       } else {
         i.reply({ content: "That trade offer isn't for you!", ephemeral: false });
       }
@@ -150,6 +162,7 @@ module.exports = {
         interaction.editReply({ components: [new_row] })
         interaction.channel.send(`The trade was declined because ${target.username} took too long.`)
         deactivate_user(interaction.user.id)
+        deactivate_user(target.id);
       }
     });
 
