@@ -59,6 +59,7 @@ function insert_and_clear() {
 	interactions_data = [];
 	interaction_opt_data = [];
 	message_data = [];
+	console.log('done with insert and clear')
 }
 
 async function remind() {
@@ -111,6 +112,7 @@ client.on('interactionCreate', async interaction => {
     });
 	}
 });
+
 
 client.on('messageCreate', async msg => {
 	message_data.push(dp.process_message(msg));
