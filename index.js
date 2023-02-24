@@ -6,7 +6,6 @@ const fs = require('fs');
 const dp = require('./data_processing.js');
 const auth = require("./config.json");
 const { async_query } = require('./db/scripts/db_funcs.js')
-const { pballs, plevels } = require('./assets/pokemon/interval_funcs.js')
 const client = new Client({intents:
 	[
 		Intents.FLAGS.GUILDS,
@@ -81,8 +80,6 @@ client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
 	setInterval(insert_and_clear, 60000);
 	setInterval(remind, 20000);
-	setInterval(plevels, 10 * 60 * 1000);
-	setInterval(pballs, 2 * 60 * 60 * 1000);
 });
 
 // Receive commands
