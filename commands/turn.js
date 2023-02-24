@@ -23,16 +23,20 @@ module.exports = {
     let img_details = await get_img_details(await get_msgs(interaction));
     console.log(img_details);
     if (img_details.width * img_details.height > 2000 * 2500) {
-      interaction.editReply("Sorry, that image is too big for me to ca :(")
+      interaction.editReply("Sorry, that image is too big for me to turn :(")
       return;
     }
     im.convert(['-set', 'dispose', 'background', img_details.url, '-set', '-delay', '3',
         '(', '+clone', '-flop', ')', '-loop', '0', 'gif:-'],
     function(err, stdout) {
-      if (err) {throw err}
-      const buf1 = Buffer.from(stdout, 'binary');
-      let attach = new Discord.MessageAttachment(buf1, 'turn.gif')
-      interaction.editReply({ files: [attach], ephemeral: false });
+      if (err) {
+        throw err
+        interaction.editReply("ImageMagick messed it up!");
+      } else {
+        const buf1 = Buffer.from(stdout, 'binary');
+        let attach = new Discord.MessageAttachment(buf1, 'turn.gif')
+        interaction.editReply({ files: [attach], ephemeral: false });
+      }
     });
   }
 }

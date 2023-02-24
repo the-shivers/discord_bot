@@ -62,10 +62,11 @@ module.exports = {
         if (err) {
           console.log(err);
           interaction.editReply("ImageMagick messed it up!");
+        } else {
+          const buf1 = Buffer.from(stdout, 'binary');
+          let attach = new Discord.MessageAttachment(buf1, 'shake.gif')
+          interaction.editReply({ files: [attach], ephemeral: false });
         }
-        const buf1 = Buffer.from(stdout, 'binary');
-        let attach = new Discord.MessageAttachment(buf1, 'shake.gif')
-        interaction.editReply({ files: [attach], ephemeral: false });
       }
     )
   }

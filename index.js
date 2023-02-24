@@ -59,7 +59,6 @@ function insert_and_clear() {
 	interactions_data = [];
 	interaction_opt_data = [];
 	message_data = [];
-	console.log('done with insert and clear')
 }
 
 async function remind() {
