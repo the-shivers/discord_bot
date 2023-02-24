@@ -7,3 +7,7 @@
 **assets/tarot/*.jpg
 **assets/pokemon/**/*.png
 **assets/pokemon/music/**
+**assets/deprecated/**
+**scripts/deprecated/**
+**scripts/deprecated/**/*.png
+**scripts/deprecated/**/*.jpg
