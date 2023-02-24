@@ -43,6 +43,7 @@ module.exports = {
     args = args.concat(['-compose', 'srcover', '-delete', '0', '-delete', '0', '-delay', delay, '-set', 'delay', delay, '-set', 'dispose', 'None', 'gif:-']);
 
     // Run command
+    console.log('Running im.convert with the following args: \n', first_args.concat(args))
     im.convert(first_args.concat(args),
       function(err, stdout) {
         if (err) {
