@@ -22,7 +22,7 @@ module.exports = {
     let angle = interaction.options.getInteger('angle') ?? 120;
     let img_details = await get_img_details(await get_msgs(interaction));
     console.log(img_details)
-    if (img_details.width * img_details.height > 2000 * 2500) {
+    if (img_details.width * img_details.height > 5000 * 5000) {
       interaction.editReply("Sorry, that image is too big for me to hue :(")
       return;
     }
