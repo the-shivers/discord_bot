@@ -185,7 +185,7 @@ module.exports = {
             lowestStat: `Your lowest stat is ***${analysis.lowestStat.name.toUpperCase()}*** (${analysis.lowestStat.value}): ${lowestStatDesc}`
         };
     }
-    const descriptions = describeStats(statsAnalysis);
+    const descriptions = describeStats(analysis);
     let stat1 = descriptions.highestStat;
     let stat2 = descriptions.lowestStat;
     
