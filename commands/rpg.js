@@ -61,8 +61,7 @@ module.exports = {
     }
     let bg_sentence = formatSentence(bg_details, bg_subtype);
 
-    // Name stuff, handling cases when last name doesn't exist.
-    // First
+    // First Name
     let first_name;
     if (gender == 'male') {
         first_name = get_rand_element(
@@ -75,11 +74,13 @@ module.exports = {
     } else {
         first_name = get_rand_element(race_details.names.first.other)
     }
-    //Last
+
+    // Last Name
     let last_name = race_details.names.last.length > 0 
         ? get_rand_element(race_details.names.last)
         : null;
-    // Full
+
+    // Full Name
     let full_name = '';
     if (first_name) {
         full_name += first_name;
@@ -88,6 +89,7 @@ module.exports = {
         if (full_name) full_name += ' ';
         full_name += last_name;  
     }
+
     // Height, Weight
     function rollDice(diceString) {
         // Parses a dice string like "2d6" and returns random roll
@@ -102,6 +104,7 @@ module.exports = {
     let height = race_details.base_height + height_roll;
     let weight_roll = rollDice(race_details.weight_modifier);
     let weight = race_details.base_weight + (height_roll * weight_roll);
+
     // Age
     function biasedRandomInRange(range) {
         const [min, max] = range;
@@ -116,7 +119,33 @@ module.exports = {
     const feet = Math.floor(height / 12);
     const inches = height % 12;
     let hwa_str = ` You are ${feet}'${inches}", ${weight} lbs, and ${age} years old.`;
+
+    // Stats generation
+    function generateRandomStats(raceDetails) {
+        const stats = {
+            str: [Math.floor(Math.random() * 20) + 1, raceDetails.ability_scores['str'] || 0],
+            dex: [Math.floor(Math.random() * 20) + 1, raceDetails.ability_scores['dex'] || 0],
+            con: [Math.floor(Math.random() * 20) + 1, raceDetails.ability_scores['con'] || 0],
+            int: [Math.floor(Math.random() * 20) + 1, raceDetails.ability_scores['int'] || 0],
+            wis: [Math.floor(Math.random() * 20) + 1, raceDetails.ability_scores['wis'] || 0],
+            cha: [Math.floor(Math.random() * 20) + 1, raceDetails.ability_scores['cha'] || 0]
+        };
+        return stats;
+    }
+    function formatStatsForDiscord(stats) {
+        let formattedStats = '\n\n```\n';
+        for (const [key, [baseValue, bonus]] of Object.entries(stats)) {
+            const totalValue = baseValue + bonus;
+            formattedStats += `${key.toUpperCase()} ${'■'.repeat(totalValue)} (${baseValue}+${bonus})\n`;
+        }
+        formattedStats += '```';
+        return formattedStats;
+    }
+    const stats = generateRandomStats();
+    let stat_str = formatStatsForDiscord(stats, race_details);
     
+    
+
     // Full character description
     let full_desc = `You are ${full_name}, a ${gender} ${race_details.name.toLowerCase()} ${pc_class}. `;
     for (let key in race_details.appearance_options) {
@@ -124,6 +153,7 @@ module.exports = {
     }
     full_desc += hwa_str;
     full_desc += bg_sentence;
+    full_desc += stat_str;
 
     // You are a [gender] [race] [class] with a(n) [background] background
     // description
