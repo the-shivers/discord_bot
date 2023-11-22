@@ -16,7 +16,39 @@ module.exports = {
 		.setDescription('Generate an RPG character'),
 	async execute(interaction) {
 
-    // First we'll deal with race.
+    // Generate a description, name, type, etc.
+    function get_rand_element(arr) {
+        const randomIndex = Math.floor(Math.random() * arr.length);
+        return arr[randomIndex];
+    }
+
+    let gender = get_rand_element([
+        'male', 'male', 'male', 'male', 'male', 
+        'female', 'female', 
+        'nonbinary'
+    ]);
+
+    let pc_class = get_rand_element([
+        'barbarian', 'bard', 'cleric', 'druid', 'fighter', 'monk', 
+        'paladin', 'ranger', 'rogue', 'sorcerer', 'warlock', 'wizard'
+    ])
+
+    const race_keys = Object.keys(race_vars);
+    const random_index = Math.floor(Math.random() * race_keys.length);
+    const selected_race = race_keys[random_index];
+    const race_details = race_vars[selected_race];
+
+    
+    let full_desc = `You are a ${gender} ${race_details.name.toLowerCase()} ${pc_class}. `;
+
+    for (let key in race_details.appearance_options) {
+        full_desc += get_rand_element(race_details.appearance_options[key]);
+    }
+
+    // You are a [gender] [race] [class] with a(n) [background] background
+    // description
+    // You are [height] and [weight]. 
+
 
     
     // let pc_info = {};
@@ -51,7 +83,7 @@ module.exports = {
     // + ' "' + species.name + '" furry' ;
     // query = query.split('_').join(' ');
 
-    let query = 'dog_cleric'
+    let query = `${gender} ${race_details.name.toLowerCase()} ${pc_class}`
 
     let full_url = (
       api_options.url + "?cx=" + api_options.cx + "&key=" + api_options.key
@@ -67,7 +99,7 @@ module.exports = {
     const template = new Discord.MessageEmbed()
     //   .setColor(color_arr[0])
       .setTitle("Your RPG Character")
-      .setDescription("lol?")
+      .setDescription(full_desc)
     //   .addField(stats_arr[0].toUpperCase(), "`SCORE: " + f.rollDie(100) + "/100`", true)
     //   .addField(stats_arr[1].toUpperCase(), "`SCORE: " + f.rollDie(100) + "/100`", true)
     //   .addField(stats_arr[2].toUpperCase(), "`SCORE: " + f.rollDie(100) + "/100`", true)
