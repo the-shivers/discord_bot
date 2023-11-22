@@ -38,6 +38,14 @@ module.exports = {
         'paladin', 'ranger', 'rogue', 'sorcerer', 'warlock', 'wizard'
     ])
 
+    // Alignment
+    let alignment = get_rand_element([
+        'lawful good', 'neutral good', 'chaotic good',
+        'lawful neutral', 'true neutral', 'chaotic neutral',
+        'lawful evil', 'neutral evil', 'chaotic evil'
+    ]);
+    let align_desc = ` You are ${alignment}.`;
+
     // Race info
     const race_keys = Object.keys(race_vars);
     const race_index = Math.floor(Math.random() * race_keys.length);
@@ -137,7 +145,7 @@ module.exports = {
         for (const [key, [baseValue, bonus]] of Object.entries(stats)) {
             const totalValue = baseValue + bonus;
             const displayValue = bonus === 0 ? `${baseValue}` : `${baseValue}+${bonus}`;
-            formattedStats += `${key.toUpperCase()} ${'●'.repeat(totalValue)} ${displayValue}\n`;
+            formattedStats += `${key.toUpperCase()} ${'◼'.repeat(totalValue)} ${displayValue}\n`;
         }
         formattedStats += '```';
         return formattedStats;
@@ -155,47 +163,10 @@ module.exports = {
     full_desc += hwa_str;
     full_desc += bg_sentence;
     full_desc += stat_str;
+    full_desc += align_desc;
 
-    // You are a [gender] [race] [class] with a(n) [background] background
-    // description
-    // You are [height] and [weight]. 
-
-
-    
-    // let pc_info = {};
-    // Object.keys(sona_vars).forEach(function(key) {
-    //   var value = sona_vars[key];
-    //   sona_info[key] = value[Math.floor(Math.random() * value.length)];
-    // })
-
-    // let gender = sona_info.gender;
-    // let species = sona_info.species;
-    // let color_arr = f.shuffle(sona_vars.color).slice(0, sona_info.pattern.colors)
-    // let color_str = sona_info.pattern.name + " " + color_arr.join(" and ");
-    // let box_color = color_arr[0]
-    // color_str = color_str.toLowerCase().replace(/_/g, " ");
-    // let weight = parseInt(sona_info.height_ft, 10)
-    //   * Math.round(Math.random() * 50 + 3);
-    // let acts = f.shuffle(sona_vars.activity).slice(0,4);
-    // let sound_str = "Your " + species.sound + " " + sona_info.sound;
-    // let stats_arr = f.shuffle(sona_vars.stats).slice(0,3)
-
-    // let sona = `You're a ${sona_info.sexuality} ${gender.name} ${sona_info.mode} `;
-    // sona += `${sona_info.species.name} named ${sona_info.first_name} `;
-    // sona += `${sona_info.ln_first}${sona_info.ln_second} with${color_str} `;
-    // sona += `${species.coat}. You are ${sona_info.height_ft}'${sona_info.height_in} `;
-    // sona += `tall and weigh ${weight} lbs. ${sound_str} `;
-    // sona += `and you smell ${sona_info.smell}. `;
-    // sona += `You ${sona_info.like} ${acts[3]}, ${acts[0]}, `;
-    // sona += `and ${acts[1]} but ${sona_info.dislike} ${acts[2]}.`;
-
-    // query = gender.name + " " + " " + color_arr[0] + " "
-    // + sona_info.mode
-    // + ' "' + species.name + '" furry' ;
-    // query = query.split('_').join(' ');
-
-    let query = `${gender} ${race_details.name.toLowerCase()} ${pc_class}`
-
+    // Get image
+    let query = `${gender} ${race_details.name.toLowerCase()} ${pc_class} ${bg_details.name}`
     let full_url = (
       api_options.url + "?cx=" + api_options.cx + "&key=" + api_options.key
       + "&q=" + query + "&num=1&searchType=image"
@@ -206,9 +177,10 @@ module.exports = {
       full_url += "&safe=off";
     }
 
+    // Template response
     let img_url;
     const template = new Discord.MessageEmbed()
-    //   .setColor(color_arr[0])
+      .setColor('blue')
       .setTitle("Your RPG Character")
       .setDescription(full_desc)
     //   .addField(stats_arr[0].toUpperCase(), "`SCORE: " + f.rollDie(100) + "/100`", true)
