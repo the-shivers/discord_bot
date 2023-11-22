@@ -198,8 +198,8 @@ module.exports = {
     full_desc += bg_sentence;
     full_desc += align_desc;
     full_desc += stat_str;
-    full_desc += highestStat;
-    full_desc += lowestStat;
+    full_desc += stat1;
+    full_desc += stat2;
     
     // Get image
     let query = `${gender} ${race_details.name.toLowerCase()} ${pc_class} ${bg_details.name}`
