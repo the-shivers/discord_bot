@@ -4,8 +4,8 @@
       "types": [
         ""
       ],
-      "base_height": "57",
-      "base_weight": "110",
+      "base_height": 57,
+      "base_weight": 110,
       "height_modifier": "2d8",
       "weight_modifier": "2d4",
       "age": [10, 100],
@@ -85,8 +85,8 @@
           "Tethyrian",
           "Turami"
         ],
-        "base_height": "56",
-        "base_weight": "110",
+        "base_height": 56,
+        "base_weight": 110,
         "height_modifier": "2d10",
         "weight_modifier": "2d4",
         "age": [14, 80],
