@@ -137,7 +137,7 @@ module.exports = {
         for (const [key, [baseValue, bonus]] of Object.entries(stats)) {
             const totalValue = baseValue + bonus;
             const displayValue = bonus === 0 ? `${baseValue}` : `${baseValue}+${bonus}`;
-            formattedStats += `${key.toUpperCase()} ${'■'.repeat(totalValue)} ${displayValue}\n`;
+            formattedStats += `${key.toUpperCase()} ${'●'.repeat(totalValue)} ${displayValue}\n`;
         }
         formattedStats += '```';
         return formattedStats;
