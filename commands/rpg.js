@@ -40,9 +40,26 @@ module.exports = {
 
     // Race info
     const race_keys = Object.keys(race_vars);
-    const random_index = Math.floor(Math.random() * race_keys.length);
-    const selected_race = race_keys[random_index];
+    const race_index = Math.floor(Math.random() * race_keys.length);
+    const selected_race = race_keys[race_index];
     const race_details = race_vars[selected_race];
+
+    // Background info
+    const bg_keys = Object.keys(bg_vars);
+    const bg_index = Math.floor(Math.random() * bg_keys.length);
+    const selected_bg = bg_keys[bg_index];
+    const bg_details = bg_vars[selected_bg];
+    const bg_subtype = get_rand_element(bg_details.types);
+    function determineArticle(word) {
+        const vowels = ['a', 'e', 'i', 'o', 'u'];
+        return vowels.includes(word[0].toLowerCase()) ? 'an' : 'a';
+    }
+    function formatSentence(bg_details, bg_subtype) {
+        const nameWithArticle = `${determineArticle(bg_details.name)} ${bg_details.name.toLowerCase()}`;
+        const subtypeWithArticle = `${determineArticle(bg_subtype)} ${bg_subtype.toLowerCase()}`;
+        return ` You have ${nameWithArticle} background, specifically ${subtypeWithArticle}.`;
+    }
+    let bg_sentence = formatSentence(bg_details, bg_subtype);
 
     // Name stuff, handling cases when last name doesn't exist.
     // First
@@ -71,8 +88,7 @@ module.exports = {
         if (full_name) full_name += ' ';
         full_name += last_name;  
     }
-
-    // Height, Weight, Age
+    // Height, Weight
     function rollDice(diceString) {
         // Parses a dice string like "2d6" and returns random roll
         const [numDice, numSides] = diceString.split('d'); 
@@ -86,7 +102,6 @@ module.exports = {
     let height = race_details.base_height + height_roll;
     let weight_roll = rollDice(race_details.weight_modifier);
     let weight = race_details.base_weight + (height_roll * weight_roll);
-      
     // Age
     function biasedRandomInRange(range) {
         const [min, max] = range;
@@ -108,6 +123,7 @@ module.exports = {
         full_desc += get_rand_element(race_details.appearance_options[key]);
     }
     full_desc += hwa_str;
+    full_desc += bg_sentence;
 
     // You are a [gender] [race] [class] with a(n) [background] background
     // description
