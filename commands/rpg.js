@@ -133,10 +133,11 @@ module.exports = {
         return stats;
     }
     function formatStatsForDiscord(stats) {
-        let formattedStats = '\n\n```\n';
+        let formattedStats = '\n```\n';
         for (const [key, [baseValue, bonus]] of Object.entries(stats)) {
             const totalValue = baseValue + bonus;
-            formattedStats += `${key.toUpperCase()} ${'■'.repeat(totalValue)} (${baseValue}+${bonus})\n`;
+            const displayValue = bonus === 0 ? `${baseValue}` : `${baseValue}+${bonus}`;
+            formattedStats += `${key.toUpperCase()} ${'■'.repeat(totalValue)} ${displayValue}\n`;
         }
         formattedStats += '```';
         return formattedStats;
