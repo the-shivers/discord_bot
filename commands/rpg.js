@@ -6,6 +6,7 @@ const api_options = require("../api_keys.json").googleSearch
 const assets_dir = '../assets/rpg/';
 var bg_vars = require(assets_dir + 'bg.json');
 var race_vars = require(assets_dir + 'race.json');
+var stat_descriptions = require(assets_dir + 'stats.json');
 
 module.exports = {
   type: "public",
@@ -152,9 +153,42 @@ module.exports = {
     }
     const stats = generateRandomStats(race_details);
     let stat_str = formatStatsForDiscord(stats);
-    
-    
 
+    // Analysis
+    function analyzeStats(stats) {
+        let sum = 0;
+        let lowestStat = { name: '', value: Infinity };
+        let highestStat = { name: '', value: -Infinity };
+        for (const [key, [baseValue, bonus]] of Object.entries(stats)) {
+            const totalValue = baseValue + bonus;
+            sum += totalValue;
+            if (totalValue < lowestStat.value) {
+                lowestStat = { name: key, value: totalValue };
+            }
+            if (totalValue > highestStat.value) {
+                highestStat = { name: key, value: totalValue };
+            }
+        }
+        return {sum: sum, lowestStat: lowestStat, highestStat: highestStat};
+    }
+    analysis = analyzeStats(stats)
+    function describeStats(analysis) {
+        function clipStatValue(value) {
+            return Math.min(Math.max(value, 1), 20);
+        }
+        const highestStatValue = clipStatValue(analysis.highestStat.value);
+        const lowestStatValue = clipStatValue(analysis.lowestStat.value);
+        const highestStatDesc = stat_descriptions[analysis.highestStat.name][highestStatValue];
+        const lowestStatDesc = stat_descriptions[analysis.lowestStat.name][lowestStatValue];
+        return {
+            highestStat: `\nYour highest stat is ***${analysis.highestStat.name.toUpperCase()}*** (${analysis.highestStat.value}): ${highestStatDesc}`,
+            lowestStat: `Your lowest stat is ***${analysis.lowestStat.name.toUpperCase()}*** (${analysis.lowestStat.value}): ${lowestStatDesc}`
+        };
+    }
+    const descriptions = describeStats(statsAnalysis);
+    let stat1 = descriptions.highestStat;
+    let stat2 = descriptions.lowestStat;
+    
     // Full character description
     let full_desc = `You are ${full_name}, a ${gender} ${race_details.name.toLowerCase()} ${pc_class}. `;
     for (let key in race_details.appearance_options) {
@@ -162,9 +196,11 @@ module.exports = {
     }
     full_desc += hwa_str;
     full_desc += bg_sentence;
-    full_desc += stat_str;
     full_desc += align_desc;
-
+    full_desc += stat_str;
+    full_desc += highestStat;
+    full_desc += lowestStat;
+    
     // Get image
     let query = `${gender} ${race_details.name.toLowerCase()} ${pc_class} ${bg_details.name}`
     let full_url = (
