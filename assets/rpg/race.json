@@ -18,14 +18,14 @@
       },
       "appearance_options": {
         "skin": [
-            "You have scarlet skin and ",
-            "Your skin is the color of sand and ",
-            "Your skin is coal black and ",
-            "Your skin is purple-black, like a bruise and ",
+            "You have scarlet skin and have ",
+            "Your skin is the color of sand and have ",
+            "Your skin is coal black and have ",
+            "Your skin is purple-black, like a bruise and have ",
             "You have alabaster skin with ",
-            "You have mocha skin and ",
+            "You have mocha skin and have ",
             "Your skin is light tan with ",
-            "Your skin is red like velvet and "
+            "Your skin is red like velvet and have "
         ],
         "horns": [
             "curling horns like a ram. ",
@@ -63,7 +63,7 @@
                 "Lerissa", "Makaria", "Nemeia", "Orianna", "Phelaia", "Rieta"
             ],
             "other": [
-                "Art", "Carrion", "Chant", "Creed", "Despair", "Excellence", "Fear", 
+                "Cum", "Art", "Carrion", "Chant", "Creed", "Despair", "Excellence", "Fear", 
                 "Glory", "Hope", "Ideal", "Music", "Nowhere", "Open", "Poetry", "Quest", 
                 "Random", "Reverence", "Sorrow", "Temerity", "Torment", "Weary",
                 "Grim", "Macabre", "Integrity", "Sonata", "Vengeance"
@@ -147,7 +147,7 @@
                     "Aoth", "Bareris", "Ehpu-Ki", "Kethoth", "Mumed", "Ramas", "So-Kehur", "Thazar-De", "Urhur",
                     "Borivik", "Faurgar", "Jandar", "Kanithar", "Madislak", "Ralmevik", "Shaumar", "Vladislak",
                     "An", "Chen", "Chi", "Fai", "Jiang", "Jun", "Lian", "Long", "Meng", "On", "Shan", "Shui", "Wen",
-                    "Anton", "Diero", "Marcon", "Pieron", "Rimardo", "Romero", "Salazar", "Umbero"
+                    "Anton", "Diero", "Marcon", "Pieron", "Rimardo", "Romero", "Salazar", "Umbero", "Cum"
                 ],
                 "female": [
                     "Atala", "Ceidil", "Hama", "Jasmal", "Meilil", "Seipora", "Yasheira", "Zasheida",
@@ -156,7 +156,7 @@
                     "Amafrey", "Betha", "Cefrey", "Kethra", "Mara", "Olga", "Silifrey", "Westra",
                     "Arizima", "Chathi", "Nephis", "Nulara", "Murithi", "Sefris", "Thola", "Umara", "Zolis",
                     "Fyevarra", "Humarra", "Immith", "Imzel", "Navarra", "Shevarra", "Tanmith", "Yuldra",
-                    "Bai", "Chao", "Jia", "Lei", "Mei", "Qiao", "Shui", "Tai",
+                    "Bai", "Chao", "Jia", "Lei", "Mei", "Qiao", "Shui", "Tai", "Pussy",
                     "Balama", "Dona", "Faila", "Jalana", "Luisa", "Marta", "Quara", "Selise", "Vonda"
                 ],
                 "other": []

@@ -58,12 +58,10 @@ module.exports = {
     } else {
         first_name = get_rand_element(race_details.names.first.other)
     }
-    
     //Last
     let last_name = race_details.names.last.length > 0 
         ? get_rand_element(race_details.names.last)
         : null;
-
     // Full
     let full_name = '';
     if (first_name) {
@@ -74,11 +72,42 @@ module.exports = {
         full_name += last_name;  
     }
 
+    // Height, Weight, Age
+    function rollDice(diceString) {
+        // Parses a dice string like "2d6" and returns random roll
+        const [numDice, numSides] = diceString.split('d'); 
+        let total = 0;
+        for(let i = 0; i < numDice; i++) {
+          total += Math.floor(Math.random() * numSides) + 1;
+        }
+        return total; 
+    }
+    let height_roll = rollDice(race_details.height_modifier);
+    let height = race_details.base_height + height_roll;
+    let weight_roll = rollDice(race_details.weight_modifier);
+    let weight = race_details.base_weight + (height_roll * weight_roll);
+      
+    // Age
+    function biasedRandomInRange(range) {
+        const [min, max] = range;
+        const midpoint = min + (max - min) / 2;
+        let randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+        if (randomNumber > midpoint) {
+            randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        return randomNumber;
+    }
+    let age = biasedRandomInRange(race_details.age);
+    const feet = Math.floor(height / 12);
+    const inches = height % 12;
+    let hwa_str = ` You are ${feet}'${inches}", ${weight} lbs, and ${age} years old.`;
+    
     // Full character description
     let full_desc = `You are ${full_name}, a ${gender} ${race_details.name.toLowerCase()} ${pc_class}. `;
     for (let key in race_details.appearance_options) {
         full_desc += get_rand_element(race_details.appearance_options[key]);
     }
+    full_desc += hwa_str;
 
     // You are a [gender] [race] [class] with a(n) [background] background
     // description
