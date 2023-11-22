@@ -1,0 +1,176 @@
+{
+    "tiefling": {
+      "name": "Tiefling",
+      "types": [
+        ""
+      ],
+      "base_height": "57",
+      "base_weight": "110",
+      "height_modifier": "2d8",
+      "weight_modifier": "2d4",
+      "age": [10, 100],
+      "ability_scores": {
+        "int": 1,
+        "cha": 2
+      },
+      "languages": {
+        "base": ["Common", "Infernal"]
+      },
+      "appearance_options": {
+        "skin": [
+            "You have scarlet skin and ",
+            "Your skin is the color of sand and ",
+            "Your skin is coal black and ",
+            "Your skin is purple-black, like a bruise and ",
+            "You have alabaster skin with ",
+            "You have mocha skin and ",
+            "Your skin is light tan with ",
+            "Your skin is red like velvet and "
+        ],
+        "horns": [
+            "curling horns like a ram. ",
+            "twisting horns like a gazelle. ",
+            "forking antlers like a deer. ",
+            "small nub-like horns protruding from your forehead. ",
+            "a single long horn like a unicorn. ",
+            "horns like a goat, though one snapped off years ago. "
+        ],
+        "eyes": [
+            "Your eyes glow white with no pupils, and ",
+            "Your eyes are black as night, two empty voids, and ",
+            "Your eyes are flat pools of violet and ",
+            "Your eyes brilliant beacons of gold, and "
+        ],
+        "hair": [
+            "your black hair drapes down to your ankles.",
+            "your white hair spikes outward into sharp points.",
+            "your black hair is cut short so as not to get in the way.",
+            "your black hair is formed into an afro.",
+            "your black hair is curly and wild.",
+            "your white, unkempt hair looks like that of an anime protagonist.",
+            "your black hair is slicked back and tidy."
+        ]
+      },
+      "names": {
+        "first": {
+            "male": [
+                "Akmenos", "Amnon", "Barakas", "Damakos", "Ekemon", 
+                "Iados", "Kairon", "Leucis", "Melech", "Mordai", 
+                "Morthos", "Pelaios", "Skamos", "Therai", "Orkus"
+            ],
+            "female": [
+                "Akta", "Anakis", "Byrseis", "Criella", "Damaia", "Ea", "Kallista",
+                "Lerissa", "Makaria", "Nemeia", "Orianna", "Phelaia", "Rieta"
+            ],
+            "other": [
+                "Art", "Carrion", "Chant", "Creed", "Despair", "Excellence", "Fear", 
+                "Glory", "Hope", "Ideal", "Music", "Nowhere", "Open", "Poetry", "Quest", 
+                "Random", "Reverence", "Sorrow", "Temerity", "Torment", "Weary",
+                "Grim", "Macabre", "Integrity", "Sonata", "Vengeance"
+            ]
+        },
+        "last": {}
+      }
+    },
+    "human": {
+        "name": "Human",
+        "types": [
+          "Calishite",
+          "Chondathan",
+          "Damaran", 
+          "Illuskan",
+          "Mulan",
+          "Rashemi", 
+          "Shou",
+          "Tethyrian",
+          "Turami"
+        ],
+        "base_height": "56",
+        "base_weight": "110",
+        "height_modifier": "2d10",
+        "weight_modifier": "2d4",
+        "age": [14, 80],
+        "ability_scores": {
+            "str": 1,
+            "dex": 1,
+            "con": 1,
+            "int": 1,
+            "wis": 1,
+            "cha": 1
+        },
+        "languages": {
+            "base": ["Common"],
+            "optional": ["Dwarvish", "Elvish", "Giant", "Gnomish", "Goblin", "Halfling", "Orc"]
+        },
+        "appearance_options": {
+          "skin": [
+              "Your skin is marble white, ",
+              "Your skin is mocha brown, ",
+              "Your skin is yellowish-tan, ",
+              "Your skin is so brown it's almost black, ",
+              "Your skin is a ruddy white, ",
+              "Your skin is dark tan, ",
+              "Your skin is pale, ",
+              "Your skin is a sunbathed tan, ",
+              "Your skin is brown, "
+          ],
+          "eyes": [
+              "your eyes are glimmering green, ",
+              "your eyes are piercing blue, ",
+              "your eyes are dull brown ", 
+              "your eyes are hazel, ",
+              "your eyes are black, ",
+              "your eyes are light brown, ",
+              "your eyes are light gray, ",
+              "your mismatched eyes are green and blue, "
+          ],
+          "hair": [
+              "and your long blond hair goes down to your waist.",
+              "and your short blond hair is tied into a bun.",
+              "and your long brown hair falls messily over your face.",
+              "and your short brown hair is cropped so short you can see the scalp.",
+              "and your red hair falls in curls to your shoulders.",
+              "and your red hair is combed neatly to the side.",
+              "and your black hair falls to your shoulders in dreadlocks.",
+              "and your black hair is tied into a ponytail.",
+              "and you are completely bald.",
+              "and your pink-dyed hair is visible from miles away."
+          ]
+        },
+        "names": {
+            "first": {
+                "male": [
+                    "Aseir", "Bardeid", "Haseid", "Khemed", "Memen", "sedeiman", "Zasheir",
+                    "Darvin", "Dorn", "Evendur", "Gorstag", "Grim", "Helm", "Malark", "Morn", "Randal", "Stredd",
+                    "Bor", "Fodel", "Glar", "Grigor", "Igan", "Ivor", "Kosef", "Mival", "Orel", "Pavel", "Sergor",
+                    "Ander", "Blath", "Bran", "Frath", "Geth", "Lander", "Luth", "Malcer", "Stor", "Taman", "Urth",
+                    "Aoth", "Bareris", "Ehpu-Ki", "Kethoth", "Mumed", "Ramas", "So-Kehur", "Thazar-De", "Urhur",
+                    "Borivik", "Faurgar", "Jandar", "Kanithar", "Madislak", "Ralmevik", "Shaumar", "Vladislak",
+                    "An", "Chen", "Chi", "Fai", "Jiang", "Jun", "Lian", "Long", "Meng", "On", "Shan", "Shui", "Wen",
+                    "Anton", "Diero", "Marcon", "Pieron", "Rimardo", "Romero", "Salazar", "Umbero"
+                ],
+                "female": [
+                    "Atala", "Ceidil", "Hama", "Jasmal", "Meilil", "Seipora", "Yasheira", "Zasheida",
+                    "Arveene", "Esvele", "Jhessail", "Kerri", "Lureene", "Miri", "Rowan", "Shandri", "Tessele",
+                    "Alethra", "Kara", "Katernin", "Mara", "Natali", "Olma", "Tana", "Zora",
+                    "Amafrey", "Betha", "Cefrey", "Kethra", "Mara", "Olga", "Silifrey", "Westra",
+                    "Arizima", "Chathi", "Nephis", "Nulara", "Murithi", "Sefris", "Thola", "Umara", "Zolis",
+                    "Fyevarra", "Humarra", "Immith", "Imzel", "Navarra", "Shevarra", "Tanmith", "Yuldra",
+                    "Bai", "Chao", "Jia", "Lei", "Mei", "Qiao", "Shui", "Tai",
+                    "Balama", "Dona", "Faila", "Jalana", "Luisa", "Marta", "Quara", "Selise", "Vonda"
+                ],
+                "other": []
+            },
+            "last": [
+                "Basha", "Dumein", "Jassan", "Khalid", "Mostana", "Pashar", "Rein",
+                "Amblecrown", "Buckman", "Dundragon", "evenwood", "Greycastle", "Tallstag",
+                "Bersk", "Chernin", "Dotsk", "Kulenov", "Marsk", "Nemetsk", "Shemov", "Starag",
+                "Brightwood", "Helder", "Hornraven", "Lackman", "Stormwind", "Windrivver",
+                "Ankhalab", "Anskuld", "Fezim", "Hahpet", "Nathandem", "Sepret", "Uuthrakt",
+                "Chergoba", "Dyernina", "Iltazyara", "Murnyethara", "Stayanoga", "Ulmokina",
+                "Chien", "Huang", "Kao", "Kung", "Lao", "Ling", "Mei", "Pin", "Shin", "Sum", "Tan", "Wan",
+                "Agosto", "Astorio", "Calabra", "Domine", "Falone", "Marivaldi", "Pisacar", "Ramondo"
+            ]
+        }
+    }
+}
