@@ -181,13 +181,27 @@ module.exports = {
         const highestStatDesc = stat_descriptions[analysis.highestStat.name][highestStatValue];
         const lowestStatDesc = stat_descriptions[analysis.lowestStat.name][lowestStatValue];
         return {
-            highestStat: `\nYour highest stat is ***${analysis.highestStat.name.toUpperCase()}*** (${analysis.highestStat.value}): ${highestStatDesc}`,
-            lowestStat: `Your lowest stat is ***${analysis.lowestStat.name.toUpperCase()}*** (${analysis.lowestStat.value}): ${lowestStatDesc}`
+            highestStat: `\nYour highest stat is ***${analysis.highestStat.name.toUpperCase()} (${analysis.highestStat.value})***: ${highestStatDesc}`,
+            lowestStat: `\nYour lowest stat is ***${analysis.lowestStat.name.toUpperCase()} (${analysis.lowestStat.value})***: ${lowestStatDesc}`
         };
     }
     const descriptions = describeStats(analysis);
     let stat1 = descriptions.highestStat;
     let stat2 = descriptions.lowestStat;
+    
+    function categorizeSum(sum) {
+        if (sum <= 20) return "kys-tier";
+        if (sum <= 30) return "Abysmal";
+        if (sum <= 40) return "Depressing";
+        if (sum <= 50) return "Disappointing";
+        if (sum <= 60) return "Below Average";
+        if (sum <= 70) return "Average";
+        if (sum <= 80) return "Good";
+        if (sum <= 90) return "Excellent";
+        if (sum <= 100) return "Exceptional";
+        return "God-like";
+    }
+    let sum_desc = `\nYour stat total is ***${analysis.sum}*** which is ${categorizeSum(analysis.sum)}.`
     
     // Full character description
     let full_desc = `You are ${full_name}, a ${gender} ${race_details.name.toLowerCase()} ${pc_class}. `;
@@ -198,6 +212,7 @@ module.exports = {
     full_desc += bg_sentence;
     full_desc += align_desc;
     full_desc += stat_str;
+    full_desc += sum_desc;
     full_desc += stat1;
     full_desc += stat2;
     
