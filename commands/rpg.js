@@ -16,31 +16,66 @@ module.exports = {
 		.setDescription('Generate an RPG character'),
 	async execute(interaction) {
 
-    // Generate a description, name, type, etc.
+    // Useful funcs
     function get_rand_element(arr) {
+        if (arr.length === 0) { 
+          return null; 
+        }
         const randomIndex = Math.floor(Math.random() * arr.length);
         return arr[randomIndex];
-    }
+      }
 
+    // Gender
     let gender = get_rand_element([
         'male', 'male', 'male', 'male', 'male', 
         'female', 'female', 
         'nonbinary'
     ]);
 
+    // Class
     let pc_class = get_rand_element([
         'barbarian', 'bard', 'cleric', 'druid', 'fighter', 'monk', 
         'paladin', 'ranger', 'rogue', 'sorcerer', 'warlock', 'wizard'
     ])
 
+    // Race info
     const race_keys = Object.keys(race_vars);
     const random_index = Math.floor(Math.random() * race_keys.length);
     const selected_race = race_keys[random_index];
     const race_details = race_vars[selected_race];
 
+    // Name stuff, handling cases when last name doesn't exist.
+    // First
+    let first_name;
+    if (gender == 'male') {
+        first_name = get_rand_element(
+            race_details.names.first.male.concat(race_details.names.first.other)
+        )
+    } else if (gender == 'female') {
+        first_name = get_rand_element(
+            race_details.names.first.female.concat(race_details.names.first.other)
+        )
+    } else {
+        first_name = get_rand_element(race_details.names.first.other)
+    }
     
-    let full_desc = `You are a ${gender} ${race_details.name.toLowerCase()} ${pc_class}. `;
+    //Last
+    let last_name = race_details.names.last.length > 0 
+        ? get_rand_element(race_details.names.last)
+        : null;
 
+    // Full
+    let full_name = '';
+    if (first_name) {
+        full_name += first_name;
+    }
+    if (last_name) {
+        if (full_name) full_name += ' ';
+        full_name += last_name;  
+    }
+
+    // Full character description
+    let full_desc = `You are ${full_name}, a ${gender} ${race_details.name.toLowerCase()} ${pc_class}. `;
     for (let key in race_details.appearance_options) {
         full_desc += get_rand_element(race_details.appearance_options[key]);
     }
