@@ -141,8 +141,8 @@ module.exports = {
         formattedStats += '```';
         return formattedStats;
     }
-    const stats = generateRandomStats();
-    let stat_str = formatStatsForDiscord(stats, race_details);
+    const stats = generateRandomStats(race_details);
+    let stat_str = formatStatsForDiscord(stats);
     
     
 
