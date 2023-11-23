@@ -103,39 +103,61 @@
             "optional": ["Dwarvish", "Elvish", "Giant", "Gnomish", "Goblin", "Halfling", "Orc"]
         },
         "appearance_options": {
-          "skin": [
-              "Your skin is marble white, ",
-              "Your skin is mocha brown, ",
-              "Your skin is yellowish-tan, ",
-              "Your skin is so brown it's almost black, ",
-              "Your skin is a ruddy white, ",
-              "Your skin is dark tan, ",
-              "Your skin is pale, ",
-              "Your skin is a sunbathed tan, ",
-              "Your skin is brown, "
-          ],
-          "eyes": [
-              "your eyes are glimmering green, ",
-              "your eyes are piercing blue, ",
-              "your eyes are dull brown ", 
-              "your eyes are hazel, ",
-              "your eyes are black, ",
-              "your eyes are light brown, ",
-              "your eyes are light gray, ",
-              "your mismatched eyes are green and blue, "
-          ],
-          "hair": [
-              "and your long blond hair goes down to your waist.",
-              "and your short blond hair is tied into a bun.",
-              "and your long brown hair falls messily over your face.",
-              "and your short brown hair is cropped so short you can see the scalp.",
-              "and your red hair falls in curls to your shoulders.",
-              "and your red hair is combed neatly to the side.",
-              "and your black hair falls to your shoulders in dreadlocks.",
-              "and your black hair is tied into a ponytail.",
-              "and you are completely bald.",
-              "and your pink-dyed hair is visible from miles away."
-          ]
+           "skin": [
+                "Your skin is marble white, ",
+                "Your skin is mocha brown, ",
+                "Your skin is yellowish-tan, ",
+                "Your skin is so brown it's almost black, ",
+                "Your skin is a ruddy white, ",
+                "Your skin is dark tan, ",
+                "Your skin is pale, ",
+                "Your skin is a sunbathed tan, ",
+                "Your skin is brown, ",
+                "Your skin has an olive tone, ",
+                "Your skin is light with freckles, "
+            ],
+            "eyes": [
+                "your eyes are glimmering green, ",
+                "your eyes are piercing blue, ",
+                "your eyes are dull brown, ",
+                "your eyes are hazel, ",
+                "your eyes are black, ",
+                "your eyes are light brown, ",
+                "your eyes are light gray, ",
+                "your mismatched eyes are green and blue, ",
+                "your eyes are a vibrant amber, ",
+                "your eyes are a deep violet, "
+            ],
+            "hair": [
+                "and your long blond hair goes down to your waist.",
+                "and your short blond hair is tied into a bun.",
+                "and your long brown hair falls messily over your face.",
+                "and your short brown hair is cropped so short you can see the scalp.",
+                "and your red hair falls in curls to your shoulders.",
+                "and your red hair is combed neatly to the side.",
+                "and your black hair falls to your shoulders in dreadlocks.",
+                "and your black hair is tied into a ponytail.",
+                "and you are completely bald.",
+                "and your pink-dyed hair is visible from miles away.",
+                "and your silver hair shimmers in the light."
+            ],
+            "distinguishing_features": [
+                "with a scar across your left cheek.",
+                "with a series of tattoos covering your arms.",
+                "with piercing in your ears and nose.",
+                "with unusually bright teeth when you smile.",
+                "with an old, faded burn mark on your right hand.",
+                "with a series of ritualistic markings on your forehead.",
+                "with a noticeable gap between your front teeth.",
+                "with a long, intricately braided beard.",
+                "with a missing eyebrow, a reminder of a past battle.",
+                "with a collection of freckles scattered across your nose and cheeks.",
+                "with an elegant, yet mysterious, tattoo on your neck.",
+                "with a small but noticeable birthmark under your left eye.",
+                "with intricately painted nails, showcasing artistic flair.",
+                "with a constantly changing hair color, reflecting your whimsical nature.",
+                "with a pair of spectacles always perched on your nose."
+            ]
         },
         "names": {
             "first": {
@@ -172,5 +194,790 @@
                 "Agosto", "Astorio", "Calabra", "Domine", "Falone", "Marivaldi", "Pisacar", "Ramondo"
             ]
         }
+    },
+    "human2": {
+        "name": "Human",
+        "types": [
+          "Calishite",
+          "Chondathan",
+          "Damaran", 
+          "Illuskan",
+          "Mulan",
+          "Rashemi", 
+          "Shou",
+          "Tethyrian",
+          "Turami"
+        ],
+        "base_height": 56,
+        "base_weight": 110,
+        "height_modifier": "2d10",
+        "weight_modifier": "2d4",
+        "age": [14, 80],
+        "ability_scores": {
+            "str": 1,
+            "dex": 1,
+            "con": 1,
+            "int": 1,
+            "wis": 1,
+            "cha": 1
+        },
+        "languages": {
+            "base": ["Common"],
+            "optional": ["Dwarvish", "Elvish", "Giant", "Gnomish", "Goblin", "Halfling", "Orc"]
+        },
+        "appearance_options": {
+           "skin": [
+                "Your skin is marble white, ",
+                "Your skin is mocha brown, ",
+                "Your skin is yellowish-tan, ",
+                "Your skin is so brown it's almost black, ",
+                "Your skin is a ruddy white, ",
+                "Your skin is dark tan, ",
+                "Your skin is pale, ",
+                "Your skin is a sunbathed tan, ",
+                "Your skin is brown, ",
+                "Your skin has an olive tone, ",
+                "Your skin is light with freckles, "
+            ],
+            "eyes": [
+                "your eyes are glimmering green, ",
+                "your eyes are piercing blue, ",
+                "your eyes are dull brown, ",
+                "your eyes are hazel, ",
+                "your eyes are black, ",
+                "your eyes are light brown, ",
+                "your eyes are light gray, ",
+                "your mismatched eyes are green and blue, ",
+                "your eyes are a vibrant amber, ",
+                "your eyes are a deep violet, "
+            ],
+            "hair": [
+                "and your long blond hair goes down to your waist.",
+                "and your short blond hair is tied into a bun.",
+                "and your long brown hair falls messily over your face.",
+                "and your short brown hair is cropped so short you can see the scalp.",
+                "and your red hair falls in curls to your shoulders.",
+                "and your red hair is combed neatly to the side.",
+                "and your black hair falls to your shoulders in dreadlocks.",
+                "and your black hair is tied into a ponytail.",
+                "and you are completely bald.",
+                "and your pink-dyed hair is visible from miles away.",
+                "and your silver hair shimmers in the light."
+            ],
+            "distinguishing_features": [
+                "with a scar across your left cheek.",
+                "with a series of tattoos covering your arms.",
+                "with piercing in your ears and nose.",
+                "with unusually bright teeth when you smile.",
+                "with an old, faded burn mark on your right hand.",
+                "with a series of ritualistic markings on your forehead.",
+                "with a noticeable gap between your front teeth.",
+                "with a long, intricately braided beard.",
+                "with a missing eyebrow, a reminder of a past battle.",
+                "with a collection of freckles scattered across your nose and cheeks.",
+                "with an elegant, yet mysterious, tattoo on your neck.",
+                "with a small but noticeable birthmark under your left eye.",
+                "with intricately painted nails, showcasing artistic flair.",
+                "with a constantly changing hair color, reflecting your whimsical nature.",
+                "with a pair of spectacles always perched on your nose."
+            ]
+        },
+        "names": {
+            "first": {
+                "male": [
+                    "Aseir", "Bardeid", "Haseid", "Khemed", "Memen", "sedeiman", "Zasheir",
+                    "Darvin", "Dorn", "Evendur", "Gorstag", "Grim", "Helm", "Malark", "Morn", "Randal", "Stredd",
+                    "Bor", "Fodel", "Glar", "Grigor", "Igan", "Ivor", "Kosef", "Mival", "Orel", "Pavel", "Sergor",
+                    "Ander", "Blath", "Bran", "Frath", "Geth", "Lander", "Luth", "Malcer", "Stor", "Taman", "Urth",
+                    "Aoth", "Bareris", "Ehpu-Ki", "Kethoth", "Mumed", "Ramas", "So-Kehur", "Thazar-De", "Urhur",
+                    "Borivik", "Faurgar", "Jandar", "Kanithar", "Madislak", "Ralmevik", "Shaumar", "Vladislak",
+                    "An", "Chen", "Chi", "Fai", "Jiang", "Jun", "Lian", "Long", "Meng", "On", "Shan", "Shui", "Wen",
+                    "Anton", "Diero", "Marcon", "Pieron", "Rimardo", "Romero", "Salazar", "Umbero", "Cum"
+                ],
+                "female": [
+                    "Atala", "Ceidil", "Hama", "Jasmal", "Meilil", "Seipora", "Yasheira", "Zasheida",
+                    "Arveene", "Esvele", "Jhessail", "Kerri", "Lureene", "Miri", "Rowan", "Shandri", "Tessele",
+                    "Alethra", "Kara", "Katernin", "Mara", "Natali", "Olma", "Tana", "Zora",
+                    "Amafrey", "Betha", "Cefrey", "Kethra", "Mara", "Olga", "Silifrey", "Westra",
+                    "Arizima", "Chathi", "Nephis", "Nulara", "Murithi", "Sefris", "Thola", "Umara", "Zolis",
+                    "Fyevarra", "Humarra", "Immith", "Imzel", "Navarra", "Shevarra", "Tanmith", "Yuldra",
+                    "Bai", "Chao", "Jia", "Lei", "Mei", "Qiao", "Shui", "Tai", "Pussy",
+                    "Balama", "Dona", "Faila", "Jalana", "Luisa", "Marta", "Quara", "Selise", "Vonda"
+                ],
+                "other": []
+            },
+            "last": [
+                "Basha", "Dumein", "Jassan", "Khalid", "Mostana", "Pashar", "Rein",
+                "Amblecrown", "Buckman", "Dundragon", "evenwood", "Greycastle", "Tallstag",
+                "Bersk", "Chernin", "Dotsk", "Kulenov", "Marsk", "Nemetsk", "Shemov", "Starag",
+                "Brightwood", "Helder", "Hornraven", "Lackman", "Stormwind", "Windrivver",
+                "Ankhalab", "Anskuld", "Fezim", "Hahpet", "Nathandem", "Sepret", "Uuthrakt",
+                "Chergoba", "Dyernina", "Iltazyara", "Murnyethara", "Stayanoga", "Ulmokina",
+                "Chien", "Huang", "Kao", "Kung", "Lao", "Ling", "Mei", "Pin", "Shin", "Sum", "Tan", "Wan",
+                "Agosto", "Astorio", "Calabra", "Domine", "Falone", "Marivaldi", "Pisacar", "Ramondo"
+            ]
+        }
+    },
+    "human3": {
+        "name": "Human",
+        "types": [
+          "Calishite",
+          "Chondathan",
+          "Damaran", 
+          "Illuskan",
+          "Mulan",
+          "Rashemi", 
+          "Shou",
+          "Tethyrian",
+          "Turami"
+        ],
+        "base_height": 56,
+        "base_weight": 110,
+        "height_modifier": "2d10",
+        "weight_modifier": "2d4",
+        "age": [14, 80],
+        "ability_scores": {
+            "str": 1,
+            "dex": 1,
+            "con": 1,
+            "int": 1,
+            "wis": 1,
+            "cha": 1
+        },
+        "languages": {
+            "base": ["Common"],
+            "optional": ["Dwarvish", "Elvish", "Giant", "Gnomish", "Goblin", "Halfling", "Orc"]
+        },
+        "appearance_options": {
+           "skin": [
+                "Your skin is marble white, ",
+                "Your skin is mocha brown, ",
+                "Your skin is yellowish-tan, ",
+                "Your skin is so brown it's almost black, ",
+                "Your skin is a ruddy white, ",
+                "Your skin is dark tan, ",
+                "Your skin is pale, ",
+                "Your skin is a sunbathed tan, ",
+                "Your skin is brown, ",
+                "Your skin has an olive tone, ",
+                "Your skin is light with freckles, "
+            ],
+            "eyes": [
+                "your eyes are glimmering green, ",
+                "your eyes are piercing blue, ",
+                "your eyes are dull brown, ",
+                "your eyes are hazel, ",
+                "your eyes are black, ",
+                "your eyes are light brown, ",
+                "your eyes are light gray, ",
+                "your mismatched eyes are green and blue, ",
+                "your eyes are a vibrant amber, ",
+                "your eyes are a deep violet, "
+            ],
+            "hair": [
+                "and your long blond hair goes down to your waist.",
+                "and your short blond hair is tied into a bun.",
+                "and your long brown hair falls messily over your face.",
+                "and your short brown hair is cropped so short you can see the scalp.",
+                "and your red hair falls in curls to your shoulders.",
+                "and your red hair is combed neatly to the side.",
+                "and your black hair falls to your shoulders in dreadlocks.",
+                "and your black hair is tied into a ponytail.",
+                "and you are completely bald.",
+                "and your pink-dyed hair is visible from miles away.",
+                "and your silver hair shimmers in the light."
+            ],
+            "distinguishing_features": [
+                "with a scar across your left cheek.",
+                "with a series of tattoos covering your arms.",
+                "with piercing in your ears and nose.",
+                "with unusually bright teeth when you smile.",
+                "with an old, faded burn mark on your right hand.",
+                "with a series of ritualistic markings on your forehead.",
+                "with a noticeable gap between your front teeth.",
+                "with a long, intricately braided beard.",
+                "with a missing eyebrow, a reminder of a past battle.",
+                "with a collection of freckles scattered across your nose and cheeks.",
+                "with an elegant, yet mysterious, tattoo on your neck.",
+                "with a small but noticeable birthmark under your left eye.",
+                "with intricately painted nails, showcasing artistic flair.",
+                "with a constantly changing hair color, reflecting your whimsical nature.",
+                "with a pair of spectacles always perched on your nose."
+            ]
+        },
+        "names": {
+            "first": {
+                "male": [
+                    "Aseir", "Bardeid", "Haseid", "Khemed", "Memen", "sedeiman", "Zasheir",
+                    "Darvin", "Dorn", "Evendur", "Gorstag", "Grim", "Helm", "Malark", "Morn", "Randal", "Stredd",
+                    "Bor", "Fodel", "Glar", "Grigor", "Igan", "Ivor", "Kosef", "Mival", "Orel", "Pavel", "Sergor",
+                    "Ander", "Blath", "Bran", "Frath", "Geth", "Lander", "Luth", "Malcer", "Stor", "Taman", "Urth",
+                    "Aoth", "Bareris", "Ehpu-Ki", "Kethoth", "Mumed", "Ramas", "So-Kehur", "Thazar-De", "Urhur",
+                    "Borivik", "Faurgar", "Jandar", "Kanithar", "Madislak", "Ralmevik", "Shaumar", "Vladislak",
+                    "An", "Chen", "Chi", "Fai", "Jiang", "Jun", "Lian", "Long", "Meng", "On", "Shan", "Shui", "Wen",
+                    "Anton", "Diero", "Marcon", "Pieron", "Rimardo", "Romero", "Salazar", "Umbero", "Cum"
+                ],
+                "female": [
+                    "Atala", "Ceidil", "Hama", "Jasmal", "Meilil", "Seipora", "Yasheira", "Zasheida",
+                    "Arveene", "Esvele", "Jhessail", "Kerri", "Lureene", "Miri", "Rowan", "Shandri", "Tessele",
+                    "Alethra", "Kara", "Katernin", "Mara", "Natali", "Olma", "Tana", "Zora",
+                    "Amafrey", "Betha", "Cefrey", "Kethra", "Mara", "Olga", "Silifrey", "Westra",
+                    "Arizima", "Chathi", "Nephis", "Nulara", "Murithi", "Sefris", "Thola", "Umara", "Zolis",
+                    "Fyevarra", "Humarra", "Immith", "Imzel", "Navarra", "Shevarra", "Tanmith", "Yuldra",
+                    "Bai", "Chao", "Jia", "Lei", "Mei", "Qiao", "Shui", "Tai", "Pussy",
+                    "Balama", "Dona", "Faila", "Jalana", "Luisa", "Marta", "Quara", "Selise", "Vonda"
+                ],
+                "other": []
+            },
+            "last": [
+                "Basha", "Dumein", "Jassan", "Khalid", "Mostana", "Pashar", "Rein",
+                "Amblecrown", "Buckman", "Dundragon", "evenwood", "Greycastle", "Tallstag",
+                "Bersk", "Chernin", "Dotsk", "Kulenov", "Marsk", "Nemetsk", "Shemov", "Starag",
+                "Brightwood", "Helder", "Hornraven", "Lackman", "Stormwind", "Windrivver",
+                "Ankhalab", "Anskuld", "Fezim", "Hahpet", "Nathandem", "Sepret", "Uuthrakt",
+                "Chergoba", "Dyernina", "Iltazyara", "Murnyethara", "Stayanoga", "Ulmokina",
+                "Chien", "Huang", "Kao", "Kung", "Lao", "Ling", "Mei", "Pin", "Shin", "Sum", "Tan", "Wan",
+                "Agosto", "Astorio", "Calabra", "Domine", "Falone", "Marivaldi", "Pisacar", "Ramondo"
+            ]
+        }
+    },
+    "hill_dwarf": {
+        "name": "Hill Dwarf",
+        "types": [],
+        "base_height": 44,
+        "base_weight": 115,
+        "height_modifier": "2d4",
+        "weight_modifier": "2d6",
+        "age": [30, 350],
+        "ability_scores": {
+            "con": 2,
+            "wis": 1
+        },
+        "languages": {
+            "base": ["Common", "Dwarvish"],
+            "optional": []
+        },
+        "appearance_options": {
+            "skin": [
+                "Your skin has a gentle sun-kissed glow, ",
+                "Your skin is a light earthy tone, reminiscent of clay, ",
+                "Your skin is fair, with a touch of rosiness, ",
+                "Your skin is smooth and has a subtle bronze tint, ",
+                "Your skin is a soft, light tan, "
+            ],
+            "eyes": [
+                "your eyes are a warm, honey brown, ",
+                "your eyes sparkle with a vibrant green, ",
+                "your eyes are a soft, sky blue, ",
+                "your eyes hold the gentle hues of hazel, ",
+                "your eyes are a clear, light gray, "
+            ],
+            "hair": [
+                "and your hair is wavy and light, cascading over your shoulders, ",
+                "and your hair is a soft chestnut, kept neatly tied back, ",
+                "and your hair is golden blonde, shining in the light, ",
+                "and your hair, auburn in color, frames your face in loose curls, ",
+                "and your hair is a striking silver, even in your youth, "
+            ],
+            "beard": [
+                "your beard is well-groomed, following the contours of your face, ",
+                "your beard is light and neatly trimmed, ",
+                "you sport a simple, short beard, ",
+                "your beard is adorned with small braids and wooden beads, ",
+                "you prefer a clean-shaven look, "
+            ],
+            "build": [
+                "and your build is sturdy yet agile.",
+                "and you have a lean, resilient physique.",
+                "and your form is well-balanced, reflecting your adaptability.",
+                "and you are of moderate build, strong but not overly bulky.",
+                "and your stature is less imposing than a Mountain Dwarf, yet still robust."
+            ]
+        },
+        "names": {
+            "first": {
+                "male": [
+                    "Adrik", "Alberich", "Baern", "Barendd", "Brottor", "Bruenor", "Dain", "Darrak", 
+                    "Delg", "Eberk", "Einkil", "Fargrim", "Flint", "Gardain", "Harbek", "Kildrak", "Morgran", 
+                    "Orsik", "Oskar", "Rangrim", "Rurik", "Taklinn", "Thoradin", "Thorin", "Tordek", 
+                    "Traubon", "Travok", "Ulfgar", "Veit", "Vondal"
+                ],
+                "female": [
+                    "Amber", "Artin", "Audhild", "Bardryn", "Dagnal", "Diesa", "Eldeth", "Falkrunn", 
+                    "Finellen", "Gunnloda", "Gurdis", "Helja", "Hlin", "Kathra", "Kristryd", 
+                    "Ilde", "Liftrasa", "Mardred", "Riswynn", "Sannl", "Torbera", "Torgga", "Vistra"
+                ],
+                "other": []
+            },
+            "last": [
+                "Balderk", "Battlehammer", "Brawnanvil", "Dankil", "Fireforge", "Frostbeard", 
+                "Gorunn", "Holderhek", "Ironfist", "Loderr", "Lutgehr", "Rumnaheim", "Strakeln", 
+                "Torunn", "Ungart"
+            ]
+        }
+    },
+    "mountain_dwarf": {
+        "name": "Mountain Dwarf",
+        "types": [],
+        "base_height": 48,
+        "base_weight": 130,
+        "height_modifier": "2d4",
+        "weight_modifier": "2d6",
+        "age": [30, 350],
+        "ability_scores": {
+            "con": 2,
+            "str": 2
+        },
+        "languages": {
+            "base": ["Common", "Dwarvish"],
+            "optional": []
+        },
+        "appearance_options": {
+            "skin": [
+                "Your skin is rugged, with a deep, stony hue, ",
+                "Your skin is a dark, iron-like tone, weathered by the forge, ",
+                "Your skin is tough and darkened, akin to old leather, ",
+                "Your skin bears a granite-like quality, both in texture and color, ",
+                "Your skin is a deep bronze, hardened by the mountain winds, "
+            ],
+            "eyes": [
+                "your eyes are a sharp steel gray, ",
+                "your eyes are deep brown, like rich earth, ",
+                "your eyes glint with a dark emerald green, ",
+                "your eyes are intense, like burning coals, ",
+                "your eyes are a piercing icy blue, "
+            ],
+            "hair": [
+                "and your hair is dark and thick, hanging heavily, ",
+                "and your hair is a deep black, cut short for practicality, ",
+                "and your hair is a dark reddish-brown, coarse to the touch, ",
+                "and your hair is slate gray, despite your youthful age, ",
+                "and your hair is a dark, earthy brown, kept tightly braided, "
+            ],
+            "beard (for males)": [
+                "your beard is bushy and full, a symbol of pride, ",
+                "your beard is heavily braided with metal clasps, ",
+                "your beard is long and unkempt, wild as the mountain wind, ",
+                "your beard is adorned with intricate metal rings, ",
+                "your beard, dark and voluminous, covers most of your chest, "
+            ],
+            "build": [
+                "and your build is imposing, muscles hardened by years of labor.",
+                "and you possess a broad, powerful frame.",
+                "and your physique is stocky and strong, a testament to your hardiness.",
+                "and your form is like a boulder, unyielding and solid.",
+                "and your stature is compact, yet overwhelmingly muscular."
+            ]
+        },
+        "names": {
+            "first": {
+                "male": [
+                    "Adrik", "Alberich", "Baern", "Barendd", "Brottor", "Bruenor", "Dain", "Darrak", 
+                    "Delg", "Eberk", "Einkil", "Fargrim", "Flint", "Gardain", "Harbek", "Kildrak", "Morgran", 
+                    "Orsik", "Oskar", "Rangrim", "Rurik", "Taklinn", "Thoradin", "Thorin", "Tordek", 
+                    "Traubon", "Travok", "Ulfgar", "Veit", "Vondal"
+                ],
+                "female": [
+                    "Amber", "Artin", "Audhild", "Bardryn", "Dagnal", "Diesa", "Eldeth", "Falkrunn", 
+                    "Finellen", "Gunnloda", "Gurdis", "Helja", "Hlin", "Kathra", "Kristryd", 
+                    "Ilde", "Liftrasa", "Mardred", "Riswynn", "Sannl", "Torbera", "Torgga", "Vistra"
+                ],
+                "other": []
+            },
+            "last": [
+                "Balderk", "Battlehammer", "Brawnanvil", "Dankil", "Fireforge", "Frostbeard", 
+                "Gorunn", "Holderhek", "Ironfist", "Loderr", "Lutgehr", "Rumnaheim", "Strakeln", 
+                "Torunn", "Ungart"
+            ]
+        }
+    },
+    "high_elf": {
+        "name": "High Elf",
+        "types": [],
+        "base_height": 54,
+        "base_weight": 90,
+        "height_modifier": "2d10",
+        "weight_modifier": "1d4",
+        "age": [50, 750],
+        "ability_scores": {
+            "dex": 2,
+            "int": 1
+        },
+        "languages": {
+            "base": ["Common", "Elvish"],
+            "optional": ["Dwarvish", "Giant", "Gnomish", "Goblin", "Halfling", "Orc"]
+        },
+        "appearance_options": {
+            "skin": [
+                "Your skin is pale with a silvery sheen, ",
+                "Your skin is smooth and fair, ",
+                "Your skin has a golden undertone, ",
+                "Your skin is as pale as moonlight, ",
+                "Your skin is richly olive, "
+            ],
+            "eyes": [
+                "your eyes are a vibrant violet, ",
+                "your eyes are a deep sapphire blue, ",
+                "your eyes shimmer like emeralds, ",
+                "your eyes are as black as the night sky, ",
+                "your eyes are a striking silver, "
+            ],
+            "hair": [
+                "and your hair is long and silver, flowing like liquid moonlight.",
+                "and your hair is a radiant gold, cascading in waves.",
+                "and your hair is jet black, sleek and straight.",
+                "and your hair is fiery red, flowing freely.",
+                "and your hair is a deep chestnut brown, braided intricately."
+            ],
+            "build": [
+                "Your build is slender and graceful, ",
+                "Your figure is lithe and agile, ",
+                "Your physique is slender but strong, ",
+                "Your form is willowy and elegant, ",
+                "Your stature is statuesque and regal, "
+            ],
+            "demeanor": [
+                "and your demeanor exudes ancient wisdom.",
+                "and your presence is ethereal and otherworldly.",
+                "and your aura is calm and serene.",
+                "and your bearing is noble and aloof.",
+                "and your essence radiates an air of mystery."
+            ]
+        },
+        "names": {
+            "first": {
+                "male": [
+                    "Adran", "Aelar", "Aramil", "Arannis", "Aust", "Beiro", "Berrian", "Carric", 
+                    "Enialis", "Erdan", "Erevan", "Galinndan", "Hadarai", "Heian", "Himo", 
+                    "Immeral", "Ivellios", "Laucian", "Mindartis", "Paelias", "Peren", "Quarion", 
+                    "Riardon", "Rolen", "Soveliss", "Thamior", "Tharivol", "Theren", "Varis"
+                ],
+                "female": [
+                    "Adrie", "Althaea", "Anastrianna", "Andraste", "Antinua", "Bethrynna", 
+                    "Birel", "Caelynn", "Drusilia", "Enna", "Felosial", "Ielenia", "Jelenneth", 
+                    "Keyleth", "Leshanna", "Lia", "Meriele", "Mialee", "Naivara", "Quelenna", 
+                    "Quillathe", "Sariel", "Shanairra", "Shava", "Silaqui", "Theirastra", "Thia", 
+                    "Vadania", "Valanthe", "Xanaphia"
+                ],
+                "other": []
+            },
+            "last": [
+                "Amakiir", "Amastacia", "Galanodel", "Holimion", "Ilphelkiir", 
+                "Liadon", "Meliamne", "Nailo", "Siannodel", "Xiloscient", "Elaithara", 
+                "Faelarion", "Gwethranor", "Hithweni", "Lorathien", "Mythienel", 
+                "Silvamere", "Telperien", "Yestevar", "Zephyrwind"
+            ]
+        }
+    },
+    "wood_elf": {
+        "name": "Wood Elf",
+        "types": [],
+        "base_height": 54,
+        "base_weight": 100,
+        "height_modifier": "2d10",
+        "weight_modifier": "1d4",
+        "age": [50, 750],
+        "ability_scores": {
+            "dex": 2,
+            "wis": 1
+        },
+        "languages": {
+            "base": ["Common", "Elvish"],
+            "optional": []
+        },
+        "appearance_options": {
+            "skin": [
+                "Your skin is earthy brown and sun-kissed, ",
+                "Your skin has a greenish hue, blending with the forest, ",
+                "Your skin is tanned and freckled, ",
+                "Your skin is the color of rich, damp soil, ",
+                "Your skin has a subtle bark-like texture, "
+            ],
+            "eyes": [
+                "your eyes are a deep forest green, ",
+                "your eyes are like dark oak wood, ",
+                "your eyes are bright like fresh leaves, ",
+                "your eyes are a rich hazel, mimicking the forest floor, ",
+                "your eyes are a clear, sky blue, "
+            ],
+            "hair": [
+                "and your hair is wild and leafy green, blending with the canopy.",
+                "and your hair is long, straight, and dark as the midnight forest.",
+                "and your hair is short, curly, and the color of autumn leaves.",
+                "and your hair, thick and wavy, is the color of pine needles.",
+                "and your hair is adorned with flowers and twigs."
+            ],
+            "build": [
+                "Your build is sturdy and rugged, ",
+                "Your figure is lithe, like a forest predator, ",
+                "Your physique is lean and enduring, ",
+                "Your form is agile and stealthy, ",
+                "Your stature is compact but powerful, "
+            ],
+            "demeanor": [
+                "and your demeanor reflects the wildness of nature.",
+                "and your presence is as calming as a forest glade.",
+                "and your aura is lively and vibrant.",
+                "and your bearing is mysterious, like the depths of the woods.",
+                "and your essence is as serene as a still forest pond."
+            ]
+        },
+        "names": {
+            "first": {
+                "male": [
+                    "Adran", "Aelar", "Aramil", "Arannis", "Aust", "Beiro", "Berrian", "Carric", 
+                    "Enialis", "Erdan", "Erevan", "Galinndan", "Hadarai", "Heian", "Himo", 
+                    "Immeral", "Ivellios", "Laucian", "Mindartis", "Paelias", "Peren", "Quarion", 
+                    "Riardon", "Rolen", "Soveliss", "Thamior", "Tharivol", "Theren", "Varis"
+                ],
+                "female": [
+                    "Adrie", "Althaea", "Anastrianna", "Andraste", "Antinua", "Bethrynna", 
+                    "Birel", "Caelynn", "Drusilia", "Enna", "Felosial", "Ielenia", "Jelenneth", 
+                    "Keyleth", "Leshanna", "Lia", "Meriele", "Mialee", "Naivara", "Quelenna", 
+                    "Quillathe", "Sariel", "Shanairra", "Shava", "Silaqui", "Theirastra", "Thia", 
+                    "Vadania", "Valanthe", "Xanaphia"
+                ],
+                "other": []
+            },
+            "last": [
+                "Amakiir", "Amastacia", "Galanodel", "Holimion", "Ilphelkiir", 
+                "Liadon", "Meliamne", "Nailo", "Siannodel", "Xiloscient", "Elaithara", 
+                "Faelarion", "Gwethranor", "Hithweni", "Lorathien", "Mythienel", 
+                "Silvamere", "Telperien", "Yestevar", "Zephyrwind"
+            ]
+        }
+    },
+    "drow": {
+        "name": "Drow",
+        "types": [],
+        "base_height": 53,
+        "base_weight": 75,
+        "height_modifier": "2d6",
+        "weight_modifier": "1d6",
+        "age": [50, 750],
+        "ability_scores": {
+            "dex": 2,
+            "cha": 1
+        },
+        "languages": {
+            "base": ["Common", "Elvish"],
+            "optional": []
+        },
+        "appearance_options": {
+            "skin": [
+                "Your skin is a deep, onyx black, ",
+                "Your skin is a shade of dark blue, like the deepest parts of the ocean, ",
+                "Your skin is a purplish hue, reminiscent of midnight shadows, ",
+                "Your skin is charcoal grey, blending with the darkness, ",
+                "Your skin is a striking dark violet, "
+            ],
+            "eyes": [
+                "your eyes are a piercing red, glowing slightly in the dark, ",
+                "your eyes are a bright, electric blue, ",
+                "your eyes are a luminous purple, ",
+                "your eyes are a stark, icy white, ",
+                "your eyes are an intense yellow, like sulfurous flames, "
+            ],
+            "hair": [
+                "and your hair is silvery white, flowing like moonlight.",
+                "and your hair is snow-white, stark against your dark skin.",
+                "and your hair is a shimmering platinum, sleek and straight.",
+                "and your hair is pale blonde, contrasting with the underdark's gloom.",
+                "and your hair is kept in elaborate braids, adorned with dark jewels."
+            ],
+            "build": [
+                "Your build is slender and graceful, ",
+                "Your figure is athletic and agile, ",
+                "Your physique is sleek and well-toned, ",
+                "Your form is elegant, with a dancer's poise, ",
+                "Your stature is lithe but strong, "
+            ],
+            "aura": [
+                "and your aura emanates an air of mystery and allure.",
+                "and your presence is as commanding as the deepest caverns.",
+                "and your demeanor is cold and calculating.",
+                "and your essence is as enigmatic as the underdark itself.",
+                "and your bearing is regal, commanding respect."
+            ]
+        },
+        "names": {
+            "first": {
+                "male": [
+                    "Adran", "Aelar", "Aramil", "Arannis", "Aust", "Beiro", "Berrian", "Carric", 
+                    "Enialis", "Erdan", "Erevan", "Galinndan", "Hadarai", "Heian", "Himo", 
+                    "Immeral", "Ivellios", "Laucian", "Mindartis", "Paelias", "Peren", "Quarion", 
+                    "Riardon", "Rolen", "Soveliss", "Thamior", "Tharivol", "Theren", "Varis"
+                ],
+                "female": [
+                    "Adrie", "Althaea", "Anastrianna", "Andraste", "Antinua", "Bethrynna", 
+                    "Birel", "Caelynn", "Drusilia", "Enna", "Felosial", "Ielenia", "Jelenneth", 
+                    "Keyleth", "Leshanna", "Lia", "Meriele", "Mialee", "Naivara", "Quelenna", 
+                    "Quillathe", "Sariel", "Shanairra", "Shava", "Silaqui", "Theirastra", "Thia", 
+                    "Vadania", "Valanthe", "Xanaphia"
+                ],
+                "other": []
+            },
+            "last": [
+                "Amakiir", "Amastacia", "Galanodel", "Holimion", "Ilphelkiir", 
+                "Liadon", "Meliamne", "Nailo", "Siannodel", "Xiloscient", "Elaithara", 
+                "Faelarion", "Gwethranor", "Hithweni", "Lorathien", "Mythienel", 
+                "Silvamere", "Telperien", "Yestevar", "Zephyrwind"
+            ]
+        }
+    },
+    "lightfoot_halfling": {
+        "name": "Lightfoot Halfling",
+        "types": [],
+        "base_height": 31,
+        "base_weight": 35,
+        "height_modifier": "2d4",
+        "weight_modifier": "1d1",
+        "age": [15, 160],
+        "ability_scores": {
+            "dex": 2,
+            "cha": 1
+        },
+        "languages": {
+            "base": ["Common", "Halfling"],
+            "optional": []
+        },
+        "appearance_options": {
+            "skin": [
+                "Your skin is a warm, sun-kissed bronze. ",
+                "Your skin is fair, almost porcelain in its lightness. ",
+                "Your skin carries a rosy hue. ",
+                "Your skin is a soft, earthy tone. ",
+                "Your skin is olive, hinting at your adventurous nature. "
+            ],
+            "eyes": [
+                "Your eyes are a deep, rich brown, ",
+                "Your eyes sparkle with a mischievous light blue, ",
+                "Your eyes are a bright, curious green, ",
+                "Your eyes are a gentle, soothing hazel, ",
+                "Your eyes, one brown and one green, show your unique heritage, "
+            ],
+            "hair": [
+                "and your hair is a wild, untamed mane of curls. ",
+                "and your hair, sleek and straight, is neatly combed back. ",
+                "and your hair is short, practical, and always out of your way. ",
+                "and your hair falls in long waves, often braided with small flowers. ",
+                "and your hair, vibrant red, stands out in any crowd. "
+            ],
+            "facial_features": [
+                "You have a broad, welcoming smile that puts others at ease, ",
+                "You have a small, upturned nose that gives you a youthful appearance, ",
+                "You have a pair of rosy cheeks, often flushed with excitement, ",
+                "You have a sharp, angular jawline that adds to your determined look, ",
+                "You have soft, rounded features that exude friendliness, "
+            ],
+            "unique_traits": [
+                "and your ears, slightly pointed at the tips, twitch when you're amused.",
+                "and a noticeable dimple appears on your cheek when you smile.",
+                "and a scattering of freckles across your nose and cheeks adds to your charm.",
+                "with a scattering of freckles across your nose and cheeks, adding to your youthful look.",
+                "and your smile reveals a gap between your front teeth, adding charm to your expressions.",
+                "with hands that are surprisingly deft, their fingers always in motion, as if playing an invisible instrument.",
+                "and your feet are bare, showcasing tough, weathered soles that speak of many journeys."
+            ]
+        },
+        "names": {
+            "first": {
+                "male": [
+                    "Alton", "Ander", "Cade", "Corrin", "Eldon", "Errich", 
+                    "Finnan", "Garret", "Lindal", "Lyle", "Merric", "Milo", 
+                    "Osborn", "Perrin", "Reed", "Roscoe", "Wellby" 
+                ],
+                "female": [
+                    "Andry", "Bree", "Callie", "Cora", "Euphemia", "Jillian", 
+                    "Kithri", "Lavinia", "Lidda", "Merla", "Nedda", "Paela", 
+                    "Portia", "Seraphina", "Shaena", "Trym", "Vani", "Verna"
+                ],
+                "other": []
+            },
+            "last": [
+                "Brushgather", "Goodbarrel", "Greenbottle", "High-hill", 
+                "Hilltopple", "Leagallow", "Tealeaf", "Thorngage", 
+                "Tosscobble", "Underbough"
+            ]
+        }
+    },
+    "stout_halfling": {
+        "name": "Stout Halfling",
+        "types": [],
+        "base_height": 31,
+        "base_weight": 35,
+        "height_modifier": "2d4",
+        "weight_modifier": "1d1",
+        "age": [15, 160],
+        "ability_scores": {
+            "dex": 2,
+            "con": 1
+        },
+        "languages": {
+            "base": ["Common", "Halfling"],
+            "optional": []
+        },
+        "appearance_options": {
+            "skin": [
+                "Your skin is ruddy and weathered from outdoor work, ",
+                "Your skin is fair, almost porcelain-like in its smoothness, ",
+                "Your skin has a deep tan, a testament to days spent under the sun, ",
+                "Your skin is a warm, earthy tone, ",
+                "Your skin is freckled, especially across your shoulders and arms, "
+            ],
+            "eyes": [
+                "your eyes are a deep, soulful brown, ",
+                "your eyes are bright and sparkling blue, ",
+                "your eyes are a soft, gentle gray, ",
+                "your eyes are vibrant green, like fresh leaves, ",
+                "your eyes are amber, catching light in a captivating way, "
+            ],
+            "hair": [
+                "and your hair is thick and curly, often escaping any attempt to tame it.",
+                "and your hair is straight and dark, cut in a practical, no-nonsense style.",
+                "and your hair is auburn, worn in a simple yet elegant braid.",
+                "and your hair is salt-and-pepper, showing signs of wisdom and experience.",
+                "and you sport a shiny bald head, polished to perfection."
+            ],
+            "facial features": [
+                "You have a broad, welcoming smile that lights up your face, ",
+                "You have a square jaw and a firm, determined look, ",
+                "You have a nose that's slightly crooked from a long-forgotten scuffle, ",
+                "You have cheeks that are always slightly flushed, ",
+                "You have a distinctive scar that runs across your cheek, "
+            ],
+            "ears": [
+                "and your ears are round and slightly large, giving you a childlike charm.",
+                "and your ears have a slight point, hinting at a mischievous nature.",
+                "and your ears are small and fit neatly against your head.",
+                "and your ears are adorned with several small piercings.",
+                "and your ears are remarkably unremarkable, perfectly blending in with your overall appearance."
+          ]
+        },
+        "names": {
+            "first": {
+                "male": [
+                    "Alton", "Ander", "Cade", "Corrin", "Eldon", "Errich", 
+                    "Finnan", "Garret", "Lindal", "Lyle", "Merric", "Milo", 
+                    "Osborn", "Perrin", "Reed", "Roscoe", "Wellby" 
+                ],
+                "female": [
+                    "Andry", "Bree", "Callie", "Cora", "Euphemia", "Jillian", 
+                    "Kithri", "Lavinia", "Lidda", "Merla", "Nedda", "Paela", 
+                    "Portia", "Seraphina", "Shaena", "Trym", "Vani", "Verna"
+                ],
+                "other": []
+            },
+            "last": [
+                "Brushgather", "Goodbarrel", "Greenbottle", "High-hill", 
+                "Hilltopple", "Leagallow", "Tealeaf", "Thorngage", 
+                "Tosscobble", "Underbough"
+            ]
+        }
     }
 }
+
+
+
+
+
