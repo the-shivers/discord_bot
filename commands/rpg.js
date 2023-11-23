@@ -131,7 +131,7 @@ module.exports = {
 
     // Stats generation
     function generateRandomStats(raceDetails) {
-        const allScores = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+        let allScores = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
         let fixedScores = {};
         let flexibleIncreases = 0;
         for (let score in raceDetails.ability_scores) {
