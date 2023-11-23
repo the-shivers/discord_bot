@@ -204,15 +204,15 @@ module.exports = {
     let stat2 = descriptions.lowestStat;
     
     function categorizeSum(sum) {
-        if (sum <= 20) return "kys-tier";
-        if (sum <= 30) return "Abysmal";
-        if (sum <= 40) return "Depressing";
-        if (sum <= 50) return "Disappointing";
-        if (sum <= 60) return "Below Average";
+        if (sum <= 45) return "kys-tier";
+        if (sum <= 50) return "Abysmal";
+        if (sum <= 55) return "Depressing";
+        if (sum <= 60) return "Disappointing";
+        if (sum <= 65) return "Below Average";
         if (sum <= 70) return "Average";
-        if (sum <= 80) return "Good";
-        if (sum <= 90) return "Excellent";
-        if (sum <= 100) return "Exceptional";
+        if (sum <= 75) return "Good";
+        if (sum <= 80) return "Excellent";
+        if (sum <= 85) return "Exceptional";
         return "God-like";
     }
     let sum_desc = `\nYour stat total is ***${analysis.sum}*** which is ${categorizeSum(analysis.sum)}.`
