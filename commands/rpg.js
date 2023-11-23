@@ -131,14 +131,28 @@ module.exports = {
 
     // Stats generation
     function generateRandomStats(raceDetails) {
-        const stats = {
-            str: [Math.floor(Math.random() * 20) + 1, raceDetails.ability_scores['str'] || 0],
-            dex: [Math.floor(Math.random() * 20) + 1, raceDetails.ability_scores['dex'] || 0],
-            con: [Math.floor(Math.random() * 20) + 1, raceDetails.ability_scores['con'] || 0],
-            int: [Math.floor(Math.random() * 20) + 1, raceDetails.ability_scores['int'] || 0],
-            wis: [Math.floor(Math.random() * 20) + 1, raceDetails.ability_scores['wis'] || 0],
-            cha: [Math.floor(Math.random() * 20) + 1, raceDetails.ability_scores['cha'] || 0]
-        };
+        const allScores = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+        let fixedScores = {};
+        let flexibleIncreases = 0;
+        for (let score in raceDetails.ability_scores) {
+            if (score.startsWith("other")) {
+                flexibleIncreases += raceDetails.ability_scores[score];
+            } else {
+                fixedScores[score] = raceDetails.ability_scores[score];
+            }
+        }
+        allScores = allScores.filter(score => !(score in fixedScores));
+        while (flexibleIncreases > 0 && allScores.length > 0) {
+            const randomIndex = Math.floor(Math.random() * allScores.length);
+            const selectedScore = allScores[randomIndex];
+            fixedScores[selectedScore] = (fixedScores[selectedScore] || 0) + 1;
+            allScores.splice(randomIndex, 1);
+            flexibleIncreases--;
+        }
+        const stats = {};
+        for (let score of ['str', 'dex', 'con', 'int', 'wis', 'cha']) {
+            stats[score] = [Math.floor(Math.random() * 20) + 1, fixedScores[score] || 0];
+        }
         return stats;
     }
     function formatStatsForDiscord(stats) {
