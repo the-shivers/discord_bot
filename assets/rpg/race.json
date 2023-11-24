@@ -1229,6 +1229,1098 @@
             },
             "last": []
         }
+    },
+    "goliath": {
+        "name": "Goliath",
+        "types": [],
+        "base_height": 74,
+        "base_weight": 200,
+        "height_modifier": "2d10",
+        "weight_modifier": "2d6",
+        "age": [15, 90],
+        "ability_scores": {
+            "str": 2,
+            "con": 1
+        },
+        "languages": {
+            "base": ["Common", "Giant"]
+        },
+        "appearance_options": {
+            "skin": [
+                "Your skin is a stony gray, reminiscent of mountain rock, ",
+                "Your skin bears a bluish tint, like the high-altitude skies, ",
+                "Your skin is a pale, alabaster white, standing out among your kin, ",
+                "Your skin is mottled with darker patches, echoing the rugged terrain of your homeland, ",
+                "Your skin is marbled with faint, natural lines, resembling the slopes of your mountainous home, "
+            ],
+            "eyes": [
+                "your eyes are a piercing glacier blue, reflecting your icy environment, ",
+                "your eyes are a deep, earthy brown, grounding you to the land, ",
+                "your eyes are a striking green, unusual for a goliath, ",
+                "your eyes shimmer with a silvery hue, like moonlight on snow, ",
+                "your eyes are a vibrant amber, glowing with an inner fire, "
+            ],
+            "tattoos": [
+                "and your tattoos are bold and geometric, telling the story of your achievements. ",
+                "and you have ritualistic tattoos that cover your arms, symbolizing your connection to the earth. ",
+                "and your back is adorned with intricate tattoos depicting your lineage. ",
+                "and your tattoos are minimalist, focusing on sharp lines and angles. ",
+                "and you have a single, prominent tattoo on your chest, a symbol of your personal philosophy. "
+            ],
+            "facial features": [
+                "You have a square, strong jawline, emphasizing your resilience, ",
+                "You have high, pronounced cheekbones, giving you a noble look, ",
+                "You have a broad forehead, marked with traditional tribal lines, ",
+                "You have a long, straight nose, a distinguishing feature among your tribe, ",
+                "You have deep-set eyes, giving you a contemplative appearance, "
+            ],
+            "hair": [
+                "and your hair is thick and coarse, cascading down your back in a wild mane.",
+                "and your hair is cropped short, practical for your nomadic lifestyle.",
+                "and your hair is intricately braided, a sign of patience and skill.",
+                "and you have a shaved head, emphasizing your tattooed scalp.",
+                "and your hair is adorned with small beads and feathers, a nod to your cultural heritage."
+            ]
+        },
+        "names": {
+            "first": {
+                "male": [
+                    "Aukan", "Eglath", "Gae-Al", "Gauthak", "Ilikan", "Keothi", 
+                    "Kuori", "Lo-Kag", "Manneo", "Maveith", "Nalla", "Orilo", 
+                    "Paavu", "Pethani", "Thalai", "Thotham", "Uthal", "Vaunea", 
+                    "Vimak"
+                ],
+                "female": [
+                    "Aukan", "Eglath", "Gae-Al", "Gauthak", "Ilikan", "Keothi", 
+                    "Kuori", "Lo-Kag", "Manneo", "Maveith", "Nalla", "Orilo", 
+                    "Paavu", "Pethani", "Thalai", "Thotham", "Uthal", "Vaunea", 
+                    "Vimak"
+                ],
+                "other": [
+                    "Bearkiller", "Dawncaller", "Fearless", "Flintfinder", 
+                    "Horncarver", "Keeneye", "Lonehunter", "Longleaper", 
+                    "Rootsmasher", "Skywatcher", "Steadyhand", "Threadtwister", 
+                    "Twice-Orphaned", "Twistedlimb", "Wordpainter"
+                ]
+            },
+            "last": [
+                "Anakalathai", "Elanithino", "Gathakanathi", "Kalagiano", 
+                "Katho-Olavi", "Kolae-Gileana", "Ogolakanu", "Thuliaga", 
+                "Thunukalathi", "Vaimei-Laga"
+            ]
+        }
+    },
+    "warforged": {
+        "name": "Warforged",
+        "types": [],
+        "base_height": 70,
+        "base_weight": 270,
+        "height_modifier": "2d6",
+        "weight_modifier": "4d1",
+        "age": [15, 90],
+        "ability_scores": {
+            "con": 2,
+            "other1": 1
+        },
+        "languages": {
+            "base": ["Common"],
+            "optional": ["Dwarvish", "Giant", "Gnomish", "Goblin", "Halfling", "Orc"]
+
+        },
+        "appearance_options": {
+            "plating": [
+                "Your body plating is a sleek, polished steel, reflecting light sharply, ",
+                "Your plating has a dark, matte finish, ideal for moving unseen at night, ",
+                "Your plating is a rustic bronze, giving you an antique, distinguished look, ",
+                "Your plating is adorned with intricate engravings, showcasing exquisite craftsmanship, ",
+                "Your plating is a patchwork of different metals, telling the story of numerous repairs, "
+            ],
+            "optic lenses": [
+                "your optic lenses are a bright, piercing blue, like a focused beam, ",
+                "your lenses have a deep red glow, intimidating to onlookers, ",
+                "your lenses are an unusual emerald green, captivating and unique, ",
+                "your lenses are a subtle amber, giving off a warm, inviting light, ",
+                "your lenses are a dynamic silver, adjusting in intensity with the light, "
+            ],
+            "frame": [
+                "and your frame is robust and heavily built, designed for strength. ",
+                "and you have a sleek, lightweight frame, built for agility. ",
+                "and your frame is unusually tall and imposing, a towering presence. ",
+                "and you have a compact, efficient frame, optimized for versatility. ",
+                "and your frame includes ornamental elements, reflecting a more artistic design. "
+            ],
+            "core": [
+                "At your core is a softly pulsing light, a sign of your magical essence, ",
+                "Your core emits a steady, rhythmic hum, soothing in its consistency, ",
+                "Your core contains visible, rotating gears, a marvel of mechanical engineering, ",
+                "Your core is sealed behind a transparent panel, showcasing its intricate inner workings, ",
+                "Your core is unusually quiet and discreet, making your presence almost unnoticeable, "
+            ],
+            "attachments": [
+                "and your arms are equipped with various tools, ready for any task.",
+                "and you have reinforced leg braces, enabling remarkable speed and stability.",
+                "and your back is fitted with expandable storage compartments, practical for adventures.",
+                "and your hands are designed with delicate, precise articulation, perfect for skilled work.",
+                "and you have a built-in cloak that can envelop you, blending into surroundings."
+            ]
+        },
+        "names": {
+            "first": {
+                "male": [],
+                "female": [],
+                "other": [
+                    "Anchor", "Banner", "Bastion", "Blade", "Blue", "Bow", "Cart", "Church", 
+                    "Crunch", "Crystal", "Dagger", "Dent", "Five", "Glaive", "Hammer", "Iron", 
+                    "Lucky", "Mace", "Oak", "Onyx", "Pants", "Pierce", "Red", "Rod", "Rusty", 
+                    "Scout", "Seven", "Shield", "Slash", "Smith", "Spike", "Temple", "Vault", "Wall"
+                ]
+            },
+            "last": []
+        }
+    },
+    "kobold": {
+        "name": "Kobold",
+        "types": [],
+        "base_height": 25,
+        "base_weight": 25,
+        "height_modifier": "2d4",
+        "weight_modifier": "1d1",
+        "age": [6, 120],
+        "ability_scores": {
+            "dex": 2
+        },
+        "languages": {
+            "base": ["Common", "Draconic"]
+        },
+        "appearance_options": {
+            "scale_color": [
+                "Your scales have a vibrant red hue, standing out with a fiery intensity, ",
+                "Your scales are a deep, earthy brown, blending seamlessly with underground environments, ",
+                "Your scales shimmer with a bright green, reminiscent of lush foliage, ",
+                "Your scales are a striking blue, catching the light in a captivating way, ",
+                "Your scales are a mix of black and dark gray, perfect for staying hidden in shadows, "
+            ],
+            "eye_color": [
+                "your eyes are a piercing yellow, glowing slightly in the dark, ",
+                "your eyes are a deep, enchanting violet, mysterious and alluring, ",
+                "your eyes are a bright, vivid orange, reflecting a curious spirit, ",
+                "your eyes are a sharp, icy blue, giving off a cool and calculating gaze, ",
+                "your eyes are a rich, emerald green, shimmering with intelligence, "
+            ],
+            "horn_style": [
+                "and your horns are long and curved, elegantly sweeping back. ",
+                "and you have short, sharp horns, designed for quick movements. ",
+                "and your horns are twisted and rugged, showing signs of many battles. ",
+                "and your horns are ornately carved, a symbol of your unique heritage. ",
+                "and you have multiple small horns, creating a crown-like effect. "
+            ],
+            "tail": [
+                "Your tail is exceptionally long and flexible, aiding in your balance, ",
+                "Your tail is short and spiky, a weapon in its own right, ",
+                "Your tail ends in a distinctive forked shape, unique among your kind, ",
+                "Your tail is adorned with colorful bands and rings, a display of your vibrant personality, ",
+                "Your tail is thick and muscular, providing powerful support, "
+            ],
+            "snout": [
+                "and your snout is broad and powerful, capable of impressive bite strength.",
+                "and you have a slender, elongated snout, enhancing your sense of smell.",
+                "and your snout is adorned with small, shiny scales that catch the light.",
+                "and you have a uniquely patterned snout, setting you apart from others.",
+                "and your snout is short and blunt, giving you a more compact appearance."
+            ]
+        },
+        "names": {
+            "first": {
+                "male": [
+                    "Akra", "Biri", "Daar", "Drax", "Fashi", "Garurt", "Hox", "Irtos", 
+                    "Jhank", "Keth", "Korinn", "Linxakasendalor", "Meepo", "Molo", 
+                    "Ohsoss", "Rox", "Siv", "Taklak", "Tes", "Uro", "Varn", "Wrahk", 
+                    "Xarinn", "Yarjerit", "Zak"
+                ],
+                "female": [
+                    "Arix", "Eesk", "Erky", "Harrix", "Kikx", "Kobura", "Lurra", "Myrynda", 
+                    "Naki", "Oparal", "Ordrar", "Purd", "Qillathe", "Rizzi", "Sagira", 
+                    "Tarka", "Uadjit", "Vrinn", "Wixxan", "Yipyak", "Zara"
+                ],
+                "other": [
+                    "Climber", "Digger", "Fisher", "Hunter", "Sneaker", "Scout", "Trapper", 
+                    "Watcher", "Weaver", "Forager", "Gatherer"
+                ]
+            },
+            "last": [
+                "Cragshadow", "Dustclaw", "Flameheart", "Ironscale", "Mudfoot", "Nightwhisper", 
+                "Quicktongue", "Rockhide", "Slyhand", "Stormtail", "Treehanger", "Wildfang", 
+                "Brightspark", "Darkcave", "Highpeak", "Lowtunnel", "Rapidstream", "Sharpstone", 
+                "Swiftwind", "Tallbranch", "Underbough"
+            ]
+        }
+    },
+    "firbolg": {
+        "name": "Firbolg",
+        "types": [],
+        "base_height": 74,
+        "base_weight": 175,
+        "height_modifier": "2d12",
+        "weight_modifier": "2d6",
+        "age": [30, 500],
+        "ability_scores": {
+            "wis": 2,
+            "str": 1
+        },
+        "languages": {
+            "base": ["Common", "Elvish", "Giant"]
+        },
+        "appearance_options": {
+            "skin_color": [
+                "Your skin is a pale, ethereal blue, reminiscent of a clear sky, ",
+                "Your skin has a rich, earthy brown tone, blending with the forest, ",
+                "Your skin is a soft, mossy green, echoing the hues of the wild, ",
+                "Your skin displays a gentle lavender shade, unique and mystical, ",
+                "Your skin is a mix of soft grays and whites, like morning mist, "
+            ],
+            "hair_color": [
+                "your hair is a wild, vibrant red, flowing freely, ",
+                "your hair is a deep, autumnal brown, full of earthy tones, ",
+                "your hair is a bright, leafy green, reflecting your connection to nature, ",
+                "your hair is a silvery white, shimmering like moonlight, ",
+                "your hair is a dark, rich black, contrasting with your skin, "
+            ],
+            "eye_shape": [
+                "and your eyes are large and round, brimming with curiosity. ",
+                "and you have narrow, almond-shaped eyes, giving you a wise appearance. ",
+                "and your eyes are slightly slanted, enhancing your mystical aura. ",
+                "and your eyes are deep-set, shadowed and thoughtful. ",
+                "and your eyes are wide-set, offering a broad, welcoming gaze. "
+            ],
+            "ear_style": [
+                "Your ears are slightly elongated, pointing upwards, signifying your fey heritage, ",
+                "Your ears are broad and leaf-shaped, blending with natural surroundings, ",
+                "Your ears are subtly pointed, a delicate hint of your mystical origins, ",
+                "Your ears are rounded, yet large, enhancing your keen hearing, ",
+                "Your ears have a gentle curve, softening your overall appearance, "
+            ],
+            "stature": [
+                "and you stand toweringly tall, a gentle giant among your kin.",
+                "and you have a modest height, unassuming yet sturdy.",
+                "and your stature is above average, with a commanding presence.",
+                "and you are of average height, well-balanced and agile.",
+                "and you are slightly shorter than typical, giving you a more approachable demeanor."
+            ]
+        },
+        "names": {
+            "first": {
+                "male": [
+                    "Elanor", "Glen", "Bracken", "Elder", "Fern", "Hawthorn", "Lichen", "Moss", 
+                    "Oaken", "Pine", "River", "Sylvan", "Thistle", "Willow", "Yarrow", 
+                    "Bramble", "Dew", "Forest", "Grove", "Leaf", "Nectar", "Reed", "Stone", 
+                    "Vale", "Wood"
+                ],
+                "female": [
+                    "Aster", "Briar", "Clover", "Daisy", "Echo", "Fawn", "Heather", "Ivy", 
+                    "Juniper", "Luna", "Maple", "Nimbus", "Opal", "Petal", "Quartz", 
+                    "Rose", "Sky", "Tansy", "Violet", "Wren", "Zephyr"
+                ],
+                "other": [
+                    "Breeze", "Brook", "Drift", "Ember", "Glade", "Haze", "Meadow", "Ripple", 
+                    "Shade", "Sprout", "Twilight", "Whisper", "Crest", "Flint", "Hollow", 
+                    "Knot", "Mist", "Rill", "Tangle", "Thicket"
+                ]
+            },
+            "last": [
+                "Barkmantle", "Cloudwatcher", "Dewwhisper", "Earthwalker", "Frostbeard", "Galewind", 
+                "Hillcomber", "Ironbark", "Jadestone", "Kestrelwing", "Lightfoot", "Moonshadow", 
+                "Nightbreeze", "Oakenheart", "Pebblebrook", "Quietstream", "Rainseeker", "Starfinder", 
+                "Treetalker", "Vinehopper", "Wildsong"
+            ]
+        }
+    },
+    "orc": {
+        "name": "Orc",
+        "types": [],
+        "base_height": 64,
+        "base_weight": 175,
+        "height_modifier": "2d8",
+        "weight_modifier": "2d6",
+        "age": [12, 50],
+        "ability_scores": {
+            "str": 2,
+            "con": 1
+        },
+        "languages": {
+            "base": ["Common", "Orc"]
+        },
+        "appearance_options": {
+            "skin_color": [
+                "Your skin is a deep, earthy green, tough and battle-scarred, ",
+                "Your skin bears a dark, charcoal gray tone, as solid as stone, ",
+                "Your skin is a rugged, reddish-brown, like the clay of ancient battlegrounds, ",
+                "Your skin is a dull, iron gray, symbolizing your unyielding nature, ",
+                "Your skin has a murky, swamp green hue, blending with the darker parts of the wild, "
+            ],
+            "hair_color": [
+                "your hair is a rough, matte black, coarse and untamed, ",
+                "your hair is a fiery crimson, wild and fierce, ",
+                "your hair is a stark, snow-white, contrasting sharply with your skin, ",
+                "your hair is a deep, dark brown, thick and bristly, ",
+                "your hair is a mottled mix of grays and greens, like a stormy sky, "
+            ],
+            "eye_shape": [
+                "and your eyes are small and piercing, like a predator's gaze. ",
+                "and you have wide, intimidating eyes, exuding a fearsome presence. ",
+                "and your eyes are narrow, creating a sharp, calculating look. ",
+                "and your eyes are deep-set, giving you a brooding appearance. ",
+                "and your eyes are large and round, granting a surprisingly expressive visage. "
+            ],
+            "ear_style": [
+                "Your ears are broad and slightly pointed, adding to your fierce demeanor, ",
+                "Your ears are long and tapered, hinting at a trace of ancient blood, ",
+                "Your ears are short and rounded, emphasizing your brute strength, ",
+                "Your ears are rugged and torn, showcasing a history of battles, ",
+                "Your ears are modest in size, but thick and resilient, "
+            ],
+            "stature": [
+                "and you stand massively tall, an imposing figure in any company.",
+                "and you have a broad, muscular build, exuding raw power.",
+                "and your stature is towering, dominating your surroundings.",
+                "and you are of solid height, with a stocky, powerful frame.",
+                "and you are slightly shorter, but your presence is no less menacing."
+            ]
+        },
+        "names": {
+            "first": {
+                "male": [
+                    "Brak", "Drog", "Gharn", "Hruk", "Jarn", "Korg", "Lug", "Murg", 
+                    "Narg", "Ork", "Prak", "Rok", "Snag", "Thok", "Urg", 
+                    "Vrak", "Wrug", "Xarg", "Yor", "Zug", "Arok", "Blud", "Crug", 
+                    "Drak", "Fark"
+                ],
+                "female": [
+                    "Argha", "Bragga", "Droga", "Ghura", "Harga", "Kasha", "Lurga", "Mokha", 
+                    "Narka", "Orsha", "Ragna", "Sorga", "Torga", "Urga", "Vraka", 
+                    "Wrakha", "Xurga", "Yura", "Zurga", "Arka", "Bolga", "Cragga", "Durga", 
+                    "Farga"
+                ],
+                "other": [
+                    "Basher", "Crusher", "Grinder", "Masher", "Pounder", "Rager", "Slasher", "Smasher", 
+                    "Thumper", "Wrecker", "Blaster", "Breaker", "Charger", "Hurler", "Rumbler", 
+                    "Scorcher", "Screamer", "Shaker", "Striker", "Thrasher"
+                ]
+            },
+            "last": [
+                "Bonecrusher", "Doomhammer", "Earthshaker", "Fireblade", "Grimfist", "Ironhide", 
+                "Jawbreaker", "Kragjaw", "Loudroar", "Mightyarm", "Nightstalker", "Oathbreaker", 
+                "Painbringer", "Quickaxe", "Rageheart", "Stormclaw", "Thunderfist", "Unbreakable", 
+                "Warbringer", "Wolfslayer", "Bloodaxe"
+            ]
+        }
+    },
+    "goblin": {
+        "name": "Goblin",
+        "types": [],
+        "base_height": 41,
+        "base_weight": 35,
+        "height_modifier": "2d4",
+        "weight_modifier": "1d1",
+        "age": [8, 60],
+        "ability_scores": {
+            "dex": 2,
+            "con": 1
+        },
+        "languages": {
+            "base": ["Common", "Goblin"]
+        },
+        "appearance_options": {
+            "skin_color": [
+                "Your skin is a sallow, yellow-green, reminiscent of damp moss in a dark forest, ",
+                "Your skin has a pale, sickly gray tone, almost ghostly in its pallor, ",
+                "Your skin is a mottled brown, like autumn leaves mixed with mud, ",
+                "Your skin carries a dull olive hue, blending easily with shadows, ",
+                "Your skin is a vibrant, garish green, standing out starkly in any environment, "
+            ],
+            "hair_color": [
+                "your hair is a wiry, rust-red, unkempt and wild, ",
+                "your hair is a greasy, jet black, hanging in limp strands, ",
+                "your hair is a bright, unnatural blue, sticking out in all directions, ",
+                "your hair is a dirty blonde, thin and straggly, ",
+                "your hair is patchy, with clumps of dark green and brown, like moss, "
+            ],
+            "eye_shape": [
+                "and your eyes are beady and shifty, darting around constantly. ",
+                "and you have bulbous, protruding eyes, giving you a perpetually surprised look. ",
+                "and your eyes are narrow slits, creating a sly, cunning appearance. ",
+                "and your eyes are round and wide, lending an air of innocence. ",
+                "and your eyes are small but bright, gleaming with mischief. "
+            ],
+            "ear_style": [
+                "Your ears are long and pointed, always twitching at the slightest sound, ",
+                "Your ears are asymmetrical, one larger than the other, adding to your quirky look, ",
+                "Your ears are small and close to your head, almost hidden by your hair, ",
+                "Your ears are ragged, with nicks and tears from past scrapes, ",
+                "Your ears are round and floppy, adding a comical aspect to your appearance, "
+            ],
+            "stature": [
+                "and you stand short and wiry, easily overlooked but surprisingly agile.",
+                "and your build is lean and lanky, making you look taller than you actually are.",
+                "and you have a hunched posture, often crouching or slinking around.",
+                "and your frame is small but surprisingly sturdy, capable of sudden bursts of speed.",
+                "and you are diminutive in stature, but your energy and agility more than compensate."
+            ]
+        },
+        "names": {
+            "first": {
+                "male": [
+                    "Blix", "Creak", "Dibb", "Fizzle", "Grib", "Haggle", "Irk", "Jinx", "Knack", "Lurk", "Muck", 
+                    "Nib", "Pox", "Quirk", "Rattle", "Sneer", "Tweak", "Vex", "Wriggle", "Zap", "Arf", "Boggle", 
+                    "Crink", "Dank", "Eek"
+                ],
+                "female": [
+                    "Blinka", "Cackle", "Dizzy", "Fickle", "Glimmer", "Hiss", "Iggle", "Jangle", "Kackle", "Lix", 
+                    "Mizzle", "Nuzzle", "Pickle", "Quibble", "Razzle", "Sizzle", "Tizzy", "Vizzle", "Whisper", 
+                    "Zizzle", "Arpa", "Bumble", "Chuckle", "Dabble", "Eerie"
+                ],
+                "other": [
+                    "Buzzer", "Clicker", "Dart", "Fidget", "Gnasher", "Hobble", "Itch", "Jester", "Knot", "Lurch", 
+                    "Muddle", "Nicker", "Pester", "Quiver", "Rustle", "Skitter", "Tangle", "Verge", "Whimper", 
+                    "Zigzag", "Blip", "Creeper", "Dabble", "Flit", "Glitch"
+                ]
+            },
+            "last": [
+                "Quickfinger", "Shadowsneak", "Trickfoot", "Cleverhand", "Silentstep", "Nightwhisper", 
+                "Swiftcut", "Darkweave", "Lightpocket", "Sharpwit", "Greengrasp", "Mudscuttle", 
+                "Riddlecloak", "Smokegaze", "Tangletrap", "Whisperwind", "Echofoot", "Mirthmask", 
+                "Puzzlepeep", "Shroudstep", "Gloomgleam"
+            ]
+        }
+    },
+    "kenku": {
+        "name": "Kenku",
+        "types": [],
+        "base_height": 52,
+        "base_weight": 50,
+        "height_modifier": "2d8",
+        "weight_modifier": "1d6",
+        "age": [12, 60],
+        "ability_scores": {
+            "dex": 2,
+            "wis": 1
+        },
+        "languages": {
+            "base": ["Common", "Auran"]
+        },
+        "appearance_options": {
+            "skin_color": [
+                "Your feathers have a sleek, raven-black color, glossy and absorbing light, ",
+                "Your feathers exhibit a dusty, charcoal gray, blending seamlessly into shadows, ",
+                "Your feathers are a dull, brownish-black, reminiscent of aged wood, ",
+                "Your feathers display a unique, deep blue-black, like a starless night sky, ",
+                "Your feathers are a rare, silvery-gray, giving a ghostly appearance in dim light, "
+            ],
+            "eye_color": [
+                "your eyes are a piercing yellow, like twin lanterns in the dark, ",
+                "your eyes are a deep, rich brown, warm and observant, ",
+                "your eyes are a striking amber, glowing with an inner fire, ",
+                "your eyes are a rare, vibrant green, full of curiosity and life, ",
+                "your eyes are an icy blue, sharp and calculating, "
+            ],
+            "beak_shape": [
+                "and your beak is sharp and hooked, like that of a raptor. ",
+                "and your beak is short and strong, ideal for urban survival. ",
+                "and your beak is long and thin, resembling that of a shorebird. ",
+                "and your beak is curved and elegant, like a songbird's. ",
+                "and your beak is broad and flat, similar to a duck's. "
+            ],
+            "wing_span": [
+                "Your wings are broad and powerful, capable of impressive feats of agility, ",
+                "Your wings are slender and elongated, perfect for quick, darting movements, ",
+                "Your wings are compact and rounded, ideal for maneuvering in tight spaces, ",
+                "Your wings are massive, with an impressive span that demands attention, ",
+                "Your wings are average in size, but very efficient and well-maintained, "
+            ],
+            "stature": [
+                "and you stand short and wiry, easily overlooked but surprisingly agile.",
+                "and your build is lean and lanky, making you look taller than you actually are.",
+                "and you have a hunched posture, often crouching or slinking around.",
+                "and your frame is small but surprisingly sturdy, capable of sudden bursts of speed.",
+                "and you are diminutive in stature, but your energy and agility more than compensate."
+            ]
+        },
+        "names": {
+            "first": {
+                "male": [],
+                "female": [],
+                "other": [
+                    "Smasher", "Clanger", "Slicer", "Basher", "Rat Scratch", "Whistler", "Mouser", "Growler", 
+                    "Crasher", "Slammer", "Bludgeoner", "Striker", "Scrapper", "Breaker", "Thrasher", "Whacker",
+                    "Battler", "Rumbler", "Clasher", "Banger", "Clang", "Snap", "Crack", "Hiss", "Chirp", 
+                    "Screech", "Squawk", "Rattle", "Creak", "Buzz", "Flutter", "Whisper", "Murmur", "Gurgle",
+                    "Croak", "Squeak", "Howl", "Meow", "Bark", "Yowl", "Purr", "Snarl", "Growl"
+                ]
+            },
+            "last": []
+        }
+    },
+    "aasimar": {
+        "name": "Aasimar",
+        "types": [],
+        "base_height": 56,
+        "base_weight": 110,
+        "height_modifier": "2d10",
+        "weight_modifier": "2d4",
+        "age": [18, 160],
+        "ability_scores": {
+            "cha": 2,
+            "wis": 1
+        },
+        "languages": {
+            "base": ["Common", "Celestial"]
+        },
+        "appearance_options": {
+            "skin_color": [
+                "Your skin has a radiant, shimmering quality, like moonlight on calm waters, ",
+                "Your skin is a soft, ethereal blue, giving off a faint, comforting glow, ",
+                "Your skin carries a golden hue, as if kissed by the sun, radiating warmth and light, ",
+                "Your skin is a pearly white, almost translucent, exuding a sense of serenity, ",
+                "Your skin shimmers with a subtle iridescence, changing hues slightly with the light, "
+            ],
+            "hair_color": [
+                "your hair is a silvery white, flowing like liquid moonlight, ",
+                "your hair sparkles with a golden sheen, reminiscent of a sunrise, ",
+                "your hair is a deep celestial blue, like the night sky filled with stars, ",
+                "your hair is a radiant copper, shining with an inner fire, ",
+                "your hair is multicolored, with strands of ethereal pastels intertwining, "
+            ],
+            "eye_shape": [
+                "and your eyes are large and luminous, glowing softly in the dark. ",
+                "and you have almond-shaped eyes that shimmer with celestial light. ",
+                "and your eyes are deep and round, mirroring the vastness of the night sky. ",
+                "and your eyes are narrow and piercing, glowing with an inner wisdom. ",
+                "and your eyes are bright and sparkling, reflecting the myriad colors of the heavens. "
+            ],
+            "ear_style": [
+                "Your ears are elegantly pointed, hinting at your celestial heritage, ",
+                "Your ears are delicate and curved, with a graceful silhouette, ",
+                "Your ears are subtly pointed, blending seamlessly with your ethereal beauty, ",
+                "Your ears are slightly elongated, complementing the contours of your face, ",
+                "Your ears have a gentle wave to them, softening your otherworldly features, "
+            ],
+            "stature": [
+                "and you stand tall and statuesque, with an aura of regal grace.",
+                "and your build is slender and graceful, moving with an effortless elegance.",
+                "and you possess a willowy form, blending strength with beauty.",
+                "and your frame is lithe and agile, exuding a sense of celestial finesse.",
+                "and you are of average height, but your presence is commanding and majestic."
+            ]
+        },
+        "names": {
+            "first": {
+                "male": [
+                    "Seraphel", "Urielus", "Galadon", "Elyon", "Azariel", "Jophiel", "Cassiel", "Gabreon", "Remiel", "Zadkiel",
+                    "Auriel", "Raziel", "Luciel", "Sariel", "Tariel", "Daniel", "Haniel", "Raphael", "Michael", "Chamuel", 
+                    "Orifiel", "Anael", "Zerachiel", "Barachiel", "Metatron"
+                ],
+                "female": [
+                    "Seraphina", "Gabriela", "Uriela", "Raziela", "Cassia", "Hanael", "Lumiel", "Ariel", "Muriel", "Zephyra", 
+                    "Celestia", "Galadria", "Elyona", "Aurora", "Lysiel", "Raphaella", "Miriel", "Chamia", "Talia", "Zara",
+                    "Oriona", "Aniela", "Zariel", "Bara", "Metatia"
+                ],
+                "other": [
+                    "Lumin", "Celeste", "Radian", "Ethereal", "Seren", "Aureon", "Zephyr", "Solaris", "Astral", "Azura",
+                    "Celestine", "Elior", "Galax", "Lumi", "Nebula", "Orion", "Phoenix", "Stellar", "Vega", "Zodiac", 
+                    "Aura", "Constellation", "Eclipse", "Halcyon", "Nova"
+                ]
+            },
+            "last": []
+        }
+    },
+    "aarakocra": {
+        "name": "Aarakocra",
+        "types": [],
+        "base_height": 60,
+        "base_weight": 65,
+        "height_modifier": "2d4",
+        "weight_modifier": "1d6",
+        "age": [3, 30],
+        "ability_scores": {
+            "dex": 2,
+            "wis": 1
+        },
+        "languages": {
+            "base": ["Common", "Aarakocra", "Auran"]
+        },
+        "appearance_options": {
+            "feather_color": [
+                "Your feathers are a majestic golden brown, resembling the regal plumage of a golden eagle, ",
+                "Your feathers have a sleek, dark hue, like that of a powerful black eagle, ",
+                "Your feathers are a striking white, reminiscent of the head and tail feathers of a bald eagle, ",
+                "Your feathers display a mix of brown and white, similar to the patterned wings of a sea eagle, ",
+                "Your feathers are a rich, deep brown, echoing the shades of a forest eagle, "
+            ],
+            "beak_shape": [
+                "your beak is strong and hooked, ideal for a skilled predator, ",
+                "your beak is sharp and pointed, perfect for precision, ",
+                "your beak is broad and powerful, showing your strength, ",
+                "your beak is slender and agile, suited for quick movement, ",
+                "your beak is curved and elegant, a symbol of grace, "
+            ],
+            "eye_color": [
+                "and your eyes are a piercing yellow, radiating keen sight and focus. ",
+                "and your eyes are a deep brown, reflecting wisdom and depth. ",
+                "and your eyes are a bright amber, glowing with intensity and determination. ",
+                "and your eyes are a sharp grey, exuding intelligence and alertness. ",
+                "and your eyes are a vibrant green, showing vitality and a strong connection to nature. "
+            ],
+            "wing_span": [
+                "Your wings are broad and impressive, spanning wide to showcase your might, ",
+                "Your wings are sleek and aerodynamic, designed for speed and agility, ",
+                "Your wings are long and elegant, enabling graceful and extended flight, ",
+                "Your wings are compact and sturdy, allowing for maneuverability in dense forests, ",
+                "Your wings have a unique pattern, marking you as distinctive among your kind, "
+            ],
+            "talons": [
+                "and your talons are sharp and formidable, a sign of your prowess as a hunter.",
+                "and your talons are strong and gripping, reflecting your ability to master the skies.",
+                "and your talons are agile and precise, aiding in your skillful navigation of the terrain.",
+                "and your talons are large and powerful, symbolizing your strength and survival instincts.",
+                "and your talons are sleek and efficient, demonstrating your adaptability in various environments."
+            ]
+        },
+        "names": {
+            "first": {
+                "male": [],
+                "female": [],
+                "other": [
+                    "Kleeckor", "Quafir", "Oorrek", "Salleeki", "Aeraan", "Aialor", "Aurik", "Deekekik", "Errkis", "Heehkul",
+                    "Ikkiar", "Oussil", "Quierkun", "Urreekom", "Zeedal", "Ekkar", "Cliir", "Treel", "Whistil", "Chirrik",
+                    "Flitik", "Skreek", "Veerik", "Pirrik", "Jikk"
+                ]
+            },
+            "last": []
+        }
+    },
+    "owlin": {
+        "name": "Owlin",
+        "types": [],
+        "base_height": 48,
+        "base_weight": 55,
+        "height_modifier": "2d6",
+        "weight_modifier": "1d6",
+        "age": [8, 50],
+        "ability_scores": {
+            "other1": 2,
+            "other2": 1
+        },
+        "languages": {
+            "base": ["Common"],
+            "optional": ["Dwarvish", "Giant", "Gnomish", "Goblin", "Halfling", "Orc"]
+        },
+        "appearance_options": {
+            "feather_color": [
+                "Your feathers are a soft, mottled brown and cream, like that of a wise barn owl, ",
+                "Your feathers have a snowy white hue, similar to the majestic plumage of a snowy owl, ",
+                "Your feathers are a deep, rich black with hints of blue, resembling the elusive black owl, ",
+                "Your feathers display a mix of grey and white, akin to the camouflaging feathers of a great grey owl, ",
+                "Your feathers are a striking tawny, echoing the warm shades of a tawny owl, "
+            ],
+            "face_shape": [
+                "your face has a distinctive heart shape, characteristic of owls known for their keen hearing, ",
+                "your face is round and wide, providing a broad field of vision, ",
+                "your face is angular with pronounced features, aiding in camouflage and stealth, ",
+                "your face is small and compact, enhancing your facial expressions, ",
+                "your face has a unique asymmetrical shape, optimizing sound localization for hunting, "
+            ],
+            "eye_color": [
+                "and your eyes are a deep black, absorbing light and enhancing night vision. ",
+                "and your eyes are a bright yellow, reflecting intelligence and keen sight. ",
+                "and your eyes are a rich amber, glowing with wisdom and intuition. ",
+                "and your eyes are a vibrant green, showing your connection to the forest and nature. ",
+                "and your eyes are a striking orange, symbolizing alertness and keen perception. "
+            ],
+            "wing_pattern": [
+                "Your wings have intricate patterns, mimicking the textures of the forest, ",
+                "Your wings are smooth and uniform, ideal for silent flight, ",
+                "Your wings have distinct spots and stripes, providing excellent camouflage, ",
+                "Your wings are tipped with dark feathers, aiding in stealth and mystery, ",
+                "Your wings display a unique array of colors, showcasing your individuality among your kind, "
+            ],
+            "talons": [
+                "and your talons are curved and sharp, perfect for gripping and climbing. ",
+                "and your talons are robust and sturdy, reflecting your arboreal lifestyle. ",
+                "and your talons are slender and agile, aiding in your dexterity and skill. ",
+                "and your talons are elongated and graceful, symbolizing elegance and precision. ",
+                "and your talons are strong and versatile, demonstrating your adaptability in various environments. "
+            ]
+        },
+        "names": {
+            "first": {
+                "male": [
+                    "Cawlen", "Feathris", "Hooten", "Lirik", "Nestor", "Ruffleo", "Taloon", "Wingston", "Zephyro", "Breezil",
+                    "Eolus", "Gustav", "Preenar", "Skylar", "Ternis", "Vorrik", "Whispin", "Cirro", "Downy", "Glider"
+                ],
+                "female": [
+                    "Aerwyn", "Fluttera", "Lunara", "Plumella", "Skya", "Twilighta", "Windara", "Breeza", "Cresta", "Featheria",
+                    "Hollowa", "Nestra", "Puffla", "Rillia", "Swoopa", "Talula", "Vanea", "Whispella", "Zephyna", "Glidea"
+                ],
+                "other": [
+                    "Kleeckor", "Quafir", "Oorrek", "Salleeki", "Aeraan", "Aialor", "Aurik", "Deekekik", "Errkis", "Heehkul",
+                    "Ikkiar", "Oussil", "Quierkun", "Urreekom", "Zeedal", "Ekkar", "Cliir", "Treel", "Whistil", "Chirrik",
+                    "Flitik", "Skreek", "Veerik", "Pirrik", "Jikk"
+                ]
+            },
+            "last": [
+                "Featherwing", "Skydancer", "Nightrunner", "Dawnchaser", "Moonsoarer", "Starwhisper", "Cloudstrider", "Windsweeper", "Sundiver", "Raindancer",
+                "Stormwatcher", "Twilightseeker", "Galeflier", "Mistwanderer", "Glidestream", "Breezevoyager", "Frostglimmer", "Shadefeather", "Lightwing", "Echoflight"
+            ]
+        }
+    },
+    "lizardfolk": {
+        "name": "Lizardfolk",
+        "types": [],
+        "base_height": 57,
+        "base_weight": 120,
+        "height_modifier": "2d10",
+        "weight_modifier": "2d6",
+        "age": [14, 60],
+        "ability_scores": {
+            "con": 2,
+            "wis": 1
+        },
+        "languages": {
+            "base": ["Common", "Draconic"]
+        },
+        "appearance_options": {
+            "scale_color": [
+                "Your scales are a mottled green and brown, resembling the camouflaged hide of a forest lizard, ",
+                "Your scales have a vibrant blue hue, similar to the striking appearance of a blue iguana, ",
+                "Your scales are a deep, earthy red, echoing the tones of a red dragon lizard, ",
+                "Your scales display a mix of dark grey and black, akin to the stealthy coloring of a night gecko, ",
+                "Your scales are a bright, sandy yellow, mirroring the hues of a desert skink, "
+            ],
+            "snout_shape": [
+                "your snout is long and tapered, ideal for sifting through water and mud, ",
+                "your snout is broad and flat, enhancing your sense of smell, ",
+                "your snout is short and rounded, giving you a more intimidating appearance, ",
+                "your snout is pointed and sharp, aiding in hunting and foraging, ",
+                "your snout has unique ridges and markings, distinguishing you among your kind, "
+            ],
+            "eye_color": [
+                "and your eyes are a piercing red, exuding a fierce and primal energy. ",
+                "and your eyes are a deep green, reflecting your connection to the marshlands and swamps. ",
+                "and your eyes are a bright gold, glowing with intelligence and cunning. ",
+                "and your eyes are a dark brown, symbolizing depth and resilience. ",
+                "and your eyes are a striking silver, showing your adaptability and survival instincts. "
+            ],
+            "crest": [
+                "You have a prominent frilled crest, which you can flare in displays of aggression or courtship, ",
+                "You have a sleek, streamlined crest, aiding in swift movement through water, ",
+                "You have a series of small, spiky crests along your spine, providing extra defense, ",
+                "You have a colorful, patterned crest, making you stand out in social gatherings, ",
+                "You have a subtle, low crest, providing an advantage in stealth and hunting, "
+            ],
+            "claws": [
+                "and your claws are sharp and retractable, perfect for climbing and grappling.",
+                "and your claws are wide and webbed, aiding in swimming and mud-walking.",
+                "and your claws are thick and robust, built for digging and burrowing.",
+                "and your claws are long and slender, suited for precise manipulation of objects.",
+                "and your claws are versatile and strong, reflecting your adaptability to different environments."
+            ]
+        },
+        "names": {
+            "first": {
+                "male": [],
+                "female": [],
+                "other": [
+                    "Achuak", "Aryte", "Baeshra", "Darastrix", "Garurt", "Irhtos", 
+                    "Jhank", "Kepesk", "Kethend", "Korth", "Kosj", "Kothar", 
+                    "Litrix", "Mirik", "Othokent", "Sauriv", "Throden", "Thurkear", 
+                    "Usk", "Valignat", "Vargach", "Verthica", "Vutha", "Vyth"
+                ]
+            },
+            "last": []
+        }
+    },
+    "minotaur": {
+        "name": "Minotaur",
+        "types": [],
+        "base_height": 64,
+        "base_weight": 175,
+        "height_modifier": "2d8",
+        "weight_modifier": "2d6",
+        "age": [18, 80],
+        "ability_scores": {
+            "str": 2,
+            "con": 1
+        },
+        "languages": {
+            "base": ["Common", "Minotaur"]
+        },
+        "appearance_options": {
+            "fur_color": [
+                "Your fur is a deep, rich brown, reminiscent of the earthy tones of a forest bull, ",
+                "Your fur is a striking black, symbolizing strength and power, ",
+                "Your fur is a light, creamy white, standing out in contrast to your rugged form, ",
+                "Your fur has a pattern of black and white, like that of a traditional dairy cow, ",
+                "Your fur is a reddish-brown hue, echoing the colors of a wild bison, "
+            ],
+            "horn_style": [
+                "your horns are long and curved, signifying your battle prowess, ",
+                "your horns are short and pointed, designed for quick and powerful thrusts, ",
+                "your horns are wide and sweeping, displaying your dominance and strength, ",
+                "your horns have intricate ridges and markings, showing your unique heritage, ",
+                "your horns are twisted in a spiral, symbolizing wisdom and age, "
+            ],
+            "eye_color": [
+                "and your eyes are a deep brown, reflecting a grounded and reliable nature. ",
+                "and your eyes are a bright blue, showing your keen awareness and insight. ",
+                "and your eyes are a vibrant green, hinting at a connection to the natural world. ",
+                "and your eyes are a piercing grey, exuding intelligence and intensity. ",
+                "and your eyes are a warm amber, glowing with a fierce inner fire. "
+            ],
+            "muzzle_shape": [
+                "You have a broad and sturdy muzzle, ideal for foraging and intimidating foes, ",
+                "You have a tapered muzzle, enhancing your sense of smell and giving you a dignified appearance, ",
+                "You have a short, squared muzzle, adding to your fearsome visage, ",
+                "You have a long, narrow muzzle, aiding in vocalizations and expressions, ",
+                "You have a uniquely shaped muzzle with distinct markings, making you memorable among your kind, "
+            ],
+            "hooves": [
+                "and your hooves are large and solid, providing stability and power in charges. ",
+                "and your hooves are rounded and well-formed, suitable for long treks and journeys. ",
+                "and your hooves are sharp-edged, aiding in combat and terrain navigation. ",
+                "and your hooves are wide and flat, adapted for different types of ground surfaces. ",
+                "and your hooves are sturdy and durable, showcasing your resilience in various environments. "
+            ]
+        },
+        "names": {
+            "first": {
+                "male": [
+                    "Bamvros", "Fotiyinos", "Halafotios", "Keranios", "Menetavro", "Nikavros", 
+                    "Prodos", "Rhordon", "Tavrostenes", "Thyrogog"
+                ],
+                "female": [
+                    "Bozzri", "Dhazdoro", "Erinimachis", "Ghalantzo", "Halafoti", "Kerania", "Mitévra", 
+                    "Philoprodis", "Tavromiki", "Ypoudoris"
+                ],
+                "other": []
+            },
+            "last": []
+        }
+    },
+    "tabaxi": {
+        "name": "Tabaxi",
+        "types": [],
+        "base_height": 58,
+        "base_weight": 90,
+        "height_modifier": "2d10",
+        "weight_modifier": "2d4",
+        "age": [18, 80],
+        "ability_scores": {
+            "dex": 2,
+            "cha": 1
+        },
+        "languages": {
+            "base": ["Common"],
+            "optional": ["Elvish", "Dwarvish", "Giant", "Gnomish", "Goblin", "Halfling", "Orc"]
+        },
+        "appearance_options": {
+            "fur_color": [
+                "Your fur is a deep, rich brown, blending seamlessly with the forest shadows, ",
+                "Your fur is a striking black, symbolizing the mystery of the night, ",
+                "Your fur is a light, creamy white, reminiscent of moonlit snow, ",
+                "Your fur has a pattern of black and white, mimicking the dappled sunlight through leaves, ",
+                "Your fur is a reddish-brown hue, echoing the colors of a sunlit canyon, "
+            ],
+            "fur_pattern": [
+                "your fur pattern is spotted like a leopard, representing stealth and agility, ",
+                "your fur pattern is striped like a tiger, symbolizing power and ferocity, ",
+                "your fur pattern is a marbled swirl, denoting your unique and enigmatic nature, ",
+                "your fur pattern is solid, signifying a strong and unyielding character, ",
+                "your fur pattern has unusual markings, showcasing your distinctive heritage, "
+            ],
+            "eye_color": [
+                "and your eyes are a deep green, reflecting a connection to the forest. ",
+                "and your eyes are a bright blue, showing your keen insight and awareness. ",
+                "and your eyes are a vivid amber, glowing with intelligence and curiosity. ",
+                "and your eyes are a piercing silver, exuding mystery and allure. ",
+                "and your eyes are a rich hazel, blending various aspects of your personality. "
+            ],
+            "tail_type": [
+                "You have a long, sleek tail, aiding in balance and agile movements, ",
+                "You have a fluffy, bushy tail, providing warmth and expressing emotions, ",
+                "You have a short, twitchy tail, indicating alertness and quick reflexes, ",
+                "You have a ringed tail, showing off your striking and distinctive appearance, ",
+                "You have a slender, whip-like tail, emphasizing your grace and finesse, "
+            ],
+            "whiskers": [
+                "and your whiskers are long and sensitive, enhancing your perception of the environment.",
+                "and your whiskers are short and sturdy, reflecting a practical and down-to-earth nature.",
+                "and your whiskers are finely tuned, aiding in navigation and detection of subtle changes.",
+                "and your whiskers are ornately patterned, adding to your charismatic presence.",
+                "and your whiskers are uniquely colored, highlighting your distinct personality."
+            ]
+        },
+        "names": {
+            "first": {
+                "male": [],
+                "female": [],
+                "other": [
+                    "Cloud on the Mountaintop", "Five Timber", "Jade Shoe", "Left-Handed Hummingbird", "Seven Thundercloud",
+                    "Skirt of Snakes", "Smoking Mirror", "Whispering Wind", "Moonlit River", "Sunset on the Horizon",
+                    "Echoing Canyon", "Glimmering Night", "Dancing Leaf", "Rustling Grass", "Soaring Falcon",
+                    "Rippling Brook", "Misty Vale", "Roaring Fire", "Shimmering Scale", "Hidden Shadow",
+                    "Quiet Mountain", "Wandering Stream", "Twilight Path", "Golden Sunbeam", "Laughing Waterfall",
+                    "Bounding Deer", "Ancient Oak", "Singing Sparrow", "Gentle Breeze", "Flickering Flame"
+                ]
+            },
+            "last": []
+        }
+    },
+    "centaur": {
+        "name": "Centaur",
+        "types": [],
+        "base_height": 72,
+        "base_weight": 600,
+        "height_modifier": "1d10",
+        "weight_modifier": "2d12",
+        "age": [18, 80],
+        "ability_scores": {
+            "str": 2,
+            "wis": 1
+        },
+        "languages": {
+            "base": ["Common", "Sylvan"]    
+        },
+        "appearance_options": {
+            "fur_color": [
+                "Your fur is a deep, rich brown, echoing the dense forests of your homeland, ",
+                "Your fur is a striking black, symbolizing the depth of the night sky, ",
+                "Your fur is a light, creamy white, reminiscent of the gentle snows of the northern plains, ",
+                "Your fur has a pattern of black and white, representing the balance of light and shadow, ",
+                "Your fur is a reddish-brown hue, reflecting the earthy tones of the wild plains, "
+            ],
+            "mane_style": [
+                "your mane is long and flowing, symbolizing freedom and wild spirit, ",
+                "your mane is short and rugged, showcasing practicality and resilience, ",
+                "your mane is intricately braided, representing a connection to your heritage, ",
+                "your mane is spiked and wild, exuding a fierce and untamed nature, ",
+                "your mane is adorned with natural elements, reflecting a bond with nature, "
+            ],
+            "eye_color": [
+                "and your eyes are a deep brown, radiating wisdom and stability. ",
+                "and your eyes are a vibrant green, showing your deep connection with nature. ",
+                "and your eyes are a bright blue, reflecting your keen awareness and intelligence. ",
+                "and your eyes are a soft grey, symbolizing your balanced and thoughtful nature. ",
+                "and your eyes are a striking gold, glowing with a strong inner spirit. "
+            ],
+            "hoof_shape": [
+                "You have broad, sturdy hooves, ideal for traversing diverse terrains, ",
+                "You have sleek, well-shaped hooves, perfect for swift and agile movements, ",
+                "You have uniquely patterned hooves, marking you as distinct among your kin, ",
+                "You have durable, rugged hooves, built for endurance and strength, ",
+                "You have nimble, light hooves, aiding in graceful and silent steps, "
+            ],
+            "body_markings": [
+                "and your body is marked with tribal symbols, telling the story of your lineage.",
+                "and your body features natural camouflage, blending seamlessly with your surroundings.",
+                "and your body has distinctive scars, each a testament to past challenges and victories.",
+                "and your body is adorned with painted designs, reflecting your artistic and spiritual nature.",
+                "and your body showcases unusual color gradients, highlighting your unique identity."
+            ]
+        },
+        "names": {
+            "first": {
+                "male": [
+                    "Bonmod", "Boruvo", "Chodi", "Drozan", "Kozim", "Milosh", 
+                    "Ninos", "Oleksi", "Orval", "Radovas", "Radom", "Rostis", 
+                    "Svetyos", "Tomis", "Trijiro", "Volim", "Vlodim", "Yarog"
+                ],
+                "female": [
+                    "Daiva", "Dunja", "Elnaya", "Galisnya", "Irinya", "Kotyali", 
+                    "Lalya", "Litisia", "Madya", "Mira", "Nedja", "Nikya", 
+                    "Ostani", "Pinya", "Rada", "Raisya", "Stasolya", "Tatna", 
+                    "Zhendoya", "Zoria"
+                ],
+                "other": []
+            },
+            "last": []
+        }
+    },
+    "harengon": {
+        "name": "Harengon",
+        "types": [],
+        "base_height": 48,
+        "base_weight": 70,
+        "height_modifier": "2d8",
+        "weight_modifier": "1d4",
+        "age": [18, 60],
+        "ability_scores": {
+            "other1": 2,
+            "other2": 1
+        },
+        "languages": {
+            "base": ["Common", "Sylvan"],
+            "optional": ["Elvish", "Dwarvish", "Giant", "Gnomish", "Goblin", "Halfling", "Orc"]
+        },
+        "appearance_options": {
+            "fur_color": [
+                "Your fur is a deep, rich brown, echoing the dense forests of your homeland, ",
+                "Your fur is a striking black, symbolizing the depth of the night sky, ",
+                "Your fur is a light, creamy white, reminiscent of the gentle snows of the northern plains, ",
+                "Your fur has a pattern of black and white, representing the balance of light and shadow, ",
+                "Your fur is a reddish-brown hue, reflecting the earthy tones of the wild plains, "
+            ],
+            "ear_style": [
+                "your ears are long and upright, signaling alertness and curiosity, ",
+                "your ears are floppy and soft, giving a friendly and approachable appearance, ",
+                "your ears have distinct tufts at the tips, adding a wild and natural charm, ",
+                "your ears are slightly bent, giving a whimsical and playful character, ",
+                "your ears are short and sleek, emphasizing speed and agility, "
+            ],
+            "eye_color": [
+                "and your eyes are a deep brown, radiating wisdom and stability. ",
+                "and your eyes are a vibrant green, showing your deep connection with nature. ",
+                "and your eyes are a bright blue, reflecting your keen awareness and intelligence. ",
+                "and your eyes are a soft grey, symbolizing your balanced and thoughtful nature. ",
+                "and your eyes are a striking gold, glowing with a strong inner spirit. "
+            ],
+            "tail_type": [
+                "You have a fluffy, round tail, exuding a cheerful and lively personality, ",
+                "You have a slender, sleek tail, showcasing grace and elegance, ",
+                "You have a bushy, voluminous tail, symbolizing strength and vitality, ",
+                "You have a short, perky tail, reflecting a perceptive and active nature, ",
+                "You have a long, whip-like tail, indicating agility and adaptability, "
+            ],
+            "whisker_length": [
+                "and your whiskers are long and sensitive, perfect for navigating in the dark.",
+                "and your whiskers are short and neat, suited for precision and tidiness.",
+                "and your whiskers are thick and strong, reflecting a robust and hearty constitution.",
+                "and your whiskers are varied in length, adding a quirky and unique aspect.",
+                "and your whiskers are exceptionally fine, enhancing your delicate and sensitive demeanor."
+            ]
+        },
+        "names": {
+            "first": {
+                "male": [
+                    "Thistlehop", "Bramblefoot", "Fernleap", "Springstride", 
+                    "Willowbound", "Mosswhisker", "Larkspur", "Hazelquick", 
+                    "Pebbleleap", "Briarpatch"
+                ],
+                "female": [
+                    "Cloverjump", "Daisyfleet", "Rosethorn", "Ivybound", 
+                    "Lilyskip", "Snowberry", "Sunbeam", "Berrybounce", 
+                    "Meadowfrost", "Brookswift"
+                ],
+                "other": [
+                    "Raintrot", "Wispdash", "Echoflicker", "Maplebreeze", 
+                    "Twilightbound", "Galewhisk", "Vinedart", "Starleap", 
+                    "Driftshadow", "Cloudskipper"
+                ]
+            },
+            "last": [
+                "Quickfoot", "Greenmeadow", "Brightear", "Feywhisper", 
+                "Wildjump", "Swiftwind", "Moonhopper", "Sylvanspring", 
+                "Riverdance", "Forestleap"
+            ]
+        }
     }
 }
 
