@@ -1,3 +1,4 @@
+.env
 **/config.json
 **/api_keys.json
 **/f_record.json

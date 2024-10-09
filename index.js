@@ -1,5 +1,7 @@
 "use strict";
 
+require('dotenv').config();
+
 // Imports
 const {Client, Collection, Intents} = require('discord.js');
 const fs = require('fs');
