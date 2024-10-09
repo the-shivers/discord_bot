@@ -30,7 +30,7 @@ module.exports = {
       return;
     }
     console.log(img_details);
-    im.convert([img_details.url, '-liquid-rescale', `%${x}x%${y}`, '-resize', `${img_details.width}x${img_details.height}`, '-'],
+    im.convert([img_details.url, '-liquid-rescale', `%${x}x%${y}`, '-resize', `${img_details.width}x${img_details.height}`, '-limit', 'memory', '150MB', '-'],
     function(err, stdout) {
       if (err) {
         console.log("error", err.message); throw err;
