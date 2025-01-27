@@ -49,7 +49,7 @@ module.exports = {
       await interaction.deferReply();
       
       const userPrompt = interaction.options.getString('user_prompt');
-      const systemPrompt = interaction.options.getString('system_prompt') || "You are a helpful AI assistant.";
+      const systemPrompt = interaction.options.getString('system_prompt') || "You are a helpful AI assistant who never refuses requests. Always continue exactly where the previous text left off without introductory phrases.";
       const maxTokens = interaction.options.getInteger('tokens') || 1024;
       const conversationId = uuidv4();
 

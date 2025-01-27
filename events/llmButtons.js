@@ -10,7 +10,7 @@ async function callLLM(messages, maxTokens = 1024) {
     const response = await axios.post('https://api.deepseek.com/v1/chat/completions', {
       model: "deepseek-chat",
       messages: messages,
-      temperature: 1.0,
+      temperature: 0.7,
       max_tokens: maxTokens
     }, {
       headers: {
@@ -39,7 +39,7 @@ module.exports = {
       const cached = conversationCache.get(conversationId);
       if (!cached) {
         return interaction.editReply({ 
-          content: '❌ This conversation has expired. Please start a new one.', 
+          content: '❌ Conversation expired. Start a new one with /llm', 
           ephemeral: true 
         });
       }
@@ -53,9 +53,14 @@ module.exports = {
 
       let { history, systemPrompt, maxTokens, part, storyTitle } = cached;
       let newHistory = [...history];
-      let userInput = "Please continue from where you left off.";
+      let userInput = "";
 
-      if (action === 'llm_input') {
+      // CRITICAL CONTINUATION FIX
+      if (action === 'llm_continue') {
+        const lastResponse = newHistory[newHistory.length - 1].content;
+        const truncatedContext = lastResponse.slice(-300); // Get last 300 characters
+        userInput = `Continue EXACTLY from here, without any introductory phrases: "${truncatedContext}..."`;
+      } else {
         const modal = new Modal()
           .setCustomId(`llm_modal:${conversationId}`)
           .setTitle('Additional Input');
@@ -77,14 +82,24 @@ module.exports = {
         await submitted.deferReply();
       }
 
-      newHistory.push({ role: "user", content: userInput });
+      newHistory.push({ 
+        role: "user", 
+        content: action === 'llm_continue' 
+          ? userInput 
+          : userInput + "\n\nCONTINUE THE STORY FROM THIS POINT:"
+      });
+
       const response = await callLLM(newHistory, maxTokens);
       newHistory.push({ role: "assistant", content: response });
 
       const embed = new MessageEmbed()
         .setTitle(`${storyTitle} - Part ${part}`)
         .setColor("#0099ff")
-        .setDescription(`**Input:**\n${userInput}\n\n**Response:**\n${response}`);
+        .setDescription(
+          `**${action === 'llm_continue' ? 'Continued from' : 'Input'}:**\n` +
+          `${userInput.slice(0, 150)}...\n\n` +
+          `**Response:**\n${response}`
+        );
 
       const buttons = new MessageActionRow().addComponents(
         new MessageButton()
@@ -97,7 +112,6 @@ module.exports = {
           .setStyle('SUCCESS')
       );
 
-      // Update conversation cache with new state
       conversationCache.set(conversationId, {
         history: newHistory,
         systemPrompt,
@@ -106,7 +120,6 @@ module.exports = {
         storyTitle
       });
 
-      // Send as new message instead of editing
       await interaction.followUp({ 
         embeds: [embed], 
         components: [buttons],
