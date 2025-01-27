@@ -3,6 +3,7 @@
 const { Modal, TextInputComponent, MessageActionRow, MessageEmbed, MessageButton } = require('discord.js');
 const conversationCache = require('../utils/conversationCache');
 const axios = require('axios');
+const { v4: uuidv4 } = require('uuid');
 const api_options = require("../api_keys.json").deepseek;
 
 async function callLLM(messages, maxTokens = 1024) {
@@ -30,32 +31,42 @@ module.exports = {
   async execute(interaction) {
     if (!interaction.isButton()) return;
 
-    const [action, conversationId] = interaction.customId.split(':');
+    const [action, conversationId, branchId] = interaction.customId.split(':');
     if (!['llm_continue', 'llm_input'].includes(action)) return;
 
     try {
       await interaction.deferReply({ ephemeral: false });
       
       const cached = conversationCache.get(conversationId);
-      if (!cached) {
+      if (!cached || !cached.branches[branchId]) {
         return interaction.editReply({ 
           content: '❌ Conversation expired. Start a new one with /llm', 
           ephemeral: true 
         });
       }
 
-      let { history, systemPrompt, maxTokens, part, storyTitle } = cached;
-      let newHistory = [...history];
+      if (interaction.user.id !== interaction.message.interaction.user.id) {
+        return interaction.editReply({ 
+          content: '❌ Only the original user can continue this conversation.', 
+          ephemeral: true 
+        });
+      }
+
+      // Create new branch ID for this continuation
+      const newBranchId = uuidv4();
+      const currentBranch = cached.branches[branchId];
+      
+      // Clone the history for the new branch
+      const newHistory = [...currentBranch.history];
       let userInput = "";
 
-      // CRITICAL CONTINUATION FIX
       if (action === 'llm_continue') {
         const lastResponse = newHistory[newHistory.length - 1].content;
-        const truncatedContext = lastResponse.slice(-300); // Get last 300 characters
-        userInput = `Continue EXACTLY from here, without any introductory phrases: "${truncatedContext}..."`;
+        const truncatedContext = lastResponse.slice(-300);
+        userInput = `CONTINUE EXACTLY HERE: "${truncatedContext}..."`;
       } else {
         const modal = new Modal()
-          .setCustomId(`llm_modal:${conversationId}`)
+          .setCustomId(`llm_modal:${conversationId}:${branchId}`)
           .setTitle('Additional Input');
 
         const input = new TextInputComponent()
@@ -67,7 +78,7 @@ module.exports = {
         await interaction.showModal(modal);
 
         const submitted = await interaction.awaitModalSubmit({
-          filter: i => i.customId === `llm_modal:${conversationId}`,
+          filter: i => i.customId === `llm_modal:${conversationId}:${branchId}`,
           time: 300_000
         });
 
@@ -75,18 +86,21 @@ module.exports = {
         await submitted.deferReply();
       }
 
-      newHistory.push({ 
-        role: "user", 
-        content: action === 'llm_continue' 
-          ? userInput 
-          : userInput + "\n\nCONTINUE THE STORY FROM THIS POINT:"
-      });
-
-      const response = await callLLM(newHistory, maxTokens);
+      newHistory.push({ role: "user", content: userInput });
+      const response = await callLLM(newHistory, currentBranch.maxTokens);
       newHistory.push({ role: "assistant", content: response });
 
+      // Create new branch entry
+      cached.branches[newBranchId] = {
+        history: newHistory,
+        part: currentBranch.part + 1,
+        storyTitle: currentBranch.storyTitle,
+        maxTokens: currentBranch.maxTokens,
+        parentBranch: branchId
+      };
+
       const embed = new MessageEmbed()
-        .setTitle(`${storyTitle} - Part ${part}`)
+        .setTitle(`${currentBranch.storyTitle} - Part ${currentBranch.part + 1}`)
         .setColor("#0099ff")
         .setDescription(
           `**${action === 'llm_continue' ? 'Continued from' : 'Input'}:**\n` +
@@ -96,22 +110,14 @@ module.exports = {
 
       const buttons = new MessageActionRow().addComponents(
         new MessageButton()
-          .setCustomId(`llm_continue:${conversationId}`)
+          .setCustomId(`llm_continue:${conversationId}:${newBranchId}`)
           .setLabel('Continue')
           .setStyle('PRIMARY'),
         new MessageButton()
-          .setCustomId(`llm_input:${conversationId}`)
+          .setCustomId(`llm_input:${conversationId}:${newBranchId}`)
           .setLabel('Continue with Input')
           .setStyle('SUCCESS')
       );
-
-      conversationCache.set(conversationId, {
-        history: newHistory,
-        systemPrompt,
-        maxTokens,
-        part: part + 1,
-        storyTitle
-      });
 
       await interaction.followUp({ 
         embeds: [embed], 

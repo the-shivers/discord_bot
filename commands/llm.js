@@ -78,11 +78,15 @@ module.exports = {
       );
 
       conversationCache.set(conversationId, {
-        history: initialHistory,
-        systemPrompt,
-        maxTokens,
-        part: 2,
-        storyTitle: response.substring(0, 50),
+        branches: {
+          [uuidv4()]: { // Initial branch ID
+            history: initialHistory,
+            systemPrompt,
+            maxTokens,
+            part: 1,
+            storyTitle: response.substring(0, 50)
+          }
+        }
       });
 
       await interaction.editReply({ embeds: [embed], components: [buttons] });
