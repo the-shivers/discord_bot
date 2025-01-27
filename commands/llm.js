@@ -35,12 +35,14 @@ async function generateEmbed(title, prompt, response, context = "", part = 1) {
     .setTitle(title)
     .setColor("#0099ff");
     
+  let description = "";
   if (context) {
-    embed.addField("Context", context);
+    description += `**Context:**\n${context}\n\n`;
   }
   
-  embed.addField("Your Prompt", prompt)
-    .addField("Response", response)
+  description += `**Your Prompt:**\n${prompt}\n\n**Response:**\n${response}`;
+  
+  embed.setDescription(description)
     .setFooter({ text: `Part ${part}` });
 
   const buttons = new MessageActionRow()
