@@ -79,7 +79,7 @@ module.exports = {
 
       conversationCache.set(conversationId, {
         branches: {
-          [uuidv4()]: { // Initial branch ID
+          [initialBranchId]: { 
             history: initialHistory,
             systemPrompt,
             maxTokens,

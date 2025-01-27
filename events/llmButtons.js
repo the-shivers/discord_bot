@@ -38,7 +38,7 @@ module.exports = {
       await interaction.deferReply({ ephemeral: false });
       
       const cached = conversationCache.get(conversationId);
-      if (!cached || !cached.branches[branchId]) {
+      if (!cached || !cached.branches || !cached.branches[branchId]) {
         return interaction.editReply({ 
           content: '❌ Conversation expired. Start a new one with /llm', 
           ephemeral: true 
