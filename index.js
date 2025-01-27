@@ -115,3 +115,95 @@ client.on('interactionCreate', async interaction => {
 client.on('messageCreate', async msg => {
 	message_data.push(dp.process_message(msg));
 });
+
+
+module.exports.buttonHandler = (client) => {
+	client.on('interactionCreate', async interaction => {
+	  if (interaction.isButton()) {
+		const [action, conversationId] = interaction.customId.split(':');
+		if (!['llm_continue', 'llm_input'].includes(action)) return;
+  
+		const cached = conversationCache.get(conversationId);
+		if (!cached) {
+		  await interaction.reply({ content: 'Conversation expired.', ephemeral: true });
+		  return;
+		}
+  
+		if (interaction.user.id !== interaction.message.interaction.user.id) {
+		  await interaction.reply({ content: 'Only the original user can continue this conversation.', ephemeral: true });
+		  return;
+		}
+  
+		await interaction.deferUpdate();
+  
+		let { history, systemPrompt, maxTokens, title, part } = cached;
+		
+		if (action === 'llm_continue') {
+		  history.push({ role: "user", content: "Please continue from where you left off." });
+		} else if (action === 'llm_input') {
+		  const modal = new Modal()
+			.setCustomId(`llm_modal:${conversationId}`)
+			.setTitle('Additional Input');
+  
+		  const input = new TextInputComponent()
+			.setCustomId('input')
+			.setLabel('Your input')
+			.setStyle('PARAGRAPH');
+  
+		  modal.addComponents(new MessageActionRow().addComponents(input));
+		  await interaction.showModal(modal);
+  
+		  try {
+			const submitted = await interaction.awaitModalSubmit({
+			  filter: i => i.customId === `llm_modal:${conversationId}` && i.user.id === interaction.user.id,
+			  time: 300000
+			});
+  
+			const inputText = submitted.fields.getTextInputValue('input');
+			history.push({ role: "user", content: inputText });
+			await submitted.deferUpdate();
+		  } catch (error) {
+			console.error('Modal error:', error);
+			return;
+		  }
+		}
+  
+		try {
+		  const response = await callLLM(history, maxTokens);
+		  history.push({ role: "assistant", content: response });
+  
+		  const context = `Previous context: ${history[history.length - 2].content.slice(-100)}...`;
+		  const newEmbed = new MessageEmbed()
+			.setTitle(title)
+			.setColor("#0099ff")
+			.setDescription(`**Context:**\n${context}\n\n**Response:**\n${response}`)
+			.setFooter({ text: `Part ${part}` });
+  
+		  const newButtons = new MessageActionRow().addComponents(
+			new MessageButton()
+			  .setCustomId(`llm_continue:${conversationId}`)
+			  .setLabel('Continue')
+			  .setStyle('PRIMARY'),
+			new MessageButton()
+			  .setCustomId(`llm_input:${conversationId}`)
+			  .setLabel('Continue with Input')
+			  .setStyle('SUCCESS')
+		  );
+  
+		  await interaction.message.edit({ embeds: [newEmbed], components: [newButtons] });
+  
+		  conversationCache.set(conversationId, {
+			history,
+			systemPrompt,
+			maxTokens,
+			title,
+			part: part + 1
+		  });
+  
+		} catch (error) {
+		  console.error('API Error:', error);
+		  await interaction.followUp({ content: 'Error generating response.', ephemeral: true });
+		}
+	  }
+	});
+  };
