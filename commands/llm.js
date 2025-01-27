@@ -86,7 +86,7 @@ module.exports = {
 
     const userPrompt = interaction.options.getString('user_prompt');
     const systemPrompt = interaction.options.getString('system_prompt') || "You are a helpful AI assistant.";
-    const maxTokens = interaction.options.getInteger('tokens') || 1024;
+    const maxTokens = interaction.options.getInteger('tokens') || 512;
 
     try {
       // Initialize conversation history
