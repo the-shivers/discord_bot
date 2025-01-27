@@ -62,10 +62,9 @@ module.exports = {
       initialHistory.push({ role: "assistant", content: response });
 
       const embed = new MessageEmbed()
-        .setTitle("AI Conversation")
+        .setTitle(`AI Conversation - Part 1`)
         .setColor("#0099ff")
-        .setDescription(`**Your Prompt:**\n${userPrompt}\n\n**Response:**\n${response}`)
-        .setFooter({ text: "Part 1" });
+        .setDescription(`**Prompt:**\n${userPrompt}\n\n**Response:**\n${response}`);
 
       const buttons = new MessageActionRow().addComponents(
         new MessageButton()
@@ -82,7 +81,8 @@ module.exports = {
         history: initialHistory,
         systemPrompt,
         maxTokens,
-        part: 2
+        part: 2,
+        storyTitle: response.substring(0, 50) // Extract initial story title
       });
 
       await interaction.editReply({ embeds: [embed], components: [buttons] });

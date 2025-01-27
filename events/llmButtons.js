@@ -34,26 +34,26 @@ module.exports = {
     if (!['llm_continue', 'llm_input'].includes(action)) return;
 
     try {
-      // Defer update first to prevent timeout
-      await interaction.deferUpdate();
+      await interaction.deferReply({ ephemeral: false });
       
       const cached = conversationCache.get(conversationId);
       if (!cached) {
-        return interaction.followUp({ 
+        return interaction.editReply({ 
           content: '❌ This conversation has expired. Please start a new one.', 
           ephemeral: true 
         });
       }
 
       if (interaction.user.id !== interaction.message.interaction.user.id) {
-        return interaction.followUp({ 
+        return interaction.editReply({ 
           content: '❌ Only the original user can continue this conversation.', 
           ephemeral: true 
         });
       }
 
-      let { history, systemPrompt, maxTokens, part } = cached;
+      let { history, systemPrompt, maxTokens, part, storyTitle } = cached;
       let newHistory = [...history];
+      let userInput = "Please continue from where you left off.";
 
       if (action === 'llm_input') {
         const modal = new Modal()
@@ -73,24 +73,20 @@ module.exports = {
           time: 300_000
         });
 
-        const inputText = submitted.fields.getTextInputValue('input');
-        newHistory.push({ role: "user", content: inputText });
-        await submitted.deferUpdate();
-      } else {
-        newHistory.push({ role: "user", content: "Please continue from where you left off." });
+        userInput = submitted.fields.getTextInputValue('input');
+        await submitted.deferReply();
       }
 
+      newHistory.push({ role: "user", content: userInput });
       const response = await callLLM(newHistory, maxTokens);
       newHistory.push({ role: "assistant", content: response });
 
-      const context = newHistory[newHistory.length - 2].content.slice(-100);
-      const newEmbed = new MessageEmbed()
-        .setTitle("AI Conversation")
+      const embed = new MessageEmbed()
+        .setTitle(`${storyTitle} - Part ${part}`)
         .setColor("#0099ff")
-        .setDescription(`**Context:**\n${context}...\n\n**Response:**\n${response}`)
-        .setFooter({ text: `Part ${part}` });
+        .setDescription(`**Input:**\n${userInput}\n\n**Response:**\n${response}`);
 
-      const newButtons = new MessageActionRow().addComponents(
+      const buttons = new MessageActionRow().addComponents(
         new MessageButton()
           .setCustomId(`llm_continue:${conversationId}`)
           .setLabel('Continue')
@@ -101,16 +97,20 @@ module.exports = {
           .setStyle('SUCCESS')
       );
 
+      // Update conversation cache with new state
       conversationCache.set(conversationId, {
         history: newHistory,
         systemPrompt,
         maxTokens,
-        part: part + 1
+        part: part + 1,
+        storyTitle
       });
 
-      await interaction.message.edit({ 
-        embeds: [newEmbed], 
-        components: [newButtons] 
+      // Send as new message instead of editing
+      await interaction.followUp({ 
+        embeds: [embed], 
+        components: [buttons],
+        ephemeral: false
       });
 
     } catch (error) {
