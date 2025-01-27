@@ -11,12 +11,13 @@ const {
 const axios = require('axios');
 const api_options = require("../api_keys.json").deepseek;
 
-async function callLLM(messages, temperature = 1.0) {
+async function callLLM(messages, maxTokens = 1024, temperature = 1.0) {
   try {
     const response = await axios.post('https://api.deepseek.com/v1/chat/completions', {
       model: "deepseek-chat",
       messages: messages,
-      temperature: temperature
+      temperature: temperature,
+      max_tokens: maxTokens
     }, {
       headers: {
         'Authorization': `Bearer ${api_options.key}`,
@@ -88,7 +89,7 @@ module.exports = {
 
     const userPrompt = interaction.options.getString('user_prompt');
     const systemPrompt = interaction.options.getString('system_prompt') || "You are a helpful AI assistant.";
-    const maxTokens = interaction.options.getInteger('tokens') || 512;
+    const maxTokens = interaction.options.getInteger('tokens') || 1024;
 
     try {
       // Initialize conversation history
@@ -97,7 +98,7 @@ module.exports = {
         { role: "user", content: userPrompt }
       ];
 
-      const response = await callLLM(conversationHistory);
+      const response = await callLLM(conversationHistory, maxTokens);
       conversationHistory.push({ role: "assistant", content: response });
 
       const title = "AI Conversation";
@@ -131,7 +132,7 @@ module.exports = {
           const lastAssistantMsg = conversationHistory[conversationHistory.length - 1].content;
           conversationHistory.push({ role: "user", content: "Please continue from where you left off." });
           
-          const continuedResponse = await callLLM(conversationHistory);
+          const continuedResponse = await callLLM(conversationHistory, maxTokens);
           conversationHistory.push({ role: "assistant", content: continuedResponse });
 
           const context = `Previous response ended with: "${lastAssistantMsg.slice(-100)}..."`;
@@ -172,7 +173,7 @@ module.exports = {
             const additionalInput = modalResponse.fields.getTextInputValue('user_input');
             conversationHistory.push({ role: "user", content: additionalInput });
 
-            const continuedResponse = await callLLM(conversationHistory);
+            const continuedResponse = await callLLM(conversationHistory, maxTokens);
             conversationHistory.push({ role: "assistant", content: continuedResponse });
 
             const context = `Previous response ended with: "${conversationHistory[conversationHistory.length - 2].content.slice(-100)}..."`;
