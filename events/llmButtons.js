@@ -44,13 +44,6 @@ module.exports = {
         });
       }
 
-      if (interaction.user.id !== cached.userId) {
-        return interaction.editReply({ 
-          content: '❌ Only the original user can continue this conversation.', 
-          ephemeral: true 
-        });
-      }
-
       let { history, systemPrompt, maxTokens, part, storyTitle } = cached;
       let newHistory = [...history];
       let userInput = "";

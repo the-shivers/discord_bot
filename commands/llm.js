@@ -83,7 +83,6 @@ module.exports = {
         maxTokens,
         part: 2,
         storyTitle: response.substring(0, 50),
-        userId: interaction.user.id // Add this line
       });
 
       await interaction.editReply({ embeds: [embed], components: [buttons] });
