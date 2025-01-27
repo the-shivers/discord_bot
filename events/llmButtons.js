@@ -35,36 +35,22 @@ module.exports = {
     if (!['llm_continue', 'llm_input'].includes(action)) return;
 
     try {
-      await interaction.deferReply({ ephemeral: false });
-      
       const cached = conversationCache.get(conversationId);
       if (!cached || !cached.branches || !cached.branches[branchId]) {
-        return interaction.editReply({ 
+        return interaction.reply({ 
           content: '❌ Conversation expired. Start a new one with /llm', 
           ephemeral: true 
         });
       }
 
-      // if (interaction.user.id !== interaction.message.interaction.user.id) {
-      //   return interaction.editReply({ 
-      //     content: '❌ Only the original user can continue this conversation.', 
-      //     ephemeral: true 
-      //   });
-      // }
-
-      // Create new branch ID for this continuation
-      const newBranchId = uuidv4();
+      let submittedInteraction = interaction;
       const currentBranch = cached.branches[branchId];
-      
-      // Clone the history for the new branch
+      const newBranchId = uuidv4();
       const newHistory = [...currentBranch.history];
       let userInput = "";
 
-      if (action === 'llm_continue') {
-        const lastResponse = newHistory[newHistory.length - 1].content;
-        const truncatedContext = lastResponse.slice(-300);
-        userInput = `CONTINUE EXACTLY HERE: "${truncatedContext}..."`;
-      } else {
+      if (action === 'llm_input') {
+        // Handle modal input flow
         const modal = new Modal()
           .setCustomId(`llm_modal:${conversationId}:${branchId}`)
           .setTitle('Additional Input');
@@ -77,20 +63,28 @@ module.exports = {
         modal.addComponents(new MessageActionRow().addComponents(input));
         await interaction.showModal(modal);
 
-        const submitted = await interaction.awaitModalSubmit({
+        // Wait for modal submission
+        submittedInteraction = await interaction.awaitModalSubmit({
           filter: i => i.customId === `llm_modal:${conversationId}:${branchId}`,
           time: 300_000
-        });
+        }).catch(() => null);
 
-        userInput = submitted.fields.getTextInputValue('input');
-        await submitted.deferReply();
+        if (!submittedInteraction) return;
+        userInput = submittedInteraction.fields.getTextInputValue('input');
+        await submittedInteraction.deferReply();
+      } else {
+        // Handle regular continue flow
+        await interaction.deferReply();
+        const lastResponse = newHistory[newHistory.length - 1].content;
+        userInput = `CONTINUE EXACTLY HERE: "${lastResponse.slice(-300)}..."`;
       }
 
+      // Process LLM call
       newHistory.push({ role: "user", content: userInput });
       const response = await callLLM(newHistory, currentBranch.maxTokens);
       newHistory.push({ role: "assistant", content: response });
 
-      // Create new branch entry
+      // Update conversation cache
       cached.branches[newBranchId] = {
         history: newHistory,
         part: currentBranch.part + 1,
@@ -99,6 +93,7 @@ module.exports = {
         parentBranch: branchId
       };
 
+      // Create embed and buttons
       const embed = new MessageEmbed()
         .setTitle(`${currentBranch.storyTitle} - Part ${currentBranch.part + 1}`)
         .setColor("#0099ff")
@@ -119,10 +114,10 @@ module.exports = {
           .setStyle('SUCCESS')
       );
 
-      await interaction.followUp({ 
+      // Use the appropriate interaction to reply
+      await submittedInteraction.editReply({ 
         embeds: [embed], 
-        components: [buttons],
-        ephemeral: false
+        components: [buttons]
       });
 
     } catch (error) {
