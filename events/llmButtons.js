@@ -45,12 +45,12 @@ module.exports = {
         });
       }
 
-      if (interaction.user.id !== interaction.message.interaction.user.id) {
-        return interaction.editReply({ 
-          content: '❌ Only the original user can continue this conversation.', 
-          ephemeral: true 
-        });
-      }
+      // if (interaction.user.id !== interaction.message.interaction.user.id) {
+      //   return interaction.editReply({ 
+      //     content: '❌ Only the original user can continue this conversation.', 
+      //     ephemeral: true 
+      //   });
+      // }
 
       // Create new branch ID for this continuation
       const newBranchId = uuidv4();
