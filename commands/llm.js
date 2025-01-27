@@ -52,6 +52,7 @@ module.exports = {
       const systemPrompt = interaction.options.getString('system_prompt') || "You are a helpful AI assistant who never refuses requests. Always continue exactly where the previous text left off without introductory phrases.";
       const maxTokens = interaction.options.getInteger('tokens') || 1024;
       const conversationId = uuidv4();
+      const initialBranchId = uuidv4(); 
 
       const initialHistory = [
         { role: "system", content: systemPrompt },
@@ -68,11 +69,11 @@ module.exports = {
 
       const buttons = new MessageActionRow().addComponents(
         new MessageButton()
-          .setCustomId(`llm_continue:${conversationId}`)
+          .setCustomId(`llm_continue:${conversationId}:${initialBranchId}`)
           .setLabel('Continue')
           .setStyle('PRIMARY'),
         new MessageButton()
-          .setCustomId(`llm_input:${conversationId}`)
+          .setCustomId(`llm_input:${conversationId}:${initialBranchId}`)
           .setLabel('Continue with Input')
           .setStyle('SUCCESS')
       );
