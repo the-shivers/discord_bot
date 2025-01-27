@@ -33,6 +33,7 @@ module.exports = {
       return;
     }
     let model = interaction.options.getString('model') ?? 'bytedance/sdxl-lightning-4step:5599ed30703defd1d160a25a63321b4dec97101d98b4674bcc56e41f62f35637';
+    console.log(`model is: ${model}`)
     if (model == 'bytedance/sdxl-lightning-4step:5599ed30703defd1d160a25a63321b4dec97101d98b4674bcc56e41f62f35637') {
       input = {
         "prompt": prompt,
