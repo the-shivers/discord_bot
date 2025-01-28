@@ -51,6 +51,9 @@ module.exports = {
         { name: 'Pooltoy', value: 'pooltoy' },
         { name: 'Diapertard', value: 'diaper' },
         { name: 'George Floyd', value: 'floyd' },
+        { name: 'Bandit', value: 'bandit' },
+        { name: 'Piss', value: 'piss' },
+        { name: 'Yoshi', value: 'yoshi' },
         { name: 'Latin', value: 'latin' }
       ))
     .addStringOption(option => option
