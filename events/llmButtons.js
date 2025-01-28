@@ -1,8 +1,9 @@
 "use strict";
 
-const { Modal, TextInputComponent, MessageActionRow, MessageEmbed, MessageButton } = require('discord.js');
+const { Modal, TextInputComponent, MessageActionRow, MessageEmbed, MessageButton, MessageAttachment } = require('discord.js');
 const conversationCache = require('../utils/conversationCache');
 const axios = require('axios');
+const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const api_options = require("../api_keys.json").deepseek;
 
@@ -61,6 +62,8 @@ module.exports = {
       const newHistory = [...currentBranch.history];
       let userInput = "";
       let displayContext = "";
+      const attachment = new MessageAttachment(currentBranch.imagePath);
+      const attachmentName = path.basename(currentBranch.imagePath);
 
       if (action === 'llm_input') {
         const modal = new Modal()
@@ -102,13 +105,13 @@ module.exports = {
         storyTitle: currentBranch.storyTitle,
         maxTokens: currentBranch.maxTokens,
         parentBranch: branchId,
-        imageUrl: currentBranch.imageUrl
+        imagePath: currentBranch.imagePath
       };
 
       const responsePreview = truncate(response, 3900);
       const embed = new MessageEmbed()
         .setColor("#0099ff")
-        .setThumbnail(currentBranch.imageUrl)
+        .setThumbnail(`attachment://${attachmentName}`)
         .setDescription(
           `...${responsePreview}`
         )
@@ -132,7 +135,8 @@ module.exports = {
 
       await submittedInteraction.editReply({ 
         embeds: [embed], 
-        components: [buttons]
+        components: [buttons],
+        files: [attachment],
       });
 
     } catch (error) {

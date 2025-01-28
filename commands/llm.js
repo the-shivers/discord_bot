@@ -1,8 +1,9 @@
 "use strict";
 
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
+const { MessageEmbed, MessageActionRow, MessageButton, MessageAttachment } = require('discord.js');
 const axios = require('axios');
+const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const api_options = require("../api_keys.json").deepseek;
 const conversationCache = require('../utils/conversationCache');
@@ -32,19 +33,18 @@ async function callLLM(messages, maxTokens = 1024) {
 }
 
 const PRESET_IMAGES = {
-  normal: 'https://img.freepik.com/premium-vector/humanoid-robot-chinese-cartoon-cartoon-mascot-vector_193274-75306.jpg',  // Replace with your default image URL
-  gayfur: 'https://ei.phncdn.com/videos/202301/11/423093992/original/(m=eaSaaTbaAaaaa)(mh=MTO4ZLHQyeXTwLNL)11.jpg',  // Replace with actual image URLs
-  pooltoy: 'https://i.redd.it/b4bjgbekwmnb1.jpg',
-  diaper: 'https://d.furaffinity.net/art/furrychrome/1514815394/1514815394.furrychrome_83368a80-a2fa-4953-9643-b8923ef75fd5.jpeg',
-  floyd: 'https://ca-times.brightspotcdn.com/dims4/default/10af3dc/2147483647/strip/true/crop/6572x4381+0+0/resize/2000x1333!/quality/75/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2F46%2F72%2Fe70278ab468bb1db8b0d52a1f1c6%2Fla-photos-1staff-552562-me-george-floyd-murals-gxc-0306.JPG',
-  bandit: 'https://static.wikia.nocookie.net/blueypedia/images/a/a3/Bandit-Neutral_Pose.png/revision/latest?cb=20230911042841',
-  piss: 'https://ih1.redbubble.net/image.3412599242.4650/bg,f8f8f8-flat,750x,075,f-pad,750x1000,f8f8f8.jpg',
-  yoshi: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/0dcb31f9-bbbb-47c8-addc-95743576231b/di6pqgj-356bf597-777b-49a1-82de-6f9dcb7647b0.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzBkY2IzMWY5LWJiYmItNDdjOC1hZGRjLTk1NzQzNTc2MjMxYlwvZGk2cHFnai0zNTZiZjU5Ny03NzdiLTQ5YTEtODJkZS02ZjlkY2I3NjQ3YjAucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.hwZb3qN75YAm1ltVpzlrSxTm4R5vtYhRR3tne6HxA9Q',
-  latin: 'https://scholalatina.it/wp-content/uploads/2016/03/il-latino-768x307-1.jpg'
+  normal: path.join(__dirname, '../assets/llm/normal.png'), 
+  gayfur: path.join(__dirname, '../assets/llm/gayfur.jpg'),
+  pooltoy: path.join(__dirname, '../assets/llm/pooltoy.jpg'),
+  diaper: path.join(__dirname, '../assets/llm/diaper.jpg'),
+  floyd: path.join(__dirname, '../assets/llm/floyd.jpg'),
+  bandit: path.join(__dirname, '../assets/llm/bandit.png'),
+  piss: path.join(__dirname, '../assets/llm/piss.png'),
+  yoshi: path.join(__dirname, '../assets/llm/yoshi.jpg'),
+  latin: path.join(__dirname, '../assets/llm/latin.png')
 };
 
-// Default image for custom system prompts
-const DEFAULT_IMAGE = 'https://img.freepik.com/premium-vector/humanoid-robot-chinese-cartoon-cartoon-mascot-vector_193274-75306.jpg';  // Replace with your default image
+const DEFAULT_IMAGE = path.join(__dirname, '../assets/llm/normal.png');
 
 module.exports = {
   type: "public",
@@ -103,7 +103,6 @@ module.exports = {
 
       // Determine system prompt
       let systemPrompt = customPrompt || PRESETS[preset] || PRESETS.normal;
-      const imageUrl = customPrompt ? DEFAULT_IMAGE : (PRESET_IMAGES[preset] || PRESET_IMAGES.normal);
 
       const conversationId = uuidv4();
       const initialBranchId = uuidv4(); 
@@ -116,10 +115,14 @@ module.exports = {
       const response = await callLLM(initialHistory, maxTokens);
       initialHistory.push({ role: "assistant", content: response });
 
+      const imagePath = customPrompt ? DEFAULT_IMAGE : (PRESET_IMAGES[preset] || PRESET_IMAGES.normal);
+      const attachment = new MessageAttachment(imagePath);
+      const attachmentName = path.basename(imagePath);
+
       const embed = new MessageEmbed()
         .setColor("#0099ff")
         .setDescription(`**Response:**\n${truncate(response, 3900)}`)
-        .setThumbnail(imageUrl)
+        .setThumbnail(`attachment://${attachmentName}`)
         .addFields(
           { 
             name: 'System Prompt',
@@ -153,12 +156,12 @@ module.exports = {
             maxTokens,
             part: 1,
             storyTitle: response.substring(0, 50),
-            imageUrl: imageUrl
+            imagePath: imagePath
           }
         }
       });
 
-      await interaction.editReply({ embeds: [embed], components: [buttons] });
+      await interaction.editReply({ embeds: [embed], components: [buttons], files: [attachment] });
     } catch (error) {
       console.error('Command Error:', error);
       await interaction.editReply({ 
