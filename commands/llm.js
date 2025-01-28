@@ -42,7 +42,7 @@ const PRESET_IMAGES = {
   bandit: path.join(__dirname, '../assets/llm/bandit.png'),
   piss: path.join(__dirname, '../assets/llm/piss.png'),
   yoshi: path.join(__dirname, '../assets/llm/yoshi.jpg'),
-  yoshi: path.join(__dirname, '../assets/llm/tony.jpg'),
+  tony: path.join(__dirname, '../assets/llm/tony.jpg'),
   latin: path.join(__dirname, '../assets/llm/latin.png')
 };
 
