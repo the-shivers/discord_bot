@@ -89,7 +89,7 @@ module.exports = {
         const lastResponse = newHistory[newHistory.length - 1].content;
         const continuationContext = lastResponse.slice(-300);
         userInput = `Continue exactly from: "${continuationContext}"`;
-        displayContext = takeLastChars(lastResponse, 100);
+        displayContext = takeLastChars(lastResponse.trim(), 100);
       }
 
       newHistory.push({ role: "user", content: userInput });
