@@ -64,7 +64,7 @@ module.exports = {
         { name: 'Normal', value: 'normal' },
         { name: 'Gay Furry Sex', value: 'gayfur' },
         { name: 'Pooltoy', value: 'pooltoy' },
-        { name: 'Diapertard', value: 'diaper' },
+        { name: 'Diaper', value: 'diaper' },
         { name: 'George Floyd', value: 'floyd' },
         { name: 'Bandit', value: 'bandit' },
         { name: 'Piss', value: 'piss' },
