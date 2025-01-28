@@ -67,12 +67,10 @@ module.exports = {
       initialHistory.push({ role: "assistant", content: response });
 
       const embed = new MessageEmbed()
-        // .setTitle(`AI Conversation - Part 1`)
         .setColor("#0099ff")
         .setDescription(`**Response:**\n${truncate(response, 3900)}`)
         .addFields(
           { name: 'System Prompt', value: truncate(systemPrompt, 1000) || 'None', inline: true },
-          // { name: 'Max Tokens', value: maxTokens.toString(), inline: true },
           { name: 'User Prompt', value: truncate(userPrompt, 1000), inline: true }
         )
         .setFooter({ text: `Max Tokens: ${maxTokens.toString()} | Part 1` });

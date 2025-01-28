@@ -89,7 +89,7 @@ module.exports = {
         const lastResponse = newHistory[newHistory.length - 1].content;
         const continuationContext = lastResponse.slice(-300);
         userInput = `Continue exactly from: "${continuationContext}"`;
-        displayContext = takeLastChars(lastResponse, 200);
+        displayContext = takeLastChars(lastResponse, 100);
       }
 
       newHistory.push({ role: "user", content: userInput });
@@ -106,15 +106,7 @@ module.exports = {
 
       const responsePreview = truncate(response, 3900);
       const embed = new MessageEmbed()
-        // .setTitle(truncate(`${currentBranch.storyTitle} - Part ${currentBranch.part + 1}`, 256))
         .setColor("#0099ff")
-        // .addFields(
-        //   { 
-        //     name: action === 'llm_continue' ? 'Continued From' : 'User Input', 
-        //     value: displayContext || '*No context available*', 
-        //     inline: false 
-        //   },
-        // )
         .setDescription(
           `...${responsePreview}`
         )
