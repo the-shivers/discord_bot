@@ -101,12 +101,14 @@ module.exports = {
         part: currentBranch.part + 1,
         storyTitle: currentBranch.storyTitle,
         maxTokens: currentBranch.maxTokens,
-        parentBranch: branchId
+        parentBranch: branchId,
+        imageUrl: currentBranch.imageUrl
       };
 
       const responsePreview = truncate(response, 3900);
       const embed = new MessageEmbed()
         .setColor("#0099ff")
+        .setImage(currentBranch.imageUrl)
         .setDescription(
           `...${responsePreview}`
         )
