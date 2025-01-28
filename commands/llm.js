@@ -7,6 +7,10 @@ const { v4: uuidv4 } = require('uuid');
 const api_options = require("../api_keys.json").deepseek;
 const conversationCache = require('../utils/conversationCache');
 
+function truncate(text, maxLength) {
+  return text.length > maxLength ? text.slice(0, maxLength - 3) + '...' : text;
+}
+
 async function callLLM(messages, maxTokens = 1024) {
   try {
     const response = await axios.post('https://api.deepseek.com/v1/chat/completions', {
@@ -65,7 +69,13 @@ module.exports = {
       const embed = new MessageEmbed()
         .setTitle(`AI Conversation - Part 1`)
         .setColor("#0099ff")
-        .setDescription(`**Prompt:**\n${userPrompt}\n\n**Response:**\n${response}`);
+        .setDescription(`**Response:**\n${truncate(response, 3900)}`)
+        .addFields(
+          { name: 'System Prompt', value: truncate(systemPrompt, 1000) || 'None', inline: true },
+          { name: 'Max Tokens', value: maxTokens.toString(), inline: true },
+          { name: 'User Prompt', value: truncate(userPrompt, 1000), inline: false }
+        )
+        .setFooter({ text: `Conversation ID: ${conversationId}` });
 
       const buttons = new MessageActionRow().addComponents(
         new MessageButton()

@@ -6,6 +6,11 @@ const axios = require('axios');
 const { v4: uuidv4 } = require('uuid');
 const api_options = require("../api_keys.json").deepseek;
 
+function truncate(text, maxLength) {
+  if (typeof text !== 'string') return '';
+  return text.length > maxLength ? text.slice(0, maxLength - 3) + '...' : text;
+}
+
 async function callLLM(messages, maxTokens = 1024) {
   try {
     const response = await axios.post('https://api.deepseek.com/v1/chat/completions', {
@@ -48,9 +53,9 @@ module.exports = {
       const newBranchId = uuidv4();
       const newHistory = [...currentBranch.history];
       let userInput = "";
+      let displayContext = "";
 
       if (action === 'llm_input') {
-        // Handle modal input flow
         const modal = new Modal()
           .setCustomId(`llm_modal:${conversationId}:${branchId}`)
           .setTitle('Additional Input');
@@ -63,7 +68,6 @@ module.exports = {
         modal.addComponents(new MessageActionRow().addComponents(input));
         await interaction.showModal(modal);
 
-        // Wait for modal submission
         submittedInteraction = await interaction.awaitModalSubmit({
           filter: i => i.customId === `llm_modal:${conversationId}:${branchId}`,
           time: 300_000
@@ -71,20 +75,20 @@ module.exports = {
 
         if (!submittedInteraction) return;
         userInput = submittedInteraction.fields.getTextInputValue('input');
+        displayContext = truncate(userInput, 1000);
         await submittedInteraction.deferReply();
       } else {
-        // Handle regular continue flow
         await interaction.deferReply();
         const lastResponse = newHistory[newHistory.length - 1].content;
-        userInput = `CONTINUE EXACTLY HERE: "${lastResponse.slice(-300)}..."`;
+        const continuationContext = lastResponse.slice(-300);
+        userInput = `Continue exactly from: "${continuationContext}"`;
+        displayContext = truncate(continuationContext, 1000);
       }
 
-      // Process LLM call
       newHistory.push({ role: "user", content: userInput });
       const response = await callLLM(newHistory, currentBranch.maxTokens);
       newHistory.push({ role: "assistant", content: response });
 
-      // Update conversation cache
       cached.branches[newBranchId] = {
         history: newHistory,
         part: currentBranch.part + 1,
@@ -93,15 +97,23 @@ module.exports = {
         parentBranch: branchId
       };
 
-      // Create embed and buttons
+      const responsePreview = truncate(response, 3900);
       const embed = new MessageEmbed()
-        .setTitle(`${currentBranch.storyTitle} - Part ${currentBranch.part + 1}`)
+        .setTitle(truncate(`${currentBranch.storyTitle} - Part ${currentBranch.part + 1}`, 256))
         .setColor("#0099ff")
+        .addFields(
+          { 
+            name: action === 'llm_continue' ? 'Continued From' : 'User Input', 
+            value: displayContext || '*No context available*', 
+            inline: false 
+          },
+        )
         .setDescription(
-          `**${action === 'llm_continue' ? 'Continued from' : 'Input'}:**\n` +
-          `${userInput.slice(0, 150)}...\n\n` +
-          `**Response:**\n${response}`
-        );
+          responsePreview
+        )
+        .setFooter({ 
+          text: `Max Tokens: ${currentBranch.maxTokens} | Part ${currentBranch.part + 1}` 
+        });
 
       const buttons = new MessageActionRow().addComponents(
         new MessageButton()
@@ -114,7 +126,6 @@ module.exports = {
           .setStyle('SUCCESS')
       );
 
-      // Use the appropriate interaction to reply
       await submittedInteraction.editReply({ 
         embeds: [embed], 
         components: [buttons]
