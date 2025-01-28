@@ -72,10 +72,10 @@ module.exports = {
         .setDescription(`**Response:**\n${truncate(response, 3900)}`)
         .addFields(
           { name: 'System Prompt', value: truncate(systemPrompt, 1000) || 'None', inline: true },
-          { name: 'Max Tokens', value: maxTokens.toString(), inline: true },
-          { name: 'User Prompt', value: truncate(userPrompt, 1000), inline: false }
+          // { name: 'Max Tokens', value: maxTokens.toString(), inline: true },
+          { name: 'User Prompt', value: truncate(userPrompt, 1000), inline: true }
         )
-        .setFooter({ text: `Max Tokens: ${currentBranch.maxTokens} | Part 1}` });
+        .setFooter({ text: `Max Tokens: ${maxTokens.toString()} | Part 1}` });
 
       const buttons = new MessageActionRow().addComponents(
         new MessageButton()
