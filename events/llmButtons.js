@@ -116,10 +116,10 @@ module.exports = {
         //   },
         // )
         .setDescription(
-          responsePreview
+          `...${responsePreview}`
         )
         .setAuthor({
-          name: `Continued from: ${displayContext}`
+          name: `Continued from: ${displayContext}...`
         })
         .setFooter({ 
           text: `Max Tokens: ${currentBranch.maxTokens} | Part ${currentBranch.part + 1}` 

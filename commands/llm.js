@@ -75,7 +75,7 @@ module.exports = {
           // { name: 'Max Tokens', value: maxTokens.toString(), inline: true },
           { name: 'User Prompt', value: truncate(userPrompt, 1000), inline: true }
         )
-        .setFooter({ text: `Max Tokens: ${maxTokens.toString()} | Part 1}` });
+        .setFooter({ text: `Max Tokens: ${maxTokens.toString()} | Part 1` });
 
       const buttons = new MessageActionRow().addComponents(
         new MessageButton()
