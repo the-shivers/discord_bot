@@ -108,7 +108,7 @@ module.exports = {
       const responsePreview = truncate(response, 3900);
       const embed = new MessageEmbed()
         .setColor("#0099ff")
-        .setImage(currentBranch.imageUrl)
+        .setThumbnail(currentBranch.imageUrl)
         .setDescription(
           `...${responsePreview}`
         )

@@ -119,7 +119,7 @@ module.exports = {
       const embed = new MessageEmbed()
         .setColor("#0099ff")
         .setDescription(`**Response:**\n${truncate(response, 3900)}`)
-        .setImage(imageUrl)
+        .setThumbnail(imageUrl)
         .addFields(
           { 
             name: 'System Prompt',
