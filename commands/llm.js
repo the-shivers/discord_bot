@@ -78,7 +78,7 @@ module.exports = {
       .setDescription('Custom behavior (overrides preset)'))
     .addIntegerOption(option => option
       .setName('tokens')
-      .setDescription('Maximum response length (default: 1024)')
+      .setDescription('Maximum response length (default: 300)')
       .setMaxValue(900)
       .setMinValue(0)),
   async execute(interaction) {
@@ -88,7 +88,7 @@ module.exports = {
       const userPrompt = interaction.options.getString('user_prompt');
       const preset = interaction.options.getString('preset');
       const customPrompt = interaction.options.getString('system_prompt');
-      const maxTokens = interaction.options.getInteger('tokens') || 1024;
+      const maxTokens = interaction.options.getInteger('tokens') || 300;
 
       // Preset configurations
       const PRESETS = {

@@ -85,14 +85,14 @@ module.exports = {
 
         if (!submittedInteraction) return;
         userInput = submittedInteraction.fields.getTextInputValue('input');
-        displayContext = truncate(userInput, 1000);
+        displayContext = takeLastChars(userInput, 200);
         await submittedInteraction.deferReply();
       } else {
         await interaction.deferReply();
         const lastResponse = newHistory[newHistory.length - 1].content;
         const continuationContext = lastResponse.slice(-300);
         userInput = `Continue exactly from: "${continuationContext}"`;
-        displayContext = takeLastChars(lastResponse.trim(), 100);
+        displayContext = takeLastChars(lastResponse.trim(), 200);
       }
 
       newHistory.push({ role: "user", content: userInput });
