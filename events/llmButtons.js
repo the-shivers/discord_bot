@@ -11,6 +11,13 @@ function truncate(text, maxLength) {
   return text.length > maxLength ? text.slice(0, maxLength - 3) + '...' : text;
 }
 
+function takeLastChars(text, maxLength, addEllipsis = true) {
+  if (typeof text !== 'string') return '';
+  if (text.length <= maxLength) return text;
+  const truncated = text.slice(-maxLength);
+  return addEllipsis ? `...${truncated}` : truncated;
+}
+
 async function callLLM(messages, maxTokens = 1024) {
   try {
     const response = await axios.post('https://api.deepseek.com/v1/chat/completions', {
@@ -82,7 +89,7 @@ module.exports = {
         const lastResponse = newHistory[newHistory.length - 1].content;
         const continuationContext = lastResponse.slice(-300);
         userInput = `Continue exactly from: "${continuationContext}"`;
-        displayContext = truncate(continuationContext, 200);
+        displayContext = takeLastChars(lastResponse, 200);
       }
 
       newHistory.push({ role: "user", content: userInput });
@@ -99,7 +106,7 @@ module.exports = {
 
       const responsePreview = truncate(response, 3900);
       const embed = new MessageEmbed()
-        .setTitle(truncate(`${currentBranch.storyTitle} - Part ${currentBranch.part + 1}`, 256))
+        // .setTitle(truncate(`${currentBranch.storyTitle} - Part ${currentBranch.part + 1}`, 256))
         .setColor("#0099ff")
         // .addFields(
         //   { 

@@ -67,7 +67,7 @@ module.exports = {
       initialHistory.push({ role: "assistant", content: response });
 
       const embed = new MessageEmbed()
-        .setTitle(`AI Conversation - Part 1`)
+        // .setTitle(`AI Conversation - Part 1`)
         .setColor("#0099ff")
         .setDescription(`**Response:**\n${truncate(response, 3900)}`)
         .addFields(
@@ -75,7 +75,7 @@ module.exports = {
           { name: 'Max Tokens', value: maxTokens.toString(), inline: true },
           { name: 'User Prompt', value: truncate(userPrompt, 1000), inline: false }
         )
-        .setFooter({ text: `Conversation ID: ${conversationId}` });
+        .setFooter({ text: `Max Tokens: ${currentBranch.maxTokens} | Part 1}` });
 
       const buttons = new MessageActionRow().addComponents(
         new MessageButton()
