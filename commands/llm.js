@@ -12,12 +12,12 @@ function truncate(text, maxLength) {
   return text.length > maxLength ? text.slice(0, maxLength - 3) + '...' : text;
 }
 
-async function callLLM(messages, maxTokens = 1024) {
+async function callLLM(messages, maxTokens = 1024, temp = 1.0) {
   try {
     const response = await axios.post('https://api.deepseek.com/v1/chat/completions', {
       model: "deepseek-chat",
       messages: messages,
-      temperature: 1.0,
+      temperature: temp,
       max_tokens: maxTokens
     }, {
       headers: {
@@ -82,7 +82,12 @@ module.exports = {
       .setName('tokens')
       .setDescription('Maximum response length (default: 300)')
       .setMaxValue(900)
-      .setMinValue(0)),
+      .setMinValue(0))
+    .addNumberOption(option => option
+      .setName('temperature')
+      .setDescription('Higher = more creative, more schizo, less repetition (default: 1.0, max: 2.0)')
+      .setMaxValue(2.0)
+      .setMinValue(0.0)),
   async execute(interaction) {
     try {
       await interaction.deferReply();
@@ -91,6 +96,7 @@ module.exports = {
       const preset = interaction.options.getString('preset');
       const customPrompt = interaction.options.getString('system_prompt');
       const maxTokens = interaction.options.getInteger('tokens') || 300;
+      const temp = interaction.options.getInteger('temp') || 1.0;
 
       // Preset configurations
       const PRESETS = {
@@ -118,7 +124,7 @@ module.exports = {
         { role: "user", content: userPrompt }
       ];
 
-      const response = await callLLM(initialHistory, maxTokens);
+      const response = await callLLM(initialHistory, maxTokens, temp);
       initialHistory.push({ role: "assistant", content: response });
 
       const imagePath = customPrompt ? DEFAULT_IMAGE : (PRESET_IMAGES[preset] || PRESET_IMAGES.normal);
@@ -141,7 +147,7 @@ module.exports = {
             inline: true
           }
         )
-        .setFooter({ text: `Max Tokens: ${maxTokens} | Part 1` });
+        .setFooter({ text: `Max Tokens: ${maxTokens} | Temperature: ${temp} | Part 1` });
 
       const buttons = new MessageActionRow().addComponents(
         new MessageButton()
