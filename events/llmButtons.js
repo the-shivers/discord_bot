@@ -120,7 +120,7 @@ module.exports = {
           name: `Continued from: ${displayContext.trim()}...`
         })
         .setFooter({ 
-          text: `Max Tokens: ${currentBranch.maxTokens} | Part ${currentBranch.part + 1}` 
+          text: `Max Tokens: ${currentBranch.maxTokens} | Temperature: ${currentBranch.temp} | Part ${currentBranch.part + 1}` 
         });
 
       const buttons = new MessageActionRow().addComponents(
