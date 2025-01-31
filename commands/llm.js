@@ -96,7 +96,7 @@ module.exports = {
       const preset = interaction.options.getString('preset');
       const customPrompt = interaction.options.getString('system_prompt');
       const maxTokens = interaction.options.getInteger('tokens') || 300;
-      const temp = interaction.options.getInteger('temperature') || 1.0;
+      const temp = interaction.options.getNumber('temperature') || 1.0;
 
       // Preset configurations
       const PRESETS = {
