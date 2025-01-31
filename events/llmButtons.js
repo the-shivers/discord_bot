@@ -19,12 +19,12 @@ function takeLastChars(text, maxLength, addEllipsis = true) {
   return addEllipsis ? `...${truncated}` : truncated;
 }
 
-async function callLLM(messages, maxTokens = 1024) {
+async function callLLM(messages, maxTokens = 1024, temp = 1) {
   try {
     const response = await axios.post('https://api.deepseek.com/v1/chat/completions', {
       model: "deepseek-chat",
       messages: messages,
-      temperature: 0.7,
+      temperature: temp,
       max_tokens: maxTokens
     }, {
       headers: {
@@ -96,7 +96,7 @@ module.exports = {
       }
 
       newHistory.push({ role: "user", content: userInput });
-      const response = await callLLM(newHistory, currentBranch.maxTokens);
+      const response = await callLLM(newHistory, currentBranch.maxTokens, currentBranch.temp);
       newHistory.push({ role: "assistant", content: response });
 
       cached.branches[newBranchId] = {
@@ -104,6 +104,7 @@ module.exports = {
         part: currentBranch.part + 1,
         storyTitle: currentBranch.storyTitle,
         maxTokens: currentBranch.maxTokens,
+        temp: currentBranch.temp,
         parentBranch: branchId,
         imagePath: currentBranch.imagePath
       };

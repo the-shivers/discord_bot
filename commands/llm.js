@@ -166,6 +166,7 @@ module.exports = {
             history: initialHistory,
             systemPrompt,
             maxTokens,
+            temp,
             part: 1,
             storyTitle: response.substring(0, 50),
             imagePath: imagePath
