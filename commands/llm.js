@@ -5,9 +5,14 @@ const { MessageEmbed, MessageActionRow, MessageButton, MessageAttachment } = req
 const axios = require('axios');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
-// const api_options = require("../api_keys.json").deepseek;
-const api_options = require("../api_keys.json").deepinfra;
 const conversationCache = require('../utils/conversationCache');
+const api_keys = require("../api_keys.json");
+
+const api_key_map = {
+  'deepseek-chat': api_keys.deepseek.key,
+  'NousResearch/Hermes-3-Llama-3.1-405B': api_keys.deepinfra.key
+};
+
 
 function truncate(text, maxLength) {
   return text.length > maxLength ? text.slice(0, maxLength - 3) + '...' : text;
@@ -22,7 +27,7 @@ async function callLLM(messages, maxTokens = 1024, temp = 1.0, model, endpoint) 
       max_tokens: maxTokens
     }, {
       headers: {
-        'Authorization': `Bearer ${api_options.key}`,
+        'Authorization': `Bearer ${api_key_map[model]}`,
         'Content-Type': 'application/json'
       }
     });
