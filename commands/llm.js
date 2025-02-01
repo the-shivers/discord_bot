@@ -5,7 +5,8 @@ const { MessageEmbed, MessageActionRow, MessageButton, MessageAttachment } = req
 const axios = require('axios');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
-const api_options = require("../api_keys.json").deepseek;
+// const api_options = require("../api_keys.json").deepseek;
+const api_options = require("../api_keys.json").deepinfra;
 const conversationCache = require('../utils/conversationCache');
 
 function truncate(text, maxLength) {
@@ -14,11 +15,13 @@ function truncate(text, maxLength) {
 
 async function callLLM(messages, maxTokens = 1024, temp = 1.0) {
   try {
-    const response = await axios.post('https://api.deepseek.com/v1/chat/completions', {
-      model: "deepseek-chat",
+    // const response = await axios.post('https://api.deepseek.com/v1/chat/completions', {
+      const response = await axios.post('https://api.deepinfra.com/v1/openai/chat/completions', {
+      // model: "deepseek-chat",
+      model: "NousResearch/Hermes-3-Llama-3.1-405B",
       messages: messages,
-      temperature: temp,
-      max_tokens: maxTokens
+      // temperature: temp,
+      // max_tokens: maxTokens
     }, {
       headers: {
         'Authorization': `Bearer ${api_options.key}`,
