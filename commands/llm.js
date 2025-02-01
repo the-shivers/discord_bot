@@ -105,7 +105,7 @@ module.exports = {
       const customPrompt = interaction.options.getString('system_prompt');
       const maxTokens = interaction.options.getInteger('tokens') || 300;
       const temp = interaction.options.getNumber('temperature') ?? 1.0;
-      const model = interaction.options.getString('model') ?? 'deepseek-chat';
+      const model = interaction.options.getString('model') || 'deepseek-chat';
       
       // Preset configurations
       const PRESETS = {
